@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Utilities Web App</title>
+  <meta name="author" content="Barata Ribeiro" />
+  <meta name="description" content="A web app dedicated to several valuable tools I've developed for me, and perhaps even you." />
+  <meta name="Copyright" content="barata </> ribeiro" />
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but this website doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app">
+    <nav class="sidenav">
+      <a href="/">Home</a>
+      <h2>Utilities</h2>
+      <ul>
+        <li><a href="/characterCounter" data-target="char-counter">Character Counter</a></li>
+      </ul>
+      <h2>Converters</h2>
+      <ul>
+        <li><a href="/converters/temperature" data-target="temp-converter">Temperature</a></li>
+        <li><a href="/converters/length" data-target="metric-converter">Length</a></li>
+        <li><a href="/converters/mass" data-target="mass-converter">Mass</a></li>
+        <li><a href="/converters/speed" data-target="speed-converter">Speed</a></li>
+        <li><a href="/converters/time" data-target="time-converter">Time</a></li>
+      </ul>
+      <h2>Calculators</h2>
+      <ul>
+        <li><a href="/bmiCalculator" data-target="bmi-calc">BMI Calculator</a></li>
+      </ul>
+    </nav>
+    <div id="content"></div>
+  </div>
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+
+</html>
