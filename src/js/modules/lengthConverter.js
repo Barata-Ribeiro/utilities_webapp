@@ -187,7 +187,7 @@ class LengthConverter {
             throw new Error('Invalid value entered');
           this.lengthUnits[to].value = convertedValue;
         } catch (error) {
-          throw new Error(error.message);
+          throw new Error(`Invalid input: ${error}`);
         }
       }
     });

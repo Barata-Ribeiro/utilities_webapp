@@ -14,6 +14,13 @@ class TimeConverter {
       decade: document.getElementById('decade'),
       century: document.getElementById('century'),
     };
+
+    Object.keys(this.timeUnits).forEach((key) => {
+      if (Number.isNaN(this.timeUnits[key].value)) {
+        this.timeUnits[key].value = '';
+      }
+    });
+
     this.conversionFactor = {
       nanosecond: [
         1,
@@ -187,11 +194,26 @@ class TimeConverter {
 
   handleConverter(e) {
     const from = e.target.id;
-    const { value } = e.target;
+    const value = parseFloat(e.target.value);
+
+    if (Number.isNaN(value)) {
+      Object.keys(this.timeUnits).forEach((key) => {
+        this.timeUnits[key].value = '';
+      });
+      return;
+    }
+
     Object.keys(this.timeUnits).forEach((key) => {
       if (key !== from) {
         const to = key;
-        this.timeUnits[to].value = this.convertFromTo(from, to, value);
+        try {
+          const convertedValue = this.convertFromTo(from, to, value);
+          if (Number.isNaN(convertedValue))
+            throw new Error('Invalid value entered');
+          this.timeUnits[to].value = convertedValue;
+        } catch (error) {
+          throw new Error(`Invalid input: ${error}`);
+        }
       }
     });
   }
