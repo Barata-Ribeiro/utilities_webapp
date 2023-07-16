@@ -6,10 +6,18 @@
   "keywords": [
     "utilities",
     "utilities_app",
+    "utility",
+    "spa",
+    "single-page-app",
+    "conversion",
+    "routing",
+    "calculator-javascript",
     "javascript",
     "javascript_app",
     "css",
-    "html"
+    "html",
+    "vite",
+    "vitejs"
   ],
   "scripts": {
     "dev": "vite --host --open",
@@ -17,8 +25,8 @@
     "lint:fix": "eslint --fix --ext .js ./",
     "format": "prettier --write \"./**/*.{js,jsx,json,css}\"",
     "build": "vite build",
-    "preview": "vite preview --open",
-    "buildpreview": "vite build && vite preview --open"
+    "preview": "vite preview --host --open",
+    "buildpreview": "vite build && vite preview --host --open"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
