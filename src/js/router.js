@@ -7,6 +7,12 @@ class AppRouter {
     this.urlPageTitle = 'Utilities Web App';
     this.currentUtility = null;
     this.urlRoutes = {
+      '/loading': {
+        route: '/routes/utils/loading.html',
+        title: `Loading...`,
+        description: 'This is the loading page!',
+        Utility: null,
+      },
       404: {
         route: '/routes/404.html',
         title: `404 | ${this.urlPageTitle}`,
@@ -49,12 +55,21 @@ class AppRouter {
     this.urlLocationHandler();
   }
 
+  async getHtmlContent(route) {
+    return await fetch(route.route).then((response) => response.text());
+  }
+
   async urlLocationHandler() {
+    // Display loading page
+    const loadingRoute = this.urlRoutes['/loading'];
+    document.querySelector('#app #content').innerHTML =
+      await this.getHtmlContent(loadingRoute);
+
     let location = window.location.pathname;
     if (location.length === 0) location = '/';
 
     const route = this.urlRoutes[location] || this.urlRoutes['404'];
-    const html = await fetch(route.route).then((response) => response.text());
+    const html = await this.getHtmlContent(route);
 
     // Remove event listeners for current utility if it exists
     if (this.currentUtility) {

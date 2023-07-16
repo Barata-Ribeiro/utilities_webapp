@@ -32,6 +32,8 @@
         "optionalDependencies": false,
         "peerDependencies": false
       }
-    ]
+    ],
+    "class-methods-use-this": "off",
+    "no-return-await": "off"
   }
 }
