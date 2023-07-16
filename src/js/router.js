@@ -1,3 +1,4 @@
+import LengthConverter from './modules/lengthConverter';
 import TemperatureConverter from './modules/tempConverter';
 import TimeConverter from './modules/timeConverter';
 
@@ -23,6 +24,12 @@ class AppRouter {
         title: `Temperature Converter | ${this.urlPageTitle}`,
         description: 'This is the temperature converter page',
         Utility: TemperatureConverter,
+      },
+      '/converters/length': {
+        route: '/routes/converters/lengthConverter.html',
+        title: `Length Converter | ${this.urlPageTitle}`,
+        description: 'This is the length converter page',
+        Utility: LengthConverter,
       },
       '/converters/time': {
         route: '/routes/converters/timeConverter.html',
