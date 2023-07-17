@@ -1,6 +1,8 @@
-import LengthConverter from './modules/lengthConverter';
-import TemperatureConverter from './modules/tempConverter';
-import TimeConverter from './modules/timeConverter';
+import TemperatureConverter from './modules/converters/tempConverter';
+import LengthConverter from './modules/converters/lengthConverter';
+import MassConverter from './modules/converters/massConverter';
+import SpeedConverter from './modules/converters/speedConverter';
+import TimeConverter from './modules/converters/timeConverter';
 
 class AppRouter {
   constructor() {
@@ -36,6 +38,18 @@ class AppRouter {
         title: `Length Converter | ${this.urlPageTitle}`,
         description: 'This is the length converter page',
         Utility: LengthConverter,
+      },
+      '/converters/mass': {
+        route: '/routes/converters/massConverter.html',
+        title: `Mass Converter | ${this.urlPageTitle}`,
+        description: 'This is the mass converter page',
+        Utility: MassConverter,
+      },
+      '/converters/speed': {
+        route: '/routes/converters/speedConverter.html',
+        title: `Speed Converter | ${this.urlPageTitle}`,
+        description: 'This is the speed converter page',
+        Utility: SpeedConverter,
       },
       '/converters/time': {
         route: '/routes/converters/timeConverter.html',

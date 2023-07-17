@@ -6,13 +6,14 @@ class TemperatureConverter {
       kelvin: document.getElementById('kelvin'),
     };
 
+    this.handleConverter = this.handleConverter.bind(this);
+
     Object.keys(this.temperatureUnits).forEach((key) => {
       if (Number.isNaN(this.temperatureUnits[key].value)) {
         this.temperatureUnits[key].value = '';
       }
     });
 
-    this.handleConverter = this.handleConverter.bind(this);
     this.addEventListeners();
   }
 

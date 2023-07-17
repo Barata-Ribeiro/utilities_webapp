@@ -14,6 +14,8 @@ class LengthConverter {
       nauticalMile: document.getElementById('nauticalMile'),
     };
 
+    this.handleConverter = this.handleConverter.bind(this);
+
     Object.keys(this.lengthUnits).forEach((key) => {
       if (Number.isNaN(this.lengthUnits[key].value)) {
         this.lengthUnits[key].value = '';
@@ -156,6 +158,7 @@ class LengthConverter {
         1,
       ],
     };
+
     this.addEventListeners();
   }
 
@@ -195,19 +198,13 @@ class LengthConverter {
 
   addEventListeners() {
     Object.keys(this.lengthUnits).forEach((key) => {
-      this.lengthUnits[key].addEventListener(
-        'input',
-        this.handleConverter.bind(this),
-      );
+      this.lengthUnits[key].addEventListener('input', this.handleConverter);
     });
   }
 
   removeEventListeners() {
     Object.keys(this.lengthUnits).forEach((key) => {
-      this.lengthUnits[key].removeEventListener(
-        'input',
-        this.handleConverter.bind(this),
-      );
+      this.lengthUnits[key].removeEventListener('input', this.handleConverter);
     });
   }
 }

@@ -15,6 +15,8 @@ class TimeConverter {
       century: document.getElementById('century'),
     };
 
+    this.handleConverter = this.handleConverter.bind(this);
+
     Object.keys(this.timeUnits).forEach((key) => {
       if (Number.isNaN(this.timeUnits[key].value)) {
         this.timeUnits[key].value = '';
@@ -181,6 +183,7 @@ class TimeConverter {
         1200, 100, 10, 1,
       ],
     };
+
     this.addEventListeners();
   }
 
@@ -220,19 +223,13 @@ class TimeConverter {
 
   addEventListeners() {
     Object.keys(this.timeUnits).forEach((key) => {
-      this.timeUnits[key].addEventListener(
-        'input',
-        this.handleConverter.bind(this),
-      );
+      this.timeUnits[key].addEventListener('input', this.handleConverter);
     });
   }
 
   removeEventListeners() {
     Object.keys(this.timeUnits).forEach((key) => {
-      this.timeUnits[key].removeEventListener(
-        'input',
-        this.handleConverter.bind(this),
-      );
+      this.timeUnits[key].removeEventListener('input', this.handleConverter);
     });
   }
 }
