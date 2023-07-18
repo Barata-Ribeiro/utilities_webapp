@@ -2,8 +2,14 @@
 import 'the-new-css-reset/css/reset.css';
 import '../styles/style.css';
 
-// Import the AppRouter
+// JavaScript Imports
 import AppRouter from './router';
+import Sidebar from './modules/sidebar';
 
-// Create new instance of AppRouter
+// The new instances
 (() => new AppRouter())();
+
+const sidenav = document.querySelector('.sidenav');
+const dropdowns = document.querySelectorAll('.dropdown');
+const burger = document.querySelector('#burger');
+(() => new Sidebar(sidenav, dropdowns, burger))();

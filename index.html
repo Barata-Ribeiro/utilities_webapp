@@ -1,43 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Utilities Web App</title>
+    <meta name="author" content="Barata Ribeiro" />
+    <meta
+      name="description"
+      content="A web app dedicated to several valuable tools I've developed for me, and perhaps even you."
+    />
+    <meta name="Copyright" content="barata </> ribeiro" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Utilities Web App</title>
-  <meta name="author" content="Barata Ribeiro" />
-  <meta name="description" content="A web app dedicated to several valuable tools I've developed for me, and perhaps even you." />
-  <meta name="Copyright" content="barata </> ribeiro" />
-</head>
+  <body>
+    <noscript>
+      <strong
+        >We're sorry but this website doesn't work properly without JavaScript
+        enabled. Please enable it to continue.</strong
+      >
+    </noscript>
+    <div id="app">
+      <button id="burger" aria-label="Main menu" aria-expanded="false">
+        <span>&#9776;</span>
+      </button>
 
-<body>
-  <noscript>
-    <strong>We're sorry but this website doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-  </noscript>
-  <div id="app">
-    <nav class="sidenav">
-      <a href="/">Home</a>
-      <h2>Utilities</h2>
-      <ul>
-        <li><a href="/characterCounter" data-target="char-counter">Character Counter</a></li>
-      </ul>
-      <h2>Converters</h2>
-      <ul>
-        <li><a href="/converters/temperature" data-target="temp-converter">Temperature</a></li>
-        <li><a href="/converters/length" data-target="metric-converter">Length</a></li>
-        <li><a href="/converters/mass" data-target="mass-converter">Mass</a></li>
-        <li><a href="/converters/speed" data-target="speed-converter">Speed</a></li>
-        <li><a href="/converters/time" data-target="time-converter">Time</a></li>
-      </ul>
-      <h2>Calculators</h2>
-      <ul>
-        <li><a href="/bmiCalculator" data-target="bmi-calc">BMI Calculator</a></li>
-      </ul>
-    </nav>
-    <div id="content"></div>
-  </div>
-  <script type="module" src="/src/js/main.js"></script>
-</body>
-
+      <nav class="sidenav" aria-label="Sidebar">
+        <a href="/" tabindex="0">Home</a>
+        <h2 id="utilities-label">
+          Utilities<span class="dropdown-icon" aria-hidden="true">&#9662;</span>
+        </h2>
+        <ul class="dropdown" aria-labelledby="utilities-label">
+          <li>
+            <a href="/characterCounter" data-target="char-counter" tabindex="0"
+              >Character Counter</a
+            >
+          </li>
+        </ul>
+        <h2 id="converters-label">
+          Converters<span class="dropdown-icon" aria-hidden="true"
+            >&#9662;</span
+          >
+        </h2>
+        <ul class="dropdown" aria-labelledby="converters-label">
+          <li>
+            <a
+              href="/converters/temperature"
+              data-target="temp-converter"
+              tabindex="0"
+              >Temperature</a
+            >
+          </li>
+          <li>
+            <a
+              href="/converters/length"
+              data-target="metric-converter"
+              tabindex="0"
+              >Length</a
+            >
+          </li>
+          <li>
+            <a href="/converters/mass" data-target="mass-converter" tabindex="0"
+              >Mass</a
+            >
+          </li>
+          <li>
+            <a
+              href="/converters/speed"
+              data-target="speed-converter"
+              tabindex="0"
+              >Speed</a
+            >
+          </li>
+          <li>
+            <a href="/converters/time" data-target="time-converter" tabindex="0"
+              >Time</a
+            >
+          </li>
+        </ul>
+        <h2 id="calculators-label">
+          Calculators<span class="dropdown-icon" aria-hidden="true"
+            >&#9662;</span
+          >
+        </h2>
+        <ul class="dropdown" aria-labelledby="calculators-label">
+          <li>
+            <a href="/bmiCalculator" data-target="bmi-calc" tabindex="0"
+              >BMI Calculator</a
+            >
+          </li>
+        </ul>
+      </nav>
+      <div id="content" role="main"></div>
+    </div>
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
 </html>

@@ -1,64 +1,12 @@
+@import url('./utils/sidenav.css');
 @import url('./utils/loading.css');
 @import url('./paths/404.css');
 
-:root {
-  --primary-color: hsl(220 25.7% 13.7%);
-  --secondary-color: hsl(218 23.1% 22.9%);
-  --text-color: hsl(0 0% 95.3%);
-  --link-color: hsl(177 52.1% 45.9%);
-  --padding: 1rem;
-}
-
-body {
-  font-size: 16px;
-  color: var(--text-color);
-  background-color: var(--primary-color);
-  font-family: Arial, sans-serif;
-}
-
-#app {
-  display: flex;
-  flex-direction: row;
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-}
-
-.sidenav {
-  display: flex;
-  flex-direction: column;
-  padding: var(--padding);
-  width: 20%;
-  background-color: var(--secondary-color);
-  min-height: 100vh;
-  box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-
-  & a {
-    color: var(--link-color);
-    text-decoration: none;
-    margin-bottom: 0.5rem;
-    &:hover {
-      filter: brightness(110%);
-    }
-  }
-
-  & h2 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-
-  & ul {
-    & li {
-      margin-bottom: 0.5rem;
-    }
-  }
-}
-
 #content {
-  flex-grow: 1;
-  padding: var(--padding);
+  margin-left: 0;
+  transition: margin-left .5s;
+
+  @media screen and (min-width: 48rem) {
+    margin-left: 15.625rem;
+  }
 }
