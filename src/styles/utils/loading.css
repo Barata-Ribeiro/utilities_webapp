@@ -2,19 +2,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh - var(--padding) * 4);
 }
 
 .loader {
-  border: 1rem solid #f3f3f3;
+  border: var(--padding) solid var(--text-color);
   border-radius: 50%;
-  border-top: 1rem solid #3498db;
+  border-top: var(--padding) solid var(--link-color);
   width: 7.5rem;
   aspect-ratio: 1/1;
   animation: spin 2s linear infinite;
+
+  @media (max-width: 768px) {
+    width: 5rem;
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

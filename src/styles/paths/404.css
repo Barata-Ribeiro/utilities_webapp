@@ -3,33 +3,42 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 4rem);
+  height: calc(100vh - var(--padding) * 4);
   text-align: center;
 
   & .error-code {
     font-size: 6rem;
-    text-decoration: underline .5rem;
-    text-underline-offset: .5rem;
-    color: #3f3f3f;
+    text-decoration: underline 0.5rem;
+    text-underline-offset: 0.5rem;
+    color: var(--text-color);
+
+    @media (max-width: 768px) {
+      font-size: 4rem;
+    }
   }
 
   & .error-description {
-    color: #3f3f3f;
+    color: var(--text-color);
     font-size: 1.5rem;
     max-width: 60ch;
     margin: 1rem 0;
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+      max-width: 50ch;
+    }
   }
 
   & .home-button {
-    color: #fff;
-    background-color: #3498db;
-    padding: 1rem 2rem;
+    color: var(--text-color);
+    background-color: var(--link-color);
+    padding: var(--padding);
     border-radius: 0.25rem;
     text-decoration: none;
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: #2980b9;
+     filter: saturate(.5);
     }
   }
 }
