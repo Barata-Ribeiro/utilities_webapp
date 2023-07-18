@@ -3,6 +3,7 @@ import LengthConverter from './modules/converters/lengthConverter';
 import MassConverter from './modules/converters/massConverter';
 import SpeedConverter from './modules/converters/speedConverter';
 import TimeConverter from './modules/converters/timeConverter';
+import BmiCalculator from './modules/calculators/bmiCalculator';
 
 class AppRouter {
   constructor() {
@@ -26,6 +27,12 @@ class AppRouter {
         title: `Home | ${this.urlPageTitle}`,
         description: 'This is the home page',
         Utility: null,
+      },
+      '/calculators/bmi': {
+        route: '/routes/calculators/bmi.html',
+        title: `BMI | ${this.urlPageTitle}`,
+        description: 'This is the bmi calculator page',
+        Utility: BmiCalculator,
       },
       '/converters/temperature': {
         route: '/routes/converters/temperatureConverter.html',

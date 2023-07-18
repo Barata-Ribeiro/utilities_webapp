@@ -1,0 +1,20 @@
+<form id="bmi-calc">
+  <h2>Body Mass Index (bmi)</h2>
+  <label for="bmiWeight">Weight (in kg)</label>
+  <input
+    type="text"
+    pattern="^-?[0-9]\d*(\.\d+)?$"
+    name="bmiWeight"
+    id="bmiWeight"
+    aria-label="Weight in kilogram input"
+  />
+  <label for="bmiHeight">Height (in cm)</label>
+  <input
+    type="text"
+    pattern="^-?[0-9]\d*(\.\d+)?$"
+    name="bmiHeight"
+    id="bmiHeight"
+    aria-label="Height in centimeter input"
+  />
+  <p id="bmiResult"></p>
+</form>
