@@ -12,10 +12,18 @@ class Sidebar {
   addDropdownListeners() {
     this.dropdowns.forEach((dropdownElem) => {
       const dropdown = dropdownElem;
+      const dropdownArrow =
+        dropdown.previousElementSibling.querySelector('.dropdown-icon');
+
       dropdown.previousElementSibling.addEventListener('click', () => {
         // eslint-disable-next-line no-param-reassign
         dropdown.style.display =
           dropdown.style.display === 'block' ? 'none' : 'block';
+
+        dropdownArrow.textContent =
+          dropdownArrow.textContent === 'arrow_drop_down'
+            ? 'arrow_drop_up'
+            : 'arrow_drop_down';
       });
     });
   }

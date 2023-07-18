@@ -43,18 +43,19 @@
 
   h2,
   .home-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     color: var(--color-secondary);
     font-size: 1.5rem;
     cursor: pointer;
   }
 
   a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-weight: 500;
-  }
-
-  .dropdown-icon {
-    float: right;
-    margin-right: 10px;
   }
 
   .dropdown {
