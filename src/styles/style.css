@@ -1,5 +1,6 @@
-@import url('./utils/sidenav.css');
-@import url('./utils/forms.css');
+@import url('./global/fonts.css');
+@import url('./global/sidenav.css');
+@import url('./global/forms.css');
 @import url('./utils/loading.css');
 @import url('./paths/404.css');
 
