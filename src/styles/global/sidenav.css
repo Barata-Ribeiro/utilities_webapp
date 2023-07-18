@@ -16,7 +16,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 1000;
   }
 }
 
@@ -24,7 +24,7 @@
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   top: 0;
   left: 0;
   background-color: var(--color-primary);
@@ -32,7 +32,8 @@
   transition: 0.5s;
   padding-top: 3.75rem;
 
-  a, h2 {
+  a,
+  h2 {
     padding: 0.5rem 0.5rem 0.5rem 32px;
     text-decoration: none;
     color: var(--color-text);
@@ -40,10 +41,11 @@
     transition: 0.3s;
   }
 
-  h2, .home-link {
-   color: var(--color-secondary);
-   font-size: 1.5rem;
-   cursor: pointer;
+  h2,
+  .home-link {
+    color: var(--color-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
   }
 
   a {
@@ -59,11 +61,12 @@
     display: none;
   }
 
-  a:hover, h2:hover {
+  a:hover,
+  h2:hover {
     color: var(--color-accent);
     background-color: var(--color-background);
     margin-left: 1rem;
-    border-radius: .5rem 0 0 .5rem;
+    border-radius: 0.5rem 0 0 0.5rem;
   }
 
   @media screen and (max-height: 28.125rem) {

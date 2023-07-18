@@ -21,11 +21,11 @@ class Sidebar {
   }
 
   addMediaQueryListener() {
-    const mediaQuery = window.matchMedia('(min-width: 768px)');
+    const mediaQuery = window.matchMedia('(min-width: 48rem)');
 
     const handleTabletChange = (e) => {
       if (e.matches) {
-        this.sidenav.style.width = '250px';
+        this.sidenav.style.width = '15.625rem';
         this.burger.style.display = 'none';
       } else {
         this.sidenav.style.width = '0';
@@ -41,7 +41,7 @@ class Sidebar {
     this.burger.addEventListener('click', () => {
       const expanded = this.burger.getAttribute('aria-expanded') === 'true';
       this.burger.setAttribute('aria-expanded', !expanded);
-      this.sidenav.style.width = expanded ? '0' : '250px';
+      this.sidenav.style.width = expanded ? '0' : '15.625rem';
     });
   }
 }
