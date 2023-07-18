@@ -1,12 +1,61 @@
 @import url('./utils/sidenav.css');
+@import url('./utils/forms.css');
 @import url('./utils/loading.css');
 @import url('./paths/404.css');
 
+:root {
+  /* Font */
+  --font-title: 'Montserrat', sans-serif;
+  --font-text: 'Source Sans Pro', sans-serif;
+
+  /* Light Mode Colors */
+  --color-text: hsl(0, 0%, 2%);
+  --color-background: hsl(0, 0%, 98%);
+  --color-primary: hsl(14, 80%, 64%);
+  --color-secondary: hsl(195, 80%, 90%);
+  --color-accent: hsl(14, 80%, 50%);
+
+  /* Dark Mode Colors */
+  --dark-color-text: hsl(0, 0%, 98%);
+  --dark-color-background: hsl(0, 0%, 2%);
+  --dark-color-primary: hsl(14, 80%, 64%);
+  --dark-color-secondary: hsl(195, 80%, 10%);
+  --dark-color-accent: hsl(14, 80%, 70%);
+}
+
+body {
+  font-family: var(--font-text);
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+}
+
+.primary {
+  color: var(--color-primary);
+}
+
+.dark-mode {
+  background-color: var(--dark-color-background);
+  color: var(--dark-color-text);
+}
+
+.dark-mode .primary {
+  color: var(--dark-color-primary);
+}
+
+
 #content {
   margin-left: 0;
-  transition: margin-left .5s;
+  transition: margin-left 0.5s;
 
   @media screen and (min-width: 48rem) {
     margin-left: 15.625rem;
+  }
+
+  @media screen and (max-width: 48rem) {
+    padding-left: 1.875rem;
   }
 }

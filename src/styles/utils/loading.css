@@ -2,18 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - var(--padding) * 4);
+  height: calc(100vh - 1rem * 4);
 }
 
 .loader {
-  border: var(--padding) solid var(--text-color);
+  border: 1rem solid var(--color-text);
   border-radius: 50%;
-  border-top: var(--padding) solid var(--link-color);
+  border-top: 1rem solid var(--color-primary);
   width: 7.5rem;
   aspect-ratio: 1/1;
   animation: spin 2s linear infinite;
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     width: 5rem;
   }
 }

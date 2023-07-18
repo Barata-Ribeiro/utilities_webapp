@@ -10,7 +10,6 @@
     font-size: 6rem;
     text-decoration: underline 0.5rem;
     text-underline-offset: 0.5rem;
-    color: var(--text-color);
 
     @media (max-width: 768px) {
       font-size: 4rem;
@@ -18,7 +17,6 @@
   }
 
   & .error-description {
-    color: var(--text-color);
     font-size: 1.5rem;
     max-width: 60ch;
     margin: 1rem 0;
@@ -30,15 +28,19 @@
   }
 
   & .home-button {
-    color: var(--text-color);
-    background-color: var(--link-color);
-    padding: var(--padding);
-    border-radius: 0.25rem;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
+    padding: 1rem 2rem;
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-radius: .375rem;
+    transition: transform ease 0.2s, box-shadow ease 0.2s;
+    display: inline-block;
+    font-size: 1.125rem;
+    z-index: 2;
+    white-space: nowrap;
 
     &:hover {
-     filter: saturate(.5);
+      transform: translate(0, -3px);
+      box-shadow: 0 1.25rem 5rem -0.625rem var(--color-primary);
     }
   }
 }

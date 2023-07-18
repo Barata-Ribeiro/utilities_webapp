@@ -1,8 +1,8 @@
 #burger {
   display: none;
-  background-color: #111;
+  background-color: var(--color-primary);
   border: none;
-  color: #fff;
+  color: var(--color-text);
   padding: 0.5rem;
   font-size: 1.625rem;
   cursor: pointer;
@@ -27,7 +27,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: var(--color-primary);
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 3.75rem;
@@ -35,10 +35,19 @@
   a, h2 {
     padding: 0.5rem 0.5rem 0.5rem 32px;
     text-decoration: none;
-    font-size: 1.5rem;
-    color: #818181;
+    color: var(--color-text);
     display: block;
     transition: 0.3s;
+  }
+
+  h2 {
+   color: var(--color-secondary);
+   font-size: 1.5rem;
+   cursor: pointer;
+  }
+
+  a {
+    font-weight: 500;
   }
 
   .dropdown-icon {
@@ -51,7 +60,8 @@
   }
 
   a:hover, h2:hover {
-    color: #f1f1f1;
+    color: var(--color-accent);
+    background-color: var();
   }
 
   @media screen and (max-height: 28.125rem) {
@@ -63,6 +73,6 @@
   }
 
   @media screen and (min-width: 48rem) {
-    width: 250px;
+    width: 15.625rem;
   }
 }
