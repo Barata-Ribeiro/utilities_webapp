@@ -12,4 +12,5 @@ import Sidebar from './modules/sidebar';
 const sidenav = document.querySelector('.sidenav');
 const dropdowns = document.querySelectorAll('.dropdown');
 const burger = document.querySelector('#burger');
-(() => new Sidebar(sidenav, dropdowns, burger))();
+const navLinks = sidenav.querySelectorAll('a');
+(() => new Sidebar(sidenav, dropdowns, burger, navLinks))();

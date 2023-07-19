@@ -1,12 +1,27 @@
 class Sidebar {
-  constructor(sidenav, dropdowns, burger) {
+  constructor(sidenav, dropdowns, burger, navLinks) {
     this.sidenav = sidenav;
     this.dropdowns = dropdowns;
     this.burger = burger;
+    this.navLinks = navLinks;
 
     this.addDropdownListeners();
     this.addMediaQueryListener();
     this.addBurgerListener();
+    this.addNavLinksListener();
+    this.addOutsideClickListener();
+  }
+
+  closeNav() {
+    this.sidenav.style.width = '0';
+    this.burger.setAttribute('aria-expanded', false);
+    this.burger.querySelector('.material-icons').textContent = 'menu';
+  }
+
+  openNav() {
+    this.sidenav.style.width = '15.625rem';
+    this.burger.setAttribute('aria-expanded', true);
+    this.burger.querySelector('.material-icons').textContent = 'close';
   }
 
   addDropdownListeners() {
@@ -48,8 +63,34 @@ class Sidebar {
   addBurgerListener() {
     this.burger.addEventListener('click', () => {
       const expanded = this.burger.getAttribute('aria-expanded') === 'true';
-      this.burger.setAttribute('aria-expanded', !expanded);
-      this.sidenav.style.width = expanded ? '0' : '15.625rem';
+      if (expanded) {
+        this.closeNav();
+      } else {
+        this.openNav();
+      }
+    });
+  }
+
+  addNavLinksListener() {
+    this.navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        if (window.matchMedia('(max-width: 48rem)').matches) {
+          this.closeNav();
+        }
+      });
+    });
+  }
+
+  addOutsideClickListener() {
+    document.addEventListener('click', (event) => {
+      if (
+        !this.sidenav.contains(event.target) &&
+        !this.burger.contains(event.target)
+      ) {
+        if (window.matchMedia('(max-width: 48rem)').matches) {
+          this.closeNav();
+        }
+      }
     });
   }
 }
