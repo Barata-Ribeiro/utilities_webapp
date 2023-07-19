@@ -4,6 +4,7 @@ import MassConverter from './modules/converters/massConverter';
 import SpeedConverter from './modules/converters/speedConverter';
 import TimeConverter from './modules/converters/timeConverter';
 import BmiCalculator from './modules/calculators/bmiCalculator';
+import CharacterCounter from './modules/utilities/characterCounter';
 
 class AppRouter {
   constructor() {
@@ -33,6 +34,12 @@ class AppRouter {
         title: `Styleguide | ${this.urlPageTitle}`,
         description: 'This is the styleguide page',
         Utility: null,
+      },
+      '/utilities/characterCounter': {
+        route: '/routes/utilities/characterCounter.html',
+        title: `Character Counter | ${this.urlPageTitle}`,
+        description: 'This is the character counter page',
+        Utility: CharacterCounter,
       },
       '/calculators/bmi': {
         route: '/routes/calculators/bmi.html',
