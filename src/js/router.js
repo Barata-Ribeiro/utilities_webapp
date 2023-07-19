@@ -5,6 +5,7 @@ import SpeedConverter from './modules/converters/speedConverter';
 import TimeConverter from './modules/converters/timeConverter';
 import BmiCalculator from './modules/calculators/bmiCalculator';
 import CharacterCounter from './modules/utilities/characterCounter';
+import PasswordGenerator from './modules/utilities/passwordGenerator';
 
 class AppRouter {
   constructor() {
@@ -40,6 +41,12 @@ class AppRouter {
         title: `Character Counter | ${this.urlPageTitle}`,
         description: 'This is the character counter page',
         Utility: CharacterCounter,
+      },
+      '/utilities/passwordGenerator': {
+        route: '/routes/utilities/passwordGenerator.html',
+        title: `Password Generator | ${this.urlPageTitle}`,
+        description: 'This is the password generator page',
+        Utility: PasswordGenerator,
       },
       '/calculators/bmi': {
         route: '/routes/calculators/bmi.html',
