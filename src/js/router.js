@@ -28,6 +28,12 @@ class AppRouter {
         description: 'This is the home page',
         Utility: null,
       },
+      '/styleguide': {
+        route: '/routes/styleguide.html',
+        title: `Styleguide | ${this.urlPageTitle}`,
+        description: 'This is the styleguide page',
+        Utility: null,
+      },
       '/calculators/bmi': {
         route: '/routes/calculators/bmi.html',
         title: `BMI | ${this.urlPageTitle}`,

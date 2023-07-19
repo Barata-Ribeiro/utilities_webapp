@@ -37,11 +37,10 @@
       box-shadow ease 0.2s;
     display: inline-block;
     font-size: 1.125rem;
-    z-index: 2;
     white-space: nowrap;
 
     &:hover {
-      transform: translate(0, -0.1875);
+      transform: translate(0, -0.1875rem);
       box-shadow: 0 1.25rem 5rem -0.625rem var(--color-primary);
     }
   }

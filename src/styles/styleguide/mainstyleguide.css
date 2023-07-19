@@ -1,0 +1,109 @@
+@import url('./styleguide.css');
+/* Styles for the Guide */
+
+.styleguide {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  > h1 {
+    font-size: 1rem;
+    font-weight: normal;
+    text-align: center;
+    margin: 2.5rem;
+  }
+
+  article {
+    margin-bottom: 1.25rem;
+
+    h1 {
+      font-size: 1rem;
+      width: calc(50% - 3.125rem);
+      float: left;
+      text-align: right;
+      padding-right: 3.125rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.0625rem;
+    }
+
+    .styles {
+      width: 50%;
+      float: left;
+    }
+
+    &::after,
+    &::before {
+      content: '';
+      display: table;
+      clear: both;
+    }
+
+    @media screen and (max-width: 37.5rem) {
+      h1 {
+        width: 100%;
+        padding: 0 1.25rem;
+        text-align: left;
+        box-sizing: border-box;
+      }
+
+      .styles {
+        width: 100%;
+        padding: 0 1.25rem;
+        float: left;
+        box-sizing: border-box;
+      }
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+
+      h2 {
+        font-size: 1rem;
+        font-weight: normal;
+        text-transform: uppercase;
+        letter-spacing: 0.0625rem;
+        margin-bottom: 0.625rem;
+        color: rgba(0, 0, 0, 0.5);
+      }
+
+      &::after,
+      &::before {
+        content: '';
+        display: table;
+        clear: both;
+      }
+
+      &.primary_colors div,
+      &.secondary_colors div {
+        padding: 7.5rem 0.625rem 0.625rem 0.625rem;
+        text-align: center;
+        float: left;
+        margin-right: 1.25rem;
+        color: black;
+        box-shadow:
+          0 -2.5rem 0 0 white inset,
+          0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.125);
+        text-transform: uppercase;
+      }
+
+      &.typography_titles > div {
+        margin-bottom: 2.5rem;
+      }
+
+      &.typography_body {
+        max-width: 31.25rem;
+      }
+
+      &.buttons > div {
+        margin-bottom: 1.25rem;
+      }
+
+      &.forms {
+        max-width: 31.25rem;
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
