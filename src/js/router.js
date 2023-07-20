@@ -36,13 +36,13 @@ class AppRouter {
         description: 'This is the styleguide page',
         Utility: null,
       },
-      '/utilities/characterCounter': {
+      '/utilities/charactercounter': {
         route: '/routes/utilities/characterCounter.html',
         title: `Character Counter | ${this.urlPageTitle}`,
         description: 'This is the character counter page',
         Utility: CharacterCounter,
       },
-      '/utilities/passwordGenerator': {
+      '/utilities/passwordgenerator': {
         route: '/routes/utilities/passwordGenerator.html',
         title: `Password Generator | ${this.urlPageTitle}`,
         description: 'This is the password generator page',

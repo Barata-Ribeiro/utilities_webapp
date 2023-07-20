@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.4.0/remixicon.css');
 @import url('./global/fonts.css');
 @import url('./utils/sidenav.css');
 @import url('./utils/forms.css');
@@ -25,6 +25,19 @@
   --dark-color-primary: hsl(14, 80%, 64%);
   --dark-color-secondary: hsl(195, 80%, 10%);
   --dark-color-accent: hsl(14, 80%, 70%);
+
+  --gradient-x: linear-gradient(
+    90deg,
+    hsla(0, 0%, 0%, 0),
+    hsl(210, 4%, 64%),
+    hsla(0, 0%, 0%, 0)
+  );
+  --gradient-y: linear-gradient(
+    0,
+    hsla(0, 0%, 0%, 0),
+    hsl(210, 4%, 64%),
+    hsla(0, 0%, 0%, 0)
+  );
 }
 
 body {
@@ -42,41 +55,18 @@ h6 {
   font-family: var(--font-title);
 }
 
-#content {
-  margin: 0;
-  transition: margin-left 0.5s;
-
-  @media screen and (min-width: 48rem) {
-    margin-left: 15.625rem;
-  }
-
-  @media screen and (max-width: 48rem) {
-    margin-left: 2.625rem;
-  }
+.container {
+  margin-inline: 1.5rem;
 }
 
-.material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal !important;
-  font-style: normal;
-  font-size: 1.5rem; /* Preferred icon size */
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
+.main {
+  padding-top: 5rem;
+}
 
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
+@media screen and (max-width: 64rem) {
+  .main {
+    padding-left: 18.75rem;
+    padding-top: 6rem;
+    transition: padding 0.4s;
+  }
 }
