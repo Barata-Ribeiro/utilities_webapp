@@ -63,10 +63,29 @@ h6 {
   padding-top: 5rem;
 }
 
+@media screen and (min-width: 64rem) {
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .main {
+    padding-left: 17.5rem;
+  }
+}
+
 @media screen and (max-width: 64rem) {
   .main {
     padding-left: 18.75rem;
     padding-top: 6rem;
     transition: padding 0.4s;
+  }
+
+  .show-sidebar .main {
+    padding-left: 18.75rem !important;
+  }
+
+  .main-pd {
+    padding-left: 7.5rem !important;
   }
 }
