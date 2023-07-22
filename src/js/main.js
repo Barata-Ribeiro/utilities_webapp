@@ -6,7 +6,7 @@ import '../styles/style.css';
 import AppRouter from './router';
 import Sidebar from './modules/sidebar';
 
+(() => new Sidebar())();
+
 // The new instances
 (() => new AppRouter())();
-
-(() => new Sidebar())();

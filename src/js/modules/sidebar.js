@@ -4,11 +4,6 @@ class Sidebar {
     this.sidebar = document.getElementById('sidebar');
     this.content = document.getElementById('content');
 
-    this.linkColor = this.linkColor.bind(this);
-
-    this.sidebarLink = document.querySelectorAll('.sidebar__link');
-
-    this.addEventListeners();
     this.showSidebar();
   }
 
@@ -24,12 +19,6 @@ class Sidebar {
   linkColor(event) {
     this.sidebarLink.forEach((link) => link.classList.remove('active-link'));
     event.target.classList.add('active-link');
-  }
-
-  addEventListeners() {
-    this.sidebarLink.forEach((link) =>
-      link.addEventListener('click', this.linkColor),
-    );
   }
 }
 

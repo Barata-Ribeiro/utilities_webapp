@@ -88,7 +88,9 @@ class AppRouter {
     };
 
     // Event listeners
-    document.addEventListener('click', this.urlRoute.bind(this));
+    document
+      .querySelector('#app')
+      .addEventListener('click', this.urlRoute.bind(this));
     window.onpopstate = this.urlLocationHandler.bind(this);
     window.route = this.urlRoute.bind(this);
 
@@ -118,6 +120,14 @@ class AppRouter {
       this.currentUtility = null;
     }
 
+    const sidebarLinks = document.querySelectorAll('.sidebar__link');
+    sidebarLinks.forEach((link) => link.classList.remove('active-link'));
+
+    const activeLink = [...sidebarLinks].find(
+      (link) => link.pathname === location,
+    );
+    if (activeLink) activeLink.classList.add('active-link');
+
     document.querySelector('#app #content').innerHTML = html;
 
     // Initialize utility if utility class is defined in the route
@@ -130,11 +140,12 @@ class AppRouter {
   }
 
   urlRoute(event) {
-    const { target } = event;
-    if (!target.matches('nav a')) return;
+    const linkElement = event.target.closest('.sidebar__link');
+    if (!linkElement) return;
 
     event.preventDefault();
-    window.history.pushState({}, '', target.href);
+    event.stopPropagation();
+    window.history.pushState({}, '', linkElement.href);
     this.urlLocationHandler();
   }
 }
