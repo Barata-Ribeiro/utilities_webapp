@@ -23,7 +23,7 @@ class PasswordGenerator {
   }
 
   generatePassword(e) {
-    e.preventDefault();
+    if (e instanceof Event) e.preventDefault();
     let password = '';
     let length = this.length_el.value;
 
@@ -37,7 +37,7 @@ class PasswordGenerator {
     chars += this.numbers_el.checked ? this.numbers : '';
     chars += this.symbols_el.checked ? this.symbols : '';
 
-    for (let i = 0; i <= length; i += 1) {
+    for (let i = 0; i < length; i += 1) {
       let randomChar;
       do {
         const random = Math.floor(Math.random() * chars.length);

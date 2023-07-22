@@ -6,13 +6,18 @@ import eslint from 'vite-plugin-eslint';
 export default defineConfig({
   publicDir: 'public',
   root: './',
+  base: '/',
   build: {
     outDir: 'dist',
+    indexHtmlTransforms: false,
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
       },
     },
+  },
+  server: {
+    historyApiFallback: true,
   },
   plugins: [
     eslint({
