@@ -15,15 +15,19 @@
   /* Light Mode Colors */
   --color-text: hsl(0, 0%, 2%);
   --color-background: hsl(0, 0%, 98%);
+  --color-background-support: hsl(0, 0%, 95%);
   --color-primary: hsl(14, 80%, 64%);
   --color-secondary: hsl(195, 80%, 90%);
+  --color-secondary-support: hsl(195, 44%, 96%);
   --color-accent: hsl(14, 80%, 50%);
 
   /* Dark Mode Colors */
   --dark-color-text: hsl(0, 0%, 98%);
   --dark-color-background: hsl(0, 0%, 2%);
+  --dark-color-background-support: hsl(0, 0%, 5%);
   --dark-color-primary: hsl(14, 80%, 64%);
   --dark-color-secondary: hsl(195, 80%, 10%);
+  --dark-color-secondary-support: hsl(195, 44%, 4%);
   --dark-color-accent: hsl(14, 80%, 70%);
 
   --gradient-x: linear-gradient(
