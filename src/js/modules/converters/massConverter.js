@@ -1,6 +1,8 @@
-class MassConverter {
+import Converter from './converter';
+
+class MassConverter extends Converter {
   constructor() {
-    this.massUnits = {
+    const massUnits = {
       tonne: document.getElementById('tonne'),
       kilogram: document.getElementById('kilogram'),
       gram: document.getElementById('gram'),
@@ -11,14 +13,7 @@ class MassConverter {
       pound: document.getElementById('pound'),
       ounce: document.getElementById('ounce'),
     };
-
-    this.handleConverter = this.handleConverter.bind(this);
-
-    Object.keys(this.massUnits).forEach((key) => {
-      if (Number.isNaN(this.massUnits[key].value)) {
-        this.massUnits[key].value = '';
-      }
-    });
+    super(massUnits);
 
     this.conversionFactor = {
       tonne: [1, 1e3, 1e6, 1e9, 1e12, 0.984207, 1.10231, 2204.623, 35273.96],
@@ -49,54 +44,6 @@ class MassConverter {
         3.125e-5, 0.0625, 1,
       ],
     };
-
-    this.addEventListeners();
-  }
-
-  convertFromTo(from, to, value) {
-    return value * this.conversionFactor[from][this.getUnitIndex(to)];
-  }
-
-  getUnitIndex(unit) {
-    return Object.keys(this.massUnits).indexOf(unit);
-  }
-
-  handleConverter(e) {
-    const from = e.target.id;
-    const value = parseFloat(e.target.value);
-
-    if (Number.isNaN(value)) {
-      Object.keys(this.massUnits).forEach((key) => {
-        this.massUnits[key].value = '';
-      });
-      return;
-    }
-
-    Object.keys(this.massUnits).forEach((key) => {
-      if (key !== from) {
-        const to = key;
-        try {
-          const convertedValue = this.convertFromTo(from, to, value);
-          if (Number.isNaN(convertedValue))
-            throw new Error('Invalid value entered');
-          this.massUnits[to].value = convertedValue;
-        } catch (error) {
-          throw new Error(`Invalid input: ${error}`);
-        }
-      }
-    });
-  }
-
-  addEventListeners() {
-    Object.keys(this.massUnits).forEach((key) => {
-      this.massUnits[key].addEventListener('input', this.handleConverter);
-    });
-  }
-
-  removeEventListeners() {
-    Object.keys(this.massUnits).forEach((key) => {
-      this.massUnits[key].removeEventListener('input', this.handleConverter);
-    });
   }
 }
 

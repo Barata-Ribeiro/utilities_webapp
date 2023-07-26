@@ -1,74 +1,35 @@
-class TemperatureConverter {
+import Converter from './converter';
+
+class TemperatureConverter extends Converter {
   constructor() {
-    this.temperatureUnits = {
+    const temperatureUnits = {
       fahrenheit: document.getElementById('fahrenheit'),
       celsius: document.getElementById('celsius'),
       kelvin: document.getElementById('kelvin'),
     };
+    super(temperatureUnits);
 
-    this.handleConverter = this.handleConverter.bind(this);
-
-    Object.keys(this.temperatureUnits).forEach((key) => {
-      if (Number.isNaN(this.temperatureUnits[key].value)) {
-        this.temperatureUnits[key].value = '';
-      }
-    });
-
-    this.addEventListeners();
+    this.conversionFactor = {
+      fahrenheit: {
+        fahrenheit: (value) => value,
+        celsius: (value) => (value - 32) * (5 / 9),
+        kelvin: (value) => (value - 32) * (5 / 9) + 273.15,
+      },
+      celsius: {
+        fahrenheit: (value) => value * (9 / 5) + 32,
+        celsius: (value) => value,
+        kelvin: (value) => value + 273.15,
+      },
+      kelvin: {
+        fahrenheit: (value) => (value - 273.15) * (9 / 5) + 32,
+        celsius: (value) => value - 273.15,
+        kelvin: (value) => value,
+      },
+    };
   }
 
-  handleConverter(e) {
-    const value = parseFloat(e.target.value);
-    if (Number.isNaN(value)) {
-      Object.keys(this.temperatureUnits).forEach((key) => {
-        this.temperatureUnits[key].value = '';
-      });
-      return;
-    }
-
-    try {
-      if (e.target === this.temperatureUnits.fahrenheit) {
-        this.temperatureUnits.celsius.value = ((value - 32) * (5 / 9)).toFixed(
-          2,
-        );
-        this.temperatureUnits.kelvin.value = (
-          (value - 32) * (5 / 9) +
-          273.15
-        ).toFixed(2);
-      } else if (e.target === this.temperatureUnits.celsius) {
-        this.temperatureUnits.fahrenheit.value = (value * (9 / 5) + 32).toFixed(
-          2,
-        );
-        this.temperatureUnits.kelvin.value = (value + 273.15).toFixed(2);
-      } else if (e.target === this.temperatureUnits.kelvin) {
-        if (value < 0) throw new Error('Kelvin cannot be less than 0');
-        this.temperatureUnits.fahrenheit.value = (
-          (value - 273.15) * (9 / 5) +
-          32
-        ).toFixed(2);
-        this.temperatureUnits.celsius.value = (value - 273.15).toFixed(2);
-      }
-    } catch (error) {
-      throw new Error(`Invalid input: ${error}`);
-    }
-  }
-
-  addEventListeners() {
-    Object.keys(this.temperatureUnits).forEach((key) => {
-      this.temperatureUnits[key].addEventListener(
-        'input',
-        this.handleConverter,
-      );
-    });
-  }
-
-  removeEventListeners() {
-    Object.keys(this.temperatureUnits).forEach((key) => {
-      this.temperatureUnits[key].removeEventListener(
-        'input',
-        this.handleConverter,
-      );
-    });
+  convertFromTo(from, to, value) {
+    return this.conversionFactor[from][to](value);
   }
 }
 

@@ -1,6 +1,8 @@
-class LengthConverter {
+import Converter from './converter';
+
+class LengthConverter extends Converter {
   constructor() {
-    this.lengthUnits = {
+    const lengthUnits = {
       kilometer: document.getElementById('kilometer'),
       meter: document.getElementById('meter'),
       centimeter: document.getElementById('centimeter'),
@@ -13,14 +15,7 @@ class LengthConverter {
       foot: document.getElementById('foot'),
       nauticalMile: document.getElementById('nauticalMile'),
     };
-
-    this.handleConverter = this.handleConverter.bind(this);
-
-    Object.keys(this.lengthUnits).forEach((key) => {
-      if (Number.isNaN(this.lengthUnits[key].value)) {
-        this.lengthUnits[key].value = '';
-      }
-    });
+    super(lengthUnits);
 
     this.conversionFactor = {
       kilometer: [
@@ -158,54 +153,6 @@ class LengthConverter {
         1,
       ],
     };
-
-    this.addEventListeners();
-  }
-
-  convertFromTo(from, to, value) {
-    return value * this.conversionFactor[from][this.getUnitIndex(to)];
-  }
-
-  getUnitIndex(unit) {
-    return Object.keys(this.lengthUnits).indexOf(unit);
-  }
-
-  handleConverter(e) {
-    const from = e.target.id;
-    const value = parseFloat(e.target.value);
-
-    if (Number.isNaN(value)) {
-      Object.keys(this.lengthUnits).forEach((key) => {
-        this.lengthUnits[key].value = '';
-      });
-      return;
-    }
-
-    Object.keys(this.lengthUnits).forEach((key) => {
-      if (key !== from) {
-        const to = key;
-        try {
-          const convertedValue = this.convertFromTo(from, to, value);
-          if (Number.isNaN(convertedValue))
-            throw new Error('Invalid value entered');
-          this.lengthUnits[to].value = convertedValue;
-        } catch (error) {
-          throw new Error(`Invalid input: ${error}`);
-        }
-      }
-    });
-  }
-
-  addEventListeners() {
-    Object.keys(this.lengthUnits).forEach((key) => {
-      this.lengthUnits[key].addEventListener('input', this.handleConverter);
-    });
-  }
-
-  removeEventListeners() {
-    Object.keys(this.lengthUnits).forEach((key) => {
-      this.lengthUnits[key].removeEventListener('input', this.handleConverter);
-    });
   }
 }
 

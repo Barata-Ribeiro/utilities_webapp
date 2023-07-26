@@ -1,6 +1,8 @@
-class TimeConverter {
+import Converter from './converter';
+
+class TimeConverter extends Converter {
   constructor() {
-    this.timeUnits = {
+    const timeUnits = {
       nanosecond: document.getElementById('nanosecond'),
       microsecond: document.getElementById('microsecond'),
       millisecond: document.getElementById('millisecond'),
@@ -14,14 +16,7 @@ class TimeConverter {
       decade: document.getElementById('decade'),
       century: document.getElementById('century'),
     };
-
-    this.handleConverter = this.handleConverter.bind(this);
-
-    Object.keys(this.timeUnits).forEach((key) => {
-      if (Number.isNaN(this.timeUnits[key].value)) {
-        this.timeUnits[key].value = '';
-      }
-    });
+    super(timeUnits);
 
     this.conversionFactor = {
       nanosecond: [
@@ -183,54 +178,6 @@ class TimeConverter {
         1200, 100, 10, 1,
       ],
     };
-
-    this.addEventListeners();
-  }
-
-  convertFromTo(from, to, value) {
-    return value * this.conversionFactor[from][this.getUnitIndex(to)];
-  }
-
-  getUnitIndex(unit) {
-    return Object.keys(this.timeUnits).indexOf(unit);
-  }
-
-  handleConverter(e) {
-    const from = e.target.id;
-    const value = parseFloat(e.target.value);
-
-    if (Number.isNaN(value)) {
-      Object.keys(this.timeUnits).forEach((key) => {
-        this.timeUnits[key].value = '';
-      });
-      return;
-    }
-
-    Object.keys(this.timeUnits).forEach((key) => {
-      if (key !== from) {
-        const to = key;
-        try {
-          const convertedValue = this.convertFromTo(from, to, value);
-          if (Number.isNaN(convertedValue))
-            throw new Error('Invalid value entered');
-          this.timeUnits[to].value = convertedValue;
-        } catch (error) {
-          throw new Error(`Invalid input: ${error}`);
-        }
-      }
-    });
-  }
-
-  addEventListeners() {
-    Object.keys(this.timeUnits).forEach((key) => {
-      this.timeUnits[key].addEventListener('input', this.handleConverter);
-    });
-  }
-
-  removeEventListeners() {
-    Object.keys(this.timeUnits).forEach((key) => {
-      this.timeUnits[key].removeEventListener('input', this.handleConverter);
-    });
   }
 }
 
