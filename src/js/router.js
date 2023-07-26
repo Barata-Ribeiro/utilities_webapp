@@ -9,15 +9,14 @@ import PasswordGenerator from './modules/utilities/passwordGenerator';
 
 class AppRouter {
   constructor() {
-    this.urlPageTitle = 'Utilities Web App';
+    this.urlPageTitle = 'Utilities App';
     this.currentUtility = null;
+    this.loadingHTML = `
+      <div id="loading" class="loading__container">
+        <div class="loading__loader"></div>
+      </div>
+    `;
     this.urlRoutes = {
-      '/loading': {
-        route: '/routes/utils/loading.html',
-        title: `Loading...`,
-        description: 'This is the loading page!',
-        Utility: null,
-      },
       404: {
         route: '/routes/404.html',
         title: `404 | ${this.urlPageTitle}`,
@@ -104,9 +103,7 @@ class AppRouter {
 
   async urlLocationHandler() {
     // Display loading page
-    const loadingRoute = this.urlRoutes['/loading'];
-    document.querySelector('#app #content').innerHTML =
-      await this.getHtmlContent(loadingRoute);
+    document.querySelector('#app #content').innerHTML = this.loadingHTML;
 
     let location = window.location.pathname;
     if (location.length === 0) location = '/';

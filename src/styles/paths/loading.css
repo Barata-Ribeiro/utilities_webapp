@@ -1,11 +1,11 @@
-#loading {
+.loading__container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: calc(100vh - 1rem * 4);
 }
 
-.loader {
+.loading__loader {
   border: 1rem solid var(--color-text);
   border-radius: 50%;
   border-top: 1rem solid var(--color-primary);
