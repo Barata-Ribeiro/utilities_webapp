@@ -58,34 +58,20 @@ h6 {
   font-family: var(--font-title);
 }
 
-.container {
-  margin-inline: 1.5rem;
-}
-
 .main {
-  padding-top: 5rem;
+  margin-left: 15.625rem;
+  margin-right: 1rem;
 }
 
-@media screen and (min-width: 64rem) {
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-@media screen and (max-width: 64rem) {
+@media screen and (max-width: 57.5rem) {
   .main {
-    padding-left: 18.75rem;
-    padding-top: 6rem;
-    transition: padding 0.4s;
+    transition: margin 0.4s;
+    margin-left: 4.875rem;
   }
+}
 
-  .show-sidebar .main {
-    padding-left: 18.75rem !important;
-  }
-
-  .main-pd {
-    padding-left: 7.5rem !important;
+@media screen and (max-width: 30rem) {
+  .main {
+    margin-left: 1rem;
   }
 }

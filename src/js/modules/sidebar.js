@@ -1,24 +1,17 @@
 class Sidebar {
   constructor() {
-    this.toggle = document.getElementById('header-toggle');
-    this.sidebar = document.getElementById('sidebar');
-    this.content = document.getElementById('content');
+    this.menuMobileBtn = document.querySelector('.hamburger__menu__button');
+    this.menuMobileBtnClose = document.querySelector(
+      '.hamburger__menu__button__close',
+    );
+    this.menuMobile = document.querySelector('.hamburger__menu__nav');
 
-    this.showSidebar();
-  }
-
-  showSidebar() {
-    if (this.toggle && this.sidebar && this.content) {
-      this.toggle.addEventListener('click', () => {
-        this.sidebar.classList.toggle('show-sidebar');
-        this.content.classList.toggle('main-pd');
-      });
-    }
-  }
-
-  linkColor(event) {
-    this.sidebarLink.forEach((link) => link.classList.remove('active-link'));
-    event.target.classList.add('active-link');
+    this.menuMobileBtn.addEventListener('click', () => {
+      this.menuMobile.classList.add('active');
+    });
+    this.menuMobileBtnClose.addEventListener('click', () => {
+      this.menuMobile.classList.remove('active');
+    });
   }
 }
 

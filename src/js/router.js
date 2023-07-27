@@ -90,6 +90,9 @@ class AppRouter {
     document
       .querySelector('#app')
       .addEventListener('click', this.urlRoute.bind(this));
+    document
+      .querySelector('#app')
+      .addEventListener('click', this.hamburgerUrlRoute.bind(this));
     window.onpopstate = this.urlLocationHandler.bind(this);
     window.route = this.urlRoute.bind(this);
 
@@ -117,7 +120,7 @@ class AppRouter {
       this.currentUtility = null;
     }
 
-    const sidebarLinks = document.querySelectorAll('.sidebar__link');
+    const sidebarLinks = document.querySelectorAll('.sidebar__nav__link');
     sidebarLinks.forEach((link) => link.classList.remove('active-link'));
 
     const activeLink = [...sidebarLinks].find(
@@ -136,8 +139,23 @@ class AppRouter {
       .setAttribute('content', route.description);
   }
 
+  hamburgerUrlRoute(event) {
+    const linkElement = event.target.closest('.hamburger__menu__nav__link');
+    if (!linkElement) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    window.history.pushState({}, '', linkElement.href);
+
+    // Close the hamburger menu
+    const menuMobile = document.querySelector('.hamburger__menu__nav');
+    menuMobile.classList.remove('active');
+
+    this.urlLocationHandler();
+  }
+
   urlRoute(event) {
-    const linkElement = event.target.closest('.sidebar__link');
+    const linkElement = event.target.closest('.sidebar__nav__link');
     if (!linkElement) return;
 
     event.preventDefault();

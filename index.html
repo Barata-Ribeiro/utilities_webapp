@@ -10,7 +10,7 @@
       name="description"
       content="A web app dedicated to several valuable tools I've developed for me, and perhaps even you."
     />
-    <meta name="Copyright" content="barata </> ribeiro" />
+    <meta name="Copyright" content="barata &lt;/&gt; ribeiro" />
   </head>
 
   <body>
@@ -21,157 +21,223 @@
       >
     </noscript>
     <div id="app">
-      <header class="header">
-        <div class="header__container container">
-          <div class="header__toggle" id="header-toggle">
-            <i class="ri-menu-line"></i>
-          </div>
-          <a href="/" class="header__logo"><h1>Utility App</h1></a>
-        </div>
-      </header>
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <header class="sidebar__header">
+          <img class="sidebar__header__logo" src="..." alt="Logo" />
+        </header>
 
-      <div class="sidebar" id="sidebar">
-        <nav class="sidebar__container">
-          <div class="sidebar__logo">
-            <h1 class="sidebar_logo-item">Utility App</h1>
-            <p class="sidebar_logo-text">Enjoy!</p>
-          </div>
+        <nav class="sidebar__nav">
+          <a class="sidebar__nav__link" href="/">
+            <span class="sidebar__nav__link__wrapper">
+              <i class="ri-home-7-line sidebar__nav__link__icon"></i>
+              <span class="sidebar__nav__link__text">Home</span>
+            </span>
+          </a>
 
-          <div class="sidebar__content">
-            <ul class="sidebar__list">
-              <li>
-                <a class="sidebar__link" href="/">
-                  <i class="ri-home-5-line"></i>
-                  <span class="sidebar__link-name">Home</span>
-                  <span class="sidebar__link-floating">Home</span>
-                </a>
-              </li>
+          <a class="sidebar__nav__link" href="/about">
+            <span class="sidebar__nav__link__wrapper">
+              <i class="ri-article-line sidebar__nav__link__icon"></i>
+              <span class="sidebar__nav__link__text">About</span>
+            </span>
+          </a>
 
-              <li>
-                <a class="sidebar__link" href="/about">
-                  <i class="ri-file-info-line"></i>
-                  <span class="sidebar__link-name">About</span>
-                  <span class="sidebar__link-floating">About</span>
-                </a>
-              </li>
-            </ul>
+          <h3 class="sidebar__nav__heading">Utilities</h3>
+          <span class="sidebar__nav__heading__separator">•</span>
 
-            <h3 class="sidebar__title"><span>Utilities</span></h3>
+          <a class="sidebar__nav__link" href="/utilities/calculator">
+            <span class="sidebar__nav__link__wrapper">
+              <i class="ri-calculator-line sidebar__nav__link__icon"></i>
+              <span class="sidebar__nav__link__text">Calculator</span>
+            </span>
+          </a>
 
-            <ul class="sidebar__list">
-              <li>
-                <a class="sidebar__link" href="/utilities/calculator">
-                  <i class="ri-calculator-line"></i>
-                  <span class="sidebar__link-name">Calculator</span>
-                  <span class="sidebar__link-floating">Calculator</span>
-                </a>
-              </li>
+          <a class="sidebar__nav__link" href="/utilities/charactercounter">
+            <span class="sidebar__nav__link__wrapper">
+              <i
+                class="ri-character-recognition-line sidebar__nav__link__icon"
+              ></i>
+              <span class="sidebar__nav__link__text">Char. Counter</span>
+            </span>
+          </a>
 
-              <li>
-                <a class="sidebar__link" href="/utilities/charactercounter">
-                  <i class="ri-character-recognition-line"></i>
-                  <span class="sidebar__link-name">Character Counter</span>
-                  <span class="sidebar__link-floating">Char Counter</span>
-                </a>
-              </li>
+          <a class="sidebar__nav__link" href="/utilities/passwordGenerator">
+            <span class="sidebar__nav__link__wrapper">
+              <i class="ri-lock-password-line sidebar__nav__link__icon"></i>
+              <span class="sidebar__nav__link__text">Pass. Generator</span>
+            </span>
+          </a>
 
-              <li>
-                <a class="sidebar__link" href="/utilities/passwordgenerator">
-                  <i class="ri-lock-password-line"></i>
-                  <span class="sidebar__link-name">Password Generator</span>
-                  <span class="sidebar__link-floating">Password Gen</span>
-                </a>
-              </li>
-            </ul>
+          <h3 class="sidebar__nav__heading">Converters</h3>
+          <span class="sidebar__nav__heading__separator">•</span>
 
-            <h3 class="sidebar__title"><span>Converters</span></h3>
+          <a class="sidebar__nav__link" href="/converters/temperature">
+            <span class="sidebar__nav__link__wrapper">
+              <i class="ri-temp-hot-line sidebar__nav__link__icon"></i>
+              <span class="sidebar__nav__link__text">Temperature</span>
+            </span>
+          </a>
 
-            <ul class="sidebar__list">
-              <li>
-                <a class="sidebar__link" href="/converters/temperature">
-                  <i class="ri-temp-hot-line"></i>
-                  <span class="sidebar__link-name">Temperature</span>
-                  <span class="sidebar__link-floating">Temperature</span>
-                </a>
-              </li>
+          <a class="sidebar__nav__link" href="/converters/length">
+            <span class="sidebar__nav__link__wrapper">
+              <i class="ri-ruler-line sidebar__nav__link__icon"></i>
+              <span class="sidebar__nav__link__text">Length</span>
+            </span>
+          </a>
 
-              <li>
-                <a class="sidebar__link" href="/converters/length">
-                  <i class="ri-ruler-line"></i>
-                  <span class="sidebar__link-name">Length</span>
-                  <span class="sidebar__link-floating">Length</span>
-                </a>
-              </li>
+          <a class="sidebar__nav__link" href="/converters/mass">
+            <span class="sidebar__nav__link__wrapper">
+              <i class="ri-scales-3-line sidebar__nav__link__icon"></i>
+              <span class="sidebar__nav__link__text">Mass</span>
+            </span>
+          </a>
 
-              <li>
-                <a class="sidebar__link" href="/converters/mass">
-                  <i class="ri-scales-3-line"></i>
-                  <span class="sidebar__link-name">Mass</span>
-                  <span class="sidebar__link-floating">Mass</span>
-                </a>
-              </li>
+          <a class="sidebar__nav__link" href="/converters/speed">
+            <span class="sidebar__nav__link__wrapper">
+              <i class="ri-speed-up-line sidebar__nav__link__icon"></i>
+              <span class="sidebar__nav__link__text">Speed</span>
+            </span>
+          </a>
 
-              <li>
-                <a class="sidebar__link" href="/converters/speed">
-                  <i class="ri-speed-up-line"></i>
-                  <span class="sidebar__link-name">Speed</span>
-                  <span class="sidebar__link-floating">Speed</span>
-                </a>
-              </li>
+          <a class="sidebar__nav__link" href="/converters/time">
+            <span class="sidebar__nav__link__wrapper">
+              <i class="ri-history-line sidebar__nav__link__icon"></i>
+              <span class="sidebar__nav__link__text">Time</span>
+            </span>
+          </a>
 
-              <li>
-                <a class="sidebar__link" href="/converters/time">
-                  <i class="ri-history-line"></i>
-                  <span class="sidebar__link-name">Time</span>
-                  <span class="sidebar__link-floating">Time</span>
-                </a>
-              </li>
-            </ul>
+          <h3 class="sidebar__nav__heading">Calculators</h3>
+          <span class="sidebar__nav__heading__separator">•</span>
 
-            <h3 class="sidebar__title"><span>Calculators</span></h3>
-
-            <ul class="sidebar__list">
-              <li>
-                <a class="sidebar__link" href="/calculators/bmi">
-                  <i class="ri-scales-2-line"></i>
-                  <span class="sidebar__link-name">BMI</span>
-                  <span class="sidebar__link-floating">BMI</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="sidebar__footer">
-            <div class="sidebar__footer-content">
-              <a
-                class="sidebar__footer-logo"
-                href="https://barataribeiro.com/"
-                rel="noopener noreferrer"
-                target="_blank"
-                ><h3>Barata <span>&lt;/&gt;</span> Ribeiro</h3></a
-              >
-              <div class="sidebar__footer-social">
-                <a
-                  href="https://github.com/Barata-Ribeiro/utilities_webapp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  ><i class="ri-github-line"></i
-                ></a>
-                <a
-                  href="https://www.linkedin.com/in/jo%C3%A3o-mendes-jorge-barata-ribeiro-645073118/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  ><i class="ri-linkedin-line"></i
-                ></a>
-              </div>
-            </div>
-
-            <i class="ri-arrow-right-s-line"></i>
-          </div>
+          <a class="sidebar__nav__link" href="/calculators/bmi">
+            <span class="sidebar__nav__link__wrapper">
+              <i class="ri-scales-2-line sidebar__nav__link__icon"></i>
+              <span class="sidebar__nav__link__text">BMI</span>
+            </span>
+          </a>
         </nav>
-      </div>
 
-      <main class="main container" id="content"></main>
+        <footer class="sidebar__footer">
+          <p class="sidebar__footer__text">© barata &lt;/&gt; ribeiro</p>
+        </footer>
+      </aside>
+
+      <!-- BURGER MENU -->
+
+      <button class="hamburger__menu__button">
+        <i class="ri-menu-line"></i>
+        <span>Menu</span>
+      </button>
+
+      <nav class="hamburger__menu__nav">
+        <button class="hamburger__menu__button__close">
+          <span><i class="ri-close-line"></i></span>
+        </button>
+
+        <a class="hamburger__menu__nav__link" href="/">
+          <span class="hamburger__menu__nav__link__wrapper">
+            <i class="ri-home-7-line hamburger__menu__nav__link__icon"></i>
+            <span class="hamburger__menu__nav__link__text">Home</span>
+          </span>
+        </a>
+
+        <a class="hamburger__menu__nav__link" href="/about">
+          <span class="hamburger__menu__nav__link__wrapper">
+            <i class="ri-article-line hamburger__menu__nav__link__icon"></i>
+            <span class="hamburger__menu__nav__link__text">About</span>
+          </span>
+        </a>
+
+        <h3 class="hamburger__menu__nav__heading">Utilities</h3>
+
+        <a class="hamburger__menu__nav__link" href="/utilities/calculator">
+          <span class="hamburger__menu__nav__link__wrapper">
+            <i class="ri-calculator-line hamburger__menu__nav__link__icon"></i>
+            <span class="hamburger__menu__nav__link__text">Calculator</span>
+          </span>
+        </a>
+
+        <a
+          class="hamburger__menu__nav__link"
+          href="/utilities/charactercounter"
+        >
+          <span class="hamburger__menu__nav__link__wrapper">
+            <i
+              class="ri-character-recognition-line hamburger__menu__nav__link__icon"
+            ></i>
+            <span class="hamburger__menu__nav__link__text">Char. Counter</span>
+          </span>
+        </a>
+
+        <a
+          class="hamburger__menu__nav__link"
+          href="/utilities/passwordGenerator"
+        >
+          <span class="hamburger__menu__nav__link__wrapper">
+            <i
+              class="ri-lock-password-line hamburger__menu__nav__link__icon"
+            ></i>
+            <span class="hamburger__menu__nav__link__text"
+              >Pass. Generator</span
+            >
+          </span>
+        </a>
+
+        <h3 class="hamburger__menu__nav__heading">Converters</h3>
+
+        <a class="hamburger__menu__nav__link" href="/converters/temperature">
+          <span class="hamburger__menu__nav__link__wrapper">
+            <i class="ri-temp-hot-line hamburger__menu__nav__link__icon"></i>
+            <span class="hamburger__menu__nav__link__text">Temperature</span>
+          </span>
+        </a>
+
+        <a class="hamburger__menu__nav__link" href="/converters/length">
+          <span class="hamburger__menu__nav__link__wrapper">
+            <i class="ri-ruler-line hamburger__menu__nav__link__icon"></i>
+            <span class="hamburger__menu__nav__link__text">Length</span>
+          </span>
+        </a>
+
+        <a class="hamburger__menu__nav__link" href="/converters/mass">
+          <span class="hamburger__menu__nav__link__wrapper">
+            <i class="ri-scales-3-line hamburger__menu__nav__link__icon"></i>
+            <span class="hamburger__menu__nav__link__text">Mass</span>
+          </span>
+        </a>
+
+        <a class="hamburger__menu__nav__link">
+          <span
+            class="hamburger__menu__nav__link__wrapper"
+            href="/converters/speed"
+          >
+            <i class="ri-speed-up-line hamburger__menu__nav__link__icon"></i>
+            <span class="hamburger__menu__nav__link__text">Speed</span>
+          </span>
+        </a>
+
+        <a class="hamburger__menu__nav__link">
+          <span
+            class="hamburger__menu__nav__link__wrapper"
+            href="/converters/time"
+          >
+            <i class="ri-history-line hamburger__menu__nav__link__icon"></i>
+            <span class="hamburger__menu__nav__link__text">Time</span>
+          </span>
+        </a>
+
+        <h3 class="hamburger__menu__nav__heading">Calculators</h3>
+
+        <a class="hamburger__menu__nav__link" href="/calculators/bmi">
+          <span class="hamburger__menu__nav__link__wrapper">
+            <i class="ri-scales-2-line hamburger__menu__nav__link__icon"></i>
+            <span class="hamburger__menu__nav__link__text">BMI</span>
+          </span>
+        </a>
+      </nav>
+
+      <!-- CONTENT -->
+      <main class="main" id="content"></main>
     </div>
     <script type="module" src="/src/js/main.js"></script>
   </body>
