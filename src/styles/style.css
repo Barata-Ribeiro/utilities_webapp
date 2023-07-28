@@ -11,7 +11,9 @@
   /* Font */
   --font-title: 'Montserrat', sans-serif;
   --font-text: 'Source Sans Pro', sans-serif;
+}
 
+.light-theme {
   /* Light Mode Colors */
   --color-text: hsl(0, 0%, 2%);
   --color-background: hsl(0, 0%, 98%);
@@ -20,21 +22,26 @@
   --color-secondary: hsl(195, 80%, 90%);
   --color-secondary-support: hsl(195, 44%, 96%);
   --color-accent: hsl(14, 80%, 50%);
+}
 
+.dark-theme {
   /* Dark Mode Colors */
-  --dark-color-text: hsl(0, 0%, 98%);
-  --dark-color-background: hsl(0, 0%, 2%);
-  --dark-color-background-support: hsl(0, 0%, 5%);
-  --dark-color-primary: hsl(14, 80%, 64%);
-  --dark-color-secondary: hsl(195, 80%, 10%);
-  --dark-color-secondary-support: hsl(195, 44%, 4%);
-  --dark-color-accent: hsl(14, 80%, 70%);
+  --color-text: hsl(0, 0%, 98%);
+  --color-background: hsl(0, 0%, 2%);
+  --color-background-support: hsl(0, 0%, 5%);
+  --color-primary: hsl(14, 80%, 64%);
+  --color-secondary: hsl(195, 80%, 10%);
+  --color-secondary-support: hsl(195, 44%, 4%);
+  --color-accent: hsl(14, 80%, 70%);
 }
 
 body {
   font-family: var(--font-text);
   background-color: var(--color-background);
   color: var(--color-text);
+  transition:
+    background-color 0.5s,
+    color 0.5s;
 }
 
 h1,

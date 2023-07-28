@@ -1,3 +1,5 @@
+@import url(./switchButton.css);
+
 /* SIDEBAR STYLE */
 .sidebar {
   position: fixed;
@@ -7,7 +9,7 @@
   align-items: flex-start;
   width: 15rem;
   height: 100%;
-  padding: 2.5rem 0.625rem 1.875rem 0.625rem;
+  padding: 0.625rem;
   border-right: 1px solid var(--color--text);
   background-color: var(--color-primary);
 
@@ -101,6 +103,19 @@
   display: none;
 }
 
+.sidebar__footer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.sidebar__footer__logo {
+  display: none;
+}
+
 /* SIDEBAR MEDIA QUERIES */
 @media screen and (max-width: 57.5rem) {
   .sidebar {
@@ -124,6 +139,34 @@
   .sidebar__nav__link__text {
     opacity: 0;
     visibility: hidden;
+  }
+
+  .sidebar__footer {
+    right: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 0;
+
+    transition: all 0.2s ease-in-out;
+  }
+
+  .sidebar__footer__copyright {
+    display: none;
+  }
+
+  .sidebar__footer__logo {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+
+    & span {
+      color: var(--color--text);
+    }
   }
 }
 
