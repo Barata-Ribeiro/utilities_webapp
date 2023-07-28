@@ -2,6 +2,7 @@
 @import url('./global/fonts.css');
 @import url('./components/sidenav.css');
 @import url('./components/forms.css');
+@import url('./paths/calculator.css');
 @import url('./components/loading.css');
 @import url('./styleguide/mainstyleguide.css');
 @import url('./paths/404.css');

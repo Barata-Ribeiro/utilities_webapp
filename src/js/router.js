@@ -35,6 +35,12 @@ class AppRouter {
         description: 'This is the styleguide page',
         Utility: null,
       },
+      '/utilities/calculator': {
+        route: '/routes/utilities/calculator.html',
+        title: `Calculator | ${this.urlPageTitle}`,
+        description: 'This is the calculator page',
+        Utility: null,
+      },
       '/utilities/charactercounter': {
         route: '/routes/utilities/characterCounter.html',
         title: `Character Counter | ${this.urlPageTitle}`,
