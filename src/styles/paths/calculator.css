@@ -25,5 +25,11 @@
 }
 
 .form__calculator-result {
+  display: grid;
+  text-align: right;
   color: var(--color-primary);
+}
+
+.calculator-result__total {
+  align-self: end;
 }

@@ -1,11 +1,17 @@
+// Converters
 import TemperatureConverter from './modules/converters/tempConverter';
 import LengthConverter from './modules/converters/lengthConverter';
 import MassConverter from './modules/converters/massConverter';
 import SpeedConverter from './modules/converters/speedConverter';
 import TimeConverter from './modules/converters/timeConverter';
+
+// Calculators
 import BmiCalculator from './modules/calculators/bmiCalculator';
+
+// Utilities
 import CharacterCounter from './modules/utilities/characterCounter';
 import PasswordGenerator from './modules/utilities/passwordGenerator';
+import Calculator from './modules/utilities/calculator';
 
 class AppRouter {
   constructor() {
@@ -39,7 +45,7 @@ class AppRouter {
         route: '/routes/utilities/calculator.html',
         title: `Calculator | ${this.urlPageTitle}`,
         description: 'This is the calculator page',
-        Utility: null,
+        Utility: Calculator,
       },
       '/utilities/charactercounter': {
         route: '/routes/utilities/characterCounter.html',
