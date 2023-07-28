@@ -1,18 +1,3 @@
-// Converters
-import TemperatureConverter from './modules/converters/tempConverter';
-import LengthConverter from './modules/converters/lengthConverter';
-import MassConverter from './modules/converters/massConverter';
-import SpeedConverter from './modules/converters/speedConverter';
-import TimeConverter from './modules/converters/timeConverter';
-
-// Calculators
-import BmiCalculator from './modules/calculators/bmiCalculator';
-
-// Utilities
-import CharacterCounter from './modules/utilities/characterCounter';
-import PasswordGenerator from './modules/utilities/passwordGenerator';
-import Calculator from './modules/utilities/calculator';
-
 class AppRouter {
   constructor() {
     this.urlPageTitle = 'Utilities App';
@@ -45,55 +30,55 @@ class AppRouter {
         route: '/routes/utilities/calculator.html',
         title: `Calculator | ${this.urlPageTitle}`,
         description: 'This is the calculator page',
-        Utility: Calculator,
+        Utility: () => import('./modules/utilities/calculator'),
       },
       '/utilities/charactercounter': {
         route: '/routes/utilities/characterCounter.html',
         title: `Character Counter | ${this.urlPageTitle}`,
         description: 'This is the character counter page',
-        Utility: CharacterCounter,
+        Utility: () => import('./modules/utilities/characterCounter'),
       },
       '/utilities/passwordgenerator': {
         route: '/routes/utilities/passwordGenerator.html',
         title: `Password Generator | ${this.urlPageTitle}`,
         description: 'This is the password generator page',
-        Utility: PasswordGenerator,
+        Utility: () => import('./modules/utilities/passwordGenerator'),
       },
       '/calculators/bmi': {
         route: '/routes/calculators/bmi.html',
         title: `BMI | ${this.urlPageTitle}`,
         description: 'This is the bmi calculator page',
-        Utility: BmiCalculator,
+        Utility: () => import('./modules/calculators/bmiCalculator'),
       },
       '/converters/temperature': {
         route: '/routes/converters/temperatureConverter.html',
         title: `Temperature Converter | ${this.urlPageTitle}`,
         description: 'This is the temperature converter page',
-        Utility: TemperatureConverter,
+        Utility: () => import('./modules/converters/tempConverter'),
       },
       '/converters/length': {
         route: '/routes/converters/lengthConverter.html',
         title: `Length Converter | ${this.urlPageTitle}`,
         description: 'This is the length converter page',
-        Utility: LengthConverter,
+        Utility: () => import('./modules/converters/lengthConverter'),
       },
       '/converters/mass': {
         route: '/routes/converters/massConverter.html',
         title: `Mass Converter | ${this.urlPageTitle}`,
         description: 'This is the mass converter page',
-        Utility: MassConverter,
+        Utility: () => import('./modules/converters/massConverter'),
       },
       '/converters/speed': {
         route: '/routes/converters/speedConverter.html',
         title: `Speed Converter | ${this.urlPageTitle}`,
         description: 'This is the speed converter page',
-        Utility: SpeedConverter,
+        Utility: () => import('./modules/converters/speedConverter'),
       },
       '/converters/time': {
         route: '/routes/converters/timeConverter.html',
         title: `Time Converter | ${this.urlPageTitle}`,
         description: 'This is the time converter page',
-        Utility: TimeConverter,
+        Utility: () => import('./modules/converters/timeConverter'),
       },
       // Other routes go here...
     };
@@ -143,7 +128,12 @@ class AppRouter {
     document.querySelector('#app #content').innerHTML = html;
 
     // Initialize utility if utility class is defined in the route
-    if (route.Utility) this.currentUtility = new route.Utility();
+    if (route.Utility) {
+      route.Utility().then((UtilityModule) => {
+        const UtilityClass = UtilityModule.default;
+        this.currentUtility = new UtilityClass();
+      });
+    }
 
     document.title = route.title;
     document
