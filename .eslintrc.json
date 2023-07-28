@@ -29,8 +29,7 @@
       "error",
       {
         "devDependencies": true,
-        "optionalDependencies": false,
-        "peerDependencies": false
+        "dependencies": true
       }
     ],
     "class-methods-use-this": "off",
