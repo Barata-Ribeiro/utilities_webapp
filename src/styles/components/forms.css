@@ -23,7 +23,7 @@
   border: 0.0625rem solid var(--color-secondary);
   border-radius: 0.25rem;
   color: var(--color-text);
-  background-color: var(--color-background);
+  background-color: var(--color-background-support);
   transition: border-color 0.3s;
 
   &:focus {
@@ -44,7 +44,7 @@
   border: 0.0625rem solid var(--color-secondary);
   border-radius: 0.25rem;
   color: var(--color-text);
-  background-color: var(--color-background);
+  background-color: var(--color-background-support);
   transition: border-color 0.3s;
   width: 1.5rem;
   height: 1.5rem;

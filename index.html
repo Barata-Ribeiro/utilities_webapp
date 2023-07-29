@@ -140,8 +140,10 @@
 
           <p class="sidebar__footer__copyright">
             <script>
-              document.write(new Date().getFullYear());
-              document.write(' © barata &lt;/&gt; ribeiro');
+              var copyright = document.querySelector(
+                '.sidebar__footer__copyright',
+              );
+              copyright.textContent = `${new Date().getFullYear()} © barata </> ribeiro`;
             </script>
           </p>
         </footer>
@@ -153,9 +155,22 @@
         <span>Menu</span>
       </button>
       <nav class="hamburger__menu__nav">
-        <button class="hamburger__menu__button__close">
-          <span><i class="ri-close-line"></i></span>
-        </button>
+        <div class="close-and-checkbox__wrapper">
+          <label class="theme-switch">
+            <input type="checkbox" id="theme-switch__checkbox" />
+            <span class="theme-switch__slider theme-switch__slider--round">
+              <i id="light-mode-icon" class="ri-sun-fill"></i>
+              <i
+                id="dark-mode-icon"
+                class="ri-moon-clear-fill theme-switch__icon--hidden"
+              ></i>
+            </span>
+          </label>
+
+          <button class="hamburger__menu__button__close">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
 
         <a class="hamburger__menu__nav__link" href="/">
           <span class="hamburger__menu__nav__link__wrapper">

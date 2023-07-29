@@ -1,12 +1,19 @@
 class ThemeSwitcher {
   constructor() {
-    // Get the system's theme
-    this.prefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)',
-    ).matches;
+    // Get the user's saved theme or the system's theme
+    const savedTheme = localStorage.getItem('theme');
+    this.prefersDark = savedTheme
+      ? savedTheme === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    this.setupEventListeners();
+  }
+
+  // Set the theme and save it to localStorage
+  setTheme(isDark) {
+    this.prefersDark = isDark;
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
     this.toggleTheme();
-    this.initialPos();
-    this.EventListener();
   }
 
   // Set the initial theme based on system theme
@@ -17,18 +24,35 @@ class ThemeSwitcher {
 
   // Set the switch initial position based on the initial theme
   initialPos() {
-    document.getElementById('theme-switch__checkbox').checked =
-      this.prefersDark;
+    this.checkboxes.forEach((checkbox) => {
+      // eslint-disable-next-line no-param-reassign
+      checkbox.checked = this.prefersDark;
+    });
   }
 
   // Listen for a change
   EventListener() {
-    document
-      .getElementById('theme-switch__checkbox')
-      .addEventListener('change', (e) => {
-        document.body.classList.toggle('dark-theme', e.target.checked);
-        document.body.classList.toggle('light-theme', !e.target.checked);
-      });
+    this.checkboxes.forEach((outerCheckbox) =>
+      outerCheckbox.addEventListener('change', (e) => {
+        const { checked } = e.target;
+        this.checkboxes.forEach((innerCheckbox) => {
+          if (innerCheckbox !== outerCheckbox) {
+            // eslint-disable-next-line no-param-reassign
+            innerCheckbox.checked = checked;
+          }
+        });
+        this.setTheme(checked);
+      }),
+    );
+  }
+
+  setupEventListeners() {
+    this.checkboxes = Array.from(
+      document.querySelectorAll('.theme-switch input[type="checkbox"]'),
+    );
+    this.toggleTheme();
+    this.initialPos();
+    this.EventListener();
   }
 }
 
