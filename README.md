@@ -34,7 +34,7 @@ git clone <https://github.com/Barata-Ribeiro/utilities_webapp.git>
 2. Install dependencies:
 
 ```bash
-cd utilities_web
+cd utilities_webapp
 npm install
 ```
 
