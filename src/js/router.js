@@ -44,12 +44,6 @@ class AppRouter {
         description: 'This is the password generator page',
         Utility: () => import('./modules/utilities/passwordGenerator'),
       },
-      '/calculators/bmi': {
-        route: '/routes/calculators/bmi.html',
-        title: `BMI | ${this.urlPageTitle}`,
-        description: 'This is the bmi calculator page',
-        Utility: () => import('./modules/calculators/bmiCalculator'),
-      },
       '/converters/temperature': {
         route: '/routes/converters/temperatureConverter.html',
         title: `Temperature Converter | ${this.urlPageTitle}`,
@@ -79,6 +73,18 @@ class AppRouter {
         title: `Time Converter | ${this.urlPageTitle}`,
         description: 'This is the time converter page',
         Utility: () => import('./modules/converters/timeConverter'),
+      },
+      '/calculators/bmi': {
+        route: '/routes/calculators/bmi.html',
+        title: `BMI | ${this.urlPageTitle}`,
+        description: 'This is the bmi calculator page',
+        Utility: () => import('./modules/calculators/bmiCalculator'),
+      },
+      '/calculators/ruleofthree': {
+        route: '/routes/calculators/ruleOfThree.html',
+        title: `Rule of Three | ${this.urlPageTitle}`,
+        description: 'This is the rule of three calculator page',
+        Utility: () => import('./modules/calculators/ruleofThree'),
       },
       // Other routes go here...
     };

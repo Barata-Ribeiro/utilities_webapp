@@ -169,6 +169,75 @@ textarea.form__input {
   }
 }
 
+/* RULE OF THREE FORM */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.ruleofthree__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: max-content;
+}
+
+.ruleofthree__title {
+  font-size: 2rem;
+  text-align: center;
+  place-self: center;
+  margin: 1rem 0;
+}
+
+.group__ruleofthree {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: first baseline;
+
+  & p {
+    color: var(--color-text);
+    font-size: 1.25rem;
+    line-height: 1;
+    width: 100%;
+    padding: 0.25rem 2rem;
+    background-color: var(--color-secondary-support);
+  }
+}
+
+.subgroup__ruleofthree {
+  display: flex;
+  flex-direction: column;
+
+  & button {
+    align-self: flex-end;
+
+    &:disabled {
+      opacity: 0.5;
+      background-color: var(--color-background-support);
+      cursor: not-allowed;
+    }
+  }
+}
+
+.ruleofthree__error {
+  display: none;
+  place-self: center;
+  text-align: center;
+  color: red;
+  font-size: 1.25rem;
+  line-height: 1;
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.25rem 0;
+  background-color: var(--color-secondary-support);
+}
+
 @media screen and (max-width: 48rem) {
   .form__label {
     font-size: 1rem;
@@ -180,5 +249,43 @@ textarea.form__input {
 
   .form__input--checkbox {
     font-size: 0.875rem;
+  }
+
+  .ruleofthree__wrapper {
+    flex-direction: column;
+  }
+
+  #ruleofthree-calc {
+    margin-inline: auto;
+    max-width: max-content;
+  }
+
+  .group__ruleofthree {
+    flex-direction: column;
+
+    input {
+      margin: 0;
+    }
+
+    p {
+      text-align: center;
+    }
+  }
+
+  .subgroup__ruleofthree {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      margin-top: 1rem;
+      margin-inline: auto;
+      align-self: initial;
+
+      &:disabled {
+        opacity: 0.5;
+        background-color: var(--color-background-support);
+        cursor: not-allowed;
+      }
+    }
   }
 }
