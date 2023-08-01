@@ -22,15 +22,24 @@
     </noscript>
     <div id="app">
       <!-- SIDEBAR -->
-      <aside class="sidebar">
+      <aside class="sidebar" role="complementary">
         <header class="sidebar__header">
-          <img class="sidebar__header__logo" src="..." alt="Logo" />
+          <img
+            class="sidebar__header__logo"
+            src="..."
+            alt="Logo of the web application"
+          />
         </header>
 
-        <nav class="sidebar__nav"></nav>
+        <nav
+          class="sidebar__nav"
+          role="navigation"
+          aria-label="Sidebar Navigation"
+        ></nav>
 
         <footer class="sidebar__footer">
-          <label class="theme-switch">
+          <label class="theme-switch" for="theme-switch__checkbox"
+            ><p class="visually-hidden">Toggle Theme</p>
             <input type="checkbox" id="theme-switch__checkbox" />
             <span class="theme-switch__slider theme-switch__slider--round">
               <i id="light-mode-icon" class="ri-sun-fill"></i>
@@ -46,6 +55,7 @@
             href="https://barataribeiro.com/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Visit developer's website"
           >
             barata<span>&#60;/&#62;</span>ribeiro
           </a>
@@ -62,13 +72,18 @@
       </aside>
 
       <!-- BURGER MENU -->
-      <button class="hamburger__menu__button">
+      <button class="hamburger__menu__button" aria-label="Open menu">
         <i class="ri-menu-line"></i>
         <span>Menu</span>
       </button>
-      <nav class="hamburger__menu__nav">
+      <nav
+        class="hamburger__menu__nav"
+        role="navigation"
+        aria-label="Mobile Navigation"
+      >
         <div class="close-and-checkbox__wrapper">
-          <label class="theme-switch">
+          <label class="theme-switch" for="theme-switch__checkbox"
+            ><p class="visually-hidden">Toggle Theme</p>
             <input type="checkbox" id="theme-switch__checkbox" />
             <span class="theme-switch__slider theme-switch__slider--round">
               <i id="light-mode-icon" class="ri-sun-fill"></i>
@@ -79,7 +94,10 @@
             </span>
           </label>
 
-          <button class="hamburger__menu__button__close">
+          <button
+            class="hamburger__menu__button__close"
+            aria-label="Close menu"
+          >
             <i class="ri-close-line"></i>
           </button>
         </div>
@@ -87,7 +105,7 @@
       </nav>
 
       <!-- CONTENT -->
-      <main class="main" id="content"></main>
+      <main class="main" id="content" role="main"></main>
     </div>
     <script type="module" src="/src/js/main.js"></script>
   </body>

@@ -1,9 +1,12 @@
 class Sidebar {
   constructor() {
     this.menuMobileBtn = document.querySelector('.hamburger__menu__button');
+    this.menuMobileBtn.setAttribute('role', 'button');
     this.menuMobileBtnClose = document.querySelector(
       '.hamburger__menu__button__close',
     );
+    this.menuMobileBtnClose.setAttribute('role', 'button');
+
     this.menuMobile = document.querySelector('.hamburger__menu__nav');
     this.sidebarNav = document.querySelector('.sidebar__nav');
 
@@ -163,6 +166,16 @@ class Sidebar {
       ? 'hamburger__menu__nav__link'
       : 'sidebar__nav__link';
     a.href = link.href;
+
+    // Add keyboard event for opening links
+    a.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        window.location.href = link.href;
+      }
+    });
+
+    // Add a tabindex attribute to make the elements focusable.
+    a.setAttribute('tabindex', 0);
 
     const spanWrapper = document.createElement('span');
     spanWrapper.className = isHamburgerMenu
