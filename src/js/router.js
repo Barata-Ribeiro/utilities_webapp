@@ -44,6 +44,12 @@ class AppRouter {
         description: 'This is the password generator page',
         Utility: () => import('./modules/utilities/passwordGenerator'),
       },
+      '/utilities/roman_converter': {
+        route: '/routes/utilities/romanConverter.html',
+        title: `Roman Converter | ${this.urlPageTitle}`,
+        description: 'This is the roman numeral converter page',
+        Utility: () => import('./modules/utilities/romanConverter'),
+      },
       '/converters/temperature': {
         route: '/routes/converters/temperatureConverter.html',
         title: `Temperature Converter | ${this.urlPageTitle}`,

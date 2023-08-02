@@ -44,6 +44,11 @@ class Sidebar {
             icon: 'ri-lock-password-line',
             href: '/utilities/passwordgenerator',
           },
+          {
+            name: 'Roman Converter',
+            icon: 'ri-swap-box-line',
+            href: '/utilities/roman_converter',
+          },
         ],
       },
       {
