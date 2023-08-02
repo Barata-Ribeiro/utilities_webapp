@@ -244,7 +244,8 @@ textarea.form__input {
   }
 }
 
-.ruleofthree__error {
+.ruleofthree__error,
+.roman-converter__error {
   display: none;
   place-self: center;
   text-align: center;

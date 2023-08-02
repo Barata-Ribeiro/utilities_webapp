@@ -6,6 +6,8 @@ class RomanConverter {
     this.toArabicBtn = document.querySelector('#convert_to_arabic');
     this.toRomanBtn = document.querySelector('#convert_to_roman');
 
+    this.elementError = document.querySelector('.roman-converter__error');
+
     this.romanNumerals = [
       'M',
       'CM',
@@ -59,13 +61,42 @@ class RomanConverter {
   }
 
   handleRomanButtonClick() {
-    const arabic = this.arabicToRoman(Number(this.arabicInput.value));
-    this.romanInput.value = arabic;
+    // Check if the Arabic input string contains only digits
+    if (!/^\d+$/.test(this.arabicInput.value)) {
+      this.elementError.style.display = 'block';
+      this.elementError.textContent = 'Please enter a valid Arabic numeral.';
+      return;
+    }
+
+    if (Number(this.arabicInput.value) > 3888) {
+      this.elementError.style.display = 'block';
+      this.elementError.textContent = "You can't convert more than 3,888.";
+      return;
+    }
+
+    this.elementError.style.display = 'none';
+    this.elementError.textContent = '';
+
+    const roman = this.arabicToRoman(Number(this.arabicInput.value));
+    this.romanInput.value = roman;
   }
 
   handleArabicButtonClick() {
-    const roman = this.romanToArabic(this.romanInput.value);
-    this.arabicInput.value = roman;
+    // Check if the Roman input string only contains valid Roman numerals
+    if (!/^[IVXLCDMivxlcdm]+$/.test(this.romanInput.value)) {
+      this.elementError.style.display = 'block';
+      this.elementError.textContent = 'Please enter a valid Roman numeral.';
+      return;
+    }
+
+    this.elementError.style.display = 'none';
+    this.elementError.textContent = '';
+
+    // Convert the Roman input string to uppercase
+    const romanUpper = this.romanInput.value.toUpperCase();
+
+    const arabic = this.romanToArabic(romanUpper);
+    this.arabicInput.value = arabic;
   }
 
   addEventListeners() {
