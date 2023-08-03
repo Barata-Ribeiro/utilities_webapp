@@ -72,7 +72,13 @@
       </aside>
 
       <!-- BURGER MENU -->
-      <button class="hamburger__menu__button" aria-label="Open menu">
+      <button
+        class="hamburger__menu__button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="menu"
+        aria-haspopup="true"
+      >
         <i class="ri-menu-line"></i>
         <span>Menu</span>
       </button>
@@ -97,6 +103,8 @@
           <button
             class="hamburger__menu__button__close"
             aria-label="Close menu"
+            aria-expanded="true"
+            aria-controls="menu"
           >
             <i class="ri-close-line"></i>
           </button>

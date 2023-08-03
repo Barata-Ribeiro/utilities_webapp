@@ -120,12 +120,19 @@ class Sidebar {
 
     this.menuMobileBtn.addEventListener('click', async () => {
       this.menuMobile.classList.add('active');
+      this.menuMobileBtn.setAttribute('aria-expanded', 'true');
+      this.menuMobileBtnClose.setAttribute('aria-expanded', 'true');
+      this.menuMobileBtnClose.setAttribute('aria-label', 'Close menu');
+
       const { default: ThemeSwitcher } = await import('./themeSwitcher');
       this.themeSwitcher = new ThemeSwitcher();
     });
 
     this.menuMobileBtnClose.addEventListener('click', () => {
       this.menuMobile.classList.remove('active');
+      this.menuMobileBtn.setAttribute('aria-expanded', 'false');
+      this.menuMobileBtnClose.setAttribute('aria-expanded', 'false');
+      this.menuMobileBtn.setAttribute('aria-label', 'Open menu');
     });
   }
 
@@ -171,13 +178,6 @@ class Sidebar {
       ? 'hamburger__menu__nav__link'
       : 'sidebar__nav__link';
     a.href = link.href;
-
-    // Add keyboard event for opening links
-    a.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter') {
-        window.location.href = link.href;
-      }
-    });
 
     // Add a tabindex attribute to make the elements focusable.
     a.setAttribute('tabindex', 0);
