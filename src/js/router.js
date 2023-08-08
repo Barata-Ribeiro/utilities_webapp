@@ -18,7 +18,7 @@ class AppRouter {
         route: '/routes/home.html',
         title: `Home | ${this.urlPageTitle}`,
         description: 'This is the home page',
-        Utility: null,
+        Utility: () => import('./modules/home'),
       },
       '/styleguide': {
         route: '/routes/styleguide.html',

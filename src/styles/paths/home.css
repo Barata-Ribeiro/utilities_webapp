@@ -1,0 +1,117 @@
+.home__container {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2em;
+  border-radius: 0.5rem;
+  background-color: var(--color-background-support);
+  /* box-shadow: 0 0.1875rem 0.625rem rgba(0, 0, 0, 0.1); */
+}
+
+.home__greeting,
+.home__info,
+.home__jokes,
+.home__footer {
+  padding: 1em;
+  border-radius: 0.25rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--color-secondary-support);
+}
+
+.home__greeting h1 {
+  font-size: 2.5em;
+  margin-bottom: 1em;
+}
+
+.home__greeting p {
+  font-size: 1.2em;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.home__info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.home__info-label {
+  font-weight: bold;
+}
+
+.home__info-data {
+  background-color: var(--color-secondary);
+  padding: 0.5em 1em;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+}
+
+.home__jokes h2 {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+.home__jokes-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.home__jokes-list li {
+  padding: 0.5em 0;
+  border-bottom: 1px solid var(--color-primary);
+}
+
+.home__jokes-list li:last-child {
+  border-bottom: none;
+}
+
+.home__footer {
+  text-align: center;
+}
+
+/* When data is loading or there's an error */
+.home__info-data:empty,
+.home__jokes-list:empty {
+  color: var(--color-accent);
+}
+
+/* Existing styles ... */
+
+/* Media Queries for Mobile Devices */
+
+@media (max-width: 768px) {
+  .home__container {
+    padding: 1em;
+  }
+
+  .home__greeting h1 {
+    font-size: 2em;
+  }
+
+  .home__greeting p {
+    font-size: 1em;
+  }
+
+  .home__info-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .home__info-label {
+    margin-bottom: 0.5em;
+  }
+
+  .home__info-data {
+    width: 100%;
+    text-align: center;
+  }
+
+  .home__jokes h2 {
+    font-size: 1.5em;
+  }
+
+  .home__jokes-list li {
+    padding: 0.5em 0;
+    font-size: 0.9em;
+  }
+}
