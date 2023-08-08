@@ -1,0 +1,168 @@
+/* Styles for the Guide */
+
+/* General Styleguide Styles */
+.styleguide {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.styleguide__title {
+  font-size: 1rem;
+  font-weight: normal;
+  text-align: center;
+  margin: 2.5rem;
+}
+
+.styleguide__article {
+  margin-bottom: 1.25rem;
+}
+
+.styleguide__section-title {
+  font-size: 1rem;
+  width: calc(50% - 3.125rem);
+  float: left;
+  text-align: right;
+  padding-right: 3.125rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+}
+
+.styleguide__styles {
+  width: 50%;
+  float: left;
+}
+
+.styleguide__article::after,
+.styleguide__article::before {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* Colors */
+
+/* Primary Colors */
+.styleguide__color--primary-1 {
+  background: var(--color-primary);
+}
+
+.styleguide__color--primary-2 {
+  background: var(--color-secondary);
+}
+
+.styleguide__color--primary-3 {
+  background: var(--color-accent);
+}
+
+/* Secondary Colors */
+.styleguide__color--secondary-1 {
+  background: var(--color-text);
+}
+
+.styleguide__color--secondary-2 {
+  background: var(--color-background);
+}
+
+/* Typography */
+.styleguide__text--title-1 {
+  font-family: var(--font-title);
+  font-size: 3rem;
+  letter-spacing: -1px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.styleguide__text--title-2 {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  letter-spacing: -2px;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1;
+}
+
+.styleguide__text-block--body-1 p {
+  font-family: var(--font-text);
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: normal;
+  margin-bottom: 1rem;
+}
+
+.styleguide__text-block--body-2 p {
+  font-family: var(--font-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* Buttons and Links */
+.styleguide__button--primary a {
+  font-family: var(--font-title);
+  padding: 1rem 2rem;
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.styleguide__button--secondary a {
+  font-family: var(--font-title);
+  padding: 1rem 2rem;
+  background-color: var(--color-secondary);
+  color: var(--color-primary);
+  text-decoration: none;
+  border-radius: 0.5rem;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.styleguide__button--primary a:hover,
+.styleguide__button--secondary a:hover {
+  background-color: var(--color-accent);
+}
+
+.styleguide__link a {
+  font-family: var(--font-text);
+  color: var(--color-primary);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.styleguide__link a:hover {
+  color: var(--color-accent);
+}
+
+/* Form elements */
+.styleguide__input label,
+.styleguide__textarea label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.styleguide__input input,
+.styleguide__textarea textarea {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid var(--color-secondary);
+  border-radius: 0.25rem;
+}
+
+.styleguide__submit-button button {
+  font-family: var(--font-title);
+  padding: 1rem 2rem;
+  background-color: var(--color-primary);
+  color: var(--color-text);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.styleguide__submit-button button:hover {
+  background-color: var(--color-accent);
+}
