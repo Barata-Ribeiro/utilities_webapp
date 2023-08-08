@@ -38,6 +38,12 @@ class Sidebar {
         type: 'link',
       },
       {
+        name: 'Style Guide',
+        icon: 'ri-palette-line',
+        href: '/styleguide',
+        type: 'link',
+      },
+      {
         name: 'Utilities',
         type: 'header',
         links: [
