@@ -124,7 +124,10 @@ class AppRouter {
     const html = await this.getHtmlContent(route);
 
     // Remove event listeners for current utility if it exists
-    if (this.currentUtility) {
+    if (
+      this.currentUtility &&
+      typeof this.currentUtility.removeEventListeners === 'function'
+    ) {
       this.currentUtility.removeEventListeners();
       this.currentUtility = null;
     }
