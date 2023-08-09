@@ -2,94 +2,106 @@ class AppRouter {
   constructor() {
     this.urlPageTitle = 'Utilities App';
     this.currentUtility = null;
+
+    // Loading
     this.loadingHTML = `
       <div id="loading" class="loading__container">
         <div class="loading__loader"></div>
       </div>
     `;
+
+    // Routes
     this.urlRoutes = {
       404: {
         route: '/routes/404.html',
         title: `404 | ${this.urlPageTitle}`,
-        description: 'Page not found',
+        description: 'Oops! The page you’re looking for cannot be found.',
         Utility: null,
       },
       '/': {
         route: '/routes/home.html',
         title: `Home | ${this.urlPageTitle}`,
-        description: 'This is the home page',
+        description:
+          'Welcome to our homepage. Explore our range of tools and utilities.',
         Utility: () => import('./modules/home'),
       },
       '/styleguide': {
         route: '/routes/styleguide.html',
         title: `Styleguide | ${this.urlPageTitle}`,
-        description: 'This is the styleguide page',
+        description: 'Discover our design principles and visual guidelines.',
         Utility: null,
       },
       '/utilities/calculator': {
         route: '/routes/utilities/calculator.html',
         title: `Calculator | ${this.urlPageTitle}`,
-        description: 'This is the calculator page',
+        description:
+          'Solve mathematical problems with our easy-to-use calculator.',
         Utility: () => import('./modules/utilities/calculator'),
       },
       '/utilities/charactercounter': {
         route: '/routes/utilities/characterCounter.html',
         title: `Character Counter | ${this.urlPageTitle}`,
-        description: 'This is the character counter page',
+        description:
+          'Count characters, words, and paragraphs for precise content creation.',
         Utility: () => import('./modules/utilities/characterCounter'),
       },
       '/utilities/passwordgenerator': {
         route: '/routes/utilities/passwordGenerator.html',
         title: `Password Generator | ${this.urlPageTitle}`,
-        description: 'This is the password generator page',
+        description:
+          'Create strong, secure passwords with our advanced generator tool.',
         Utility: () => import('./modules/utilities/passwordGenerator'),
       },
       '/utilities/roman_converter': {
         route: '/routes/utilities/romanConverter.html',
         title: `Roman Converter | ${this.urlPageTitle}`,
-        description: 'This is the roman numeral converter page',
+        description: 'Convert numbers to and from Roman numerals with ease.',
         Utility: () => import('./modules/utilities/romanConverter'),
       },
       '/converters/temperature': {
         route: '/routes/converters/temperatureConverter.html',
         title: `Temperature Converter | ${this.urlPageTitle}`,
-        description: 'This is the temperature converter page',
+        description:
+          'Convert temperatures between Celsius, Fahrenheit, and Kelvin.',
         Utility: () => import('./modules/converters/tempConverter'),
       },
       '/converters/length': {
         route: '/routes/converters/lengthConverter.html',
         title: `Length Converter | ${this.urlPageTitle}`,
-        description: 'This is the length converter page',
+        description: 'Convert measurements of length across various units.',
         Utility: () => import('./modules/converters/lengthConverter'),
       },
       '/converters/mass': {
         route: '/routes/converters/massConverter.html',
         title: `Mass Converter | ${this.urlPageTitle}`,
-        description: 'This is the mass converter page',
+        description: 'Effortlessly convert between different mass units.',
         Utility: () => import('./modules/converters/massConverter'),
       },
       '/converters/speed': {
         route: '/routes/converters/speedConverter.html',
         title: `Speed Converter | ${this.urlPageTitle}`,
-        description: 'This is the speed converter page',
+        description:
+          'Convert speed measurements across miles per hour, kilometers per hour, and more.',
         Utility: () => import('./modules/converters/speedConverter'),
       },
       '/converters/time': {
         route: '/routes/converters/timeConverter.html',
         title: `Time Converter | ${this.urlPageTitle}`,
-        description: 'This is the time converter page',
+        description: 'Easily convert between various time units.',
         Utility: () => import('./modules/converters/timeConverter'),
       },
       '/calculators/bmi': {
         route: '/routes/calculators/bmi.html',
-        title: `BMI | ${this.urlPageTitle}`,
-        description: 'This is the bmi calculator page',
+        title: `BMI Calculator | ${this.urlPageTitle}`,
+        description:
+          'Determine your Body Mass Index and understand your health metrics.',
         Utility: () => import('./modules/calculators/bmiCalculator'),
       },
       '/calculators/ruleofthree': {
         route: '/routes/calculators/ruleOfThree.html',
         title: `Rule of Three | ${this.urlPageTitle}`,
-        description: 'This is the rule of three calculator page',
+        description:
+          'Calculate proportions quickly with the Rule of Three calculator.',
         Utility: () => import('./modules/calculators/ruleofThree'),
       },
       // Other routes go here...
@@ -109,6 +121,7 @@ class AppRouter {
     this.urlLocationHandler();
   }
 
+  // Gets the html content for the given route
   async getHtmlContent(route) {
     return await fetch(route.route).then((response) => response.text());
   }
@@ -132,14 +145,17 @@ class AppRouter {
       this.currentUtility = null;
     }
 
+    // Remove active class from all sidebar links
     const sidebarLinks = document.querySelectorAll('.sidebar__nav__link');
     sidebarLinks.forEach((link) => link.classList.remove('active-link'));
 
+    // Adds active class to the selected sidebar link
     const activeLink = [...sidebarLinks].find(
       (link) => link.pathname === location,
     );
     if (activeLink) activeLink.classList.add('active-link');
 
+    // Display the html content
     document.querySelector('#app #content').innerHTML = html;
 
     // Initialize utility if utility class is defined in the route
@@ -150,12 +166,14 @@ class AppRouter {
       });
     }
 
+    // Sets the Head title and meta description for the current route
     document.title = route.title;
     document
       .querySelector('meta[name="description"]')
       .setAttribute('content', route.description);
   }
 
+  // Handles the hamburger menu state and url routes
   hamburgerUrlRoute(event) {
     const linkElement = event.target.closest('.hamburger__menu__nav__link');
     if (!linkElement) return;
@@ -171,6 +189,7 @@ class AppRouter {
     this.urlLocationHandler();
   }
 
+  // Handles the url route
   urlRoute(event) {
     const linkElement = event.target.closest('.sidebar__nav__link');
     if (!linkElement) return;
