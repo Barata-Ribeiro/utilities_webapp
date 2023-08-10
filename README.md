@@ -6,7 +6,7 @@ The Utilities Web App is a single-page application built from scratch using vani
 
 ## 👨‍💻 Demo
 
-_TO BE ADDED_
+[Click here](https://utilities-webapp.vercel.app/) to see a live demo of the website.
 
 ## 🚀 Built With
 
@@ -43,6 +43,8 @@ npm install
 ```bash
 npm run dev
 ```
+
+Routes are available in the 'public' directory as regular HTML files.
 
 ## 🤝 Contributing
 
