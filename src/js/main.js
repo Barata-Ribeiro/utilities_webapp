@@ -7,9 +7,7 @@ import AppRouter from './router';
 import Sidebar from './modules/sidebar';
 import ThemeSwitcher from './modules/themeSwitcher';
 
+// Initialize the new instances
 (() => new Sidebar())();
-
-// The new instances
 (() => new AppRouter())();
-
 (() => new ThemeSwitcher())();

@@ -7,7 +7,7 @@ class RuleOfThree {
 
     this.buttonCopy = document.querySelector('#copy');
 
-    this.copyPassword = this.copyPassword.bind(this);
+    this.copyButton = this.copyButton.bind(this);
     this.updateResult = this.updateResult.bind(this);
 
     this.elementError = document.querySelector('.ruleofthree__error');
@@ -15,6 +15,7 @@ class RuleOfThree {
     this.addEventListeners();
   }
 
+  // Method to calculate the result of the rule of three
   calculate() {
     const a = this.elementA.value;
     const b = this.elementB.value;
@@ -25,19 +26,14 @@ class RuleOfThree {
     return result;
   }
 
-  async copyPassword(e) {
+  // Method to copy the result of the rule of three
+  async copyButton(e) {
     e.preventDefault();
     if (navigator.clipboard)
       await navigator.clipboard.writeText(this.elementX.value);
   }
 
-  addEventListeners() {
-    this.elementA.addEventListener('input', this.updateResult);
-    this.elementB.addEventListener('input', this.updateResult);
-    this.elementC.addEventListener('input', this.updateResult);
-    this.buttonCopy.addEventListener('click', this.copyPassword);
-  }
-
+  // Method to update the result of the rule of three
   updateResult() {
     if (
       this.elementA.value === '0' ||
@@ -59,11 +55,19 @@ class RuleOfThree {
     }
   }
 
+  // Add/Remove event listeners to the elements
+  addEventListeners() {
+    this.elementA.addEventListener('input', this.updateResult);
+    this.elementB.addEventListener('input', this.updateResult);
+    this.elementC.addEventListener('input', this.updateResult);
+    this.buttonCopy.addEventListener('click', this.copyButton);
+  }
+
   removeEventListeners() {
     this.elementA.removeEventListener('input', this.updateResult);
     this.elementB.removeEventListener('input', this.updateResult);
     this.elementC.removeEventListener('input', this.updateResult);
-    this.buttonCopy.removeEventListener('click', this.copyPassword);
+    this.buttonCopy.removeEventListener('click', this.copyButton);
   }
 }
 
