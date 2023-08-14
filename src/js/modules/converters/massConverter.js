@@ -1,6 +1,13 @@
 import Converter from './Converter';
 
+/**
+ * MassConverter class for converting between various mass units.
+ * @extends Converter
+ */
 class MassConverter extends Converter {
+  /**
+   * Constructs a new MassConverter.
+   */
   constructor() {
     const massUnits = {
       tonne: document.getElementById('tonne'),

@@ -1,6 +1,13 @@
 import Converter from './Converter';
 
+/**
+ * TimeConverter class for converting between various time units.
+ * @extends Converter
+ */
 class TimeConverter extends Converter {
+  /**
+   * Constructs a new TimeConverter.
+   */
   constructor() {
     const timeUnits = {
       nanosecond: document.getElementById('nanosecond'),

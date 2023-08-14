@@ -1,6 +1,13 @@
 import Converter from './Converter';
 
+/**
+ * TemperatureConverter class for converting between various temperature units.
+ * @extends Converter
+ */
 class TemperatureConverter extends Converter {
+  /**
+   * Constructs a new TemperatureConverter.
+   */
   constructor() {
     const temperatureUnits = {
       fahrenheit: document.getElementById('fahrenheit'),
@@ -28,6 +35,13 @@ class TemperatureConverter extends Converter {
     };
   }
 
+  /**
+   * Converts a given value from one temperature unit to another.
+   * @param {string} from - The unit to convert from.
+   * @param {string} to - The unit to convert to.
+   * @param {number} value - The value to convert.
+   * @returns {number} - The converted value.
+   */
   convertFromTo(from, to, value) {
     return this.conversionFactor[from][to](value);
   }

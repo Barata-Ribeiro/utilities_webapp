@@ -1,10 +1,24 @@
+/**
+ * Class to handle and display Body Mass Index (BMI) calculations.
+ */
 class BmiCalculator {
+  /**
+   * Initializes the class, setting up default properties and initial methods to run.
+   */
   constructor() {
+    /**
+     * @type {Object} Container for weight and height input elements.
+     * @property {HTMLInputElement} bmiWeight - Input element for weight.
+     * @property {HTMLInputElement} bmiHeight - Input element for height.
+     */
     this.bmiUnits = {
       bmiWeight: document.getElementById('bmiWeight'),
       bmiHeight: document.getElementById('bmiHeight'),
     };
 
+    /**
+     * @type {HTMLElement} Element to display the result of the BMI calculation.
+     */
     this.result = document.getElementById('bmiResult');
 
     this.handleCalculation = this.handleCalculation.bind(this);
@@ -12,6 +26,9 @@ class BmiCalculator {
     this.addEventListeners();
   }
 
+  /**
+   * Calculates and displays the BMI result based on the inputted weight and height.
+   */
   handleCalculation() {
     const weight = parseFloat(this.bmiUnits.bmiWeight.value);
     const height = parseFloat(this.bmiUnits.bmiHeight.value);
@@ -56,12 +73,18 @@ class BmiCalculator {
     }
   }
 
+  /**
+   * Add event listeners to the weight and height input elements.
+   */
   addEventListeners() {
     Object.keys(this.bmiUnits).forEach((key) => {
       this.bmiUnits[key].addEventListener('input', this.handleCalculation);
     });
   }
 
+  /**
+   * Remove event listeners from the weight and height input elements.
+   */
   removeEventListeners() {
     Object.keys(this.bmiUnits).forEach((key) => {
       this.bmiUnits[key].removeEventListener('input', this.handleCalculation);

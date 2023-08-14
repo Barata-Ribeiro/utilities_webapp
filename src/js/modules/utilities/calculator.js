@@ -1,31 +1,55 @@
 import { evaluate } from 'mathjs';
 
+/**
+ * Class to handle and display calculations entered in a textarea.
+ */
 class Calculator {
+  /**
+   * Initializes the class, setting up default properties and initial methods to run.
+   */
   constructor() {
+    /**
+     * @type {HTMLTextAreaElement} Text area for inputting calculations.
+     */
     this.calculator = document.querySelector('#calculator-textarea');
+
+    /**
+     * @type {HTMLElement} Element to display results of the calculations.
+     */
     this.calculatorResult = document.querySelector('#calculator-result');
 
     this.calculate = this.calculate.bind(this);
-
     this.calculator.value = localStorage.getItem('calculator') || '';
 
     this.addEventListeners();
     this.calculate();
   }
 
-  // Method to check if a value is a number
+  /**
+   * Check if a given value is a number.
+   * @param {*} value - The value to check.
+   * @returns {boolean} True if the value is a number, otherwise false.
+   */
   isNumber(value) {
     if (typeof value === 'number')
       return !Number.isNaN(value) && Number.isFinite(value);
     return false;
   }
 
-  // Method to round a number to 3 decimal places
+  /**
+   * Rounds a given number to up to 3 decimal places.
+   * @param {number} value - The number to round.
+   * @returns {number} The rounded number.
+   */
   roundNumber(value) {
     return Math.round(value * 1000) / 1000;
   }
 
-  // Method to check if parentheses are balanced
+  /**
+   * Check if a string has balanced parentheses.
+   * @param {string} value - The string to check.
+   * @returns {boolean} True if the parentheses in the string are balanced, otherwise false.
+   */
   isBalanced(value) {
     const stack = [];
     for (let i = 0; i < value.length; i += 1) {
@@ -39,7 +63,9 @@ class Calculator {
     return stack.length === 0;
   }
 
-  // Method to calculate the result
+  /**
+   * Calculate and display the result of the inputted calculations.
+   */
   calculate() {
     try {
       const validExpr =
@@ -78,7 +104,9 @@ class Calculator {
     this.copyToClipboard();
   }
 
-  // Method to allow saving total to clipboard
+  /**
+   * Enable copying the total calculation result to clipboard by clicking on it.
+   */
   copyToClipboard() {
     this.total = document.querySelector('.calculator-result__total');
 
@@ -94,10 +122,12 @@ class Calculator {
     }
   }
 
+  /** Add event listeners for the calculator textarea. */
   addEventListeners() {
     this.calculator.addEventListener('input', this.calculate);
   }
 
+  /** Remove the event listeners from the calculator textarea. */
   removeEventListeners() {
     this.calculator.removeEventListener('input', this.calculate);
 

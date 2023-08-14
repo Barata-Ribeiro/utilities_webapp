@@ -1,6 +1,13 @@
 import Converter from './Converter';
 
+/**
+ * LengthConverter class for converting between various length units.
+ * @extends Converter
+ */
 class LengthConverter extends Converter {
+  /**
+   * Constructs a new LengthConverter.
+   */
   constructor() {
     const lengthUnits = {
       kilometer: document.getElementById('kilometer'),

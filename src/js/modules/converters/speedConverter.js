@@ -1,6 +1,13 @@
 import Converter from './Converter';
 
+/**
+ * SpeedConverter class for converting between various speed units.
+ * @extends Converter
+ */
 class SpeedConverter extends Converter {
+  /**
+   * Constructs a new SpeedConverter.
+   */
   constructor() {
     const speedUnits = {
       milePerHour: document.getElementById('milePerHour'),
