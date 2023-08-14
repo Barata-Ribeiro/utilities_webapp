@@ -1,7 +1,10 @@
 /**
- * Represents the application router.
+ * Class that represents the application router.
  */
 class AppRouter {
+  /**
+   * Initializes the class, setting up default properties and initial methods to run.
+   */
   constructor() {
     /**
      * @property {string} urlPageTitle - The title prefix for all routes.

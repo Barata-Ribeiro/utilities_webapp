@@ -1,4 +1,7 @@
 class Sidebar {
+  /**
+   * Initializes the class, setting up default properties and initial methods to run.
+   */
   constructor() {
     /** @type {HTMLElement} Represents the button for opening mobile menu. */
     this.menuMobileBtn = document.querySelector('.hamburger__menu__button');

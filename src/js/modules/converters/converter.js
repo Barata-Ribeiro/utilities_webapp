@@ -3,6 +3,7 @@
  */
 class Converter {
   /**
+   * Initializes the class, setting up default properties and initial methods to run.
    * Creates a new Converter instance.
    * @param {Object} units - A collection of units with associated DOM elements for input.
    * @param {Object} conversionFactor - A matrix of conversion factors between units.

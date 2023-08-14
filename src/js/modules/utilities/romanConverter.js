@@ -1,13 +1,27 @@
+/**
+ * Class for converting between Roman and Arabic numerals.
+ */
 class RomanConverter {
+  /**
+   * Initializes the class, setting up default properties and initial methods to run.
+   */
   constructor() {
+    /** @type {HTMLElement} Input element for Roman numerals. */
     this.romanInput = document.querySelector('#roman-numerals');
+
+    /** @type {HTMLElement} Input element for Arabic numerals. */
     this.arabicInput = document.querySelector('#arabic-numerals');
 
+    /** @type {HTMLElement} Button to trigger conversion to Arabic. */
     this.toArabicBtn = document.querySelector('#convert_to_arabic');
+
+    /** @type {HTMLElement} Button to trigger conversion to Roman. */
     this.toRomanBtn = document.querySelector('#convert_to_roman');
 
+    /** @type {HTMLElement} Display element for error messages. */
     this.elementError = document.querySelector('.roman-converter__error');
 
+    /** @type {string[]} Array of Roman numerals from largest to smallest. */
     this.romanNumerals = [
       'M',
       'CM',
@@ -24,6 +38,7 @@ class RomanConverter {
       'I',
     ];
 
+    /** @type {number[]} Array of Arabic numerals corresponding to the Roman numerals. */
     this.arabicNumerals = [
       1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1,
     ];
@@ -34,6 +49,12 @@ class RomanConverter {
     this.addEventListeners();
   }
 
+  /**
+   * Convert a Roman numeral string to its Arabic numeral equivalent.
+   *
+   * @param {string} romanStr - The Roman numeral string.
+   * @returns {number} - The corresponding Arabic numeral.
+   */
   romanToArabic(romanStr) {
     let num = 0;
     let i = 0;
@@ -47,6 +68,12 @@ class RomanConverter {
     return num;
   }
 
+  /**
+   * Convert an Arabic numeral to its Roman numeral equivalent.
+   *
+   * @param {number} arabicNum - The Arabic numeral.
+   * @returns {string} - The corresponding Roman numeral.
+   */
   arabicToRoman(arabicNum) {
     let roman = '';
     let i = 0;
@@ -60,6 +87,7 @@ class RomanConverter {
     return roman;
   }
 
+  /** Handle the conversion from Arabic to Roman when the corresponding button is clicked. */
   handleRomanButtonClick() {
     // Check if the Arabic input string contains only digits
     if (!/^\d+$/.test(this.arabicInput.value)) {
@@ -81,6 +109,7 @@ class RomanConverter {
     this.romanInput.value = roman;
   }
 
+  /** Handle the conversion from Roman to Arabic when the corresponding button is clicked. */
   handleArabicButtonClick() {
     // Check if the Roman input string only contains valid Roman numerals
     if (!/^[IVXLCDMivxlcdm]+$/.test(this.romanInput.value)) {
@@ -99,11 +128,13 @@ class RomanConverter {
     this.arabicInput.value = arabic;
   }
 
+  /** Add event listeners to trigger conversions when buttons are clicked. */
   addEventListeners() {
     this.toArabicBtn.addEventListener('click', this.handleArabicButtonClick);
     this.toRomanBtn.addEventListener('click', this.handleRomanButtonClick);
   }
 
+  /** Remove event listeners from the conversion buttons. */
   removeEventListeners() {
     this.toArabicBtn.removeEventListener('click', this.handleArabicButtonClick);
     this.toRomanBtn.removeEventListener('click', this.handleRomanButtonClick);
