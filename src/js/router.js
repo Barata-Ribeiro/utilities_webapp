@@ -1,16 +1,26 @@
+/**
+ * Represents the application router.
+ */
 class AppRouter {
   constructor() {
+    /**
+     * @property {string} urlPageTitle - The title prefix for all routes.
+     */
     this.urlPageTitle = 'Utilities App';
     this.currentUtility = null;
 
-    // Loading
+    /**
+     * @property {string} loadingHTML - The loading HTML content.
+     */
     this.loadingHTML = `
       <div id="loading" class="loading__container">
         <div class="loading__loader"></div>
       </div>
     `;
 
-    // Routes
+    /**
+     * @property {Object} urlRoutes - Mapping of routes to their details.
+     */
     this.urlRoutes = {
       404: {
         route: '/routes/404.html',
@@ -121,11 +131,19 @@ class AppRouter {
     this.urlLocationHandler();
   }
 
-  // Gets the html content for the given route
+  /**
+   * Fetches the HTML content for a given route.
+   *
+   * @param {Object} route - The route object.
+   * @returns {Promise<string>} The HTML content.
+   */
   async getHtmlContent(route) {
     return await fetch(route.route).then((response) => response.text());
   }
 
+  /**
+   * Handles URL changes and updates the content accordingly.
+   */
   async urlLocationHandler() {
     // Display loading page
     document.querySelector('#app #content').innerHTML = this.loadingHTML;
@@ -173,7 +191,11 @@ class AppRouter {
       .setAttribute('content', route.description);
   }
 
-  // Handles the hamburger menu state and url routes
+  /**
+   * Handles the state and routes of the hamburger menu.
+   *
+   * @param {Event} event - The click event.
+   */
   hamburgerUrlRoute(event) {
     const linkElement = event.target.closest('.hamburger__menu__nav__link');
     if (!linkElement) return;
@@ -189,7 +211,11 @@ class AppRouter {
     this.urlLocationHandler();
   }
 
-  // Handles the url route
+  /**
+   * Handles URL route changes via the sidebar.
+   *
+   * @param {Event} event - The click event.
+   */
   urlRoute(event) {
     const linkElement = event.target.closest('.sidebar__nav__link');
     if (!linkElement) return;

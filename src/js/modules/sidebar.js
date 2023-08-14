@@ -1,29 +1,30 @@
 class Sidebar {
   constructor() {
-    // Identify and initialize buttons for menu controls
+    /** @type {HTMLElement} Represents the button for opening mobile menu. */
     this.menuMobileBtn = document.querySelector('.hamburger__menu__button');
-    // set initial state
     this.menuMobileBtn.setAttribute('role', 'button');
     this.menuMobileBtn.setAttribute('aria-expanded', 'false');
     this.menuMobileBtn.setAttribute('aria-label', 'Open menu');
 
-    // Menu Mobile Button (to close menu)
+    /** @type {HTMLElement} Represents the button for closing mobile menu. */
     this.menuMobileBtnClose = document.querySelector(
       '.hamburger__menu__button__close',
     );
-    // set initial state
     this.menuMobileBtnClose.setAttribute('role', 'button');
     this.menuMobileBtnClose.setAttribute('aria-expanded', 'false');
     this.menuMobileBtnClose.setAttribute('aria-label', 'Close menu');
 
-    // Identify menu and sidebar navigation elements
+    /**
+     * @type {HTMLElement} Represents the mobile navigation container.
+     * @type {HTMLElement} Represents the sidebar navigation container.
+     */
     this.menuMobile = document.querySelector('.hamburger__menu__nav');
     this.sidebarNav = document.querySelector('.sidebar__nav');
 
-    // Identify container for menu links
+    /** @type {HTMLElement} Represents the container for mobile navigation links. */
     this.menuMobileLinks = document.querySelector('.hamburger__menu__links');
 
-    // The links in the menu
+    /** @type {Array} Represents navigation links configuration. */
     this.links = [
       {
         name: 'Home',
@@ -118,52 +119,31 @@ class Sidebar {
       },
     ];
 
-    // Set initial state for mobile or desktop layout
+    /** @type {boolean} Represents if the UI is in mobile layout. */
     this.isMobile = window.innerWidth <= 480;
     if (this.isMobile) this.init(this.menuMobile, true);
     else this.init(this.sidebarNav, false);
 
-    // Update layout on window resize
-    window.addEventListener('resize', () => {
-      const nowIsMobile = window.innerWidth <= 480;
-      if (nowIsMobile !== this.isMobile) {
-        if (nowIsMobile) {
-          this.clearLinks(this.sidebarNav);
-          this.init(this.menuMobile, true);
-        } else {
-          this.clearLinks(this.menuMobile);
-          this.init(this.sidebarNav, false);
-        }
-        this.isMobile = nowIsMobile;
-      }
-    });
+    this.bindings();
 
-    // Event listener for menu button click (open menu)
-    this.menuMobileBtn.addEventListener('click', async () => {
-      this.menuMobile.classList.add('active');
-      this.menuMobileBtn.setAttribute('aria-expanded', 'true');
-      this.menuMobileBtnClose.setAttribute('aria-expanded', 'true');
-      this.menuMobileBtnClose.setAttribute('aria-label', 'Close menu');
-
-      const { default: ThemeSwitcher } = await import('./themeSwitcher');
-      this.themeSwitcher = new ThemeSwitcher();
-    });
-
-    // Event listener for close button click (close menu)
-    this.menuMobileBtnClose.addEventListener('click', () => {
-      this.menuMobile.classList.remove('active');
-      this.menuMobileBtn.setAttribute('aria-expanded', 'false');
-      this.menuMobileBtnClose.setAttribute('aria-expanded', 'false');
-      this.menuMobileBtn.setAttribute('aria-label', 'Open menu');
-    });
+    window.addEventListener('resize', this.handleResize);
+    this.menuMobileBtn.addEventListener('click', this.handleMenuOpen);
+    this.menuMobileBtnClose.addEventListener('click', this.handleMenuClose);
   }
 
-  // Method to initialize the container with the appropriate links
+  /**
+   * Initializes the container with the appropriate links.
+   * @param {HTMLElement} container - The container for placing the links.
+   * @param {boolean} isMobile - Represents if the UI is in mobile layout.
+   */
   init(container, isMobile) {
     this.createLinks(container, isMobile);
   }
 
-  // Method to clear links from the specified container
+  /**
+   * Removes links from the specified container.
+   * @param {HTMLElement} container - The container from which the links are removed.
+   */
   clearLinks(container) {
     const linkContainer =
       container === this.menuMobile ? this.menuMobileLinks : this.sidebarNav;
@@ -174,7 +154,11 @@ class Sidebar {
     }
   }
 
-  // Method to create links in the specified container
+  /**
+   * Creates links in the specified container based on the `links` configuration.
+   * @param {HTMLElement} container - The container where links are placed.
+   * @param {boolean} isMobile - Represents if the UI is in mobile layout.
+   */
   createLinks(container, isMobile) {
     const linkContainer = isMobile ? this.menuMobileLinks : this.sidebarNav;
 
@@ -201,7 +185,12 @@ class Sidebar {
     });
   }
 
-  // Method to create a single link
+  /**
+   * Creates a single link.
+   * @param {Object} link - The link configuration.
+   * @param {boolean} isHamburgerMenu - Represents if the link is for mobile layout.
+   * @returns {HTMLElement} The anchor element created based on the link configuration.
+   */
   createLink(link, isHamburgerMenu) {
     const a = document.createElement('a');
     a.className = isHamburgerMenu
@@ -238,6 +227,55 @@ class Sidebar {
     a.appendChild(spanWrapper);
 
     return a;
+  }
+
+  /**
+   * Handles window resize and updates UI layout.
+   */
+  handleResize() {
+    const nowIsMobile = window.innerWidth <= 480;
+    if (nowIsMobile !== this.isMobile) {
+      if (nowIsMobile) {
+        this.clearLinks(this.sidebarNav);
+        this.init(this.menuMobile, true);
+      } else {
+        this.clearLinks(this.menuMobile);
+        this.init(this.sidebarNav, false);
+      }
+      this.isMobile = nowIsMobile;
+    }
+  }
+
+  /**
+   * Handles opening of mobile menu.
+   */
+  async handleMenuOpen() {
+    this.menuMobile.classList.add('active');
+    this.menuMobileBtn.setAttribute('aria-expanded', 'true');
+    this.menuMobileBtnClose.setAttribute('aria-expanded', 'true');
+    this.menuMobileBtnClose.setAttribute('aria-label', 'Close menu');
+
+    const { default: ThemeSwitcher } = await import('./themeSwitcher');
+    this.themeSwitcher = new ThemeSwitcher();
+  }
+
+  /**
+   * Handles closing of mobile menu.
+   */
+  handleMenuClose() {
+    this.menuMobile.classList.remove('active');
+    this.menuMobileBtn.setAttribute('aria-expanded', 'false');
+    this.menuMobileBtnClose.setAttribute('aria-expanded', 'false');
+    this.menuMobileBtn.setAttribute('aria-label', 'Open menu');
+  }
+
+  /**
+   * Binds methods to the current instance of the class.
+   */
+  bindings() {
+    this.handleResize = this.handleResize.bind(this);
+    this.handleMenuOpen = this.handleMenuOpen.bind(this);
+    this.handleMenuClose = this.handleMenuClose.bind(this);
   }
 }
 
