@@ -1,4 +1,4 @@
-import Converter from './converter';
+import Converter from './Converter';
 
 class TimeConverter extends Converter {
   constructor() {

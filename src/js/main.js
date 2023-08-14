@@ -6,8 +6,8 @@ import '../styles/style.css';
  * JavaScript class importings
  */
 import AppRouter from './router';
-import Sidebar from './modules/sidebar';
-import ThemeSwitcher from './modules/themeSwitcher';
+import Sidebar from './modules/Sidebar';
+import ThemeSwitcher from './modules/ThemeSwitcher';
 
 /**
  * Initializes the Sidebar module.

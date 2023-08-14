@@ -255,7 +255,7 @@ class Sidebar {
     this.menuMobileBtnClose.setAttribute('aria-expanded', 'true');
     this.menuMobileBtnClose.setAttribute('aria-label', 'Close menu');
 
-    const { default: ThemeSwitcher } = await import('./themeSwitcher');
+    const { default: ThemeSwitcher } = await import('./ThemeSwitcher');
     this.themeSwitcher = new ThemeSwitcher();
   }
 

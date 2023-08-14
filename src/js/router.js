@@ -33,7 +33,7 @@ class AppRouter {
         title: `Home | ${this.urlPageTitle}`,
         description:
           'Welcome to our homepage. Explore our range of tools and utilities.',
-        Utility: () => import('./modules/home'),
+        Utility: () => import('./modules/Home'),
       },
       '/styleguide': {
         route: '/routes/styleguide.html',
@@ -46,73 +46,73 @@ class AppRouter {
         title: `Calculator | ${this.urlPageTitle}`,
         description:
           'Solve mathematical problems with our easy-to-use calculator.',
-        Utility: () => import('./modules/utilities/calculator'),
+        Utility: () => import('./modules/utilities/Calculator'),
       },
       '/utilities/charactercounter': {
         route: '/routes/utilities/characterCounter.html',
         title: `Character Counter | ${this.urlPageTitle}`,
         description:
           'Count characters, words, and paragraphs for precise content creation.',
-        Utility: () => import('./modules/utilities/characterCounter'),
+        Utility: () => import('./modules/utilities/CharacterCounter'),
       },
       '/utilities/passwordgenerator': {
         route: '/routes/utilities/passwordGenerator.html',
         title: `Password Generator | ${this.urlPageTitle}`,
         description:
           'Create strong, secure passwords with our advanced generator tool.',
-        Utility: () => import('./modules/utilities/passwordGenerator'),
+        Utility: () => import('./modules/utilities/PasswordGenerator'),
       },
       '/utilities/roman_converter': {
         route: '/routes/utilities/romanConverter.html',
         title: `Roman Converter | ${this.urlPageTitle}`,
         description: 'Convert numbers to and from Roman numerals with ease.',
-        Utility: () => import('./modules/utilities/romanConverter'),
+        Utility: () => import('./modules/utilities/RomanConverter'),
       },
       '/converters/temperature': {
         route: '/routes/converters/temperatureConverter.html',
         title: `Temperature Converter | ${this.urlPageTitle}`,
         description:
           'Convert temperatures between Celsius, Fahrenheit, and Kelvin.',
-        Utility: () => import('./modules/converters/tempConverter'),
+        Utility: () => import('./modules/converters/TempConverter'),
       },
       '/converters/length': {
         route: '/routes/converters/lengthConverter.html',
         title: `Length Converter | ${this.urlPageTitle}`,
         description: 'Convert measurements of length across various units.',
-        Utility: () => import('./modules/converters/lengthConverter'),
+        Utility: () => import('./modules/converters/LengthConverter'),
       },
       '/converters/mass': {
         route: '/routes/converters/massConverter.html',
         title: `Mass Converter | ${this.urlPageTitle}`,
         description: 'Effortlessly convert between different mass units.',
-        Utility: () => import('./modules/converters/massConverter'),
+        Utility: () => import('./modules/converters/MassConverter'),
       },
       '/converters/speed': {
         route: '/routes/converters/speedConverter.html',
         title: `Speed Converter | ${this.urlPageTitle}`,
         description:
           'Convert speed measurements across miles per hour, kilometers per hour, and more.',
-        Utility: () => import('./modules/converters/speedConverter'),
+        Utility: () => import('./modules/converters/SpeedConverter'),
       },
       '/converters/time': {
         route: '/routes/converters/timeConverter.html',
         title: `Time Converter | ${this.urlPageTitle}`,
         description: 'Easily convert between various time units.',
-        Utility: () => import('./modules/converters/timeConverter'),
+        Utility: () => import('./modules/converters/TimeConverter'),
       },
       '/calculators/bmi': {
         route: '/routes/calculators/bmi.html',
         title: `BMI Calculator | ${this.urlPageTitle}`,
         description:
           'Determine your Body Mass Index and understand your health metrics.',
-        Utility: () => import('./modules/calculators/bmiCalculator'),
+        Utility: () => import('./modules/calculators/BmiCalculator'),
       },
       '/calculators/ruleofthree': {
         route: '/routes/calculators/ruleOfThree.html',
         title: `Rule of Three | ${this.urlPageTitle}`,
         description:
           'Calculate proportions quickly with the Rule of Three calculator.',
-        Utility: () => import('./modules/calculators/ruleofThree'),
+        Utility: () => import('./modules/calculators/RuleofThree'),
       },
       // Other routes go here...
     };

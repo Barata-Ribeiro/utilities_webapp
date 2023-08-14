@@ -1,4 +1,4 @@
-import Converter from './converter';
+import Converter from './Converter';
 
 class MassConverter extends Converter {
   constructor() {
