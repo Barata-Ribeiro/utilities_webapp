@@ -17,6 +17,9 @@ export default defineConfig({
       output: {
         // eslint-disable-next-line consistent-return
         manualChunks(id) {
+          if (id.includes('mathjs')) {
+            return 'mathjs';
+          }
           if (id.includes('node_modules')) {
             return id
               .toString()

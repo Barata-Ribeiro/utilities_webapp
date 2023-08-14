@@ -115,7 +115,7 @@ class AppRouter {
         title: `Rule of Three | ${this.urlPageTitle}`,
         description:
           'Calculate proportions quickly with the Rule of Three calculator.',
-        Utility: () => import('./modules/calculators/RuleofThree'),
+        Utility: () => import('./modules/calculators/RuleOfThree'),
       },
       // Other routes go here...
     };

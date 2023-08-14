@@ -7,7 +7,8 @@ class ThemeSwitcher {
    */
   constructor() {
     /**
-     * Get the user's saved theme or fallback to the system's theme.
+     * Flag indicating if the user prefers the dark theme.
+     * Will check the user's saved preference or fallback to the system's theme.
      * @type {boolean}
      * @private
      */
@@ -20,9 +21,9 @@ class ThemeSwitcher {
   }
 
   /**
-   * Set the theme and save the preference to localStorage.
+   * Set the theme based on user preference and save this preference to localStorage.
    *
-   * @param {boolean} isDark - Flag indicating if the theme is dark.
+   * @param {boolean} isDark - Flag indicating if the theme should be set to dark.
    */
   setTheme(isDark) {
     this.prefersDark = isDark;
@@ -31,7 +32,7 @@ class ThemeSwitcher {
   }
 
   /**
-   * Toggles between dark and light themes.
+   * Toggle the theme classes based on the `prefersDark` property.
    * @private
    */
   toggleTheme() {
@@ -40,7 +41,7 @@ class ThemeSwitcher {
   }
 
   /**
-   * Set the initial position for theme switches based on the current theme.
+   * Set the initial position for theme switches based on the `prefersDark` property.
    * @private
    */
   initialPos() {
@@ -51,7 +52,7 @@ class ThemeSwitcher {
   }
 
   /**
-   * Adds event listeners for theme switches to ensure consistency across switches.
+   * Attach event listeners to the checkboxes ensuring consistent theme switching.
    * @private
    */
   addCheckboxListeners() {
@@ -70,10 +71,15 @@ class ThemeSwitcher {
   }
 
   /**
-   * Initializes checkboxes, applies the initial theme, and sets up event listeners.
+   * Initialize checkboxes, apply the initial theme, and set up checkbox event listeners.
    * @private
    */
   setupEventListeners() {
+    /**
+     * Collection of all theme switch checkboxes.
+     * @type {HTMLElement[]}
+     * @private
+     */
     this.checkboxes = Array.from(
       document.querySelectorAll('.theme-switch input[type="checkbox"]'),
     );

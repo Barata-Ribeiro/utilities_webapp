@@ -1,9 +1,12 @@
+/**
+ * Class that represents the application side bar for navigation.
+ */
 class Sidebar {
   /**
    * Initializes the class, setting up default properties and initial methods to run.
    */
   constructor() {
-    /** @type {HTMLElement} Represents the button for opening mobile menu. */
+    /** @type {HTMLElement} Represents the button for opening the mobile menu. */
     this.menuMobileBtn = document.querySelector('.hamburger__menu__button');
     this.menuMobileBtn.setAttribute('role', 'button');
     this.menuMobileBtn.setAttribute('aria-expanded', 'false');
@@ -19,15 +22,21 @@ class Sidebar {
 
     /**
      * @type {HTMLElement} Represents the mobile navigation container.
-     * @type {HTMLElement} Represents the sidebar navigation container.
      */
     this.menuMobile = document.querySelector('.hamburger__menu__nav');
+
+    /**
+     * @type {HTMLElement} Represents the sidebar navigation container.
+     */
     this.sidebarNav = document.querySelector('.sidebar__nav');
 
     /** @type {HTMLElement} Represents the container for mobile navigation links. */
     this.menuMobileLinks = document.querySelector('.hamburger__menu__links');
 
-    /** @type {Array} Represents navigation links configuration. */
+    /**
+     * @type {Array.<{name: string, icon?: string, href?: string, type: string, links?: Array.<Object>}>}
+     * Represents navigation links configuration.
+     */
     this.links = [
       {
         name: 'Home',

@@ -5,7 +5,7 @@ import '../styles/style.css';
 /**
  * JavaScript class importings
  */
-import AppRouter from './router';
+import AppRouter from './AppRouter';
 import Sidebar from './modules/Sidebar';
 import ThemeSwitcher from './modules/ThemeSwitcher';
 
