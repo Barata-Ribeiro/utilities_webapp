@@ -123,6 +123,11 @@ class Sidebar {
             href: '/calculators/bmi',
           },
           {
+            name: 'Percentage',
+            icon: 'ri-percent-line',
+            href: '/calculators/percentage',
+          },
+          {
             name: 'Rule of 3',
             icon: 'ri-tree-line',
             href: '/calculators/ruleofthree',

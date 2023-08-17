@@ -110,6 +110,13 @@ class AppRouter {
           'Determine your Body Mass Index and understand your health metrics.',
         Utility: () => import('./modules/calculators/BmiCalculator'),
       },
+      '/calculators/percentage': {
+        route: '/routes/calculators/percentage.html',
+        title: `Percentage Calculator | ${this.urlPageTitle}`,
+        description:
+          'Calculate proportions quickly with the Percentage calculator.',
+        Utility: () => import('./modules/calculators/Percentage'),
+      },
       '/calculators/ruleofthree': {
         route: '/routes/calculators/ruleOfThree.html',
         title: `Rule of Three | ${this.urlPageTitle}`,
