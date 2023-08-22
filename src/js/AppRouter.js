@@ -148,7 +148,13 @@ class AppRouter {
    * @returns {Promise<string>} The HTML content.
    */
   async getHtmlContent(route) {
-    return await fetch(route.route).then((response) => response.text());
+    try {
+      const response = await fetch(route.route);
+      return response.text();
+    } catch (error) {
+      console.error('Error fetching route:', error);
+      return `<div>Error loading content.</div>`;
+    }
   }
 
   /**
@@ -201,6 +207,20 @@ class AppRouter {
   }
 
   /**
+   * Changes the URL route and set the state in the history api.
+   *
+   * @param {string} href - The new URL route.
+   */
+  changeRoute(href) {
+    if (window.location.pathname === href) {
+      window.history.replaceState({}, '', href);
+    } else {
+      window.history.pushState({}, '', href);
+    }
+    this.urlLocationHandler();
+  }
+
+  /**
    * Handles the state and routes of the hamburger menu.
    *
    * @param {Event} event - The click event.
@@ -212,18 +232,11 @@ class AppRouter {
     event.preventDefault();
     event.stopPropagation();
 
-    // If navigating to the same route, replace the current history entry
-    if (window.location.pathname === linkElement.pathname) {
-      window.history.replaceState({}, '', linkElement.href);
-    } else {
-      window.history.pushState({}, '', linkElement.href);
-    }
+    this.changeRoute(linkElement.href);
 
     // Close the hamburger menu
     const menuMobile = document.querySelector('.hamburger__menu__nav');
     menuMobile.classList.remove('active');
-
-    this.urlLocationHandler();
   }
 
   /**
@@ -238,14 +251,7 @@ class AppRouter {
     event.preventDefault();
     event.stopPropagation();
 
-    // If navigating to the same route, replace the current history entry
-    if (window.location.pathname === linkElement.pathname) {
-      window.history.replaceState({}, '', linkElement.href);
-    } else {
-      window.history.pushState({}, '', linkElement.href);
-    }
-
-    this.urlLocationHandler();
+    this.changeRoute(linkElement.href);
   }
 }
 
