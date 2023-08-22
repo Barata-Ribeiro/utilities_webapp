@@ -65,7 +65,7 @@ class AppRouter {
           'Create strong, secure passwords with our advanced generator tool.',
         Utility: () => import('./modules/utilities/PasswordGenerator'),
       },
-      '/utilities/roman_converter': {
+      '/utilities/romanconverter': {
         route: '/routes/utilities/romanConverter.html',
         title: `Roman Converter | ${this.urlPageTitle}`,
         description: 'Convert numbers to and from Roman numerals with ease.',
@@ -155,7 +155,6 @@ class AppRouter {
    * Handles URL changes and updates the content accordingly.
    */
   async urlLocationHandler() {
-    // Display loading page
     document.querySelector('#app #content').innerHTML = this.loadingHTML;
 
     let location = window.location.pathname;
@@ -212,7 +211,13 @@ class AppRouter {
 
     event.preventDefault();
     event.stopPropagation();
-    window.history.pushState({}, '', linkElement.href);
+
+    // If navigating to the same route, replace the current history entry
+    if (window.location.pathname === linkElement.pathname) {
+      window.history.replaceState({}, '', linkElement.href);
+    } else {
+      window.history.pushState({}, '', linkElement.href);
+    }
 
     // Close the hamburger menu
     const menuMobile = document.querySelector('.hamburger__menu__nav');
@@ -232,7 +237,14 @@ class AppRouter {
 
     event.preventDefault();
     event.stopPropagation();
-    window.history.pushState({}, '', linkElement.href);
+
+    // If navigating to the same route, replace the current history entry
+    if (window.location.pathname === linkElement.pathname) {
+      window.history.replaceState({}, '', linkElement.href);
+    } else {
+      window.history.pushState({}, '', linkElement.href);
+    }
+
     this.urlLocationHandler();
   }
 }
