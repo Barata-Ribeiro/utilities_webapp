@@ -58,26 +58,31 @@ class Home {
    */
   getUserBrowserName() {
     this.userBrowserName.textContent = 'Loading...';
-    const browserName = ((agent) => {
-      switch (true) {
-        case agent.indexOf('edge') > -1:
-          return 'Microsft Edge';
-        case agent.indexOf('edg/') > -1:
-          return 'Microsoft Edge (Chromium Based)';
-        case agent.indexOf('opr') > -1 && !!window.opr:
-          return 'Opera';
-        case agent.indexOf('chrome') > -1 && !!window.chrome:
-          return 'Chrome';
-        case agent.indexOf('trident') > -1:
-          return 'MS IE';
-        case agent.indexOf('firefox') > -1:
-          return 'Mozilla Firefox';
-        case agent.indexOf('safari') > -1:
-          return 'Safari';
-        default:
-          return 'Other or Unknown Browser';
+
+    const agent = navigator.userAgent.toLowerCase();
+    let browserName = 'Other or Unknown Browser';
+
+    const browserList = [
+      { name: 'Microsoft Edge (Chromium Based)', regex: /edg\//i },
+      { name: 'Microsoft Edge', regex: /edge/i },
+      { name: 'Opera', regex: /opr/i, condition: () => !!window.opr },
+      { name: 'Chrome', regex: /chrome/i, condition: () => !!window.chrome },
+      { name: 'MS IE', regex: /trident/i },
+      { name: 'Mozilla Firefox', regex: /firefox/i },
+      { name: 'Safari', regex: /safari/i },
+    ];
+
+    browserList.some((browser) => {
+      if (
+        browser.regex.test(agent) &&
+        (!browser.condition || browser.condition())
+      ) {
+        browserName = browser.name;
+        return true;
       }
-    })(window.navigator.userAgent.toLowerCase());
+      return false;
+    });
+
     this.userBrowserName.textContent = browserName;
   }
 
@@ -86,31 +91,27 @@ class Home {
    */
   getUserOperatingSystem() {
     this.userOperatingSystem.textContent = 'Loading...';
-    const osName = ((agent) => {
-      if (agent.indexOf('win') !== -1) {
-        return 'Windows NT';
+
+    const agent = navigator.userAgent;
+    let osName = 'Other or Unknown OS';
+
+    const osList = [
+      { name: 'Windows NT', regex: /Windows NT/i },
+      { name: 'Mac', regex: /Mac OS X/i },
+      { name: 'Linux', regex: /Linux/i },
+      { name: 'Android', regex: /Android/i },
+      { name: 'iOS', regex: /(iPhone|iPad|iPod)/i },
+      { name: 'UNIX', regex: /X11/i },
+    ];
+
+    osList.some((os) => {
+      if (os.regex.test(agent)) {
+        osName = os.name;
+        return true;
       }
-      if (agent.indexOf('mac') !== -1) {
-        return 'Mac';
-      }
-      if (agent.indexOf('linux') !== -1) {
-        return 'Linux';
-      }
-      if (agent.indexOf('android') !== -1) {
-        return 'Android';
-      }
-      if (
-        agent.indexOf('iphone') !== -1 ||
-        agent.indexOf('ipad') !== -1 ||
-        agent.indexOf('ipod') !== -1
-      ) {
-        return 'iOS';
-      }
-      if (agent.indexOf('x11') !== -1) {
-        return 'UNIX';
-      }
-      return 'Other or Unknown OS';
-    })(navigator.userAgent.toLowerCase());
+      return false;
+    });
+
     this.userOperatingSystem.textContent = osName;
   }
 
