@@ -141,7 +141,7 @@ class Sidebar {
     if (this.isMobile) this.init(this.menuMobile, true);
     else this.init(this.sidebarNav, false);
 
-    this.bindings();
+    this.bindEventHandlers();
 
     window.addEventListener('resize', this.handleResize);
     this.menuMobileBtn.addEventListener('click', this.handleMenuOpen);
@@ -272,8 +272,12 @@ class Sidebar {
     this.menuMobileBtnClose.setAttribute('aria-expanded', 'true');
     this.menuMobileBtnClose.setAttribute('aria-label', 'Close menu');
 
-    const { default: ThemeSwitcher } = await import('./ThemeSwitcher');
-    this.themeSwitcher = new ThemeSwitcher();
+    try {
+      const { default: ThemeSwitcher } = await import('./ThemeSwitcher');
+      this.themeSwitcher = new ThemeSwitcher();
+    } catch (error) {
+      console.error('Failed to load ThemeSwitcher:', error);
+    }
   }
 
   /**
@@ -289,7 +293,7 @@ class Sidebar {
   /**
    * Binds methods to the current instance of the class.
    */
-  bindings() {
+  bindEventHandlers() {
     this.handleResize = this.handleResize.bind(this);
     this.handleMenuOpen = this.handleMenuOpen.bind(this);
     this.handleMenuClose = this.handleMenuClose.bind(this);

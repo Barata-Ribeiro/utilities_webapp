@@ -13,7 +13,7 @@ class Home {
 
     this.randomJokes = document.querySelector('.home__jokes-list');
 
-    this.bindings();
+    this.bindEventHandlers();
     this.init();
   }
 
@@ -164,7 +164,7 @@ class Home {
   /**
    * Binds methods to the current instance of the class.
    */
-  bindings() {
+  bindEventHandlers() {
     this.getUserIpAddress = this.getUserIpAddress.bind(this);
     this.getUserBrowserName = this.getUserBrowserName.bind(this);
     this.getUserOperatingSystem = this.getUserOperatingSystem.bind(this);
