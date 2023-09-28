@@ -189,6 +189,13 @@ class Sidebar {
         header.textContent = link.name;
         linkContainer.appendChild(header);
 
+        if (header.className === 'sidebar__nav__heading') {
+          const separator = document.createElement('p');
+          separator.className = 'sidebar__nav__heading__separator';
+          separator.textContent = '•';
+          linkContainer.appendChild(separator);
+        }
+
         // Sublink creation
         link.links.forEach((sublink) => {
           const a = this.createLink(sublink, isMobile);
