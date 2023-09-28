@@ -3,23 +3,27 @@
 /* General Styleguide Styles */
 .styleguide {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 60rem;
+  margin: 0 auto;
 }
 
 .styleguide__title {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: normal;
   text-align: center;
   margin: 2.5rem;
 }
 
 .styleguide__article {
-  margin-bottom: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin-bottom: 3rem;
 }
 
 .styleguide__section-title {
+  grid-column: 1;
+  justify-self: self-end;
   font-size: 1rem;
-  width: calc(50% - 3.125rem);
-  float: left;
   text-align: right;
   padding-right: 3.125rem;
   font-weight: bold;
@@ -28,31 +32,32 @@
 }
 
 .styleguide__styles {
-  width: 50%;
-  float: left;
+  grid-column: 2;
   display: flex;
   flex-direction: column;
+  gap: 2.5rem;
+}
+
+.styleguide__colors {
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+.styleguide__colors-wrapper {
+  display: flex;
   gap: 1rem;
 }
 
-.styleguide__colors--primary div,
-.styleguide__colors--secondary div {
+.styleguide__colors--primary .styleguide__color,
+.styleguide__colors--secondary .styleguide__color {
   padding: 7.5rem 0.625rem 0.625rem 0.625rem;
+  max-width: max-content;
   text-align: center;
-  float: left;
-  margin-right: 1.25rem;
-  margin-bottom: 1.25rem;
   color: black;
   box-shadow:
     0 -40px 0 0 white inset,
     0 2px 2px 0 rgba(0, 0, 0, 0.125);
   text-transform: uppercase;
-}
-
-.styleguide__colors--primary div:last-of-type,
-.styleguide__colors--secondary div:last-of-type {
-  margin-right: 0;
-  margin-bottom: 0;
 }
 
 .styleguide__colors--primary h2,
@@ -65,6 +70,23 @@
   content: '';
   display: table;
   clear: both;
+}
+
+.styleguide__elements:first-child {
+  margin-bottom: 1.5rem;
+}
+
+.styleguide__typography,
+.styleguide__elements--forms {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.styleguide__elements--buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 /* Colors */
@@ -125,11 +147,6 @@
 }
 
 /* Buttons and Links */
-.styleguide__elements--buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
 .styleguide__button--primary a {
   font-family: var(--font-title);
   padding: 1rem 2rem;
@@ -178,7 +195,7 @@
   transition: all 0.1s ease;
   background-size: 0.125rem;
   background-size: auto 190%;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
 
   &:hover {
     background-position-y: 100%;
@@ -198,7 +215,7 @@
 .styleguide__input input,
 .styleguide__textarea textarea {
   width: 100%;
-  padding: 0.5rem;
+  padding: 1rem;
   font-size: 1rem;
   border: 1px solid var(--color-secondary);
   background-color: var(--color-background-support);
@@ -231,5 +248,29 @@
   &:hover {
     transform: translate(0, -0.1875rem);
     box-shadow: 0 1rem 2rem -0.625rem var(--color-primary);
+  }
+}
+
+@media screen and (max-width: 48rem) {
+  .styleguide__article {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .styleguide__section-title {
+    padding-right: 0;
+    text-align: center;
+  }
+  .styleguide__colors-wrapper {
+    flex-wrap: wrap;
+  }
+  .styleguide__colors--primary .styleguide__color,
+  .styleguide__colors--secondary .styleguide__color {
+    box-shadow: none !important;
+  }
+  .styleguide__colors--primary .styleguide__color p,
+  .styleguide__colors--secondary .styleguide__color p {
+    color: rgb(255, 255, 255);
+    mix-blend-mode: difference;
   }
 }
