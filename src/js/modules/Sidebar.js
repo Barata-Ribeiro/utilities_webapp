@@ -199,11 +199,15 @@ class Sidebar {
         // Sublink creation
         link.links.forEach((sublink) => {
           const a = this.createLink(sublink, isMobile);
+          a.title = sublink.name;
+          a.ariaLabel = `Go to ${sublink.name}`;
           linkContainer.appendChild(a);
         });
       } else if (link.type === 'link') {
         // Single link creation
         const a = this.createLink(link, isMobile);
+        a.title = link.name;
+        a.ariaLabel = `Go to ${link.name}`;
         linkContainer.appendChild(a);
       }
     });

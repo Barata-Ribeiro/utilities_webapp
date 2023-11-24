@@ -1,13 +1,9 @@
-<form id="percentage-calc" class="form">
-  <h2 class="form__title">Percentage Calculator</h2>
+<form id="percentage-calc" class="form" aria-labelledby="percentageCalcTitle">
+  <h2 id="percentageCalcTitle" class="form__title">Percentage Calculator</h2>
   <div class="percentage__wrapper">
     <!-- First Group (Calculate Percentage Result) -->
-    <section>
-      <div
-        class="group__percentage"
-        role="group"
-        aria-labelledby="group1-heading"
-      >
+    <section aria-labelledby="group1-heading">
+      <div class="group__percentage" role="group">
         <h3 class="visually-hidden" id="group1-heading">
           Calculate Percentage Result
         </h3>
@@ -33,8 +29,7 @@
       </div>
       <span
         class="percentage__result"
-        aria-label="Result for first group"
-        role="text"
+        aria-live="polite"
         id="percent-result-one"
       ></span>
     </section>
@@ -42,12 +37,8 @@
     <hr class="form__separator" />
 
     <!-- Second Group (Calculate What Percent X is of Y) -->
-    <section>
-      <div
-        class="group__percentage"
-        role="group"
-        aria-labelledby="group3-heading"
-      >
+    <section aria-labelledby="group3-heading">
+      <div class="group__percentage" role="group">
         <h3 class="visually-hidden" id="group3-heading">
           Calculate What Percent X is of Y
         </h3>
@@ -73,8 +64,7 @@
       </div>
       <span
         class="percentage__result"
-        aria-label="Result for second group"
-        role="text"
+        aria-live="polite"
         id="percent-result-two"
       ></span>
     </section>
@@ -82,12 +72,8 @@
     <hr class="form__separator" />
 
     <!-- Third Group (Calculate Y is X Percent of What) -->
-    <section>
-      <div
-        class="group__percentage"
-        role="group"
-        aria-labelledby="group4-heading"
-      >
+    <section aria-labelledby="group4-heading">
+      <div class="group__percentage" role="group">
         <h3 class="visually-hidden" id="group4-heading">
           Calculate Y is X Percent of What
         </h3>
@@ -114,8 +100,7 @@
       </div>
       <span
         class="percentage__result"
-        aria-label="Result for third group"
-        role="text"
+        aria-live="polite"
         id="percent-result-three"
       ></span>
     </section>

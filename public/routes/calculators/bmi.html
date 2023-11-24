@@ -1,5 +1,5 @@
-<form id="bmi-calc" class="form">
-  <h2 class="form__title">Body Mass Index (bmi)</h2>
+<form id="bmi-calc" class="form" aria-labelledby="bmiFormTitle">
+  <h2 id="bmiFormTitle" class="form__title">Body Mass Index (BMI)</h2>
   <label for="bmiWeight" class="form__label">Weight (in kg)</label>
   <input
     type="text"
@@ -18,5 +18,5 @@
     aria-label="Height in centimeter input"
     class="form__input"
   />
-  <p id="bmiResult" class="form__result" role="status"></p>
+  <p id="bmiResult" class="form__result" role="status" aria-live="polite"></p>
 </form>

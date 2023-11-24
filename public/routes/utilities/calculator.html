@@ -1,4 +1,11 @@
-<form id="utility-calculator" class="form__calculator">
+<form
+  id="utility-calculator"
+  class="form__calculator"
+  aria-labelledby="utilityCalculatorTitle"
+>
+  <h2 id="utilityCalculatorTitle" class="visually-hidden">
+    Utility Calculator
+  </h2>
   <textarea
     class="form__calculator-textarea"
     name="calculator-textarea"
@@ -10,5 +17,6 @@
     id="calculator-result"
     class="form__calculator-result"
     role="status"
+    aria-live="polite"
   ></div>
 </form>

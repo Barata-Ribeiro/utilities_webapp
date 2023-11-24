@@ -1,10 +1,10 @@
-<form id="char-counter" class="form">
-  <h2 class="form__title">Character Counter</h2>
+<form id="char-counter" class="form" aria-labelledby="charCounterTitle">
+  <h2 id="charCounterTitle" class="form__title">Character Counter</h2>
   <textarea
     class="form__input"
     id="text-area"
     placeholder="Paste your text here..."
     aria-placeholder="Paste your text here..."
   ></textarea>
-  <p class="form__result" id="charResult" role="status"></p>
+  <p class="form__result" id="charResult" role="status" aria-live="polite"></p>
 </form>

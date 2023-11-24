@@ -1,11 +1,21 @@
-<section class="styleguide">
-  <h1 class="styleguide__title">Style Guide</h1>
+<!-- Style Guide Section with ARIA Landmark Role -->
+<section class="styleguide" role="region" aria-labelledby="styleGuideTitle">
+  <h1 id="styleGuideTitle" class="styleguide__title">Style Guide</h1>
 
-  <article class="styleguide__article styleguide__article--colors">
-    <h1 class="styleguide__section-title">colors</h1>
+  <!-- Colors Article -->
+  <article
+    class="styleguide__article styleguide__article--colors"
+    aria-labelledby="colorsSectionTitle"
+  >
+    <h2 id="colorsSectionTitle" class="styleguide__section-title">Colors</h2>
     <div class="styleguide__styles">
-      <section class="styleguide__colors styleguide__colors--primary">
-        <h2 class="styleguide__colors-title">Primary</h2>
+      <section
+        class="styleguide__colors styleguide__colors--primary"
+        aria-labelledby="primaryColorsTitle"
+      >
+        <h3 id="primaryColorsTitle" class="styleguide__colors-title">
+          Primary
+        </h3>
         <div class="styleguide__colors-wrapper">
           <div class="styleguide__color styleguide__color--primary-1">
             <p>hsl(14, 80%, 64%)</p>
@@ -18,8 +28,13 @@
           </div>
         </div>
       </section>
-      <section class="styleguide__colors styleguide__colors--secondary">
-        <h2 class="styleguide__colors-title">Secondary</h2>
+      <section
+        class="styleguide__colors styleguide__colors--secondary"
+        aria-labelledby="secondaryColorsTitle"
+      >
+        <h3 id="secondaryColorsTitle" class="styleguide__colors-title">
+          Secondary
+        </h3>
         <div class="styleguide__colors-wrapper">
           <div class="styleguide__color styleguide__color--secondary-1">
             <p>hsl(0, 0%, 2%)</p>
@@ -32,20 +47,42 @@
     </div>
   </article>
 
-  <article class="styleguide__article styleguide__article--typography">
-    <h1 class="styleguide__section-title">typography</h1>
+  <!-- Typography Article -->
+  <article
+    class="styleguide__article styleguide__article--typography"
+    aria-labelledby="typographySectionTitle"
+  >
+    <h2 id="typographySectionTitle" class="styleguide__section-title">
+      Typography
+    </h2>
     <div class="styleguide__styles">
-      <section class="styleguide__typography styleguide__typography--titles">
-        <h2 class="styleguide__typography-title">Titles</h2>
-        <div class="styleguide__text styleguide__text--title-1">
+      <section
+        class="styleguide__typography styleguide__typography--titles"
+        aria-labelledby="titlesTypographyTitle"
+      >
+        <h3 id="titlesTypographyTitle" class="styleguide__typography-title">
+          Titles
+        </h3>
+        <div
+          class="styleguide__text styleguide__text--title-1"
+          role="presentation"
+        >
           Our Products and Services
         </div>
-        <div class="styleguide__text styleguide__text--title-2">
+        <div
+          class="styleguide__text styleguide__text--title-2"
+          role="presentation"
+        >
           Our Products and Services
         </div>
       </section>
-      <section class="styleguide__typography styleguide__typography--body">
-        <h2 class="styleguide__typography-title">Body Text</h2>
+      <section
+        class="styleguide__typography styleguide__typography--body"
+        aria-labelledby="bodyTextTypographyTitle"
+      >
+        <h3 id="bodyTextTypographyTitle" class="styleguide__typography-title">
+          Body Text
+        </h3>
         <div class="styleguide__text-block styleguide__text-block--body-1">
           <p>
             In this sense, the mobility of international capital indirectly
@@ -72,31 +109,55 @@
     </div>
   </article>
 
-  <article class="styleguide__article styleguide__article--elements">
-    <h1 class="styleguide__section-title">elements</h1>
+  <!-- Elements Article -->
+  <article
+    class="styleguide__article styleguide__article--elements"
+    aria-labelledby="elementsSectionTitle"
+  >
+    <h2 id="elementsSectionTitle" class="styleguide__section-title">
+      Elements
+    </h2>
     <div class="styleguide__styles">
-      <section class="styleguide__elements styleguide__elements--buttons">
-        <h2 class="styleguide__elements-title">Buttons and Links</h2>
+      <section
+        class="styleguide__elements styleguide__elements--buttons"
+        aria-labelledby="buttonsAndLinksTitle"
+      >
+        <h3 id="buttonsAndLinksTitle" class="styleguide__elements-title">
+          Buttons and Links
+        </h3>
         <div class="styleguide__button styleguide__button--primary">
-          <a href="#">Primary Button</a>
+          <a href="#" aria-label="Primary Button">Primary Button</a>
         </div>
         <div class="styleguide__button styleguide__button--secondary">
-          <a href="#">Secondary Button</a>
+          <a href="#" aria-label="Secondary Button">Secondary Button</a>
         </div>
-        <div class="styleguide__link"><a href="#">Links</a></div>
+        <div class="styleguide__link">
+          <a href="#" aria-label="Example Link">Links</a>
+        </div>
       </section>
-      <section class="styleguide__elements styleguide__elements--forms">
-        <h2 class="styleguide__elements-title">Forms</h2>
+      <section
+        class="styleguide__elements styleguide__elements--forms"
+        aria-labelledby="formsElementsTitle"
+      >
+        <h3 id="formsElementsTitle" class="styleguide__elements-title">
+          Forms
+        </h3>
         <div class="styleguide__input">
-          <label>Input</label>
-          <input type="text" />
+          <label for="exampleInput">Input</label>
+          <input type="text" id="exampleInput" aria-label="Example Input" />
         </div>
         <div class="styleguide__textarea">
-          <label>Textarea</label>
-          <textarea rows="5" cols="25" wrap="hard"></textarea>
+          <label for="exampleTextarea">Textarea</label>
+          <textarea
+            id="exampleTextarea"
+            rows="5"
+            cols="25"
+            wrap="hard"
+            aria-label="Example Textarea"
+          ></textarea>
         </div>
         <div class="styleguide__submit-button">
-          <button type="submit">Submit</button>
+          <button type="submit" aria-label="Submit Button">Submit</button>
         </div>
       </section>
     </div>

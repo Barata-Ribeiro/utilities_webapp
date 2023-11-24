@@ -1,8 +1,10 @@
-<form id="ruleofthree-calc" class="form">
-  <h2 class="form__title">Rule of Three</h2>
+<form id="ruleofthree-calc" class="form" aria-labelledby="ruleOfThreeTitle">
+  <h2 id="ruleOfThreeTitle" class="form__title">Rule of Three</h2>
   <div class="ruleofthree__wrapper">
     <div class="group__ruleofthree">
-      <label class="visually-hidden" for="ruleofthree-a">Value of A</label>
+      <label for="ruleofthree-a" class="visually-hidden" for="ruleofthree-a"
+        >Value of A</label
+      >
       <input
         type="text"
         class="form__input"
@@ -10,6 +12,7 @@
         name="ruleofthree-a"
         pattern="^-?[0-9]\d*(\.\d+)?$"
         placeholder="A"
+        aria-label="Value of A"
       />
       <p>is to</p>
       <label class="visually-hidden" for="ruleofthree-b">Value of B</label>
@@ -20,6 +23,7 @@
         name="ruleofthree-b"
         pattern="^-?[0-9]\d*(\.\d+)?$"
         placeholder="B"
+        aria-label="Value of B"
       />
     </div>
     <h3 class="ruleofthree__title">AS</h3>
@@ -32,6 +36,7 @@
         name="ruleofthree-c"
         pattern="^-?[0-9]\d*(\.\d+)?$"
         placeholder="C"
+        aria-label="Value of C"
       />
       <p>is to</p>
       <div class="subgroup__ruleofthree">
@@ -44,6 +49,7 @@
           placeholder="X"
           disabled
           aria-readonly="true"
+          aria-label="Value of X"
         />
         <button title="Copy" disabled class="form__btn-one" id="copy">
           <i class="ri-clipboard-line"></i>

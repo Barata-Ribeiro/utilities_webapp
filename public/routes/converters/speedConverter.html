@@ -1,12 +1,16 @@
-<form id="speed-converter" class="form">
-  <h2 class="form__title">Speed</h2>
+<form
+  id="speed-converter"
+  class="form"
+  aria-labelledby="speedConverterCalculatorTitle"
+>
+  <h2 id="speedConverterCalculatorTitle" class="form__title">Speed</h2>
   <label for="milePerHour">Mile per hour (mph)</label>
   <input
     type="text"
     pattern="^-?[0-9]\d*(\.\d+)?$"
     name="milePerHour"
     id="milePerHour"
-    aria-label="Mile per hour input"
+    aria-label="Enter or Read value in Mile per hour input"
     class="form__input"
   />
   <label for="footPerSecond">Foot per second (ft/s)</label>
@@ -15,7 +19,7 @@
     pattern="^-?[0-9]\d*(\.\d+)?$"
     name="footPerSecond"
     id="footPerSecond"
-    aria-label="Foot per second input"
+    aria-label="Enter or Read value in Foot per second input"
     class="form__input"
   />
   <label for="meterPerSecond">Meter per second (m/s)</label>
@@ -24,7 +28,7 @@
     pattern="^-?[0-9]\d*(\.\d+)?$"
     name="meterPerSecond"
     id="meterPerSecond"
-    aria-label="Meter per second input"
+    aria-label="Enter or Read value in Meter per second input"
     class="form__input"
   />
   <label for="kilometerPerHour">Kilometer per hour (km/h)</label>
@@ -33,7 +37,7 @@
     pattern="^-?[0-9]\d*(\.\d+)?$"
     name="kilometerPerHour"
     id="kilometerPerHour"
-    aria-label="Kilometer per hour input"
+    aria-label="Enter or Read value in Kilometer per hour input"
     class="form__input"
   />
   <label for="knots">Knots (kn)</label>
@@ -42,7 +46,7 @@
     pattern="^-?[0-9]\d*(\.\d+)?$"
     name="knots"
     id="knots"
-    aria-label="Knots input"
+    aria-label="Enter or Read value in Knots input"
     class="form__input"
   />
 </form>

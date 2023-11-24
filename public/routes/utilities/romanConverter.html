@@ -1,5 +1,5 @@
-<form id="romanConverter" class="form">
-  <h2 class="form__title">Roman Numerals Converter</h2>
+<form id="romanConverter" class="form" aria-labelledby="romanConverterTitle">
+  <h2 id="romanConverterTitle" class="form__title">Roman Numerals Converter</h2>
   <div class="form__roman_wrapper">
     <label class="form__label" for="arabic-numerals"
       >Arabic Numerals
@@ -9,16 +9,16 @@
         pattern="^[0-9]+$"
         id="arabic-numerals"
         name="arabic-numerals"
-        aria-label="Arabic Numerals"
+        aria-label="Enter Arabic Numerals"
       />
     </label>
     <button
       id="convert_to_roman"
       class="form__btn-two"
       type="button"
-      aria-label="Convert to Roman"
+      aria-label="Convert to Roman Numerals"
     >
-      Convert to Roman
+      > Convert to Roman
     </button>
   </div>
   <div class="form__roman_wrapper">
@@ -30,17 +30,18 @@
         pattern="^[a-zA-Z]+$"
         id="roman-numerals"
         name="roman-numerals"
-        aria-label="Roman Numerals"
+        aria-label="Enter Roman Numerals"
+      />
       />
     </label>
     <button
       id="convert_to_arabic"
       class="form__btn-two"
       type="button"
-      aria-label="Convert to Arabic"
+      aria-label="Convert to Arabic Numerals"
     >
-      Convert to Arabic
+      > Convert to Arabic
     </button>
   </div>
-  <span class="roman-converter__error" role="alert"></span>
+  <span class="roman-converter__error" role="alert" aria-live="polite"></span>
 </form>

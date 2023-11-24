@@ -1,12 +1,16 @@
-<form id="temp-converter" class="form">
-  <h2 class="form__title">Temperature</h2>
+<form
+  id="temp-converter"
+  class="form"
+  aria-labelledby="tempConverterCalculatorTitle"
+>
+  <h2 id="tempConverterCalculatorTitle" class="form__title">Temperature</h2>
   <label class="form__label" for="fahrenheit">Fahrenheit (ºF)</label>
   <input
     type="text"
     pattern="^-?[0-9]\d*(\.\d+)?$"
     name="fahrenheit"
     id="fahrenheit"
-    aria-label="Fahrenheit input"
+    aria-label="Enter or Read value in Fahrenheit input"
     class="form__input"
   />
   <label class="form__label" for="celsius">Celsius (ºC)</label>
@@ -15,7 +19,7 @@
     pattern="^-?[0-9]\d*(\.\d+)?$"
     name="celsius"
     id="celsius"
-    aria-label="Celsius input"
+    aria-label="Enter or Read value in Celsius input"
     class="form__input"
   />
   <label class="form__label" for="kelvin">Kelvin (K)</label>
@@ -24,7 +28,7 @@
     pattern="^-?[0-9]\d*(\.\d+)?$"
     name="kelvin"
     id="kelvin"
-    aria-label="Kelvin input"
+    aria-label="Enter or Read value in Kelvin input"
     class="form__input"
   />
 </form>
