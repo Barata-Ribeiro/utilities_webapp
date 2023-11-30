@@ -22,13 +22,28 @@
 }
 
 .sidebar__header__logo {
-  width: 2.125rem;
   min-height: 2.125rem;
   object-fit: cover;
+  transition: transform 0.4s ease-in-out;
+}
+
+.sidebar__header__logo__mini {
+  display: none;
   transition: transform 0.4s ease-in-out;
 
   &:hover {
     transform: scale(1.5);
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .sidebar__header__logo {
+    display: none;
+  }
+  .sidebar__header__logo__mini {
+    display: block;
+    object-fit: cover;
+    max-height: fit-content;
   }
 }
 
