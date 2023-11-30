@@ -1,6 +1,7 @@
 // vite.config.js
 import { resolve } from 'path';
 import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 import eslint from 'vite-plugin-eslint';
 
 export default defineConfig({
@@ -38,6 +39,7 @@ export default defineConfig({
       cache: false,
       fix: true,
     }),
+    VitePWA({ registerType: 'autoUpdate' }),
     splitVendorChunkPlugin(),
   ],
 });
