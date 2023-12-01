@@ -21,9 +21,8 @@ class CharacterCounter {
    */
   handleCounting() {
     const charCount = this.textArea.value.replace(/\s+/g, '').length;
-    document.getElementById(
-      'charResult',
-    ).textContent = `${charCount} characters.`;
+    document.getElementById('charResult').textContent =
+      `${charCount} characters.`;
   }
 
   /** Add an event listener for text input in the text area. */
