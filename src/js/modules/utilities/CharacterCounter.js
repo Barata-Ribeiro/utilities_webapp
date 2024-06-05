@@ -17,10 +17,10 @@ class CharacterCounter {
   }
 
   /**
-   * Calculates and displays the number of non-space characters in the text area.
+   * Calculates and displays the number of characters in the text area.
    */
   handleCounting() {
-    const charCount = this.textArea.value.replace(/\s+/g, '').length;
+    const charCount = this.textArea.value.replace(/\n/g, '').length;
     document.getElementById('charResult').textContent =
       `${charCount} characters.`;
   }
