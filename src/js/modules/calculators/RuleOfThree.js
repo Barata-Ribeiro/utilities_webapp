@@ -51,9 +51,7 @@ class RuleOfThree {
     const b = this.elementB.value;
     const c = this.elementC.value;
 
-    const result = (b / a) * c;
-
-    return result;
+    return (b / a) * c;
   }
 
   /**

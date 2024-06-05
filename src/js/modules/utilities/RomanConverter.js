@@ -105,8 +105,7 @@ class RomanConverter {
     this.elementError.style.display = 'none';
     this.elementError.textContent = '';
 
-    const roman = this.arabicToRoman(Number(this.arabicInput.value));
-    this.romanInput.value = roman;
+    this.romanInput.value = this.arabicToRoman(Number(this.arabicInput.value));
   }
 
   /** Handle the conversion from Roman to Arabic when the corresponding button is clicked. */
@@ -124,8 +123,7 @@ class RomanConverter {
     // Convert the Roman input string to uppercase
     const romanUpper = this.romanInput.value.toUpperCase();
 
-    const arabic = this.romanToArabic(romanUpper);
-    this.arabicInput.value = arabic;
+    this.arabicInput.value = this.romanToArabic(romanUpper);
   }
 
   /** Add event listeners to trigger conversions when buttons are clicked. */
