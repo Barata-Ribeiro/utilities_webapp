@@ -16,7 +16,7 @@
 }
 
 .form__input {
-  font-family: var(--font-text);
+  font-family: var(--font-text), sans-serif;
   font-size: 1rem;
   padding: 1rem 0.5rem;
   margin-bottom: 1rem;
@@ -75,7 +75,7 @@
 }
 
 textarea.form__input {
-  font-family: var(--font-text);
+  font-family: var(--font-text), sans-serif;
   white-space: pre-wrap;
   overflow-wrap: break-word;
 }
@@ -148,7 +148,7 @@ textarea.form__input {
 
 .passGen__wrapper__label > span {
   display: block;
-  flex: 1 1 0%;
+  flex: 1 1 0;
   white-space: nowrap;
 }
 
@@ -157,7 +157,7 @@ textarea.form__input {
 }
 
 .form__btn-two {
-  font-family: var(--font-title);
+  font-family: var(--font-title), sans-serif;
   padding: 1rem 2rem;
   background-color: var(--color-primary);
   color: var(--color-background);

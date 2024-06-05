@@ -115,7 +115,7 @@
 
 /* Typography */
 .styleguide__text--title-1 {
-  font-family: var(--font-title);
+  font-family: var(--font-title), sans-serif;
   font-size: 3rem;
   letter-spacing: -1px;
   font-weight: 700;
@@ -123,7 +123,7 @@
 }
 
 .styleguide__text--title-2 {
-  font-family: var(--font-title);
+  font-family: var(--font-title), sans-serif;
   font-size: 2rem;
   letter-spacing: -2px;
   font-weight: 500;
@@ -132,7 +132,7 @@
 }
 
 .styleguide__text-block--body-1 p {
-  font-family: var(--font-text);
+  font-family: var(--font-text), sans-serif;
   font-size: 1.125rem;
   line-height: 1.25;
   letter-spacing: normal;
@@ -140,7 +140,7 @@
 }
 
 .styleguide__text-block--body-2 p {
-  font-family: var(--font-text);
+  font-family: var(--font-text), sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 1rem;
@@ -148,7 +148,7 @@
 
 /* Buttons and Links */
 .styleguide__button--primary a {
-  font-family: var(--font-title);
+  font-family: var(--font-title), sans-serif;
   padding: 1rem 2rem;
   background-color: var(--color-primary);
   color: var(--color-background);
@@ -167,7 +167,7 @@
 }
 
 .styleguide__button--secondary a {
-  font-family: var(--font-title);
+  font-family: var(--font-title), sans-serif;
   padding: 1rem 2rem;
   background-color: var(--color-secondary);
   color: var(--color-text);
@@ -185,7 +185,7 @@
 }
 
 .styleguide__link a {
-  font-family: var(--font-text);
+  font-family: var(--font-text), sans-serif;
   background-position-y: -0%;
   background-image: linear-gradient(
     180deg,
@@ -194,7 +194,6 @@
   ) !important;
   transition: all 0.1s ease;
   background-size: 0.125rem;
-  background-size: auto 190%;
   padding: 0.5rem;
 
   &:hover {
@@ -232,7 +231,7 @@
 }
 
 .styleguide__submit-button button {
-  font-family: var(--font-title);
+  font-family: var(--font-title), sans-serif;
   padding: 0.5rem 1rem;
   background-color: var(--color-primary);
   color: var(--color-background);
