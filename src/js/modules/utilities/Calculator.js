@@ -52,15 +52,18 @@ class Calculator {
    */
   isBalanced(value) {
     const stack = [];
-    for (let i = 0; i < value.length; i += 1) {
-      const char = value[i];
+    let balanced = true;
+    Array.from(value).forEach((char) => {
       if (char === '(') stack.push(char);
       else if (char === ')') {
-        if (stack.length === 0) return false;
+        if (stack.length === 0) {
+          balanced = false;
+          return;
+        }
         stack.pop();
       }
-    }
-    return stack.length === 0;
+    });
+    return balanced && stack.length === 0;
   }
 
   /**

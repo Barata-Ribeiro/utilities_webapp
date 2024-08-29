@@ -76,10 +76,7 @@ class PasswordGenerator {
       do {
         const random = Math.floor(Math.random() * chars.length);
         randomChar = chars.charAt(random);
-      } while (
-        password.charAt(password.length - 1) === randomChar &&
-        chars.length > 1
-      );
+      } while (password.endsWith(randomChar) && chars.length > 1);
       password += randomChar;
     }
 

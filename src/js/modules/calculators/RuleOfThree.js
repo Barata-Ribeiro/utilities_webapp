@@ -82,7 +82,7 @@ class RuleOfThree {
 
       if (this.elementA.value && this.elementB.value && this.elementC.value) {
         const result = this.calculate();
-        this.elementX.value = parseFloat(result).toFixed(3);
+        this.elementX.value = result.toFixed(3);
         this.buttonCopy.disabled = false;
       }
     }
