@@ -27,7 +27,6 @@ class Home {
       this.getUserOperatingSystem();
       await this.getJokes();
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(error);
     }
   }
@@ -45,7 +44,6 @@ class Home {
       this.userIpAddress.textContent = data.ip;
     } catch (error) {
       this.userIpAddress.textContent = 'Failed to load IP Address';
-      // eslint-disable-next-line no-console
       console.error(
         'There was a problem with the fetch operation:',
         error.message,
@@ -145,7 +143,6 @@ class Home {
         this.randomJokes,
         'Failed to load jokes. Please try again later.',
       );
-      // eslint-disable-next-line no-console
       console.error('Error fetching jokes:', error);
     }
   }

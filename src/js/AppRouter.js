@@ -138,7 +138,7 @@ class AppRouter {
     window.route = this.urlRoute.bind(this);
 
     // Initial url handler
-    this.urlLocationHandler();
+    this.urlLocationHandler().then((r) => r);
   }
 
   /**
@@ -217,7 +217,7 @@ class AppRouter {
     } else {
       window.history.pushState({}, '', href);
     }
-    this.urlLocationHandler();
+    this.urlLocationHandler().then((r) => r);
   }
 
   /**

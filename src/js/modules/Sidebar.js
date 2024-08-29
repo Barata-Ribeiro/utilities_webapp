@@ -1,5 +1,5 @@
 /**
- * Class that represents the application side bar for navigation.
+ * Class that represents the application sidebar for navigation.
  */
 class Sidebar {
   /**
@@ -226,7 +226,7 @@ class Sidebar {
       : 'sidebar__nav__link';
     a.href = link.href;
     // Add a tabindex attribute to make the elements focusable
-    a.setAttribute('tabindex', 0);
+    a.setAttribute('tabindex', '0');
 
     // Creating wrapper span for icon and text
     const spanWrapper = document.createElement('span');
