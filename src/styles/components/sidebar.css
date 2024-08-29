@@ -241,7 +241,9 @@
   gap: 1rem;
 }
 
-.hamburger__menu__nav.active > .hamburger__menu__links > .hamburger__menu__nav__link {
+.hamburger__menu__nav.active
+  > .hamburger__menu__links
+  > .hamburger__menu__nav__link {
   .hamburger__menu__nav__link__wrapper {
     display: inline-flex;
     align-items: center;
@@ -250,7 +252,9 @@
   }
 }
 
-.hamburger__menu__nav.active > .hamburger__menu__links > .hamburger__menu__nav__heading {
+.hamburger__menu__nav.active
+  > .hamburger__menu__links
+  > .hamburger__menu__nav__heading {
   text-decoration: underline;
   text-underline-offset: 0.25rem;
   text-decoration-thickness: 0.125rem;

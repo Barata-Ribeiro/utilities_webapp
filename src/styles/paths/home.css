@@ -4,7 +4,6 @@
   padding: 2em;
   border-radius: 0.5rem;
   background-color: var(--color-background-support);
-  /* box-shadow: 0 0.1875rem 0.625rem rgba(0, 0, 0, 0.1); */
 }
 
 .home__greeting,
