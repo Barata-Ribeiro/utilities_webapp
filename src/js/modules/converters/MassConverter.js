@@ -20,9 +20,7 @@ class MassConverter extends Converter {
       pound: document.getElementById('pound'),
       ounce: document.getElementById('ounce'),
     };
-    super(massUnits);
-
-    this.conversionFactor = {
+    const conversionFactor = {
       tonne: [1, 1e3, 1e6, 1e9, 1e12, 0.984207, 1.10231, 2204.623, 35273.96],
       kilogram: [
         1e-3, 1, 1e3, 1e6, 1e9, 0.000984207, 0.00110231, 2.204623, 35.27396,
@@ -51,6 +49,8 @@ class MassConverter extends Converter {
         3.125e-5, 0.0625, 1,
       ],
     };
+
+    super(massUnits, conversionFactor);
   }
 }
 

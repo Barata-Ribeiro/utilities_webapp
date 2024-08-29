@@ -14,9 +14,7 @@ class TemperatureConverter extends Converter {
       celsius: document.getElementById('celsius'),
       kelvin: document.getElementById('kelvin'),
     };
-    super(temperatureUnits);
-
-    this.conversionFactor = {
+    const conversionFactor = {
       fahrenheit: {
         fahrenheit: (value) => value,
         celsius: (value) => (value - 32) * (5 / 9),
@@ -33,6 +31,8 @@ class TemperatureConverter extends Converter {
         kelvin: (value) => value,
       },
     };
+
+    super(temperatureUnits, conversionFactor);
   }
 
   /**

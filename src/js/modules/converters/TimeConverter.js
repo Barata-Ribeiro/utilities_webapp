@@ -23,9 +23,7 @@ class TimeConverter extends Converter {
       decade: document.getElementById('decade'),
       century: document.getElementById('century'),
     };
-    super(timeUnits);
-
-    this.conversionFactor = {
+    const conversionFactor = {
       nanosecond: [
         1,
         1e-3,
@@ -185,6 +183,8 @@ class TimeConverter extends Converter {
         1200, 100, 10, 1,
       ],
     };
+
+    super(timeUnits, conversionFactor);
   }
 }
 

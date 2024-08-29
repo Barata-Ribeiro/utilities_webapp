@@ -22,9 +22,7 @@ class LengthConverter extends Converter {
       foot: document.getElementById('foot'),
       nauticalMile: document.getElementById('nauticalMile'),
     };
-    super(lengthUnits);
-
-    this.conversionFactor = {
+    const conversionFactor = {
       kilometer: [
         1,
         1e3,
@@ -160,6 +158,8 @@ class LengthConverter extends Converter {
         1,
       ],
     };
+
+    super(lengthUnits, conversionFactor);
   }
 }
 
