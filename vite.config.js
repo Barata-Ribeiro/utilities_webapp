@@ -1,6 +1,5 @@
-// vite.config.js
 import { resolve } from 'path';
-import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import eslint from 'vite-plugin-eslint';
 
@@ -16,7 +15,6 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
       },
       output: {
-        // eslint-disable-next-line consistent-return
         manualChunks(id) {
           if (id.includes('mathjs')) return 'mathjs';
           if (id.includes('node_modules')) {
@@ -26,6 +24,7 @@ export default defineConfig({
               .split('/')[0]
               .toString();
           }
+          return null;
         },
       },
     },
@@ -39,7 +38,15 @@ export default defineConfig({
       cache: false,
       fix: true,
     }),
-    VitePWA({ registerType: 'autoUpdate' }),
-    splitVendorChunkPlugin(),
+    VitePWA({
+      manifest: {
+        name: 'Utility Web App',
+        short_name: 'UWA',
+        description:
+          "A web app dedicated to several valuable tools I've developed for me, and perhaps even you.",
+        theme_color: '#ffffff',
+      },
+      registerType: 'autoUpdate',
+    }),
   ],
 });
