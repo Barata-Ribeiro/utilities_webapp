@@ -1,3 +1,7 @@
+import { AppSidebar } from "@/components/app-sidebar"
+import Breadcrumbs from "@/components/breadcrumbs"
+import { Separator } from "@/components/ui/separator"
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import type { Metadata } from "next"
 import { Montserrat, Source_Sans_3 } from "next/font/google"
 import "./globals.css"
@@ -28,8 +32,24 @@ export default function RootLayout({
     children: ReactNode
 }>) {
     return (
-        <html lang="en">
-            <body className={`${montserrat.variable} ${sourceSans3.variable} antialiased`}>{children}</body>
+        <html lang="en" suppressHydrationWarning>
+            <body className={`${montserrat.variable} ${sourceSans3.variable} antialiased`}>
+                <SidebarProvider>
+                    <AppSidebar />
+                    <SidebarInset>
+                        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+                            <div className="flex items-center gap-2 px-4">
+                                <SidebarTrigger className="-ml-1" />
+                                <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
+                                <Breadcrumbs />
+                            </div>
+                        </header>
+                        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+                            <main className="relative flex min-h-0 flex-1 flex-col gap-4 md:gap-6">{children}</main>
+                        </div>
+                    </SidebarInset>
+                </SidebarProvider>
+            </body>
         </html>
     )
 }
