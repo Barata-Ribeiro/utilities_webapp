@@ -87,7 +87,7 @@ export function NavMain() {
                 },
                 {
                     title: "Mass",
-                    url: "/converters/Mass",
+                    url: "/converters/mass",
                 },
                 {
                     title: "Speed",
