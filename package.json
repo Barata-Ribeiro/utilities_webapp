@@ -2,6 +2,16 @@
   "name": "utilities_webapp",
   "version": "2.0.0",
   "private": true,
+  "author": {
+    "name": "João Mendes Jorge Barata Ribeiro",
+    "email": "jmj@barataribeiro.com",
+    "url": "https://github.barataribeiro.com/"
+  },
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/Barata-Ribeiro/utilities_webapp/issues",
+    "email": "jmj@barataribeiro.com"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -49,7 +59,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4.1.12",
-    "tw-animate-css": "^1.3.7",
+    "tw-animate-css": "^1.3.8",
     "typescript": "^5.9.2"
-  }
+  },
+  "packageManager": "pnpm@10.15.1"
 }

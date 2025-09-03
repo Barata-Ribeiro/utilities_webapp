@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Utilities Web App
 
-## Getting Started
+A collection of small utilities built as a modern Next.js application. The project was restructured to use the Next.js
+/app router with TypeScript, Tailwind CSS and a set of UI primitives and helpers to compose converters, calculators and
+small utilities.
 
-First, run the development server:
+Demo: https://utilities-webapp.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🧰 Key details
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Framework**: Next.js (app router)
+- **Language**: TypeScript + React
+- **Styling**: Tailwind CSS
+- **UI primitives**: Radix UI components for SHADCN/UI
+- **Package manager**: pnpm
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 What this repository contains
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app` — Next.js app routes and pages (converters, calculators, utilities, about, etc.)
+- `src/components` — shared UI and feature components (converters, calculators, utilities subcomponents)
+- `src/lib` — utilities and helpers
+- `src/actions` — small server/client actions used by pages (examples: get-ip, get-jokes)
 
-## Learn More
+## ✨ Notable features
 
-To learn more about Next.js, take a look at the following resources:
+- **Converters**: length, mass, speed, temperature
+- **Calculators**: BMI, rule-of-three
+- **Utilities**: password generator (including pin generator), character counter, roman numeral converter
+- Light/dark theme switching (next-themes)
+- Responsive layout with accessible UI primitives (Radix + custom shadcn/ui components)
+- Project built with modern tooling: Next.js, TypeScript, Tailwind and linting
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+MORE TO COME...
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## ⚙️ Local development
 
-## Deploy on Vercel
+1. Clone the repository
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   git clone https://github.com/Barata-Ribeiro/utilities_webapp.git
+   cd utilities_webapp
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Install dependencies (pnpm is recommended)
+
+   ```bash
+   pnpm install
+   ```
+
+3. Run the development server
+
+   ```bash
+   pnpm run dev
+   ```
+
+## 🧩 Available scripts (from package.json)
+
+- `pnpm run dev`     — start Next.js in development (uses turbopack)
+- `pnpm run build`   — build for production
+- `pnpm run start`   — start built production server
+- `pnpm run lint`    — run linter
+
+## 📝 Notes
+
+- Routes are implemented under `src/app` (Next.js app router). Static files (icons, manifest) live in the `public/`
+  directory.
+- The project uses pnpm as package manager (see `packageManager` in package.json).
+
+## 🤝 Contributing
+
+Contributions are welcome. Open an issue to discuss larger changes before preparing a pull request. Keep changes small
+and add descriptions/tests where appropriate.
+
+## 📬 Get in Touch
+
+Feel free to contact me with any questions or if you are interested in collaborating on a project.
+
+🔗 [LinkedIn](https://www.linkedin.com/in/barataribeiro/)
+
+## 📜 License
+
+This project is free software available under the [GPLv3](LICENSE) license.
