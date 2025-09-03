@@ -1,14 +1,6 @@
 import type { NextConfig } from "next"
 
-// const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? ""
-// const ASSET_PREFIX = process.env.NEXT_PUBLIC_ASSET_PREFIX ?? BASE_PATH ?? ""
-
 const nextConfig: NextConfig = {
-    // TODO: enable for static export later
-    // output: "export",
-    // distDir: "dist",
-    // basePath: BASE_PATH ?? undefined,
-    // assetPrefix: ASSET_PREFIX ?? undefined,
     reactStrictMode: true,
     trailingSlash: false,
     skipTrailingSlashRedirect: true,
@@ -26,6 +18,39 @@ const nextConfig: NextConfig = {
             "@radix-ui/react-tooltip",
             "lucide-react",
         ],
+    },
+    headers: async () => {
+        return [
+            {
+                source: "/(.*)",
+                headers: [
+                    {
+                        key: "X-Content-Type-Options",
+                        value: "nosniff",
+                    },
+                    {
+                        key: "Referrer-Policy",
+                        value: "strict-origin-when-cross-origin",
+                    },
+                    {
+                        key: "Permissions-Policy",
+                        value: "geolocation=(), microphone=(), camera=()",
+                    },
+                    {
+                        key: "X-Frame-Options",
+                        value: "DENY",
+                    },
+                    {
+                        key: "X-XSS-Protection",
+                        value: "1; mode=block",
+                    },
+                    {
+                        key: "Strict-Transport-Security",
+                        value: "max-age=31536000; includeSubDomains; preload",
+                    },
+                ],
+            },
+        ]
     },
 }
 
