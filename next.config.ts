@@ -2,9 +2,7 @@ import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
     reactStrictMode: true,
-    trailingSlash: false,
-    skipTrailingSlashRedirect: true,
-    serverExternalPackages: ["postcss"],
+    serverExternalPackages: ["postcss", "sharp"],
     experimental: {
         reactCompiler: true,
         optimizePackageImports: [
@@ -47,6 +45,15 @@ const nextConfig: NextConfig = {
                     {
                         key: "Strict-Transport-Security",
                         value: "max-age=31536000; includeSubDomains; preload",
+                    },
+                ],
+            },
+            {
+                source: "/manifest.json",
+                headers: [
+                    {
+                        key: "cache-control",
+                        value: "public, max-age=3600",
                     },
                 ],
             },
