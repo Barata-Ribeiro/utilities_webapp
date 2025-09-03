@@ -23,7 +23,6 @@ import {
 import {
     CalculatorIcon,
     ChevronRight,
-    DotIcon,
     GaugeIcon,
     type LucideIcon,
     NotebookIcon,
@@ -31,7 +30,7 @@ import {
     RefreshCcwDotIcon,
 } from "lucide-react"
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { Fragment } from "react"
 
 interface LinkItem {
@@ -46,11 +45,10 @@ interface LinkItem {
 }
 
 export function NavMain() {
-    const { state, isMobile, toggleSidebar } = useSidebar()
+    const { state, isMobile } = useSidebar()
     const pathname = usePathname()
-    const router = useRouter()
 
-    const links: LinkItem[] = [
+    const LINKS: LinkItem[] = [
         {
             title: "Utilities",
             url: "#",
@@ -132,29 +130,27 @@ export function NavMain() {
                     tooltip="Home"
                     aria-current={pathname === "/" ? "page" : undefined}
                     {...(pathname.endsWith("/") && { "data-current": "" })}
-                    onClick={() => {
-                        router.push("/")
-                        toggleSidebar()
-                    }}
-                    className="data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground cursor-pointer">
-                    <GaugeIcon aria-hidden className="mr-2" />
-                    <span>Home</span>
+                    className="data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground cursor-pointer"
+                    asChild>
+                    <Link href="/">
+                        <GaugeIcon aria-hidden className="mr-2" />
+                        <span>Home</span>
+                    </Link>
                 </SidebarMenuButton>
                 <SidebarMenuButton
                     tooltip="About"
                     aria-current={pathname.endsWith("/about") ? "page" : undefined}
                     {...(pathname.endsWith("/about") && { "data-current": "" })}
-                    onClick={() => {
-                        router.push("/about")
-                        toggleSidebar()
-                    }}
-                    className="data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground cursor-pointer">
-                    <NotebookIcon aria-hidden className="mr-2" />
-                    <span>About</span>
+                    className="data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground cursor-pointer"
+                    asChild>
+                    <Link href="/about">
+                        <NotebookIcon aria-hidden className="mr-2" />
+                        <span>About</span>
+                    </Link>
                 </SidebarMenuButton>
                 {state === "collapsed" && !isMobile && (
                     <Fragment>
-                        {links.map(item => (
+                        {LINKS.map(item => (
                             <DropdownMenu key={item.title}>
                                 <DropdownMenuTrigger asChild>
                                     <SidebarMenuButton
@@ -170,19 +166,20 @@ export function NavMain() {
                                 <DropdownMenuContent side="right" align="start">
                                     <DropdownMenuLabel>{item.title}</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
+                                    <DropdownMenuGroup className="space-y-1">
                                         {item.items?.map(subItem => {
                                             const isActive = pathname.endsWith(subItem.url)
 
                                             return (
-                                                <DropdownMenuItem key={subItem.title}>
+                                                <DropdownMenuItem
+                                                    asChild
+                                                    {...(isActive && { "data-current": "" })}
+                                                    className="data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground cursor-pointer data-current:px-2 data-current:font-medium"
+                                                    key={subItem.title}>
                                                     <Link
                                                         href={subItem.url}
                                                         aria-current={isActive ? "page" : undefined}
-                                                        {...(isActive && { "data-current": "" })}
-                                                        onClick={() => toggleSidebar()}
-                                                        className="inline-flex w-full items-center gap-x-2 data-current:underline">
-                                                        {isActive && <DotIcon aria-hidden />}
+                                                        className="inline-flex w-full items-center gap-x-2">
                                                         <span>{subItem.title}</span>
                                                     </Link>
                                                 </DropdownMenuItem>
@@ -194,9 +191,9 @@ export function NavMain() {
                         ))}
                     </Fragment>
                 )}
-                {state === "expanded" && (
+                {(state === "expanded" || isMobile) && (
                     <Fragment>
-                        {links.map(item => (
+                        {LINKS.map(item => (
                             <Collapsible
                                 key={item.title}
                                 asChild
@@ -222,14 +219,12 @@ export function NavMain() {
 
                                                 return (
                                                     <SidebarMenuSubItem key={subItem.title}>
-                                                        <SidebarMenuSubButton asChild>
+                                                        <SidebarMenuSubButton isActive={isActive} asChild>
                                                             <Link
                                                                 href={subItem.url}
                                                                 aria-current={isActive ? "page" : undefined}
                                                                 {...(isActive && { "data-current": "" })}
-                                                                onClick={() => toggleSidebar()}
-                                                                className="inline-flex items-center gap-x-2 data-current:underline">
-                                                                {isActive && <DotIcon aria-hidden />}
+                                                                className="inline-flex items-center gap-x-2">
                                                                 <span>{subItem.title}</span>
                                                             </Link>
                                                         </SidebarMenuSubButton>

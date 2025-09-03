@@ -477,7 +477,7 @@ function SidebarMenuButton({
     tooltip?: string | ComponentProps<typeof TooltipContent>
 } & VariantProps<typeof sidebarMenuButtonVariants>) {
     const Comp = asChild ? Slot : "button"
-    const { isMobile, state } = useSidebar()
+    const { isMobile, state, toggleSidebar } = useSidebar()
 
     const button = (
         <Comp
@@ -486,6 +486,7 @@ function SidebarMenuButton({
             data-size={size}
             data-active={isActive}
             className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
+            onClick={() => isMobile && toggleSidebar()}
             {...props}
         />
     )
@@ -629,6 +630,7 @@ function SidebarMenuSubButton({
     isActive?: boolean
 }) {
     const Comp = asChild ? Slot : "a"
+    const { isMobile, toggleSidebar } = useSidebar()
 
     return (
         <Comp
@@ -644,6 +646,7 @@ function SidebarMenuSubButton({
                 "group-data-[collapsible=icon]:hidden",
                 className,
             )}
+            onClick={() => isMobile && toggleSidebar()}
             {...props}
         />
     )
