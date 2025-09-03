@@ -4,6 +4,7 @@ import { ThemeSwitcher } from "@/components/theme-switcher"
 import { Separator } from "@/components/ui/separator"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { ThemeProvider } from "@/providers/theme-provider"
+import Cookies from "js-cookie"
 import type { Metadata } from "next"
 import { Montserrat, Source_Sans_3 } from "next/font/google"
 import "./globals.css"
@@ -78,18 +79,20 @@ export const metadata: Metadata = {
     },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: ReactNode
 }>) {
+    const defaultOpen = Cookies.get("sidebar_state") === "true"
+
     return (
         <html lang="en" suppressHydrationWarning>
             <body className={`${montserrat.variable} ${sourceSans3.variable} antialiased`}>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                     <ThemeSwitcher />
 
-                    <SidebarProvider>
+                    <SidebarProvider defaultOpen={defaultOpen}>
                         <AppSidebar />
                         <SidebarInset>
                             <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
