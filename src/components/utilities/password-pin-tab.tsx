@@ -1,9 +1,10 @@
 "use client"
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import PasswordGenerator from "@/components/utilities/password-generator"
-import PinGenerator from "@/components/utilities/pin-generator"
-import { HashIcon, RotateCcwKeyIcon } from "lucide-react"
+import MemorablePassword from "@/components/utilities/password-generators/memorable-password"
+import PasswordGenerator from "@/components/utilities/password-generators/password-generator"
+import PinGenerator from "@/components/utilities/password-generators/pin-generator"
+import { HashIcon, LightbulbIcon, RotateCcwKeyIcon } from "lucide-react"
 
 export default function PasswordPinTab() {
     return (
@@ -13,6 +14,10 @@ export default function PasswordPinTab() {
                     <RotateCcwKeyIcon aria-hidden size={16} />
                     Password
                 </TabsTrigger>
+                <TabsTrigger value="memorable-password">
+                    <LightbulbIcon aria-hidden size={16} />
+                    Memorable
+                </TabsTrigger>
                 <TabsTrigger value="pin">
                     <HashIcon aria-hidden size={16} />
                     PIN
@@ -21,6 +26,10 @@ export default function PasswordPinTab() {
 
             <TabsContent value="password">
                 <PasswordGenerator />
+            </TabsContent>
+
+            <TabsContent value="memorable-password">
+                <MemorablePassword />
             </TabsContent>
 
             <TabsContent value="pin">

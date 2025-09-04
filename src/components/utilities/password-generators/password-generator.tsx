@@ -67,7 +67,7 @@ export default function PasswordGenerator() {
                 <CardTitle>Password Generator</CardTitle>
                 <CardDescription>Generate secure passwords for enhanced security.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
                 <div className="flex flex-col gap-2">
                     <label htmlFor="pin-size" className="text-sm font-medium">
                         Password Length: {passSize}
@@ -82,19 +82,7 @@ export default function PasswordGenerator() {
                     />
                 </div>
 
-                <div className="mb-4 flex w-full flex-col items-center">
-                    <p className="mb-2 max-w-full text-center font-mono text-2xl tracking-widest break-all">
-                        {password
-                            ? Array.from(password).map((ch, i) => (
-                                  <span key={i} className={`${charClass(ch)} inline-block`} aria-hidden={false}>
-                                      {ch}
-                                  </span>
-                              ))
-                            : "••••••••"}
-                    </p>
-                </div>
-
-                <div className="grid gap-2 pt-4 sm:grid-cols-2">
+                <div className="grid gap-2 sm:grid-cols-2">
                     <div className="inline-flex items-center justify-between gap-x-2 rounded-md p-2 hover:bg-gray-100 dark:hover:bg-gray-800">
                         <Label htmlFor="has-numbers" className="text-sm font-medium">
                             Has Numbers
@@ -117,6 +105,18 @@ export default function PasswordGenerator() {
                         />
                     </div>
                 </div>
+
+                <div className="flex w-full flex-col items-center rounded-md border p-4">
+                    <p className="mb-2 max-w-full text-center font-mono text-2xl tracking-widest break-all">
+                        {password
+                            ? Array.from(password).map((ch, i) => (
+                                  <span key={i} className={`${charClass(ch)} inline-block`} aria-hidden={false}>
+                                      {ch}
+                                  </span>
+                              ))
+                            : "••••••••"}
+                    </p>
+                </div>
             </CardContent>
             <CardFooter className="flex w-full items-center justify-between gap-2">
                 <div className="flex-1">
@@ -132,7 +132,7 @@ export default function PasswordGenerator() {
                         variant="outline"
                         onClick={copyToClipboard}
                         disabled={!password}
-                        aria-label="Copy PIN to clipboard">
+                        aria-label="Copy Password to clipboard">
                         Copy
                     </Button>
                 </div>

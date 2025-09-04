@@ -40,9 +40,9 @@ export default function PinGenerator() {
                 <CardDescription>Generate secure PINs for enhanced security.</CardDescription>
             </CardHeader>
 
-            <CardContent>
-                <div className="mb-4 flex flex-col items-center">
-                    <div className="mb-2 font-mono text-2xl tracking-widest">{pin ?? "•••"}</div>
+            <CardContent className="space-y-4">
+                <div className="flex flex-col items-center rounded-md border p-4">
+                    <div className="font-mono text-2xl tracking-widest">{pin ?? "•••"}</div>
                 </div>
 
                 <div className="flex flex-col gap-2">
