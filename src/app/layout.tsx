@@ -12,6 +12,7 @@ import { type ReactNode } from "react"
 
 const montserrat = Montserrat({
     variable: "--font-montserrat",
+    display: "swap",
     subsets: ["latin"],
     style: ["normal", "italic"],
     weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -19,6 +20,7 @@ const montserrat = Montserrat({
 
 const sourceSans3 = Source_Sans_3({
     variable: "--font-source-sans-3",
+    display: "swap",
     subsets: ["latin"],
     style: ["normal", "italic"],
     weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
