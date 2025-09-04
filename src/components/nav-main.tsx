@@ -119,6 +119,10 @@ export function NavMain() {
                     title: "Rule of Three",
                     url: "/calculators/rule-of-three",
                 },
+                {
+                    title: "Dates",
+                    url: "/calculators/dates",
+                },
             ],
         },
     ]
