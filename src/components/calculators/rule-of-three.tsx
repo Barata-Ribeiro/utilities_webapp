@@ -8,27 +8,27 @@ import { useState } from "react"
 import { Resolver, useForm } from "react-hook-form"
 import { z } from "zod/v4"
 
-const ruleOfThreeSchema = z.object({
-    a: z.preprocess(val => parseFloat(String(val)), z.number("Value must be a number.").nonnegative()),
-    b: z.preprocess(val => parseFloat(String(val)), z.number("Value must be a number.").nonnegative()),
-    c: z.preprocess(val => parseFloat(String(val)), z.number("Value must be a number.").nonnegative()),
+const RuleOfThreeSchema = z.object({
+    a: z.coerce.number("Value must be a number.").nonnegative(),
+    b: z.coerce.number("Value must be a number.").nonnegative(),
+    c: z.coerce.number("Value must be a number.").nonnegative(),
 })
 
-type FormValues = z.infer<typeof ruleOfThreeSchema>
+type FormValues = z.infer<typeof RuleOfThreeSchema>
 
 export default function RuleOfThree() {
     const [result, setResult] = useState<string | null>(null)
 
     const form = useForm<FormValues>({
-        resolver: zodResolver(ruleOfThreeSchema) as unknown as Resolver<FormValues>,
+        resolver: zodResolver(RuleOfThreeSchema) as Resolver<FormValues>,
         defaultValues: { a: 0, b: 0, c: 0 },
     })
 
-    const onFormSubmit = (data: z.infer<typeof ruleOfThreeSchema>) => {
+    const onFormSubmit = (data: z.infer<typeof RuleOfThreeSchema>) => {
         const { a, b, c } = data
 
-        if (a === 0) {
-            setResult("Error: Division by zero is not allowed.")
+        if (Object.values(data).some(value => value === null || value === undefined || isNaN(value) || value <= 0)) {
+            alert("Please fill in all fields with valid numbers.")
             return
         }
 
@@ -54,17 +54,13 @@ export default function RuleOfThree() {
                                     <FormItem className="relative">
                                         <FormControl>
                                             <Input
-                                                id={field.name}
                                                 type="text"
                                                 placeholder="Value A"
-                                                value={field.value}
-                                                onChange={e => field.onChange(e.target.value)}
-                                                onBlur={field.onBlur}
-                                                name={field.name}
                                                 inputMode="decimal"
                                                 autoComplete="off"
                                                 aria-describedby={describedBy}
                                                 aria-invalid={!!fieldError}
+                                                {...field}
                                             />
                                         </FormControl>
                                         <FormMessage
@@ -89,17 +85,13 @@ export default function RuleOfThree() {
                                     <FormItem className="relative">
                                         <FormControl>
                                             <Input
-                                                id={field.name}
                                                 type="text"
                                                 placeholder="Value B"
-                                                value={field.value}
-                                                onChange={e => field.onChange(e.target.value)}
-                                                onBlur={field.onBlur}
-                                                name={field.name}
                                                 inputMode="decimal"
                                                 autoComplete="off"
                                                 aria-describedby={describedBy}
                                                 aria-invalid={!!fieldError}
+                                                {...field}
                                             />
                                         </FormControl>
                                         <FormMessage
@@ -126,17 +118,13 @@ export default function RuleOfThree() {
                                     <FormItem className="relative">
                                         <FormControl>
                                             <Input
-                                                id={field.name}
                                                 type="text"
                                                 placeholder="Value A"
-                                                value={field.value}
-                                                onChange={e => field.onChange(e.target.value)}
-                                                onBlur={field.onBlur}
-                                                name={field.name}
                                                 inputMode="decimal"
                                                 autoComplete="off"
                                                 aria-describedby={describedBy}
                                                 aria-invalid={!!fieldError}
+                                                {...field}
                                             />
                                         </FormControl>
                                         <FormMessage

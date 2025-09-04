@@ -10,24 +10,21 @@ import type { Resolver } from "react-hook-form"
 import { useForm } from "react-hook-form"
 import { z } from "zod/v4"
 
-const romanSchema = z.object({
+const RomanSchema = z.object({
     value: z.string().regex(/^(?=.)M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/i, {
-        message: "Invalid Roman numeral",
+        message: "Invalid Roman numeral.",
     }),
 })
 
-const arabicSchema = z.object({
-    value: z.preprocess(
-        val => {
-            if (typeof val === "string") return parseInt(val, 10)
-            return val
-        },
-        z
-            .number()
-            .min(1, { message: "Number must be at least 1" })
-            .max(3999, { message: "Number must be at most 3999" }),
-    ),
+const ArabicSchema = z.object({
+    value: z.coerce
+        .number()
+        .min(1, { message: "Number must be at least 1." })
+        .max(3999, { message: "Number must be at most 3999." }),
 })
+
+type ArabicSchemaType = z.infer<typeof ArabicSchema>
+type RomanSchemaType = z.infer<typeof RomanSchema>
 
 const ROMAN_NUMERALS = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"]
 const ARABIC_NUMERALS = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
@@ -38,17 +35,17 @@ export default function RomanConverter() {
         arabic: null,
     })
 
-    const romanToArabicForm = useForm<z.infer<typeof romanSchema>>({
-        resolver: zodResolver(romanSchema),
+    const romanToArabicForm = useForm<RomanSchemaType>({
+        resolver: zodResolver(RomanSchema) as Resolver<RomanSchemaType>,
         defaultValues: { value: "" },
     })
 
-    const arabicToRomanForm = useForm<z.infer<typeof arabicSchema>>({
-        resolver: zodResolver(arabicSchema) as unknown as Resolver<z.infer<typeof arabicSchema>>,
-        defaultValues: { value: 1 },
+    const arabicToRomanForm = useForm<ArabicSchemaType>({
+        resolver: zodResolver(ArabicSchema) as Resolver<ArabicSchemaType>,
+        defaultValues: { value: 0 },
     })
 
-    function onRomanFormSubmit(data: z.infer<typeof romanSchema>) {
+    function onRomanFormSubmit(data: RomanSchemaType) {
         let i = 0
         let num = 0
         let roman = data.value.toUpperCase()
@@ -66,7 +63,7 @@ export default function RomanConverter() {
         setResults(prev => ({ ...prev, roman: num }))
     }
 
-    function onArabicFormSubmit(data: z.infer<typeof arabicSchema>) {
+    function onArabicFormSubmit(data: ArabicSchemaType) {
         let num = data.value
         let roman = ""
         let i = 0
@@ -148,18 +145,7 @@ export default function RomanConverter() {
                                 <FormItem>
                                     <FormLabel className="text-xs">Number</FormLabel>
                                     <FormControl>
-                                        <Input
-                                            type="number"
-                                            min={1}
-                                            max={3999}
-                                            value={field.value as unknown as number}
-                                            onChange={e => {
-                                                const v = e.target.value
-                                                field.onChange(v === "" ? "" : Number(v))
-                                            }}
-                                            onBlur={field.onBlur}
-                                            name={field.name}
-                                        />
+                                        <Input type="number" min={1} max={3999} placeholder="e.g. 14" {...field} />
                                     </FormControl>
                                     <FormDescription className="text-xs">
                                         Enter an integer between 1 and 3999.

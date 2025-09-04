@@ -10,26 +10,22 @@ import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { BadgeAlertIcon, BadgeCheckIcon } from "lucide-react"
 import { useState } from "react"
-import { type Resolver, useForm } from "react-hook-form"
+import { Resolver, useForm } from "react-hook-form"
 import { twMerge } from "tailwind-merge"
 import { z } from "zod/v4"
 
-const bmiSchema = z.object({
-    weight: z.preprocess(
-        val => parseFloat(String(val)),
-        z
-            .number("Weight must be a valid number.")
-            .min(1, { message: "Weight must be at least 1 kg." })
-            .max(500, { message: "Weight must be at most 500 kg." }),
-    ),
-    height: z.preprocess(
-        val => parseFloat(String(val)),
-        z
-            .number("Height must be a valid number.")
-            .min(30, { message: "Height must be at least 30 cm." })
-            .max(300, { message: "Height must be at most 300 cm." }),
-    ),
+const BmiSchema = z.object({
+    weight: z.coerce
+        .number()
+        .min(1, { message: "Weight must be at least 1 kg." })
+        .max(500, { message: "Weight must be at most 500 kg." }),
+    height: z.coerce
+        .number()
+        .min(30, { message: "Height must be at least 30 cm." })
+        .max(300, { message: "Height must be at most 300 cm." }),
 })
+
+type BmiSchemaType = z.infer<typeof BmiSchema>
 
 interface BmiResult {
     bmi: number | null
@@ -40,16 +36,15 @@ interface BmiResult {
 export default function Bmi() {
     const [bmi, setBmi] = useState<BmiResult>({ bmi: null, height: null, weight: null })
 
-    const form = useForm<z.infer<typeof bmiSchema>>({
-        resolver: zodResolver(bmiSchema) as unknown as Resolver<z.infer<typeof bmiSchema>>,
+    const form = useForm<BmiSchemaType>({
+        resolver: zodResolver(BmiSchema) as Resolver<BmiSchemaType>,
         defaultValues: { weight: 0, height: 0 },
     })
 
-    function onFormSubmit(data: z.infer<typeof bmiSchema>) {
-        const parsed = bmiSchema.parse(data as unknown)
-        const heightInMeters = parsed.height / 100
-        const calculatedBmi = parsed.weight / (heightInMeters * heightInMeters)
-        setBmi({ bmi: parseFloat(calculatedBmi.toFixed(2)), height: parsed.height, weight: parsed.weight })
+    function onFormSubmit(data: BmiSchemaType) {
+        const heightInMeters = data.height / 100
+        const calculatedBmi = data.weight / (heightInMeters * heightInMeters)
+        setBmi({ bmi: parseFloat(calculatedBmi.toFixed(2)), height: data.height, weight: data.weight })
     }
 
     function getProgressBarValue(bmi: number) {
@@ -98,17 +93,13 @@ export default function Bmi() {
                                         </FormLabel>
                                         <FormControl>
                                             <Input
-                                                id={field.name}
                                                 type="text"
-                                                placeholder="Height in cm"
-                                                value={field.value}
-                                                onChange={e => field.onChange(e.target.value)}
-                                                onBlur={field.onBlur}
-                                                name={field.name}
+                                                placeholder="e.g. 170"
                                                 inputMode="decimal"
                                                 autoComplete="off"
                                                 aria-describedby={describedBy}
                                                 aria-invalid={!!fieldError}
+                                                {...field}
                                             />
                                         </FormControl>
                                         {!fieldError && (
@@ -137,17 +128,13 @@ export default function Bmi() {
                                         </FormLabel>
                                         <FormControl>
                                             <Input
-                                                id={field.name}
                                                 type="text"
-                                                placeholder="Weight in kg"
-                                                value={field.value}
-                                                onChange={e => field.onChange(e.target.value)}
-                                                onBlur={field.onBlur}
-                                                name={field.name}
+                                                placeholder="e.g. 65"
                                                 inputMode="decimal"
                                                 autoComplete="off"
                                                 aria-describedby={describedBy}
                                                 aria-invalid={!!fieldError}
+                                                {...field}
                                             />
                                         </FormControl>
                                         {!fieldError && (
