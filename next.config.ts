@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
             "@radix-ui/react-slot",
             "@radix-ui/react-tooltip",
             "lucide-react",
+            "mathjs",
+            "clsx",
+            "date-fns",
         ],
     },
     headers: async () => {
@@ -49,7 +52,7 @@ const nextConfig: NextConfig = {
                 ],
             },
             {
-                source: "/manifest.json",
+                source: "/manifest\\.(json|webmanifest)",
                 headers: [
                     {
                         key: "cache-control",
