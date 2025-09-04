@@ -1,13 +1,7 @@
-import { Metadata } from "next"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import ChuckNorrisJokesClient from "@/components/home/chuck-norris-jokes-client"
 import SystemInfoClient from "@/components/home/system-info-client"
-
-export const metadata: Metadata = {
-    title: "Home",
-    description: "Welcome to my Utilities Web App. Quick handy tools to speed up everyday tasks.",
-}
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function Home() {
     return (

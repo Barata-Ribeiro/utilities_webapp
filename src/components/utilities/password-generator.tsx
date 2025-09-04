@@ -68,18 +68,6 @@ export default function PasswordGenerator() {
                 <CardDescription>Generate secure passwords for enhanced security.</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="mb-4 flex w-full flex-col items-center">
-                    <p className="mb-2 max-w-full text-center font-mono text-2xl tracking-widest break-all">
-                        {password
-                            ? Array.from(password).map((ch, i) => (
-                                  <span key={i} className={`${charClass(ch)} inline-block`} aria-hidden={false}>
-                                      {ch}
-                                  </span>
-                              ))
-                            : "••••••••"}
-                    </p>
-                </div>
-
                 <div className="flex flex-col gap-2">
                     <label htmlFor="pin-size" className="text-sm font-medium">
                         Password Length: {passSize}
@@ -92,6 +80,18 @@ export default function PasswordGenerator() {
                         max={128}
                         step={1}
                     />
+                </div>
+
+                <div className="mb-4 flex w-full flex-col items-center">
+                    <p className="mb-2 max-w-full text-center font-mono text-2xl tracking-widest break-all">
+                        {password
+                            ? Array.from(password).map((ch, i) => (
+                                  <span key={i} className={`${charClass(ch)} inline-block`} aria-hidden={false}>
+                                      {ch}
+                                  </span>
+                              ))
+                            : "••••••••"}
+                    </p>
                 </div>
 
                 <div className="grid gap-2 pt-4 sm:grid-cols-2">
