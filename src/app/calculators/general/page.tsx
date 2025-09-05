@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
     title: "Calculator",
     description: "A calculator for various general purposes.",
+    manifest: "/manifest.webmanifest",
 }
 
 export default function Page() {

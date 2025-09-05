@@ -6,6 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
         short_name: "Utilities",
         description: "A Progressive Web App built with Next.js - Utilities Webapp",
         start_url: "/",
+        scope: "/",
         display: "standalone",
         background_color: "oklch(0.9851 0 0)",
         theme_color: "oklch(0.6229 0.2012 35.9323)",

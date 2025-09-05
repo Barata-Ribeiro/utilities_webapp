@@ -1,14 +1,17 @@
 import { AppSidebar } from "@/components/app-sidebar"
 import Breadcrumbs from "@/components/breadcrumbs"
+import { SwRegister } from "@/components/sw-register"
 import { ThemeSwitcher } from "@/components/theme-switcher"
 import { Separator } from "@/components/ui/separator"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/providers/theme-provider"
 import Cookies from "js-cookie"
-import type { Metadata } from "next"
-import { Montserrat, Source_Sans_3 } from "next/font/google"
+import type { Metadata, Viewport } from "next"
+import { Fira_Mono, Montserrat, Source_Sans_3 } from "next/font/google"
 import "./globals.css"
 import { type ReactNode } from "react"
+import { twMerge } from "tailwind-merge"
 
 const montserrat = Montserrat({
     variable: "--font-montserrat",
@@ -26,15 +29,34 @@ const sourceSans3 = Source_Sans_3({
     weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
 })
 
+const firaMono = Fira_Mono({
+    variable: "--font-fira-mono",
+    display: "swap",
+    subsets: ["latin"],
+    style: ["normal"],
+    weight: ["400", "500", "700"],
+})
+
+const APP_NAME = "Utilities Webapp"
+const APP_DEFAULT_TITLE = "Utilities Webapp"
+const APP_TITLE_TEMPLATE = "%s | Utilities Webapp"
+const APP_DESCRIPTION = `Welcome to Utilities Webapp, your go-to platform for a variety of handy tools and utilities designed to make your life easier. Whether you need to perform quick calculations, convert units, or access other useful functionalities, we've got you covered.`
+
 export const metadata: Metadata = {
-    metadataBase: new URL("https://utilities-webapp.vercel.app/"),
+    applicationName: APP_NAME,
     title: {
-        default: "Utilities Webapp",
-        template: "%s | Utilities Webapp",
+        default: APP_DEFAULT_TITLE,
+        template: APP_TITLE_TEMPLATE,
     },
-    description:
-        "Welcome to Utilities Webapp, your go-to platform for a variety of handy tools and utilities" +
-        " designed to make your life easier. Whether you need to perform quick calculations, convert units, or access other useful functionalities, we've got you covered.",
+    description: APP_DESCRIPTION,
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: "default",
+        title: APP_DEFAULT_TITLE,
+    },
+    formatDetection: {
+        telephone: false,
+    },
     keywords: [
         "utilities",
         "webapp",
@@ -51,21 +73,23 @@ export const metadata: Metadata = {
     authors: [{ name: "João Mendes J. B. Ribeiro", url: "https://www.linkedin.com/in/barataribeiro/" }],
     creator: "Barata Ribeiro",
     openGraph: {
-        title: "Utilities Webapp",
-        description:
-            "Welcome to Utilities Webapp, your go-to platform for a variety of handy tools and utilities" +
-            " designed to make your life easier. Whether you need to perform quick calculations, convert units, or access other useful functionalities, we've got you covered.",
+        siteName: APP_NAME,
+        title: {
+            default: APP_DEFAULT_TITLE,
+            template: APP_TITLE_TEMPLATE,
+        },
+        description: APP_DESCRIPTION,
         url: "https://utilities-webapp.vercel.app/",
-        siteName: "Utilities Webapp",
         locale: "en-US",
         type: "website",
     },
     twitter: {
-        card: "summary_large_image",
-        title: "Utilities Webapp",
-        description:
-            "Welcome to Utilities Webapp, your go-to platform for a variety of handy tools and utilities" +
-            " designed to make your life easier. Whether you need to perform quick calculations, convert units, or access other useful functionalities, we've got you covered.",
+        card: "summary",
+        title: {
+            default: APP_DEFAULT_TITLE,
+            template: APP_TITLE_TEMPLATE,
+        },
+        description: APP_DESCRIPTION,
         creator: "@JohnRoachy",
     },
     robots: {
@@ -81,18 +105,25 @@ export const metadata: Metadata = {
     },
 }
 
+export const viewport: Viewport = {
+    themeColor: "oklch(0.6229 0.2012 35.9323)",
+}
+
 export default async function RootLayout({
     children,
 }: Readonly<{
     children: ReactNode
 }>) {
     const defaultOpen = Cookies.get("sidebar_state") === "true"
+    const fontVariables = `${montserrat.variable} ${sourceSans3.variable} ${firaMono.variable}`
+    const bodyStyles = twMerge(cn`h-full w-full !scroll-smooth antialiased`, fontVariables)
 
     return (
-        <html lang="en" suppressHydrationWarning>
-            <body className={`${montserrat.variable} ${sourceSans3.variable} antialiased`}>
+        <html lang="en" dir="ltr" suppressHydrationWarning>
+            <body className={bodyStyles}>
                 <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
                     <ThemeSwitcher />
+                    <SwRegister />
 
                     <SidebarProvider defaultOpen={defaultOpen}>
                         <AppSidebar />

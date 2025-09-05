@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
     title: "Rule of Three",
     description: "A simple Rule of Three calculator to help you solve proportions.",
+    manifest: "/manifest.webmanifest",
 }
 
 export default function Page() {

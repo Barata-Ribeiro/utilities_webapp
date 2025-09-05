@@ -6,6 +6,7 @@ import Link from "next/link"
 export const metadata: Metadata = {
     title: "404 - Page not found",
     description: "We could not find the page you are looking for. It may have been moved or renamed.",
+    manifest: "/manifest.webmanifest",
 }
 
 export default function NotFound() {

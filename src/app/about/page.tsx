@@ -1,3 +1,11 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: "About",
+    description: "Learn more about this project and its purpose.",
+    manifest: "/manifest.webmanifest",
+}
+
 export default function Page() {
     return (
         <article className="bg-card rounded-md p-6 shadow">

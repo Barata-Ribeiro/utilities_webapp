@@ -5,6 +5,7 @@ export const metadata: Metadata = {
     title: "Time Converter",
     description:
         "Convert time units such as seconds, minutes, hours, days, weeks, months, and years. Useful for scheduling, planning, and everyday calculations.",
+    manifest: "/manifest.webmanifest",
 }
 
 export default function Page() {

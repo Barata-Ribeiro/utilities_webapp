@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
     title: "Date Calculator",
     description: "A simple date calculator to help you with date calculations.",
+    manifest: "/manifest.webmanifest",
 }
 
 export default function Page() {

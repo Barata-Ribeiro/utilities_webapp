@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
     title: "Temperature Converter",
     description: "A simple temperature converter utility. Convert between Celsius, Fahrenheit, and Kelvin.",
+    manifest: "/manifest.webmanifest",
 }
 
 export default function Page() {

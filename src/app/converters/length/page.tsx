@@ -5,6 +5,7 @@ export const metadata: Metadata = {
     title: "Length Converter",
     description:
         "Easily convert lengths between meters, feet, and inches. Perfect for construction, travel, and everyday use.",
+    manifest: "/manifest.webmanifest",
 }
 
 export default function Page() {

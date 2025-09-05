@@ -5,6 +5,7 @@ export const metadata: Metadata = {
     title: "Mass Converter",
     description:
         "Easily convert masses between kilograms, pounds, and ounces. Perfect for cooking, shipping, and everyday use.",
+    manifest: "/manifest.webmanifest",
 }
 
 export default function Page() {

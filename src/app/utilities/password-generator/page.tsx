@@ -5,6 +5,7 @@ export const metadata: Metadata = {
     title: "Password Generator",
     description:
         "Generate strong, random passwords to enhance your online security. Customize length and character types to create passwords that meet your needs.",
+    manifest: "/manifest.webmanifest",
 }
 
 export default function Page() {
