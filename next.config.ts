@@ -1,7 +1,13 @@
+import withSerwistInit from "@serwist/next"
 import type { NextConfig } from "next"
+import { execSync } from "node:child_process"
+
+const revision = execSync("git rev-parse HEAD", { encoding: "utf8" }).trim().slice(0, 7)
 
 const nextConfig: NextConfig = {
     reactStrictMode: true,
+    trailingSlash: false,
+    skipTrailingSlashRedirect: false,
     serverExternalPackages: ["postcss", "sharp"],
     experimental: {
         reactCompiler: true,
@@ -19,6 +25,12 @@ const nextConfig: NextConfig = {
             "clsx",
             "date-fns",
         ],
+    },
+    turbopack: {
+        resolveAlias: {
+            underscore: "lodash",
+        },
+        resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
     },
     headers: async () => {
         return [
@@ -64,4 +76,16 @@ const nextConfig: NextConfig = {
     },
 }
 
-export default nextConfig
+const withSerwist = withSerwistInit({
+    cacheOnNavigation: true,
+    reloadOnOnline: false,
+    swSrc: "src/app/sw.ts",
+    swDest: "public/sw.js",
+    disable: process.env.NODE_ENV !== "production",
+    additionalPrecacheEntries: [
+        { url: "/", revision },
+        { url: "/~offline", revision },
+    ],
+})
+
+export default withSerwist(nextConfig)
