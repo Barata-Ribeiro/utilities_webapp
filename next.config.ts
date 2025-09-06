@@ -3,6 +3,7 @@ import type { NextConfig } from "next"
 import { execSync } from "node:child_process"
 
 const revision = execSync("git rev-parse HEAD", { encoding: "utf8" }).trim().slice(0, 7)
+const allowedDevOrigins = (process.env.ALLOWED_DEV_HOSTS ?? "").split(",").filter(Boolean)
 
 const nextConfig: NextConfig = {
     reactStrictMode: true,
@@ -32,6 +33,7 @@ const nextConfig: NextConfig = {
         },
         resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"],
     },
+    allowedDevOrigins,
     headers: async () => {
         return [
             {

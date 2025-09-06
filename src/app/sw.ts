@@ -3,6 +3,8 @@ import { ExpirationPlugin, type PrecacheEntry, type RuntimeCaching, Serwist, Sta
 
 declare const self: ServiceWorkerGlobalScope & { __SW_MANIFEST?: (PrecacheEntry | string)[] }
 
+const isDev = process.env.NODE_ENV !== "production"
+
 const cacheStrategies: RuntimeCaching[] = [
     {
         matcher: ({ request, url: { pathname }, sameOrigin }) =>
@@ -92,6 +94,19 @@ const serwist = new Serwist({
 })
 
 const urlsToCache = ["/", "/~offline"] as const
+
+if (isDev) {
+    self.addEventListener("install", event => {
+        console.log("Event install (dev only)", event)
+        void self.skipWaiting()
+    })
+
+    self.addEventListener("activate", event => {
+        event.waitUntil(self.clients.claim())
+    })
+
+    self.addEventListener("fetch", event => console.log("Fetch event (dev only)", event))
+}
 
 self.addEventListener("install", event => {
     event.waitUntil(

@@ -28,7 +28,38 @@ export function SwRegister(): null {
             }
         }
 
-        async function register() {
+        async function tryRegister() {
+            if (
+                typeof navigator === "undefined" ||
+                !("serviceWorker" in navigator) ||
+                typeof navigator.serviceWorker.register !== "function"
+            ) {
+                console.info("[SW] serviceWorker API not available; skipping registration")
+                return
+            }
+
+            const hostname = window.location.hostname
+            const isLocalhost =
+                hostname === "localhost" ||
+                hostname === "127.0.0.1" ||
+                hostname === "::1" ||
+                hostname.startsWith("192.")
+            if (window.location.protocol !== "https:" && !isLocalhost) {
+                console.info("[SW] insecure origin and not localhost; skipping service worker registration")
+                return
+            }
+
+            try {
+                const resp = await fetch("/sw.js", { method: "HEAD" })
+                if (!resp.ok) {
+                    console.info("[SW] /sw.js not found (status " + resp.status + "), skipping registration")
+                    return
+                }
+            } catch (err) {
+                console.info("[SW] could not fetch /sw.js, skipping registration: ", err)
+                return
+            }
+
             try {
                 const reg = await navigator.serviceWorker.register("/sw.js", { scope: "/" })
 
@@ -40,10 +71,8 @@ export function SwRegister(): null {
                     newWorker.addEventListener("statechange", handleNewWorkerStateChange)
                 })
 
-                // If there's an installing worker already (first install), attach listener
                 if (reg.installing) reg.installing.addEventListener("statechange", handleNewWorkerStateChange)
 
-                // Force an update attempt (useful after you add missing files)
                 reg.update().catch(e => console.error("[SW] update check failed: ", e))
 
                 const ready = await navigator.serviceWorker.ready
@@ -54,7 +83,7 @@ export function SwRegister(): null {
             }
         }
 
-        void register()
+        void tryRegister()
 
         return () => {
             mounted = false
