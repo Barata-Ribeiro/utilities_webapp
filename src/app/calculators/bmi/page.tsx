@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
     title: "BMI Calculator",
     description: "A simple BMI calculator to help you assess your body weight.",
+    keywords: ["bmi", "body mass index", "health calculator", "weight", "calculator", "utilities"],
     manifest: "/manifest.webmanifest",
 }
 

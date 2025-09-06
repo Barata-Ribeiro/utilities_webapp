@@ -5,6 +5,7 @@ export const metadata: Metadata = {
     title: "Character Counter",
     description:
         "A simple, accessible character counter utility. Counts characters, words, and lines for any pasted or typed text.",
+    keywords: ["character counter", "word count", "text analysis", "characters", "words", "lines", "utilities"],
     manifest: "/manifest.webmanifest",
 }
 

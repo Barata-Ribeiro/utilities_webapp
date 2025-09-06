@@ -4,6 +4,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
     title: "Calculator",
     description: "A calculator for various general purposes.",
+    keywords: ["calculator", "arithmetic", "math", "compute", "utilities"],
     manifest: "/manifest.webmanifest",
 }
 

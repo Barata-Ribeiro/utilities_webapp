@@ -1,7 +1,12 @@
 import ChuckNorrisJokesClient from "@/components/home/chuck-norris-jokes-client"
 import SystemInfoClient from "@/components/home/system-info-client"
 import { Button } from "@/components/ui/button"
+import type { Metadata } from "next"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+    manifest: "/manifest.webmanifest",
+}
 
 export default function Home() {
     return (

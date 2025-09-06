@@ -5,6 +5,15 @@ export const metadata: Metadata = {
     title: "Password & PIN Generator",
     description:
         "Generate strong passwords, memorable passphrases, and numeric PINs locally in your browser. Customize length, character sets, and options to create secure, usable credentials.",
+    keywords: [
+        "password generator",
+        "pin generator",
+        "passphrase",
+        "password strength",
+        "security",
+        "crypto",
+        "utilities",
+    ],
     manifest: "/manifest.webmanifest",
 }
 

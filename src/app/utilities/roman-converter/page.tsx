@@ -5,6 +5,15 @@ export const metadata: Metadata = {
     title: "Roman Numeral Converter",
     description:
         "Convert between Roman numerals and Arabic numbers. Enter a number to see its Roman numeral equivalent, or enter a Roman numeral to see its numeric value.",
+    keywords: [
+        "roman numerals",
+        "roman converter",
+        "arabic to roman",
+        "roman to arabic",
+        "numeral conversion",
+        "converter",
+        "utilities",
+    ],
     manifest: "/manifest.webmanifest",
 }
 

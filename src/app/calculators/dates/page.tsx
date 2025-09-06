@@ -5,6 +5,15 @@ export const metadata: Metadata = {
     title: "Date Calculator — Difference & Add/Subtract",
     description:
         "Calculate differences between two dates or add/subtract days, weeks, months, and years from a specific date. Includes time-of-day support and multiple output formats.",
+    keywords: [
+        "date calculator",
+        "date difference",
+        "add days",
+        "subtract days",
+        "date math",
+        "timezones",
+        "utilities",
+    ],
     manifest: "/manifest.webmanifest",
 }
 
@@ -15,7 +24,7 @@ export default function Page() {
                 <h1 className="font-serif text-xl">Date Calculator</h1>
                 <p className="text-muted-foreground mt-2 text-sm">
                     Use the tabs below to switch between calculating the difference between two dates or
-                    adding/subtracting an offset (days, weeks, months, years) to a given date. Both tools support
+                    adding/subtractting an offset (days, weeks, months, years) to a given date. Both tools support
                     selecting a time of day and provide human-friendly results along with alternative unit breakdowns.
                 </p>
             </header>

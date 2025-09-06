@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
     title: "About",
     description: "Learn more about this project and its purpose.",
+    keywords: ["about", "project", "utilities", "tools", "next.js", "open source"],
     manifest: "/manifest.webmanifest",
 }
 

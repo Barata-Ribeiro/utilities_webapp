@@ -5,6 +5,7 @@ export const metadata: Metadata = {
     title: "Speed Converter",
     description:
         "Convert speeds between kilometers per hour, miles per hour, meters per second, and more. Ideal for travel, sports, and everyday use.",
+    keywords: ["speed converter", "km/h", "mph", "m/s", "convert speed", "units", "utilities"],
     manifest: "/manifest.webmanifest",
 }
 
