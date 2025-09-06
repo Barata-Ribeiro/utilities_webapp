@@ -2,41 +2,49 @@ import PasswordPinTab from "@/components/utilities/password-pin-tab"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-    title: "Password Generator",
+    title: "Password & PIN Generator",
     description:
-        "Generate strong, random passwords to enhance your online security. Customize length and character types to create passwords that meet your needs.",
+        "Generate strong passwords, memorable passphrases, and numeric PINs locally in your browser. Customize length, character sets, and options to create secure, usable credentials.",
     manifest: "/manifest.webmanifest",
 }
 
 export default function Page() {
     return (
         <article className="bg-card rounded-md p-6 shadow">
-            <h1 className="font-serif text-xl">Password Generator</h1>
+            <h1 className="font-serif text-xl">Password & PIN Generator</h1>
 
             <p className="text-muted-foreground mt-2 text-sm">
-                Generate strong, random passwords to enhance your online security. Customize length and character types
-                to create passwords that meet your needs.
+                Create strong, random passwords, memorable passphrases, or short numeric PINs — all generated locally in
+                your browser. Use the tabs to switch between the standard password generator, a memorable passphrase
+                generator, and a numeric PIN generator. Customize length and options to meet different use-cases (e.g.,
+                long site passwords, easy-to-remember passphrases, or short PIN codes).
             </p>
 
             <section className="mt-4">
                 <h2 className="sr-only">How it works</h2>
                 <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-sm">
                     <li>
-                        <strong>Choose length</strong>: Pick a length (8–128). Longer passwords (12+ characters) provide
-                        much stronger protection against guessing and brute-force attacks.
+                        <strong>Choose length</strong>: For standard passwords pick a length (8–128). For memorable
+                        passphrases pick the number of words (3–15). For PINs choose 3–12 digits. Longer values provide
+                        stronger protection against guessing and brute-force attacks.
                     </li>
                     <li>
-                        <strong>Select character types</strong>: Combine uppercase, lowercase, numbers, and symbols to
-                        increase entropy. Each additional character set makes the password exponentially harder to
-                        crack.
+                        <strong>Select character types</strong>: For passwords you can include uppercase, lowercase,
+                        numbers, and symbols. Each additional character set increases entropy and makes the credential
+                        harder to crack.
+                    </li>
+                    <li>
+                        <strong>Memorable passphrases</strong>: Generate passphrases made of common words (optionally
+                        shortened or capitalized) to balance memorability and security.
                     </li>
                     <li>
                         <strong>PIN option</strong>: Switch to PIN mode to generate numeric-only codes when you need
-                        short, memorable numeric values (e.g., 3–12 digits).
+                        short, memorable numeric values.
                     </li>
                     <li>
-                        <strong>Strong randomness</strong>: Passwords and PINs are generated locally in your browser
-                        using the secure Web Crypto API (crypto.getRandomValues) for high-quality randomness.
+                        <strong>Strong randomness</strong>: All values are generated locally using the secure Web Crypto
+                        API (crypto.getRandomValues) when available, ensuring high-quality randomness without sending
+                        data to any server.
                     </li>
                     <li>
                         <strong>Generate & copy</strong>: Use the Generate (Refresh) button to create a new value, then

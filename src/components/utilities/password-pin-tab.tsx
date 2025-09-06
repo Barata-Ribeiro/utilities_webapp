@@ -9,7 +9,7 @@ import { HashIcon, LightbulbIcon, RotateCcwKeyIcon } from "lucide-react"
 export default function PasswordPinTab() {
     return (
         <Tabs defaultValue="password" className="mx-auto w-full max-w-lg">
-            <TabsList>
+            <TabsList className="flex h-auto flex-wrap items-center justify-start space-y-1">
                 <TabsTrigger value="password">
                     <RotateCcwKeyIcon aria-hidden size={16} />
                     Password
