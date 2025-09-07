@@ -2,6 +2,7 @@
 
 import IsPercentOfWhatCalc from "@/components/calculators/percentage/is-percent-of-what-calc"
 import IsWhatPercentOfCalc from "@/components/calculators/percentage/is-what-percent-of-calc"
+import PercentIncreaseDecreaseCalc from "@/components/calculators/percentage/percent-increase-decrease-calc"
 import PercentOfCalc from "@/components/calculators/percentage/percent-of-calc"
 import ValueIncreaseDecreasePercent from "@/components/calculators/percentage/value-increase-decrease-percent"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -31,7 +32,7 @@ export default function PercentageTab() {
             </TabsContent>
 
             <TabsContent value="percentage-increase-decrease">
-                TODO: Add content for Percentage Increase/Decrease tab
+                <PercentIncreaseDecreaseCalc />
             </TabsContent>
         </Tabs>
     )
