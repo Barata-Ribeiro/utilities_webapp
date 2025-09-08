@@ -8,11 +8,11 @@ export const SIZE = {
 export const contentType = "image/png"
 
 export default function Icon() {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd" viewBox="0 0 64 64">
-  <path fill="#e64919" d="M64 16v32c0 8.831-7.169 16-16 16H16C7.169 64 0 56.831 0 48V16C0 7.169 7.169 0 16 0h32c8.831 0 16 7.169 16 16Z"/>
-  <path fill="none" stroke="#fafafa" stroke-width="4.5" d="m29.75 28.1075-9-15.5925m9 23.3775-9 15.5925M32 54.5V50m0-40.5V14m4.5 18h18M43.25 51.485 41 47.5925m2.25-35.0775L41 16.4075M9.5 32H14m37.485 11.25L47.5925 41m3.8925-20.25L47.5925 23M12.515 43.25 16.4075 41M12.515 20.75 16.4075 23"/>
-  <circle cx="12" cy="12" r="2" fill="none" stroke="#fafafa" stroke-width="2" transform="matrix(2.25 0 0 2.25 5 5)"/>
-  <circle cx="12" cy="12" r="8" fill="none" stroke="#fafafa" stroke-width="2" transform="matrix(2.25 0 0 2.25 5 5)"/>
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd" viewBox="0 0 512 512">
+  <path fill="#e64919" d="M512 122.18v267.64C512 457.253 457.253 512 389.82 512H122.18C54.747 512 0 457.253 0 389.82V122.18C0 54.747 54.747 0 122.18 0h267.64C457.253 0 512 54.747 512 122.18Z"/>
+  <path fill="none" stroke="#fafafa" stroke-width="35" d="m238.49 225.7225-70-121.275M238.49 286.2725l-70 121.275M255.99 430.9975v-35M255.99 80.9975v35M290.99 255.9975h140M343.49 407.5475l-17.5-30.275M343.49 104.4475l-17.5 30.275M80.99 255.9975h35M407.54 343.4975l-30.275-17.5M407.54 168.4975l-30.275 17.5M104.44 343.4975l30.275-17.5M104.44 168.4975l30.275 17.5"/>
+  <circle cx="12" cy="12" r="2" fill="none" stroke="#fafafa" stroke-width="2" transform="matrix(17.5 0 0 17.5 45.99 45.9975)"/>
+  <circle cx="12" cy="12" r="8" fill="none" stroke="#fafafa" stroke-width="2" transform="matrix(17.5 0 0 17.5 45.99 45.9975)"/>
 </svg>`
 
     return new ImageResponse(
