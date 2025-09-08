@@ -10,11 +10,12 @@ export function NavFooter() {
     return (
         <SidebarMenu>
             <SidebarMenuItem className="mx-auto grid">
-                {state === "expanded" && (
-                    <span aria-hidden className="text-center">
-                        &copy; {new Date().getFullYear()}
-                    </span>
-                )}
+                {state === "expanded" ||
+                    (isMobile && (
+                        <span aria-hidden className="text-center">
+                            &copy; {new Date().getFullYear()}
+                        </span>
+                    ))}
                 <Link
                     href="https://barataribeiro.com/"
                     target="_blank"
@@ -23,7 +24,7 @@ export function NavFooter() {
                     title="barata </> ribeiro"
                     className="text-muted-foreground hover:text-foreground text-sm"
                     aria-label="Visit my portfolio website">
-                    {state === "collapsed" ? (
+                    {state === "collapsed" && !isMobile ? (
                         <CodeXmlIcon aria-hidden />
                     ) : (
                         <span className="inline-flex items-center gap-x-1 font-medium">
