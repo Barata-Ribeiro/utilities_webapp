@@ -60,6 +60,10 @@ export function NavMain() {
                     url: "/utilities/character-counter",
                 },
                 {
+                    title: "Lorem Ipsum Generator",
+                    url: "/utilities/lorem-ipsum",
+                },
+                {
                     title: "Pass. Generator",
                     url: "/utilities/password-generator",
                 },
