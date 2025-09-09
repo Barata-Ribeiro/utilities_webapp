@@ -23,8 +23,8 @@ export default function Home() {
                         <Link href="/utilities/password-generator">
                             <Button variant="outline">Pass. Generator</Button>
                         </Link>
-                        <Link href="/utilities/roman-converter">
-                            <Button variant="outline">Roman Converter</Button>
+                        <Link href="/utilities/lorem-ipsum">
+                            <Button variant="outline">Lorem Ipsum Generator</Button>
                         </Link>
                     </div>
                 </div>
