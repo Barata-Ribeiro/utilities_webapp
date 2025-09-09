@@ -69,6 +69,7 @@ function makeSentence(
 
 export default function LoremIpsumGenerator() {
     const [output, setOutput] = useState<string>("")
+    const [rawOutput, setRawOutput] = useState<string>("")
     const savedIpsum = useRef<string[] | null>(null)
 
     const form = useForm<LoremIpsumSchemaType>({
@@ -92,6 +93,7 @@ export default function LoremIpsumGenerator() {
         switch (mode) {
             case "paragraphs": {
                 const paragraphs: string[] = []
+                const rawParagraphs: string[] = []
                 let wordIndex = 0
                 for (let p = 0; p < amount; p++) {
                     const sentencesCount = 5 + floor(random() * 10) // 5-14 sentences
@@ -103,20 +105,25 @@ export default function LoremIpsumGenerator() {
                         wordIndex = nextIndex
                     }
                     paragraphs.push(`<p>${sentences.join(" ")}</p>`)
+                    rawParagraphs.push(sentences.join(" "))
                 }
                 setOutput(paragraphs.join("\n\n"))
+                setRawOutput(rawParagraphs.join("\n\n"))
                 break
             }
             case "sentences": {
                 const sentences: string[] = []
+                const rawSentences: string[] = []
                 let wordIndex = 0
                 for (let s = 0; s < amount; s++) {
                     const len = 8 + floor(random() * 8) // 8-15 words
                     const { sentence, nextIndex } = makeSentence(wordIndex, len, pool)
                     sentences.push(`<p>${sentence}</p>`)
+                    rawSentences.push(sentence)
                     wordIndex = nextIndex
                 }
                 setOutput(sentences.join("\n\n"))
+                setRawOutput(rawSentences.join("\n\n"))
                 break
             }
             case "words": {
@@ -137,6 +144,7 @@ export default function LoremIpsumGenerator() {
                     }
                 }
                 setOutput(`<p>${words.join(" ")}</p>`)
+                setRawOutput(words.join(" "))
                 break
             }
             case "bytes": {
@@ -147,25 +155,44 @@ export default function LoremIpsumGenerator() {
                     text += " " + sentence
                 }
                 setOutput(`<p>${text.slice(0, amount)}</p>`)
+                setRawOutput(text.slice(0, amount))
                 break
             }
             case "lists": {
                 const items: string[] = []
+                const rawItems: string[] = []
                 let wordIndex = 0
                 for (let i = 0; i < amount; i++) {
                     const len = 4 + floor(random() * 6) // 4-9 words
                     const { sentence, nextIndex } = makeSentence(wordIndex, len, pool)
                     items.push(`<li>${sentence.replace(/\.$/, "")}</li>`) // Remove trailing period for list items
+                    rawItems.push(`- ${sentence.replace(/\.$/, "")}`)
                     wordIndex = nextIndex
                 }
                 setOutput(`<ul>${items.join("\n")}</ul>`)
+                setRawOutput(rawItems.join("\n"))
                 break
             }
             default:
                 setOutput("")
+                setRawOutput("")
                 break
         }
     }, [])
+
+    function reset() {
+        form.reset()
+        setOutput("")
+    }
+
+    const copyToClipboard = async () => {
+        try {
+            if (!rawOutput) return
+            await navigator.clipboard.writeText(rawOutput)
+        } catch {
+            console.warn("Failed copying Output to clipboard")
+        }
+    }
 
     return (
         <Fragment>
@@ -227,15 +254,36 @@ export default function LoremIpsumGenerator() {
                         )}
                     />
 
-                    <Button type="submit" className="w-full">
-                        Submit
-                    </Button>
+                    <div className="grid grid-rows-[auto_1fr] gap-2">
+                        <Button type="submit" variant="default">
+                            Submit
+                        </Button>
+
+                        <div className="grid gap-2 sm:grid-cols-2">
+                            <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
+                                Reset
+                            </Button>
+
+                            <Button
+                                type="button"
+                                variant="outline"
+                                disabled={rawOutput.length === 0 || output.length === 0}
+                                onClick={copyToClipboard}
+                                aria-label="Copy Output">
+                                Copy
+                            </Button>
+                        </div>
+                    </div>
                 </form>
             </Form>
 
-            <section
-                className="prose md:prose-lg lg:prose-xl dark:prose-invert mx-auto max-h-96 overflow-auto rounded-md border p-4"
-                dangerouslySetInnerHTML={{ __html: output }}></section>
+            {output.length > 0 && rawOutput.length > 0 ? (
+                <section
+                    className="prose md:prose-lg lg:prose-xl dark:prose-invert mx-auto max-h-96 overflow-auto rounded-md border p-4"
+                    dangerouslySetInnerHTML={{ __html: output }}></section>
+            ) : (
+                <p className="text-muted-foreground text-center">Generate output above.</p>
+            )}
         </Fragment>
     )
 }
