@@ -8,12 +8,7 @@ export const SIZE = {
 export const contentType = "image/png"
 
 export default function Icon() {
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd" viewBox="0 0 512 512">
-  <path fill="#e64919" d="M512 122.18v267.64C512 457.253 457.253 512 389.82 512H122.18C54.747 512 0 457.253 0 389.82V122.18C0 54.747 54.747 0 122.18 0h267.64C457.253 0 512 54.747 512 122.18Z"/>
-  <path fill="none" stroke="#fafafa" stroke-width="35" d="m238.49 225.7225-70-121.275M238.49 286.2725l-70 121.275M255.99 430.9975v-35M255.99 80.9975v35M290.99 255.9975h140M343.49 407.5475l-17.5-30.275M343.49 104.4475l-17.5 30.275M80.99 255.9975h35M407.54 343.4975l-30.275-17.5M407.54 168.4975l-30.275 17.5M104.44 343.4975l30.275-17.5M104.44 168.4975l30.275 17.5"/>
-  <circle cx="12" cy="12" r="2" fill="none" stroke="#fafafa" stroke-width="2" transform="matrix(17.5 0 0 17.5 45.99 45.9975)"/>
-  <circle cx="12" cy="12" r="8" fill="none" stroke="#fafafa" stroke-width="2" transform="matrix(17.5 0 0 17.5 45.99 45.9975)"/>
-</svg>`
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" clip-rule="evenodd" viewBox="0 0 482 482"><path fill="#e64919" d="M481.8822 120.4702v240.942c0 66.489-53.981 120.47-120.47 120.47h-240.942c-66.489 0-120.47-53.981-120.47-120.47v-240.942c0-66.489 53.981-120.47 120.47-120.47h240.942c66.489 0 120.47 53.981 120.47 120.47Z"/><circle cx="256" cy="256" r="194" fill="#ed7c5a" transform="translate(-17.69798 -17.69798) scale(1.01031)"/><path fill="none" stroke="#fafafa" stroke-width="34.8" d="m223.5392 210.8498-69.6-120.582M223.5392 271.0538l-69.6 120.582M240.9392 414.9518v-34.8M240.9392 66.9518v34.8M275.7392 240.9518h139.2M327.9392 391.6358l-17.4-30.102M327.9392 90.2678l-17.4 30.102M66.9392 240.9518h34.8M391.6232 327.9518l-30.102-17.4M391.6232 153.9518l-30.102 17.4M90.2552 327.9518l30.102-17.4M90.2552 153.9518l30.102 17.4"/><circle cx="12" cy="12" r="2" fill="none" stroke="#fafafa" stroke-width="2" transform="matrix(17.4 0 0 17.4 32.1392 32.1518)"/><circle cx="12" cy="12" r="8" fill="none" stroke="#fafafa" stroke-width="2" transform="matrix(17.4 0 0 17.4 32.1392 32.1518)"/></svg>`
 
     return new ImageResponse(
         (
