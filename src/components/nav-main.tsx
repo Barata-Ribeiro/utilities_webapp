@@ -71,6 +71,10 @@ export function NavMain() {
                     title: "Roman Converter",
                     url: "/utilities/roman-converter",
                 },
+                {
+                    title: "URL Slug Generator",
+                    url: "/utilities/url-slug-generator",
+                },
             ],
         },
         {
