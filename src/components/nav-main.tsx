@@ -75,6 +75,10 @@ export function NavMain() {
                     title: "URL Slug Generator",
                     url: "/utilities/url-slug-generator",
                 },
+                {
+                    title: "QR Code Generator",
+                    url: "/utilities/qrcode-generator",
+                },
             ],
         },
         {
