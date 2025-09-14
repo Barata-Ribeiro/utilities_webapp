@@ -78,7 +78,7 @@ const coreUrls = ["/", "/~offline"]
 const precacheUrls = Array.from(new Set([...coreUrls, ...manifestUrls]))
 
 const serwist = new Serwist({
-    precacheEntries: [...(self.__SW_MANIFEST ?? []), ...coreUrls],
+    precacheEntries: [...buildManifest, ...coreUrls],
     skipWaiting: true,
     clientsClaim: true,
     navigationPreload: true,
