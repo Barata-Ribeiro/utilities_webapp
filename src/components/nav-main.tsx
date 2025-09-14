@@ -107,6 +107,10 @@ export function NavMain() {
                     title: "Time",
                     url: "/converters/time",
                 },
+                {
+                    title: "Bytes",
+                    url: "/converters/bytes",
+                },
             ],
         },
         {
