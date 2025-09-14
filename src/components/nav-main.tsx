@@ -32,13 +32,14 @@ import {
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Fragment } from "react"
+import { URLS } from "@/lib/consts"
 
 interface LinkItem {
     title: string
     url: string
     icon?: LucideIcon
     isActive?: boolean
-    items?: {
+    items?: readonly {
         title: string
         url: string
     }[]
@@ -54,92 +55,21 @@ export function NavMain() {
             url: "#",
             icon: PencilRulerIcon,
             isActive: pathname.startsWith("/utilities"),
-            items: [
-                {
-                    title: "Char. Counter",
-                    url: "/utilities/character-counter",
-                },
-                {
-                    title: "Lorem Ipsum Generator",
-                    url: "/utilities/lorem-ipsum",
-                },
-                {
-                    title: "Pass. Generator",
-                    url: "/utilities/password-generator",
-                },
-                {
-                    title: "Roman Converter",
-                    url: "/utilities/roman-converter",
-                },
-                {
-                    title: "URL Slug Generator",
-                    url: "/utilities/url-slug-generator",
-                },
-                {
-                    title: "QR Code Generator",
-                    url: "/utilities/qrcode-generator",
-                },
-            ],
+            items: URLS.utilities,
         },
         {
             title: "Converters",
             url: "#",
             icon: RefreshCcwDotIcon,
             isActive: pathname.startsWith("/converters"),
-            items: [
-                {
-                    title: "Temperature",
-                    url: "/converters/temperature",
-                },
-                {
-                    title: "Length",
-                    url: "/converters/length",
-                },
-                {
-                    title: "Mass",
-                    url: "/converters/mass",
-                },
-                {
-                    title: "Speed",
-                    url: "/converters/speed",
-                },
-                {
-                    title: "Time",
-                    url: "/converters/time",
-                },
-                {
-                    title: "Bytes",
-                    url: "/converters/bytes",
-                },
-            ],
+            items: URLS.converters,
         },
         {
             title: "Calculators",
             url: "#",
             icon: CalculatorIcon,
             isActive: pathname.endsWith("/calculators"),
-            items: [
-                {
-                    title: "General",
-                    url: "/calculators/general",
-                },
-                {
-                    title: "BMI",
-                    url: "/calculators/bmi",
-                },
-                {
-                    title: "Percentage",
-                    url: "/calculators/percentage",
-                },
-                {
-                    title: "Rule of Three",
-                    url: "/calculators/rule-of-three",
-                },
-                {
-                    title: "Dates",
-                    url: "/calculators/dates",
-                },
-            ],
+            items: URLS.calculators,
         },
     ]
 

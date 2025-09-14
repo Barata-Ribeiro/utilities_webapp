@@ -1,10 +1,10 @@
+import { URLS } from "@/lib/consts"
 import { defaultCache } from "@serwist/next/worker"
 import { ExpirationPlugin, type PrecacheEntry, type RuntimeCaching, Serwist, StaleWhileRevalidate } from "serwist"
 
 declare const self: ServiceWorkerGlobalScope & { __SW_MANIFEST?: (PrecacheEntry | string)[] }
 
 const isDev = process.env.NODE_ENV !== "production"
-const PRECACHE_NAME = "precache-v1"
 
 const cacheStrategies: RuntimeCaching[] = [
     {
@@ -72,13 +72,8 @@ const cacheStrategies: RuntimeCaching[] = [
     },
 ]
 
-const buildManifest = self.__SW_MANIFEST ?? []
-const manifestUrls = buildManifest.map(entry => (typeof entry === "string" ? entry : entry.url)).filter(Boolean)
-const coreUrls = ["/", "/~offline"]
-const precacheUrls = Array.from(new Set([...coreUrls, ...manifestUrls]))
-
 const serwist = new Serwist({
-    precacheEntries: [...buildManifest, ...coreUrls],
+    precacheEntries: self.__SW_MANIFEST,
     skipWaiting: true,
     clientsClaim: true,
     navigationPreload: true,
@@ -99,38 +94,28 @@ const serwist = new Serwist({
     },
 })
 
-async function safePrecache(urls: string[]) {
-    const cache = await caches.open(PRECACHE_NAME)
-    await Promise.all(
-        urls.map(async url => {
-            try {
-                const resp = await fetch(url, { cache: "no-store" })
-                if (resp?.ok) await cache.put(url, resp.clone())
-            } catch {
-                console.warn(`Precache failed for ${url}`)
-            }
-        }),
-    )
+const baseUrls = ["/", "/~offline"] as const
+const otherUrls = Object.values(URLS)
+    .flat()
+    .map(({ url }) => url)
+const urlsToCache = [...baseUrls, ...otherUrls]
+
+if (isDev) {
+    self.addEventListener("install", event => {
+        console.log("Event install (dev only)", event)
+        void self.skipWaiting()
+    })
+
+    self.addEventListener("activate", event => {
+        event.waitUntil(self.clients.claim())
+    })
+
+    self.addEventListener("fetch", event => console.log("Fetch event (dev only)", event))
 }
 
 self.addEventListener("install", event => {
-    const precacheTask = isDev ? Promise.resolve() : safePrecache(precacheUrls)
-
     event.waitUntil(
-        (async () => {
-            await precacheTask
-            await self.skipWaiting()
-        })(),
-    )
-})
-
-self.addEventListener("activate", event => {
-    event.waitUntil(
-        (async () => {
-            await self.clients.claim()
-            const keys = await caches.keys()
-            await Promise.all(keys.map(k => (k !== PRECACHE_NAME ? caches.delete(k) : Promise.resolve())))
-        })(),
+        Promise.all(urlsToCache.map(entry => serwist.handleRequest({ request: new Request(entry), event }))),
     )
 })
 
