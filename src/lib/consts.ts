@@ -23,6 +23,7 @@ export const URLS = {
         { title: "Percentage", url: "/calculators/percentage" },
         { title: "Rule of Three", url: "/calculators/rule-of-three" },
         { title: "Dates", url: "/calculators/dates" },
+        { title: "GCF and LCM", url: "/calculators/gcf-and-lcm" },
     ],
 } as const
 
