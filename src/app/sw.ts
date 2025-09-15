@@ -70,6 +70,48 @@ const cacheStrategies: RuntimeCaching[] = [
             ],
         }),
     },
+    {
+        matcher: ({ url: { pathname }, sameOrigin }) =>
+            /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i.test(pathname) && sameOrigin,
+        handler: new StaleWhileRevalidate({
+            cacheName: "images",
+            plugins: [
+                new ExpirationPlugin({
+                    maxEntries: 64,
+                    maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+                    maxAgeFrom: "last-used",
+                }),
+            ],
+        }),
+    },
+    {
+        matcher: ({ url: { pathname }, sameOrigin }) => /\/_next\/static.+\.js$/i.test(pathname) && sameOrigin,
+        handler: new StaleWhileRevalidate({
+            cacheName: "next-static-js-assets",
+            plugins: [
+                new ExpirationPlugin({
+                    maxEntries: 64,
+                    maxAgeSeconds: 24 * 60 * 60, // 24 hours
+                    maxAgeFrom: "last-used",
+                }),
+            ],
+        }),
+    },
+    {
+        matcher: ({ url: { pathname }, sameOrigin }) =>
+            sameOrigin &&
+            (/\/_next\/static.+\.js$/i.test(pathname) || /\.json$/i.test(pathname) || pathname.endsWith(".json")),
+        handler: new StaleWhileRevalidate({
+            cacheName: "public-json",
+            plugins: [
+                new ExpirationPlugin({
+                    maxEntries: 128,
+                    maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+                    maxAgeFrom: "last-used",
+                }),
+            ],
+        }),
+    },
 ]
 
 const serwist = new Serwist({
@@ -80,6 +122,7 @@ const serwist = new Serwist({
     runtimeCaching: [...cacheStrategies, ...defaultCache],
     precacheOptions: {
         cleanupOutdatedCaches: true,
+        concurrency: 20,
         ignoreURLParametersMatching: [/.*/],
     },
     fallbacks: {
@@ -114,9 +157,8 @@ if (isDev) {
 }
 
 self.addEventListener("install", event => {
-    event.waitUntil(
-        Promise.all(urlsToCache.map(entry => serwist.handleRequest({ request: new Request(entry), event }))),
-    )
+    const promises = urlsToCache.map(entry => serwist.handleRequest({ request: new Request(entry), event }))
+    event.waitUntil(Promise.all(promises))
 })
 
 serwist.addEventListeners()
