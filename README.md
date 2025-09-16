@@ -1,8 +1,11 @@
 # Utilities Web App
 
-A collection of small utilities built as a modern Next.js application. The project was restructured to use the Next.js
-/app router with TypeScript, Tailwind CSS and a set of UI primitives and helpers to compose converters, calculators and
-small utilities.
+A collection of focused utilities implemented as a modern Next.js application using the `app` router with TypeScript and
+Tailwind CSS.
+Built with composable UI primitives (Radix + shadcn/ui), the project organizes converters, calculators and utilities
+into reusable components and routes for easy extension.
+Provides PWA/service worker support, light/dark theming, and small server/client actions (ex: get\-ip, get\-jokes) to
+power practical utilities.
 
 Demo: https://utilities-webapp.vercel.app/
 
@@ -23,12 +26,15 @@ Demo: https://utilities-webapp.vercel.app/
 
 ## ✨ Notable features
 
-- **Converters**: length, mass, speed, temperature
-- **Calculators**: BMI, rule-of-three
-- **Utilities**: password generator (including pin generator), character counter, roman numeral converter
+- **Converters**: bytes, length, mass, speed, temperature, time
+- **Calculators**: General, BMI, Dates, GCF/LCM, Percentage, Rule of Three
+- **Utilities**: Character Counter, Lorem Ipsum, Password Generator(random, memorable, pin), QR Code Generator,
+  Roman Converter, URL Slug Generator
+- **Programming Utilities**: Image to Base64
 - Light/dark theme switching (next-themes)
 - Responsive layout with accessible UI primitives (Radix + custom shadcn/ui components)
 - Project built with modern tooling: Next.js, TypeScript, Tailwind and linting
+- Service Worker for offline support (unstable) and PWA (workbox)
 
 MORE TO COME...
 
