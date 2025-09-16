@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
     reactStrictMode: true,
     trailingSlash: false,
     skipTrailingSlashRedirect: false,
+    images: {
+        qualities: [25, 50, 75],
+    },
     serverExternalPackages: ["postcss", "sharp"],
     experimental: {
         reactCompiler: true,
