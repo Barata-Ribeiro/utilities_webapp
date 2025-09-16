@@ -23,6 +23,7 @@ import {
 import {
     CalculatorIcon,
     ChevronRight,
+    CodeXmlIcon,
     GaugeIcon,
     type LucideIcon,
     NotebookIcon,
@@ -70,6 +71,13 @@ export function NavMain() {
             icon: CalculatorIcon,
             isActive: pathname.endsWith("/calculators"),
             items: URLS.calculators,
+        },
+        {
+            title: "Programming",
+            url: "#",
+            icon: CodeXmlIcon,
+            isActive: pathname.startsWith("/programming"),
+            items: URLS.programming,
         },
     ]
 

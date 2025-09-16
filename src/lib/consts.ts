@@ -25,6 +25,8 @@ export const URLS = {
         { title: "Dates", url: "/calculators/dates" },
         { title: "GCF and LCM", url: "/calculators/gcf-and-lcm" },
     ],
+
+    programming: [{ title: "Image to Base64", url: "/programming/image-to-base64" }],
 } as const
 
 export type NavCategory = keyof typeof URLS
