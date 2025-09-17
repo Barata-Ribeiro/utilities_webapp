@@ -10,13 +10,12 @@ const nextConfig: NextConfig = {
     trailingSlash: false,
     skipTrailingSlashRedirect: false,
     images: {
-        qualities: [25, 50, 75],
+        qualities: [25, 50, 75, 100],
     },
     serverExternalPackages: ["postcss", "sharp"],
     experimental: {
         reactCompiler: true,
         optimizePackageImports: [
-            "tailwindcss",
             "@radix-ui/react-avatar",
             "@radix-ui/react-collapsible",
             "@radix-ui/react-dialog",
@@ -32,11 +31,13 @@ const nextConfig: NextConfig = {
             "@radix-ui/react-switch",
             "@radix-ui/react-tabs",
             "@radix-ui/react-tooltip",
-            "lucide-react",
-            "qrcode",
-            "mathjs",
             "clsx",
             "date-fns",
+            "hash-wasm",
+            "lucide-react",
+            "mathjs",
+            "qrcode",
+            "tailwindcss",
         ],
     },
     turbopack: {
