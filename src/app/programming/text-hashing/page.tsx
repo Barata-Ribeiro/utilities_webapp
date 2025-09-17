@@ -4,12 +4,15 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
     title: "Text Hashing Tool",
     description:
-        "Generate secure hashes for your text using various algorithms like SHA-1, SHA-256, and more. Ideal for data integrity and security.",
+        "Generate hashes for your text using SHA (including SHA3 variants) and MD (MD4, MD5) algorithms. Choose the algorithm family and produce hashes locally in your browser.",
     keywords: [
         "text hashing",
         "hash generator",
         "SHA",
+        "SHA3",
         "MD",
+        "MD5",
+        "MD4",
         "hash algorithms",
         "data integrity",
         "security",
@@ -25,8 +28,9 @@ export default function Page() {
         <article className="bg-card rounded-md p-6 shadow">
             <h1 className="font-serif text-xl">Text Hashing Tool</h1>
             <p className="text-muted-foreground mt-2 text-sm">
-                Generate secure hashes for your text using various algorithms like SHA-1, SHA-256, and more. Ideal for
-                data integrity and security.
+                Generate hashes for your text using algorithms from the SHA family (SHA-1, SHA-224, SHA-256, SHA-384,
+                SHA-512, and SHA3 variants) or the MD family (MD4 and MD5). Select the algorithm group using the tabs
+                and generate hashes locally in your browser — nothing is sent to a server.
             </p>
 
             <section className="mt-4">
@@ -36,10 +40,12 @@ export default function Page() {
                         <strong>Input Text</strong>: Enter the text you want to hash in the provided field.
                     </li>
                     <li>
-                        <strong>Select Algorithm</strong>: Choose from available hashing algorithms.
+                        <strong>Select Algorithm Family</strong>: Use the tabs to choose between the <em>SHA</em> family
+                        (including SHA3 variants) and the <em>MD</em> family (MD4, MD5).
                     </li>
                     <li>
-                        <strong>Generate Hash</strong>: Click the &rsquo;Hash&lsquo; button to generate the hash.
+                        <strong>Generate Hash</strong>: Click the &quot;Hash&quot; button to compute the selected
+                        algorithms for your text.
                     </li>
                     <li>
                         <strong>View & Copy</strong>: View the generated hash and copy it for your use.
@@ -52,8 +58,9 @@ export default function Page() {
             </div>
 
             <footer className="text-muted-foreground text-xs">
-                Tip: Use strong hashing algorithms like SHA-256 or SHA-512 for better security. This tool runs locally
-                in your browser and does not transmit your data to any server.
+                Tip: Prefer modern SHA algorithms (e.g. SHA-256, SHA-512, or SHA3 variants) for security-sensitive uses.
+                MD4 and MD5 are included for compatibility and non-cryptographic purposes only — they are considered
+                broken for cryptographic security and should not be used to protect sensitive data.
             </footer>
         </article>
     )
