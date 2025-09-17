@@ -29,6 +29,7 @@ export const URLS = {
     programming: [
         { title: "Image to Base64", url: "/programming/image-to-base64" },
         { title: "Base64 to Image", url: "/programming/base64-to-image" },
+        { title: "Text Hashing", url: "/programming/text-hashing" },
     ],
 } as const
 
