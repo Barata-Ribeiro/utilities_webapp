@@ -16,11 +16,11 @@ import { z } from "zod/v4"
 
 const BmiSchema = z.object({
     weight: z.coerce
-        .number()
+        .number("Weight must be a number.")
         .min(1, { message: "Weight must be at least 1 kg." })
         .max(500, { message: "Weight must be at most 500 kg." }),
     height: z.coerce
-        .number()
+        .number("Height must be a number.")
         .min(30, { message: "Height must be at least 30 cm." })
         .max(300, { message: "Height must be at most 300 cm." }),
 })
@@ -112,6 +112,7 @@ export default function Bmi() {
                                 )
                             }}
                         />
+
                         <FormField
                             control={form.control}
                             name="weight"
