@@ -1,5 +1,3 @@
-"use client"
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import MemorablePassword from "@/components/utilities/password-generators/memorable-password"
 import PasswordGenerator from "@/components/utilities/password-generators/password-generator"

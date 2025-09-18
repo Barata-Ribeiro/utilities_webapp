@@ -1,5 +1,3 @@
-"use client"
-
 import DateAddSubtract from "@/components/calculators/date/date-add-subtract"
 import { DateDifference } from "@/components/calculators/date/date-difference"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"

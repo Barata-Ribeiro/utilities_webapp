@@ -1,5 +1,3 @@
-"use client"
-
 import IsPercentOfWhatCalc from "@/components/calculators/percentage/is-percent-of-what-calc"
 import IsWhatPercentOfCalc from "@/components/calculators/percentage/is-what-percent-of-calc"
 import PercentIncreaseDecreaseCalc from "@/components/calculators/percentage/percent-increase-decrease-calc"
