@@ -1,5 +1,6 @@
 "use client"
 
+import ButtonClipboard from "@/components/button-clipboard"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -106,23 +107,23 @@ export default function UrlSlugGenerator() {
                     append ??= charMap[char] ?? char
 
                     if (removeSpecialChars && /[^A-Za-z0-9\s]/g.test(append)) {
-                        append = append.replace(/[^A-Za-z0-9\s]/g, "")
+                        append = append.replaceAll(/[^A-Za-z0-9\s]/g, "")
                     }
 
                     if (removeNumbers && /\d+/g.test(append)) {
-                        append = append.replace(/\d+/g, "")
+                        append = append.replaceAll(/\d+/g, "")
                     }
 
                     return result + append
                 }, "")
 
             const afterSpecials = removeSpecialChars
-                ? reduced.replace(/[^\p{L}\p{N}\s$*_+~.()'"!:\-@]+/gu, "")
+                ? reduced.replaceAll(/[^\p{L}\p{N}\s$*_+~.()'"!:\-@]+/gu, "")
                 : reduced
 
             const slug = afterSpecials
-                .replace(/\s+/g, separator)
-                .replace(new RegExp(`\\${separator}+`, "g"), separator)
+                .replaceAll(/\s+/g, separator)
+                .replaceAll(new RegExp(`\\${separator}+`, "g"), separator)
                 .trim()
 
             setResult(lowercase ? slug.toLowerCase() : slug)
@@ -133,15 +134,6 @@ export default function UrlSlugGenerator() {
     function reset() {
         form.reset()
         setResult(null)
-    }
-
-    const copyToClipboard = async () => {
-        try {
-            if (!result) return
-            await navigator.clipboard.writeText(result)
-        } catch {
-            console.warn("Failed copying Result to clipboard")
-        }
     }
 
     useEffect(() => {
@@ -250,14 +242,7 @@ export default function UrlSlugGenerator() {
                                 Reset
                             </Button>
 
-                            <Button
-                                type="button"
-                                variant="outline"
-                                disabled={!result}
-                                onClick={copyToClipboard}
-                                aria-label="Copy Output">
-                                Copy
-                            </Button>
+                            <ButtonClipboard size="default" variant="outline" content={result} />
                         </div>
                     </div>
                 </form>

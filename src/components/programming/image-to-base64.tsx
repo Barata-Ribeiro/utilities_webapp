@@ -1,10 +1,9 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import ButtonClipboard from "@/components/button-clipboard"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from "@/components/ui/shadcn-io/dropzone"
-import { ClipboardCopyIcon } from "lucide-react"
 import Image from "next/image"
 import { Fragment, useState } from "react"
 
@@ -33,15 +32,6 @@ export default function ImageToBase64() {
                 if (typeof e.target?.result === "string") setBase64(e.target?.result)
             }
             reader.readAsDataURL(files[0])
-        }
-    }
-
-    async function copyToClipboard(copyValue: string) {
-        try {
-            if (!copyValue) return
-            await navigator.clipboard.writeText(copyValue)
-        } catch {
-            console.warn("Failed copying the Value to clipboard")
         }
     }
 
@@ -104,8 +94,7 @@ export default function ImageToBase64() {
                 <ul className="mt-4 w-full max-w-xl space-y-4">
                     {options.map((option, idx) => {
                         const reducedBase64 = base64.substring(0, 50).concat("...")
-                        const key = option.toLowerCase().replace(/\s+/g, "-").concat("-").concat(idx.toString())
-                        const label = `Copy ${option} to clipboard`
+                        const key = option.toLowerCase().replaceAll(/\s+/g, "-").concat("-").concat(idx.toString())
 
                         let value = ""
                         let copyValue = ""
@@ -149,17 +138,7 @@ export default function ImageToBase64() {
                                 <Label>{option} (preview)</Label>
                                 <div className="inline-flex items-center gap-x-2">
                                     <Input disabled readOnly aria-readonly defaultValue={value} />
-                                    <Button
-                                        type="button"
-                                        variant="secondary"
-                                        size="icon"
-                                        aria-label={label}
-                                        title={label}
-                                        onClick={() => {
-                                            void copyToClipboard(copyValue)
-                                        }}>
-                                        <ClipboardCopyIcon aria-hidden size={16} />
-                                    </Button>
+                                    <ButtonClipboard size="icon" variant="secondary" content={copyValue} />
                                 </div>
                             </li>
                         )

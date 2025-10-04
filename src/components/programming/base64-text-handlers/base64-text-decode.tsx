@@ -1,4 +1,6 @@
 "use client"
+
+import ButtonClipboard from "@/components/button-clipboard"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -33,15 +35,6 @@ export default function Base64TextDecode() {
     function resetForm() {
         form.reset()
         setResult(null)
-    }
-
-    async function copyToClipboard() {
-        try {
-            if (!result) return
-            await navigator.clipboard.writeText(result)
-        } catch {
-            console.warn("Failed copying Result to clipboard")
-        }
     }
 
     return (
@@ -84,14 +77,7 @@ export default function Base64TextDecode() {
                                     Reset
                                 </Button>
 
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    disabled={!result}
-                                    onClick={copyToClipboard}
-                                    aria-label="Copy Output">
-                                    Copy Result
-                                </Button>
+                                <ButtonClipboard size="default" variant="outline" content={result} />
                             </div>
                         </div>
                     </form>
@@ -110,7 +96,7 @@ export default function Base64TextDecode() {
                                 Use the &ldquo;Copy&rdquo; button for complete result.
                             </p>
                             <p className="text-muted-foreground text-sm">
-                                Total Characters: <strong>{result.replace(/\n/g, "").length}</strong>
+                                Total Characters: <strong>{result.replaceAll(/\n/g, "").length}</strong>
                             </p>
                         </div>
                     </div>
