@@ -1,8 +1,9 @@
 "use client"
 
+import ButtonClipboard from "@/components/button-clipboard"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
-import { Button } from "@/components/ui/button"
 import { useCallback, useEffect, useState } from "react"
 
 function generateRandomPin(size: number) {
@@ -23,15 +24,6 @@ export default function PinGenerator() {
     const generatePin = useCallback((size: number) => setPin(generateRandomPin(size)), [])
 
     useEffect(() => generatePin(pinSize), [pinSize, generatePin])
-
-    const copyToClipboard = async () => {
-        try {
-            if (!pin) return
-            await navigator.clipboard.writeText(pin)
-        } catch {
-            console.warn("Failed copying PIN to clipboard")
-        }
-    }
 
     return (
         <Card>
@@ -61,21 +53,11 @@ export default function PinGenerator() {
             </CardContent>
 
             <CardFooter className="flex w-full items-center justify-between gap-2">
-                <div className="flex-1">
-                    <Button onClick={() => generatePin(pinSize)} aria-label="Generate PIN">
-                        Refresh
-                    </Button>
-                </div>
+                <Button type="button" onClick={() => generatePin(pinSize)} aria-label="Generate PIN">
+                    Refresh
+                </Button>
 
-                <div className="flex gap-2">
-                    <Button
-                        variant="outline"
-                        onClick={copyToClipboard}
-                        disabled={!pin}
-                        aria-label="Copy PIN to clipboard">
-                        Copy
-                    </Button>
-                </div>
+                <ButtonClipboard size="default" variant="outline" content={pin} />
             </CardFooter>
         </Card>
     )

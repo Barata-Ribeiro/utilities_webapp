@@ -1,5 +1,6 @@
 "use client"
 
+import ButtonClipboard from "@/components/button-clipboard"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -58,9 +59,9 @@ function makeSentence(
         words.push(word + comma)
     }
     let sentence = words.join(" ")
-    sentence = sentence.replace(/\s,/g, ",") // Remove space before commas
+    sentence = sentence.replaceAll(/\s,/g, ",") // Remove space before commas
     sentence = capitalizeFirstLetter(sentence)
-    sentence = sentence.replace(/,+$/, "") // Remove trailing commas
+    sentence = sentence.replaceAll(/,+$/g, "") // Remove trailing commas
 
     if (!/[.!?]$/.test(sentence)) sentence += "." // Ensure sentence ends with a period
 
@@ -183,15 +184,7 @@ export default function LoremIpsumGenerator() {
     function reset() {
         form.reset()
         setOutput("")
-    }
-
-    const copyToClipboard = async () => {
-        try {
-            if (!rawOutput) return
-            await navigator.clipboard.writeText(rawOutput)
-        } catch {
-            console.warn("Failed copying Output to clipboard")
-        }
+        setRawOutput("")
     }
 
     return (
@@ -264,14 +257,7 @@ export default function LoremIpsumGenerator() {
                                 Reset
                             </Button>
 
-                            <Button
-                                type="button"
-                                variant="outline"
-                                disabled={rawOutput.length === 0 || output.length === 0}
-                                onClick={copyToClipboard}
-                                aria-label="Copy Output">
-                                Copy
-                            </Button>
+                            <ButtonClipboard size="default" variant="outline" content={rawOutput} />
                         </div>
                     </div>
                 </form>

@@ -1,11 +1,12 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import ButtonClipboard                                                           from "@/components/button-clipboard"
+import { Button }                                                                from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Slider } from "@/components/ui/slider"
-import { Switch } from "@/components/ui/switch"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { Label }                                                                 from "@/components/ui/label"
+import { Slider }                                                                from "@/components/ui/slider"
+import { Switch }                                                                from "@/components/ui/switch"
+import { useCallback, useEffect, useRef, useState }                              from "react"
 
 function charClass(ch: string) {
     if (/^[A-Za-z]$/.test(ch)) return ""
@@ -59,15 +60,6 @@ export default function MemorablePassword() {
         },
         [],
     )
-
-    const copyToClipboard = async () => {
-        try {
-            if (!password) return
-            await navigator.clipboard.writeText(password)
-        } catch {
-            console.warn("Failed copying Password to clipboard")
-        }
-    }
 
     useEffect(() => {
         void generateMemorablePassword(passSize, firstLetterUppercase, useFullWords)
@@ -136,23 +128,14 @@ export default function MemorablePassword() {
             </CardContent>
 
             <CardFooter className="flex w-full items-center justify-between gap-2">
-                <div className="flex-1">
-                    <Button
-                        onClick={() => generateMemorablePassword(passSize, firstLetterUppercase, useFullWords)}
-                        aria-label="Generate Password">
-                        Generate
-                    </Button>
-                </div>
+                <Button
+                    type="button"
+                    onClick={() => generateMemorablePassword(passSize, firstLetterUppercase, useFullWords)}
+                    aria-label="Generate Password">
+                    Refresh
+                </Button>
 
-                <div className="flex gap-2">
-                    <Button
-                        variant="outline"
-                        onClick={copyToClipboard}
-                        disabled={!password}
-                        aria-label="Copy Password to clipboard">
-                        Copy
-                    </Button>
-                </div>
+                <ButtonClipboard size="default" variant="outline" content={password} />
             </CardFooter>
         </Card>
     )

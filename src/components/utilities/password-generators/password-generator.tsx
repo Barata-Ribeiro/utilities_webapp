@@ -1,5 +1,6 @@
 "use client"
 
+import ButtonClipboard from "@/components/button-clipboard"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
@@ -51,15 +52,6 @@ export default function PasswordGenerator() {
     useEffect(() => {
         generatePassword(passSize, hasNumbers, hasSymbols)
     }, [generatePassword, hasNumbers, hasSymbols, passSize])
-
-    const copyToClipboard = async () => {
-        try {
-            if (!password) return
-            await navigator.clipboard.writeText(password)
-        } catch {
-            console.warn("Failed copying Password to clipboard")
-        }
-    }
 
     return (
         <Card>
@@ -119,23 +111,14 @@ export default function PasswordGenerator() {
                 </div>
             </CardContent>
             <CardFooter className="flex w-full items-center justify-between gap-2">
-                <div className="flex-1">
-                    <Button
-                        onClick={() => generatePassword(passSize, hasNumbers, hasSymbols)}
-                        aria-label="Generate Password">
-                        Refresh
-                    </Button>
-                </div>
+                <Button
+                    type="button"
+                    onClick={() => generatePassword(passSize, hasNumbers, hasSymbols)}
+                    aria-label="Generate Password">
+                    Refresh
+                </Button>
 
-                <div className="flex gap-2">
-                    <Button
-                        variant="outline"
-                        onClick={copyToClipboard}
-                        disabled={!password}
-                        aria-label="Copy Password to clipboard">
-                        Copy
-                    </Button>
-                </div>
+                <ButtonClipboard size="default" variant="outline" content={password} />
             </CardFooter>
         </Card>
     )
