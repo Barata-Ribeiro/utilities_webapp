@@ -1,8 +1,21 @@
 import { URLS } from '@/lib/consts';
 import { defaultCache } from '@serwist/next/worker';
-import { ExpirationPlugin, type PrecacheEntry, type RuntimeCaching, Serwist, StaleWhileRevalidate } from 'serwist';
+import {
+    ExpirationPlugin,
+    type PrecacheEntry,
+    type RuntimeCaching,
+    Serwist,
+    SerwistGlobalConfig,
+    StaleWhileRevalidate,
+} from 'serwist';
 
-declare const self: ServiceWorkerGlobalScope & { __SW_MANIFEST?: (PrecacheEntry | string)[] };
+declare global {
+    interface WorkerGlobalScope extends SerwistGlobalConfig {
+        __SW_MANIFEST: (PrecacheEntry | string)[] | undefined;
+    }
+}
+
+declare const self: ServiceWorkerGlobalScope;
 
 const isDev = process.env.NODE_ENV !== 'production';
 
