@@ -1,10 +1,10 @@
-"use client"
+'use client';
 
-import { Logo } from "@/components/logo"
-import { NavFooter } from "@/components/nav-footer"
-import { NavMain } from "@/components/nav-main"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar"
-import { type ComponentProps } from "react"
+import { Logo } from '@/components/logo';
+import { NavFooter } from '@/components/nav-footer';
+import { NavMain } from '@/components/nav-main';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
+import { type ComponentProps } from 'react';
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
     return (
@@ -20,5 +20,5 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>
-    )
+    );
 }

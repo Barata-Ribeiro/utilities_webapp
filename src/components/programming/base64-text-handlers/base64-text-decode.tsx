@@ -1,40 +1,40 @@
-"use client"
+'use client';
 
-import ButtonClipboard from "@/components/button-clipboard"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
-import { Resolver, useForm } from "react-hook-form"
-import { z } from "zod/v4"
+import ButtonClipboard from '@/components/button-clipboard';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { Resolver, useForm } from 'react-hook-form';
+import { z } from 'zod/v4';
 
 const FormSchema = z.object({
     base64: z.preprocess(
-        val => (typeof val === "string" ? val.replace(/^data:(image\/[a-zA-Z]+);base64,/, "") : val),
-        z.base64("The provided value is not valid Base64.").min(1, "Base64 string is required."),
+        (val) => (typeof val === 'string' ? val.replace(/^data:(image\/[a-zA-Z]+);base64,/, '') : val),
+        z.base64('The provided value is not valid Base64.').min(1, 'Base64 string is required.'),
     ),
-})
+});
 
-type FormSchemaType = z.infer<typeof FormSchema>
+type FormSchemaType = z.infer<typeof FormSchema>;
 
 export default function Base64TextDecode() {
-    const [result, setResult] = useState<string | null>(null)
+    const [result, setResult] = useState<string | null>(null);
 
     const form = useForm<FormSchemaType>({
         resolver: zodResolver(FormSchema) as Resolver<FormSchemaType>,
-        defaultValues: { base64: "" },
-    })
+        defaultValues: { base64: '' },
+    });
 
     function onSubmit(data: FormSchemaType) {
-        const { base64 } = data
-        setResult(atob(base64))
+        const { base64 } = data;
+        setResult(atob(base64));
     }
 
     function resetForm() {
-        form.reset()
-        setResult(null)
+        form.reset();
+        setResult(null);
     }
 
     return (
@@ -88,24 +88,24 @@ export default function Base64TextDecode() {
                 {result ? (
                     <div className="w-full space-y-1">
                         <p className="font-semibold">Partial Result:</p>
-                        <pre className="bg-muted rounded p-2 font-mono text-sm break-all whitespace-pre-wrap">
-                            {result.substring(0, 250) + (result.length > 250 ? "..." : "")}
+                        <pre className="rounded bg-muted p-2 font-mono text-sm break-all whitespace-pre-wrap">
+                            {result.substring(0, 250) + (result.length > 250 ? '...' : '')}
                         </pre>
                         <div className="flex flex-wrap items-center-safe justify-between gap-2">
-                            <p className="text-muted-foreground text-xs">
+                            <p className="text-xs text-muted-foreground">
                                 Use the &ldquo;Copy&rdquo; button for complete result.
                             </p>
-                            <p className="text-muted-foreground text-sm">
-                                Total Characters: <strong>{result.replaceAll(/\n/g, "").length}</strong>
+                            <p className="text-sm text-muted-foreground">
+                                Total Characters: <strong>{result.replaceAll(/\n/g, '').length}</strong>
                             </p>
                         </div>
                     </div>
                 ) : (
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-sm text-muted-foreground">
                         Paste Base64 formatted text and click &ldquo;Decode&rdquo; to get the result.
                     </p>
                 )}
             </CardFooter>
         </Card>
-    )
+    );
 }

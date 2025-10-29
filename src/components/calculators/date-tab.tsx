@@ -1,7 +1,7 @@
-import DateAddSubtract from "@/components/calculators/date/date-add-subtract"
-import { DateDifference } from "@/components/calculators/date/date-difference"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CalendarRangeIcon, CalendarSyncIcon } from "lucide-react"
+import DateAddSubtract from '@/components/calculators/date/date-add-subtract';
+import { DateDifference } from '@/components/calculators/date/date-difference';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { CalendarRangeIcon, CalendarSyncIcon } from 'lucide-react';
 
 export default function DateTab() {
     return (
@@ -25,5 +25,5 @@ export default function DateTab() {
                 <DateAddSubtract />
             </TabsContent>
         </Tabs>
-    )
+    );
 }

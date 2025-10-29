@@ -1,26 +1,26 @@
-"use client"
+'use client';
 
-import React, { useEffect, useState, useTransition } from "react"
-import getJokes, { Joke } from "@/actions/get-jokes"
-import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
+import getJokes, { Joke } from '@/actions/get-jokes';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useEffect, useState, useTransition } from 'react';
 
 export default function ChuckNorrisJokesClient() {
-    const [isPending, startTransition] = useTransition()
-    const [jokes, setJokes] = useState<Joke[] | null>(null)
+    const [isPending, startTransition] = useTransition();
+    const [jokes, setJokes] = useState<Joke[] | null>(null);
 
     function fetchJokes() {
         startTransition(() =>
             getJokes()
-                .then(fetchedJokes => setJokes(fetchedJokes))
-                .catch(error => console.error("Error fetching jokes: ", error)),
-        )
+                .then((fetchedJokes) => setJokes(fetchedJokes))
+                .catch((error) => console.error('Error fetching jokes: ', error)),
+        );
     }
 
-    useEffect(() => fetchJokes(), [])
+    useEffect(() => fetchJokes(), []);
 
     return (
-        <div aria-busy={isPending} className="bg-card rounded-md p-6 shadow">
+        <div aria-busy={isPending} className="rounded-md bg-card p-6 shadow">
             <h2 className="font-serif text-lg">Chuck Norris Jokes</h2>
             <div className="mt-3 flex flex-col gap-3">
                 {isPending || jokes === null ? (
@@ -30,11 +30,11 @@ export default function ChuckNorrisJokesClient() {
                         <Skeleton className="h-5 w-full" />
                     </div>
                 ) : (
-                    jokes.map(j => (
+                    jokes.map((j) => (
                         <article key={j.id} className="rounded-md border p-3">
                             <p className="text-sm">{j.value}</p>
-                            <div className="text-muted-foreground mt-2 text-xs">
-                                Category: {j.categories.join(", ") || "uncategorized"}
+                            <div className="mt-2 text-xs text-muted-foreground">
+                                Category: {j.categories.join(', ') || 'uncategorized'}
                             </div>
                         </article>
                     ))
@@ -42,9 +42,9 @@ export default function ChuckNorrisJokesClient() {
             </div>
             <div className="mt-4 flex justify-end">
                 <Button variant="secondary" disabled={isPending} onClick={fetchJokes}>
-                    {isPending ? "Refreshing..." : "Refresh"}
+                    {isPending ? 'Refreshing...' : 'Refresh'}
                 </Button>
             </div>
         </div>
-    )
+    );
 }

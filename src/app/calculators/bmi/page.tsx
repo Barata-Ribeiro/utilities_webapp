@@ -1,19 +1,19 @@
-import Bmi from "@/components/calculators/bmi"
-import type { Metadata } from "next"
+import Bmi from '@/components/calculators/bmi';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "BMI Calculator",
-    description: "A simple BMI calculator to help you assess your body weight.",
-    keywords: ["bmi", "body mass index", "health calculator", "weight", "calculator", "utilities"],
-    manifest: "/manifest.webmanifest",
-}
+    title: 'BMI Calculator',
+    description: 'A simple BMI calculator to help you assess your body weight.',
+    keywords: ['bmi', 'body mass index', 'health calculator', 'weight', 'calculator', 'utilities'],
+    manifest: '/manifest.webmanifest',
+};
 
 export default function Page() {
     return (
-        <article className="bg-card rounded-md p-6 shadow">
+        <article className="rounded-md bg-card p-6 shadow">
             <h1 className="font-serif text-xl">BMI Calculator</h1>
 
-            <p className="text-muted-foreground mt-2 text-sm">
+            <p className="mt-2 text-sm text-muted-foreground">
                 Calculate your Body Mass Index (BMI) to assess your body weight relative to your height. This tool helps
                 you understand whether you&#39;re underweight, normal weight, overweight, or obese based on standard BMI
                 categories.
@@ -21,7 +21,7 @@ export default function Page() {
 
             <section className="mt-4">
                 <h2 className="sr-only">How it works</h2>
-                <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-sm">
+                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
                     <li>
                         <strong>Input your weight</strong>: Enter your weight in kilograms (kg) or pounds (lbs).
                     </li>
@@ -43,10 +43,10 @@ export default function Page() {
                 <Bmi />
             </div>
 
-            <footer className="text-muted-foreground mt-4 text-xs">
+            <footer className="mt-4 text-xs text-muted-foreground">
                 Note: This calculator is for informational purposes only and should not replace professional medical
                 advice.
             </footer>
         </article>
-    )
+    );
 }

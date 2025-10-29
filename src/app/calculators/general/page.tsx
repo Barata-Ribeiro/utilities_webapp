@@ -1,19 +1,19 @@
-import GeneralCalculator from "@/components/calculators/general-calculator"
-import type { Metadata } from "next"
+import GeneralCalculator from '@/components/calculators/general-calculator';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Calculator",
-    description: "A calculator for various general purposes.",
-    keywords: ["calculator", "arithmetic", "math", "compute", "utilities"],
-    manifest: "/manifest.webmanifest",
-}
+    title: 'Calculator',
+    description: 'A calculator for various general purposes.',
+    keywords: ['calculator', 'arithmetic', 'math', 'compute', 'utilities'],
+    manifest: '/manifest.webmanifest',
+};
 
 export default function Page() {
     return (
-        <article className="bg-card rounded-md p-6 shadow">
+        <article className="rounded-md bg-card p-6 shadow">
             <h1 className="font-serif text-xl">General Calculator</h1>
 
-            <p className="text-muted-foreground mt-2 text-sm">
+            <p className="mt-2 text-sm text-muted-foreground">
                 A versatile calculator for performing a wide range of calculations, from basic arithmetic to more
                 complex mathematical operations.
             </p>
@@ -30,10 +30,10 @@ export default function Page() {
                 <GeneralCalculator />
             </div>
 
-            <footer className="text-muted-foreground mt-4 text-xs">
+            <footer className="mt-4 text-xs text-muted-foreground">
                 Note: This calculator runs advanced calculations through a library but should not replace professional
                 advice. This utility runs locally in your browser and does not transmit the text to any server.
             </footer>
         </article>
-    )
+    );
 }

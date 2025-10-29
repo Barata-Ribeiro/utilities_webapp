@@ -1,74 +1,74 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { type ChangeEvent, useId, useState } from "react"
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { type ChangeEvent, useId, useState } from 'react';
 
 export default function IsPercentOfWhatCalc() {
-    const [value, setValue] = useState("")
-    const [percentOf, setPercentOf] = useState("")
-    const [result, setResult] = useState<number | null>(null)
+    const [value, setValue] = useState('');
+    const [percentOf, setPercentOf] = useState('');
+    const [result, setResult] = useState<number | null>(null);
 
-    const componentName = IsPercentOfWhatCalc.name.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()
+    const componentName = IsPercentOfWhatCalc.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
-    const valueId = useId()
-    const percentOfId = useId()
-    const resultId = useId()
+    const valueId = useId();
+    const percentOfId = useId();
+    const resultId = useId();
 
     function reset() {
-        setValue("")
-        setPercentOf("")
-        setResult(null)
+        setValue('');
+        setPercentOf('');
+        setResult(null);
     }
 
     function handleCalculation(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value: raw } = event.target
+        const { name, value: raw } = event.target;
 
-        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(raw) && raw !== "" && raw !== "-") return
-        const normalized = raw.replace(/,/g, ".")
-        let inputNum = parseFloat(normalized)
-        if (isNaN(inputNum)) inputNum = 0
+        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(raw) && raw !== '' && raw !== '-') return;
+        const normalized = raw.replace(/,/g, '.');
+        let inputNum = parseFloat(normalized);
+        if (isNaN(inputNum)) inputNum = 0;
 
         switch (name) {
-            case "value": {
-                setValue(raw)
-                if (percentOf === "" || percentOf === "-") {
-                    setResult(null)
-                    return
+            case 'value': {
+                setValue(raw);
+                if (percentOf === '' || percentOf === '-') {
+                    setResult(null);
+                    return;
                 }
-                const percentNum = parseFloat(percentOf.replace(/,/g, "."))
+                const percentNum = parseFloat(percentOf.replace(/,/g, '.'));
                 if (isNaN(percentNum) || percentNum === 0) {
-                    setResult(null)
-                    return
+                    setResult(null);
+                    return;
                 }
-                const res = (inputNum * 100) / percentNum
-                setResult(Number(res.toFixed(2)))
-                break
+                const res = (inputNum * 100) / percentNum;
+                setResult(Number(res.toFixed(2)));
+                break;
             }
-            case "percentOf": {
-                setPercentOf(raw)
-                if (raw === "" || raw === "-") {
-                    setResult(null)
-                    return
+            case 'percentOf': {
+                setPercentOf(raw);
+                if (raw === '' || raw === '-') {
+                    setResult(null);
+                    return;
                 }
-                const percentNum = parseFloat(raw.replace(/,/g, "."))
+                const percentNum = parseFloat(raw.replace(/,/g, '.'));
                 if (isNaN(percentNum) || percentNum === 0) {
-                    setResult(null)
-                    return
+                    setResult(null);
+                    return;
                 }
-                const valueNum = parseFloat(value.replace(/,/g, "."))
+                const valueNum = parseFloat(value.replace(/,/g, '.'));
                 if (isNaN(valueNum)) {
-                    setResult(null)
-                    return
+                    setResult(null);
+                    return;
                 }
-                const res = (valueNum * 100) / percentNum
-                setResult(Number(res.toFixed(2)))
-                break
+                const res = (valueNum * 100) / percentNum;
+                setResult(Number(res.toFixed(2)));
+                break;
             }
             default:
-                break
+                break;
         }
     }
 
@@ -88,7 +88,7 @@ export default function IsPercentOfWhatCalc() {
                         placeholder="e.g. 50"
                         inputMode="decimal"
                         aria-label="Value"
-                        aria-invalid={value === "-" ? "true" : undefined}
+                        aria-invalid={value === '-' ? 'true' : undefined}
                         aria-describedby="value-help"
                         value={value}
                         onChange={handleCalculation}
@@ -105,7 +105,7 @@ export default function IsPercentOfWhatCalc() {
                         name="percentOf"
                         inputMode="decimal"
                         placeholder="e.g. 30"
-                        aria-invalid={percentOf === "-" ? "true" : undefined}
+                        aria-invalid={percentOf === '-' ? 'true' : undefined}
                         aria-describedby="of-help"
                         value={percentOf}
                         aria-label="Percent of value"
@@ -126,7 +126,7 @@ export default function IsPercentOfWhatCalc() {
                         aria-label="Calculation result"
                         aria-describedby={`${componentName}-formula`}
                         className="font-bold"
-                        value={result !== null ? String(Number(result.toFixed(2))) : ""}
+                        value={result !== null ? String(Number(result.toFixed(2))) : ''}
                         readOnly
                     />
                 </div>
@@ -138,18 +138,18 @@ export default function IsPercentOfWhatCalc() {
 
             <CardFooter className="border-t pt-4">
                 {result === null ? (
-                    <p id={`${componentName}-formula`} className="text-muted-foreground text-sm font-medium">
+                    <p id={`${componentName}-formula`} className="text-sm font-medium text-muted-foreground">
                         y = (x ⋅ 100) / p
                     </p>
                 ) : (
-                    <p id={`${componentName}-formula`} className="text-muted-foreground text-sm font-medium">
-                        {result} = ({value.replace(/,/g, ".")} ⋅ 100) / {percentOf.replace(/,/g, ".")}
+                    <p id={`${componentName}-formula`} className="text-sm font-medium text-muted-foreground">
+                        {result} = ({value.replace(/,/g, '.')} ⋅ 100) / {percentOf.replace(/,/g, '.')}
                     </p>
                 )}
                 <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-                    {result !== null ? `Result is ${result}` : "No result"}
+                    {result !== null ? `Result is ${result}` : 'No result'}
                 </div>
             </CardFooter>
         </Card>
-    )
+    );
 }

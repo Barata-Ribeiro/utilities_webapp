@@ -1,44 +1,44 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { sha1, sha224, sha256, sha3, sha384, sha512 } from "hash-wasm"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod/v4"
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { sha1, sha224, sha256, sha3, sha384, sha512 } from 'hash-wasm';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod/v4';
 
 const FormSchema = z.object({
-    text: z.string("Text is required.").min(1, "Text is required."),
-})
+    text: z.string('Text is required.').min(1, 'Text is required.'),
+});
 
-type FormSchemaType = z.infer<typeof FormSchema>
+type FormSchemaType = z.infer<typeof FormSchema>;
 
 const initialShaState = {
-    "SHA-1": "",
-    "SHA-224": "",
-    "SHA-256": "",
-    "SHA-384": "",
-    "SHA-512": "",
-    "SHA3-224": "",
-    "SHA3-256": "",
-    "SHA3-384": "",
-    "SHA3-512": "",
-}
+    'SHA-1': '',
+    'SHA-224': '',
+    'SHA-256': '',
+    'SHA-384': '',
+    'SHA-512': '',
+    'SHA3-224': '',
+    'SHA3-256': '',
+    'SHA3-384': '',
+    'SHA3-512': '',
+};
 
 export default function ShaHashing() {
-    const [result, setResult] = useState(initialShaState)
+    const [result, setResult] = useState(initialShaState);
 
     const form = useForm<FormSchemaType>({
         resolver: zodResolver(FormSchema),
-        defaultValues: { text: "" },
-    })
+        defaultValues: { text: '' },
+    });
 
     async function onSubmit(data: FormSchemaType) {
-        const { text } = data
-        const buffer = new TextEncoder().encode(text)
+        const { text } = data;
+        const buffer = new TextEncoder().encode(text);
 
         const hashes = await Promise.all([
             sha1(buffer),
@@ -50,16 +50,16 @@ export default function ShaHashing() {
             sha3(buffer, 256),
             sha3(buffer, 384),
             sha3(buffer, 512),
-        ])
+        ]);
 
-        const entries = Object.keys(initialShaState).map((k, i) => [k, hashes[i]])
+        const entries = Object.keys(initialShaState).map((k, i) => [k, hashes[i]]);
 
-        setResult(Object.fromEntries(entries) as typeof initialShaState)
+        setResult(Object.fromEntries(entries) as typeof initialShaState);
     }
 
     function resetForm() {
-        form.reset()
-        setResult(initialShaState)
+        form.reset();
+        setResult(initialShaState);
     }
 
     return (
@@ -108,21 +108,21 @@ export default function ShaHashing() {
             </CardContent>
 
             <CardFooter className="grid border-t pt-4">
-                {Object.values(result).some(value => value) ? (
+                {Object.values(result).some((value) => value) ? (
                     <div className="space-y-4">
                         {Object.entries(result).map(([algo, hash]) => (
                             <div key={algo} className="space-y-1">
                                 <p className="font-semibold">{algo}:</p>
-                                <pre className="bg-muted rounded p-2 font-mono text-sm break-all whitespace-pre-wrap">
+                                <pre className="rounded bg-muted p-2 font-mono text-sm break-all whitespace-pre-wrap">
                                     {hash}
                                 </pre>
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <p className="text-muted-foreground text-sm">No hashed results yet.</p>
+                    <p className="text-sm text-muted-foreground">No hashed results yet.</p>
                 )}
             </CardFooter>
         </Card>
-    )
+    );
 }

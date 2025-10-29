@@ -1,10 +1,10 @@
-import IsPercentOfWhatCalc from "@/components/calculators/percentage/is-percent-of-what-calc"
-import IsWhatPercentOfCalc from "@/components/calculators/percentage/is-what-percent-of-calc"
-import PercentIncreaseDecreaseCalc from "@/components/calculators/percentage/percent-increase-decrease-calc"
-import PercentOfCalc from "@/components/calculators/percentage/percent-of-calc"
-import ValueIncreaseDecreasePercent from "@/components/calculators/percentage/value-increase-decrease-percent"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ArrowUpDownIcon, PercentIcon } from "lucide-react"
+import IsPercentOfWhatCalc from '@/components/calculators/percentage/is-percent-of-what-calc';
+import IsWhatPercentOfCalc from '@/components/calculators/percentage/is-what-percent-of-calc';
+import PercentIncreaseDecreaseCalc from '@/components/calculators/percentage/percent-increase-decrease-calc';
+import PercentOfCalc from '@/components/calculators/percentage/percent-of-calc';
+import ValueIncreaseDecreasePercent from '@/components/calculators/percentage/value-increase-decrease-percent';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ArrowUpDownIcon, PercentIcon } from 'lucide-react';
 
 export default function PercentageTab() {
     return (
@@ -22,7 +22,8 @@ export default function PercentageTab() {
 
             <TabsContent
                 value="percentage-calculators"
-                className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            >
                 <PercentOfCalc />
                 <IsWhatPercentOfCalc />
                 <IsPercentOfWhatCalc />
@@ -33,5 +34,5 @@ export default function PercentageTab() {
                 <PercentIncreaseDecreaseCalc />
             </TabsContent>
         </Tabs>
-    )
+    );
 }

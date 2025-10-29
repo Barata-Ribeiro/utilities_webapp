@@ -1,29 +1,29 @@
-"use client"
+'use client';
 
-import ButtonClipboard from "@/components/button-clipboard"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Slider } from "@/components/ui/slider"
-import { useCallback, useEffect, useState } from "react"
+import ButtonClipboard from '@/components/button-clipboard';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Slider } from '@/components/ui/slider';
+import { useCallback, useEffect, useState } from 'react';
 
 function generateRandomPin(size: number) {
-    const bytes = new Uint8Array(size)
+    const bytes = new Uint8Array(size);
 
-    if (typeof crypto !== "undefined" && typeof crypto.getRandomValues === "function") crypto.getRandomValues(bytes)
-    else for (let i = 0; i < size; i++) bytes[i] = Math.floor(Math.random() * 256)
+    if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') crypto.getRandomValues(bytes);
+    else for (let i = 0; i < size; i++) bytes[i] = Math.floor(Math.random() * 256);
 
     return Array.from(bytes)
-        .map(b => String(b % 10))
-        .join("")
+        .map((b) => String(b % 10))
+        .join('');
 }
 
 export default function PinGenerator() {
-    const [pinSize, setPinSize] = useState(3)
-    const [pin, setPin] = useState(() => generateRandomPin(3))
+    const [pinSize, setPinSize] = useState(3);
+    const [pin, setPin] = useState(() => generateRandomPin(3));
 
-    const generatePin = useCallback((size: number) => setPin(generateRandomPin(size)), [])
+    const generatePin = useCallback((size: number) => setPin(generateRandomPin(size)), []);
 
-    useEffect(() => generatePin(pinSize), [pinSize, generatePin])
+    useEffect(() => generatePin(pinSize), [pinSize, generatePin]);
 
     return (
         <Card>
@@ -34,7 +34,7 @@ export default function PinGenerator() {
 
             <CardContent className="space-y-4">
                 <div className="flex flex-col items-center rounded-md border p-4">
-                    <div className="font-mono text-2xl tracking-widest">{pin ?? "•••"}</div>
+                    <div className="font-mono text-2xl tracking-widest">{pin ?? '•••'}</div>
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -44,7 +44,7 @@ export default function PinGenerator() {
                     <Slider
                         id="pin-size"
                         value={[pinSize]}
-                        onValueChange={value => setPinSize(value[0])}
+                        onValueChange={(value) => setPinSize(value[0])}
                         min={3}
                         max={12}
                         step={1}
@@ -60,5 +60,5 @@ export default function PinGenerator() {
                 <ButtonClipboard size="default" variant="outline" content={pin} />
             </CardFooter>
         </Card>
-    )
+    );
 }

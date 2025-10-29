@@ -1,7 +1,7 @@
-import Base64TextDecode from "@/components/programming/base64-text-handlers/base64-text-decode"
-import Base64TextEncode from "@/components/programming/base64-text-handlers/base64-text-encode"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BrainIcon, NewspaperIcon } from "lucide-react"
+import Base64TextDecode from '@/components/programming/base64-text-handlers/base64-text-decode';
+import Base64TextEncode from '@/components/programming/base64-text-handlers/base64-text-encode';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { BrainIcon, NewspaperIcon } from 'lucide-react';
 
 export default function Base64TextEncodeDecodeTab() {
     return (
@@ -25,5 +25,5 @@ export default function Base64TextEncodeDecodeTab() {
                 <Base64TextDecode />
             </TabsContent>
         </Tabs>
-    )
+    );
 }

@@ -1,18 +1,18 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuRadioGroup,
     DropdownMenuRadioItem,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { MoonIcon, SunIcon } from "lucide-react"
-import { useTheme } from "next-themes"
+} from '@/components/ui/dropdown-menu';
+import { MoonIcon, SunIcon } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
 export function ThemeSwitcher() {
-    const { setTheme, theme } = useTheme()
+    const { setTheme, theme } = useTheme();
 
     return (
         <div className="fixed right-6 bottom-6 z-50">
@@ -25,7 +25,7 @@ export function ThemeSwitcher() {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                    <DropdownMenuRadioGroup value={theme ?? "system"} onValueChange={val => setTheme(val)}>
+                    <DropdownMenuRadioGroup value={theme ?? 'system'} onValueChange={(val) => setTheme(val)}>
                         <DropdownMenuRadioItem value="light">Light</DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="dark">Dark</DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
@@ -33,5 +33,5 @@ export function ThemeSwitcher() {
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>
-    )
+    );
 }

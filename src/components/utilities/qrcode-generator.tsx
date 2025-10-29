@@ -1,52 +1,52 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useTheme } from "next-themes"
-import Image from "next/image"
-import { Fragment, useState } from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod/v4"
-import QRCode from "qrcode"
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
+import QRCode from 'qrcode';
+import { Fragment, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod/v4';
 
 const FormSchema = z.object({
     url: z.url({ protocol: /^https$/, hostname: z.regexes.domain }),
-})
+});
 
-type FormSchemaType = z.infer<typeof FormSchema>
+type FormSchemaType = z.infer<typeof FormSchema>;
 
 export default function QRCodeGenerator() {
-    const { theme } = useTheme()
-    const [qrCode, setQRCode] = useState<string | null>(null)
+    const { theme } = useTheme();
+    const [qrCode, setQRCode] = useState<string | null>(null);
 
     const form = useForm<FormSchemaType>({
         resolver: zodResolver(FormSchema),
-        defaultValues: { url: "" },
-    })
+        defaultValues: { url: '' },
+    });
 
     function onSubmit(data: FormSchemaType) {
-        const { url } = data
+        const { url } = data;
 
         QRCode.toDataURL(url, {
             width: 800,
             margin: 2,
             color: {
-                dark: theme === "dark" ? "#fafafa" : "#050505",
-                light: theme === "dark" ? "#050505" : "#fafafa",
+                dark: theme === 'dark' ? '#fafafa' : '#050505',
+                light: theme === 'dark' ? '#050505' : '#fafafa',
             },
         })
-            .then(dataUrl => setQRCode(dataUrl))
-            .catch(err => {
-                console.error(err)
-                setQRCode(null)
-            })
+            .then((dataUrl) => setQRCode(dataUrl))
+            .catch((err) => {
+                console.error(err);
+                setQRCode(null);
+            });
     }
 
     function reset() {
-        form.reset()
-        setQRCode(null)
+        form.reset();
+        setQRCode(null);
     }
 
     return (
@@ -54,7 +54,8 @@ export default function QRCodeGenerator() {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6">
+                    className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6"
+                >
                     <FormField
                         control={form.control}
                         name="url"
@@ -96,5 +97,5 @@ export default function QRCodeGenerator() {
                 </div>
             )}
         </Fragment>
-    )
+    );
 }

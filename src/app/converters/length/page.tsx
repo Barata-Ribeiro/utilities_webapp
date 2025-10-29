@@ -1,26 +1,26 @@
-import Length from "@/components/converters/length"
-import type { Metadata } from "next"
+import Length from '@/components/converters/length';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Length Converter",
+    title: 'Length Converter',
     description:
-        "Easily convert lengths between meters, feet, and inches. Perfect for construction, travel, and everyday use.",
-    keywords: ["length converter", "meters", "feet", "inches", "convert length", "distance", "units", "utilities"],
-    manifest: "/manifest.webmanifest",
-}
+        'Easily convert lengths between meters, feet, and inches. Perfect for construction, travel, and everyday use.',
+    keywords: ['length converter', 'meters', 'feet', 'inches', 'convert length', 'distance', 'units', 'utilities'],
+    manifest: '/manifest.webmanifest',
+};
 
 export default function Page() {
     return (
-        <article className="bg-card rounded-md p-6 shadow">
+        <article className="rounded-md bg-card p-6 shadow">
             <h1 className="font-serif text-xl">Length Converter</h1>
-            <p className="text-muted-foreground mt-2 text-sm">
+            <p className="mt-2 text-sm text-muted-foreground">
                 Easily convert lengths between meters, feet, and inches. Perfect for construction, travel, and everyday
                 use.
             </p>
 
             <section className="mt-4">
                 <h2 className="sr-only">How it works</h2>
-                <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-sm">
+                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
                     <li>
                         <strong>Meters (m)</strong>: The metric unit of length, commonly used worldwide.
                     </li>
@@ -62,10 +62,10 @@ export default function Page() {
                 <Length />
             </div>
 
-            <footer className="text-muted-foreground text-xs">
+            <footer className="text-xs text-muted-foreground">
                 Tip: Use this tool to quickly convert lengths for construction projects, travel measurements, or
                 everyday tasks. This utility runs locally in your browser and does not transmit any data to a server.
             </footer>
         </article>
-    )
+    );
 }

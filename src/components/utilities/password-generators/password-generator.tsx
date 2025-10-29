@@ -1,57 +1,57 @@
-"use client"
+'use client';
 
-import ButtonClipboard from "@/components/button-clipboard"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Slider } from "@/components/ui/slider"
-import { Switch } from "@/components/ui/switch"
-import { cn } from "@/lib/utils"
-import { useCallback, useEffect, useState } from "react"
+import ButtonClipboard from '@/components/button-clipboard';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Slider } from '@/components/ui/slider';
+import { Switch } from '@/components/ui/switch';
+import { cn } from '@/lib/utils';
+import { useCallback, useEffect, useState } from 'react';
 
-const UPPERCASE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-const LOWERCASE_CHARS = "abcdefghijklmnopqrstuvwxyz"
-const NUMBER_CHARS = "0123456789"
-const SYMBOL_CHARS = "!@#$%^&*()-_=+[]{}|;:,.<>?/`~"
+const UPPERCASE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const LOWERCASE_CHARS = 'abcdefghijklmnopqrstuvwxyz';
+const NUMBER_CHARS = '0123456789';
+const SYMBOL_CHARS = '!@#$%^&*()-_=+[]{}|;:,.<>?/`~';
 
 function generateRandomPassword(size: number, numbers: boolean, symbols: boolean) {
-    let charSet = UPPERCASE_CHARS + LOWERCASE_CHARS
-    if (numbers) charSet += NUMBER_CHARS
-    if (symbols) charSet += SYMBOL_CHARS
+    let charSet = UPPERCASE_CHARS + LOWERCASE_CHARS;
+    if (numbers) charSet += NUMBER_CHARS;
+    if (symbols) charSet += SYMBOL_CHARS;
 
-    if (charSet.length === 0) return null
+    if (charSet.length === 0) return null;
 
-    const bytes = new Uint8Array(size)
-    if (typeof crypto !== "undefined" && typeof crypto.getRandomValues === "function") {
-        crypto.getRandomValues(bytes)
+    const bytes = new Uint8Array(size);
+    if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+        crypto.getRandomValues(bytes);
     } else {
-        for (let i = 0; i < size; i++) bytes[i] = Math.floor(Math.random() * 256)
+        for (let i = 0; i < size; i++) bytes[i] = Math.floor(Math.random() * 256);
     }
 
     return Array.from(bytes)
-        .map(b => charSet[b % charSet.length])
-        .join("")
+        .map((b) => charSet[b % charSet.length])
+        .join('');
 }
 
 function charClass(ch: string) {
-    if (/\d/.test(ch)) return cn`text-blue-500 dark:text-blue-400`
-    if (/^[A-Za-z]$/.test(ch)) return ""
-    return cn`text-primary`
+    if (/\d/.test(ch)) return cn`text-blue-500 dark:text-blue-400`;
+    if (/^[A-Za-z]$/.test(ch)) return '';
+    return cn`text-primary`;
 }
 
 export default function PasswordGenerator() {
-    const [password, setPassword] = useState<string | null>(null)
-    const [passSize, setPassSize] = useState(8)
-    const [hasNumbers, setHasNumbers] = useState(true)
-    const [hasSymbols, setHasSymbols] = useState(true)
+    const [password, setPassword] = useState<string | null>(null);
+    const [passSize, setPassSize] = useState(8);
+    const [hasNumbers, setHasNumbers] = useState(true);
+    const [hasSymbols, setHasSymbols] = useState(true);
 
     const generatePassword = useCallback((size: number, numbers: boolean, symbols: boolean) => {
-        setPassword(generateRandomPassword(size, numbers, symbols))
-    }, [])
+        setPassword(generateRandomPassword(size, numbers, symbols));
+    }, []);
 
     useEffect(() => {
-        generatePassword(passSize, hasNumbers, hasSymbols)
-    }, [generatePassword, hasNumbers, hasSymbols, passSize])
+        generatePassword(passSize, hasNumbers, hasSymbols);
+    }, [generatePassword, hasNumbers, hasSymbols, passSize]);
 
     return (
         <Card>
@@ -67,7 +67,7 @@ export default function PasswordGenerator() {
                     <Slider
                         id="pin-size"
                         value={[passSize]}
-                        onValueChange={value => setPassSize(value[0])}
+                        onValueChange={(value) => setPassSize(value[0])}
                         min={8}
                         max={128}
                         step={1}
@@ -82,7 +82,7 @@ export default function PasswordGenerator() {
                         <Switch
                             id="has-numbers"
                             checked={hasNumbers}
-                            onCheckedChange={checked => setHasNumbers(checked)}
+                            onCheckedChange={(checked) => setHasNumbers(checked)}
                         />
                     </div>
 
@@ -93,7 +93,7 @@ export default function PasswordGenerator() {
                         <Switch
                             id="has-symbols"
                             checked={hasSymbols}
-                            onCheckedChange={checked => setHasSymbols(checked)}
+                            onCheckedChange={(checked) => setHasSymbols(checked)}
                         />
                     </div>
                 </div>
@@ -106,7 +106,7 @@ export default function PasswordGenerator() {
                                       {ch}
                                   </span>
                               ))
-                            : "••••••••"}
+                            : '••••••••'}
                     </p>
                 </div>
             </CardContent>
@@ -114,12 +114,13 @@ export default function PasswordGenerator() {
                 <Button
                     type="button"
                     onClick={() => generatePassword(passSize, hasNumbers, hasSymbols)}
-                    aria-label="Generate Password">
+                    aria-label="Generate Password"
+                >
                     Refresh
                 </Button>
 
                 <ButtonClipboard size="default" variant="outline" content={password} />
             </CardFooter>
         </Card>
-    )
+    );
 }

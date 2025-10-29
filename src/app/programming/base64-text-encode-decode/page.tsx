@@ -1,35 +1,35 @@
-import Base64TextEncodeDecodeTab from "@/components/programming/base64-text-encode-decode-tab"
-import type { Metadata } from "next"
+import Base64TextEncodeDecodeTab from '@/components/programming/base64-text-encode-decode-tab';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Base64 Text Encoder/Decoder",
+    title: 'Base64 Text Encoder/Decoder',
     description:
-        "Quickly encode or decode text to and from Base64 format online. Paste your text and get the Base64 representation or decode Base64 back to plain text.",
+        'Quickly encode or decode text to and from Base64 format online. Paste your text and get the Base64 representation or decode Base64 back to plain text.',
     keywords: [
-        "base64 text encoder",
-        "base64 text decoder",
-        "text converter",
-        "online tool",
-        "utilities",
-        "programming",
-        "data encoding",
-        "text processing",
+        'base64 text encoder',
+        'base64 text decoder',
+        'text converter',
+        'online tool',
+        'utilities',
+        'programming',
+        'data encoding',
+        'text processing',
     ],
-    manifest: "/manifest.webmanifest",
-}
+    manifest: '/manifest.webmanifest',
+};
 
 export default function Page() {
     return (
-        <article className="bg-card rounded-md p-6 shadow">
+        <article className="rounded-md bg-card p-6 shadow">
             <h1 className="font-serif text-xl">Base64 Text Encoder/Decoder</h1>
-            <p className="text-muted-foreground mt-2 text-sm">
+            <p className="mt-2 text-sm text-muted-foreground">
                 Quickly encode or decode text to and from Base64 format online. Paste your text and get the Base64
                 representation or decode Base64 back to plain text.
             </p>
 
             <section className="mt-4">
                 <h2 className="sr-only">How it works</h2>
-                <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-sm">
+                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
                     <li>
                         <strong>Paste Text</strong>: Input your plain text or Base64 encoded string into the provided
                         field.
@@ -48,10 +48,10 @@ export default function Page() {
                 <Base64TextEncodeDecodeTab />
             </div>
 
-            <footer className="text-muted-foreground text-xs">
+            <footer className="text-xs text-muted-foreground">
                 Tip: Ensure your Base64 string is correctly formatted. This utility runs locally in your browser and
                 does not transmit your data to any server.
             </footer>
         </article>
-    )
+    );
 }

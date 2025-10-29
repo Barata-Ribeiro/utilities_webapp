@@ -1,28 +1,28 @@
-import PasswordPinTab from "@/components/utilities/password-pin-tab"
-import type { Metadata } from "next"
+import PasswordPinTab from '@/components/utilities/password-pin-tab';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Password & PIN Generator",
+    title: 'Password & PIN Generator',
     description:
-        "Generate strong passwords, memorable passphrases, and numeric PINs locally in your browser. Customize length, character sets, and options to create secure, usable credentials.",
+        'Generate strong passwords, memorable passphrases, and numeric PINs locally in your browser. Customize length, character sets, and options to create secure, usable credentials.',
     keywords: [
-        "password generator",
-        "pin generator",
-        "passphrase",
-        "password strength",
-        "security",
-        "crypto",
-        "utilities",
+        'password generator',
+        'pin generator',
+        'passphrase',
+        'password strength',
+        'security',
+        'crypto',
+        'utilities',
     ],
-    manifest: "/manifest.webmanifest",
-}
+    manifest: '/manifest.webmanifest',
+};
 
 export default function Page() {
     return (
-        <article className="bg-card rounded-md p-6 shadow">
+        <article className="rounded-md bg-card p-6 shadow">
             <h1 className="font-serif text-xl">Password & PIN Generator</h1>
 
-            <p className="text-muted-foreground mt-2 text-sm">
+            <p className="mt-2 text-sm text-muted-foreground">
                 Create strong, random passwords, memorable passphrases, or short numeric PINs — all generated locally in
                 your browser. Use the tabs to switch between the standard password generator, a memorable passphrase
                 generator, and a numeric PIN generator. Customize length and options to meet different use-cases (e.g.,
@@ -31,7 +31,7 @@ export default function Page() {
 
             <section className="mt-4">
                 <h2 className="sr-only">How it works</h2>
-                <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-sm">
+                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
                     <li>
                         <strong>Choose length</strong>: For standard passwords pick a length (8–128). For memorable
                         passphrases pick the number of words (3–15). For PINs choose 3–12 digits. Longer values provide
@@ -72,9 +72,9 @@ export default function Page() {
                 <PasswordPinTab />
             </div>
 
-            <footer className="text-muted-foreground mt-4 text-xs">
+            <footer className="mt-4 text-xs text-muted-foreground">
                 Note: This utility runs locally in your browser and does not transmit any data to a server.
             </footer>
         </article>
-    )
+    );
 }

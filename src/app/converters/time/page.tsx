@@ -1,26 +1,26 @@
-import Time from "@/components/converters/time"
-import type { Metadata } from "next"
+import Time from '@/components/converters/time';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Time Converter",
+    title: 'Time Converter',
     description:
-        "Convert time units such as seconds, minutes, hours, days, weeks, months, and years. Useful for scheduling, planning, and everyday calculations.",
-    keywords: ["time converter", "time units", "seconds", "minutes", "hours", "convert time", "utilities"],
-    manifest: "/manifest.webmanifest",
-}
+        'Convert time units such as seconds, minutes, hours, days, weeks, months, and years. Useful for scheduling, planning, and everyday calculations.',
+    keywords: ['time converter', 'time units', 'seconds', 'minutes', 'hours', 'convert time', 'utilities'],
+    manifest: '/manifest.webmanifest',
+};
 
 export default function Page() {
     return (
-        <article className="bg-card rounded-md p-6 shadow">
+        <article className="rounded-md bg-card p-6 shadow">
             <h1 className="font-serif text-xl">Time Converter</h1>
-            <p className="text-muted-foreground mt-2 text-sm">
+            <p className="mt-2 text-sm text-muted-foreground">
                 Convert time units such as seconds, minutes, hours, days, weeks, months, and years. Useful for
                 scheduling, planning, and everyday calculations.
             </p>
 
             <section className="mt-4">
                 <h2 className="sr-only">How it works</h2>
-                <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-sm">
+                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
                     <li>
                         <strong>Nanoseconds (ns)</strong>: A unit of time equal to one billionth of a second, commonly
                         used in scientific and technical contexts.
@@ -76,11 +76,11 @@ export default function Page() {
                 <Time />
             </div>
 
-            <footer className="text-muted-foreground text-xs">
+            <footer className="text-xs text-muted-foreground">
                 Tip: Use the time converter to quickly switch between different time units. This tool is perfect for
                 converting durations when scheduling events, planning projects, or managing daily activities. This
                 utility runs locally in your browser and does not transmit any data to a server.
             </footer>
         </article>
-    )
+    );
 }

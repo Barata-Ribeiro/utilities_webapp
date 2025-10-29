@@ -1,103 +1,103 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { type ChangeEvent, useId, useState } from "react"
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { type ChangeEvent, useId, useState } from 'react';
 
 enum Action {
-    INCREASE = "increase",
-    DECREASE = "decrease",
+    INCREASE = 'increase',
+    DECREASE = 'decrease',
 }
 
 export default function ValueIncreaseDecreasePercent() {
-    const [value, setValue] = useState("")
-    const [percentChange, setPercentChange] = useState("")
-    const [action, setAction] = useState<Action>(Action.INCREASE)
-    const [result, setResult] = useState<number | null>(null)
+    const [value, setValue] = useState('');
+    const [percentChange, setPercentChange] = useState('');
+    const [action, setAction] = useState<Action>(Action.INCREASE);
+    const [result, setResult] = useState<number | null>(null);
 
-    const componentName = ValueIncreaseDecreasePercent.name.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()
+    const componentName = ValueIncreaseDecreasePercent.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
-    const valueId = useId()
-    const percentChangeId = useId()
-    const actionId = useId()
-    const resultId = useId()
+    const valueId = useId();
+    const percentChangeId = useId();
+    const actionId = useId();
+    const resultId = useId();
 
     function handleCalculation(event: ChangeEvent<HTMLInputElement>) {
-        const { name, value: raw } = event.target
+        const { name, value: raw } = event.target;
 
-        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(raw) && raw !== "" && raw !== "-") return
-        const normalized = raw.replace(/,/g, ".")
-        let inputNum = parseFloat(normalized)
-        if (isNaN(inputNum)) inputNum = 0
+        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(raw) && raw !== '' && raw !== '-') return;
+        const normalized = raw.replace(/,/g, '.');
+        let inputNum = parseFloat(normalized);
+        if (isNaN(inputNum)) inputNum = 0;
 
         switch (name) {
-            case "value": {
-                setValue(raw)
-                if (percentChange === "" || percentChange === "-") {
-                    setResult(null)
-                    return
+            case 'value': {
+                setValue(raw);
+                if (percentChange === '' || percentChange === '-') {
+                    setResult(null);
+                    return;
                 }
-                const percentNum = parseFloat(percentChange.replace(/,/g, "."))
+                const percentNum = parseFloat(percentChange.replace(/,/g, '.'));
                 if (isNaN(percentNum)) {
-                    setResult(null)
-                    return
+                    setResult(null);
+                    return;
                 }
                 const res =
-                    action === Action.INCREASE ? inputNum * (1 + percentNum / 100) : inputNum * (1 - percentNum / 100)
-                setResult(Number(res.toFixed(2)))
-                break
+                    action === Action.INCREASE ? inputNum * (1 + percentNum / 100) : inputNum * (1 - percentNum / 100);
+                setResult(Number(res.toFixed(2)));
+                break;
             }
-            case "percentChange": {
-                setPercentChange(raw)
-                if (raw === "" || raw === "-") {
-                    setResult(null)
-                    return
+            case 'percentChange': {
+                setPercentChange(raw);
+                if (raw === '' || raw === '-') {
+                    setResult(null);
+                    return;
                 }
-                const percentNum = parseFloat(raw.replace(/,/g, "."))
+                const percentNum = parseFloat(raw.replace(/,/g, '.'));
                 if (isNaN(percentNum)) {
-                    setResult(null)
-                    return
+                    setResult(null);
+                    return;
                 }
-                const valueNum = parseFloat(value.replace(/,/g, "."))
+                const valueNum = parseFloat(value.replace(/,/g, '.'));
                 if (isNaN(valueNum)) {
-                    setResult(null)
-                    return
+                    setResult(null);
+                    return;
                 }
                 const res =
-                    action === Action.INCREASE ? valueNum * (1 + percentNum / 100) : valueNum * (1 - percentNum / 100)
-                setResult(Number(res.toFixed(2)))
-                break
+                    action === Action.INCREASE ? valueNum * (1 + percentNum / 100) : valueNum * (1 - percentNum / 100);
+                setResult(Number(res.toFixed(2)));
+                break;
             }
             default:
-                break
+                break;
         }
     }
 
     function handleActionChange(newAction: Action) {
-        setAction(newAction)
-        if (value === "" || value === "-" || percentChange === "" || percentChange === "-") {
-            setResult(null)
-            return
+        setAction(newAction);
+        if (value === '' || value === '-' || percentChange === '' || percentChange === '-') {
+            setResult(null);
+            return;
         }
-        const valueNum = parseFloat(value.replace(/,/g, "."))
-        const percentNum = parseFloat(percentChange.replace(/,/g, "."))
+        const valueNum = parseFloat(value.replace(/,/g, '.'));
+        const percentNum = parseFloat(percentChange.replace(/,/g, '.'));
         if (isNaN(valueNum) || isNaN(percentNum)) {
-            setResult(null)
-            return
+            setResult(null);
+            return;
         }
         const res =
-            newAction === Action.INCREASE ? valueNum * (1 + percentNum / 100) : valueNum * (1 - percentNum / 100)
-        setResult(Number(res.toFixed(2)))
+            newAction === Action.INCREASE ? valueNum * (1 + percentNum / 100) : valueNum * (1 - percentNum / 100);
+        setResult(Number(res.toFixed(2)));
     }
 
     function reset() {
-        setValue("")
-        setPercentChange("")
-        setAction(Action.INCREASE)
-        setResult(null)
+        setValue('');
+        setPercentChange('');
+        setAction(Action.INCREASE);
+        setResult(null);
     }
 
     return (
@@ -116,7 +116,7 @@ export default function ValueIncreaseDecreasePercent() {
                             name="value"
                             inputMode="decimal"
                             placeholder="e.g. 50"
-                            aria-invalid={value === "-" ? "true" : undefined}
+                            aria-invalid={value === '-' ? 'true' : undefined}
                             aria-describedby="value-help"
                             value={value}
                             aria-label="Initial value"
@@ -131,8 +131,9 @@ export default function ValueIncreaseDecreasePercent() {
                         <Select
                             name="action"
                             value={action}
-                            onValueChange={val => handleActionChange(val as Action)}
-                            aria-label="Select action">
+                            onValueChange={(val) => handleActionChange(val as Action)}
+                            aria-label="Select action"
+                        >
                             <SelectTrigger>
                                 <SelectValue placeholder="Increase/Decrease" />
                             </SelectTrigger>
@@ -154,7 +155,7 @@ export default function ValueIncreaseDecreasePercent() {
                         name="percentChange"
                         inputMode="decimal"
                         placeholder="e.g. 70"
-                        aria-invalid={percentChange === "-" ? "true" : undefined}
+                        aria-invalid={percentChange === '-' ? 'true' : undefined}
                         aria-describedby="of-help"
                         value={percentChange}
                         aria-label="Percent change"
@@ -176,7 +177,7 @@ export default function ValueIncreaseDecreasePercent() {
                         aria-label="Calculation result"
                         aria-describedby={`${componentName}-formula`}
                         className="font-bold"
-                        value={result !== null ? String(Number(result.toFixed(2))) : ""}
+                        value={result !== null ? String(Number(result.toFixed(2))) : ''}
                         readOnly
                     />
                 </div>
@@ -188,19 +189,19 @@ export default function ValueIncreaseDecreasePercent() {
 
             <CardFooter className="border-t pt-4">
                 {result === null ? (
-                    <p id={`${componentName}-formula`} className="text-muted-foreground text-sm font-medium">
+                    <p id={`${componentName}-formula`} className="text-sm font-medium text-muted-foreground">
                         y = ± x (100 + p) / 100
                     </p>
                 ) : (
-                    <p id={`${componentName}-formula`} className="text-muted-foreground text-sm font-medium">
-                        {result} = ({value.replace(/,/g, ".")} ⋅ (100 {action === Action.INCREASE ? "+" : "-"}{" "}
-                        {percentChange.replace(/,/g, ".")})) / 100
+                    <p id={`${componentName}-formula`} className="text-sm font-medium text-muted-foreground">
+                        {result} = ({value.replace(/,/g, '.')} ⋅ (100 {action === Action.INCREASE ? '+' : '-'}{' '}
+                        {percentChange.replace(/,/g, '.')})) / 100
                     </p>
                 )}
                 <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-                    {result !== null ? `Result is ${result}` : "No result"}
+                    {result !== null ? `Result is ${result}` : 'No result'}
                 </div>
             </CardFooter>
         </Card>
-    )
+    );
 }

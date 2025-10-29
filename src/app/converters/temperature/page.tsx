@@ -1,24 +1,24 @@
-import Temperature from "@/components/converters/temperature"
-import type { Metadata } from "next"
+import Temperature from '@/components/converters/temperature';
+import type { Metadata } from 'next';
 export const metadata: Metadata = {
-    title: "Temperature Converter",
-    description: "A simple temperature converter utility. Convert between Celsius, Fahrenheit, and Kelvin.",
-    keywords: ["temperature converter", "celsius", "fahrenheit", "kelvin", "convert temperature", "units", "utilities"],
-    manifest: "/manifest.webmanifest",
-}
+    title: 'Temperature Converter',
+    description: 'A simple temperature converter utility. Convert between Celsius, Fahrenheit, and Kelvin.',
+    keywords: ['temperature converter', 'celsius', 'fahrenheit', 'kelvin', 'convert temperature', 'units', 'utilities'],
+    manifest: '/manifest.webmanifest',
+};
 
 export default function Page() {
     return (
-        <article className="bg-card rounded-md p-6 shadow">
+        <article className="rounded-md bg-card p-6 shadow">
             <h1 className="font-serif text-xl">Temperature Converter</h1>
-            <p className="text-muted-foreground mt-2 text-sm">
+            <p className="mt-2 text-sm text-muted-foreground">
                 Easily convert temperatures between Celsius, Fahrenheit, and Kelvin. Perfect for cooking, science, and
                 everyday use.
             </p>
 
             <section className="mt-4">
                 <h2 className="sr-only">How it works</h2>
-                <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-sm">
+                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
                     <li>
                         <strong>Celsius (°C)</strong>: The metric unit of temperature, commonly used worldwide.
                     </li>
@@ -36,10 +36,10 @@ export default function Page() {
                 <Temperature />
             </div>
 
-            <footer className="text-muted-foreground text-xs">
+            <footer className="text-xs text-muted-foreground">
                 Tip: Use this tool to quickly convert temperatures for recipes, weather reports, or scientific data.
                 This utility runs locally in your browser and does not transmit any data to a server.
             </footer>
         </article>
-    )
+    );
 }

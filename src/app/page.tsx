@@ -1,20 +1,20 @@
-import ChuckNorrisJokesClient from "@/components/home/chuck-norris-jokes-client"
-import SystemInfoClient from "@/components/home/system-info-client"
-import { Button } from "@/components/ui/button"
-import type { Metadata } from "next"
-import Link from "next/link"
+import ChuckNorrisJokesClient from '@/components/home/chuck-norris-jokes-client';
+import SystemInfoClient from '@/components/home/system-info-client';
+import { Button } from '@/components/ui/button';
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
-    manifest: "/manifest.webmanifest",
-}
+    manifest: '/manifest.webmanifest',
+};
 
 export default function Home() {
     return (
         <article className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-6">
             <section className="flex flex-col gap-4 md:col-span-2">
-                <div className="bg-card rounded-md p-6 shadow">
+                <div className="rounded-md bg-card p-6 shadow">
                     <h1 className="font-serif text-2xl">Welcome to my Utilities Web App</h1>
-                    <p className="text-muted-foreground mt-2 text-sm">Quick handy tools to speed up everyday tasks.</p>
+                    <p className="mt-2 text-sm text-muted-foreground">Quick handy tools to speed up everyday tasks.</p>
 
                     <div className="mt-4 flex flex-wrap items-center gap-2">
                         <Link href="/utilities/character-counter">
@@ -32,9 +32,9 @@ export default function Home() {
                 {/* System info is a client component */}
                 <SystemInfoClient />
 
-                <div className="bg-card rounded-md p-6 shadow">
+                <div className="rounded-md bg-card p-6 shadow">
                     <h2 className="font-serif text-lg">About</h2>
-                    <p className="text-muted-foreground mt-2 text-sm">
+                    <p className="mt-2 text-sm text-muted-foreground">
                         This app groups small utilities and converters in a single, fast interface. Use the sidebar to
                         navigate through available tools.
                     </p>
@@ -45,7 +45,7 @@ export default function Home() {
                 {/* Jokes is a client component */}
                 <ChuckNorrisJokesClient />
 
-                <div className="bg-card rounded-md p-6 shadow">
+                <div className="rounded-md bg-card p-6 shadow">
                     <h2 className="font-serif text-lg">Quick Links</h2>
                     <ul className="mt-3 flex flex-col gap-2">
                         <li>
@@ -57,7 +57,8 @@ export default function Home() {
                             <Link
                                 href="https://github.com/Barata-Ribeiro/utilities_webapp/issues"
                                 target="_blank"
-                                rel="noopener noreferrer external">
+                                rel="noopener noreferrer external"
+                            >
                                 <Button variant="link">Report an issue</Button>
                             </Link>
                         </li>
@@ -65,5 +66,5 @@ export default function Home() {
                 </div>
             </aside>
         </article>
-    )
+    );
 }

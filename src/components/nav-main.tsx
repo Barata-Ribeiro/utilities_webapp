@@ -1,6 +1,6 @@
-"use client"
+'use client';
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -9,7 +9,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu';
 import {
     SidebarGroup,
     SidebarMenu,
@@ -19,7 +19,8 @@ import {
     SidebarMenuSubButton,
     SidebarMenuSubItem,
     useSidebar,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/sidebar';
+import { URLS } from '@/lib/consts';
 import {
     CalculatorIcon,
     ChevronRight,
@@ -29,67 +30,67 @@ import {
     NotebookIcon,
     PencilRulerIcon,
     RefreshCcwDotIcon,
-} from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Fragment } from "react"
-import { URLS } from "@/lib/consts"
+} from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Fragment } from 'react';
 
 interface LinkItem {
-    title: string
-    url: string
-    icon?: LucideIcon
-    isActive?: boolean
+    title: string;
+    url: string;
+    icon?: LucideIcon;
+    isActive?: boolean;
     items?: readonly {
-        title: string
-        url: string
-    }[]
+        title: string;
+        url: string;
+    }[];
 }
 
 export function NavMain() {
-    const { state, isMobile } = useSidebar()
-    const pathname = usePathname()
+    const { state, isMobile } = useSidebar();
+    const pathname = usePathname();
 
     const LINKS: LinkItem[] = [
         {
-            title: "Utilities",
-            url: "#",
+            title: 'Utilities',
+            url: '#',
             icon: PencilRulerIcon,
-            isActive: pathname.startsWith("/utilities"),
+            isActive: pathname.startsWith('/utilities'),
             items: URLS.utilities,
         },
         {
-            title: "Converters",
-            url: "#",
+            title: 'Converters',
+            url: '#',
             icon: RefreshCcwDotIcon,
-            isActive: pathname.startsWith("/converters"),
+            isActive: pathname.startsWith('/converters'),
             items: URLS.converters,
         },
         {
-            title: "Calculators",
-            url: "#",
+            title: 'Calculators',
+            url: '#',
             icon: CalculatorIcon,
-            isActive: pathname.endsWith("/calculators"),
+            isActive: pathname.endsWith('/calculators'),
             items: URLS.calculators,
         },
         {
-            title: "Programming",
-            url: "#",
+            title: 'Programming',
+            url: '#',
             icon: CodeXmlIcon,
-            isActive: pathname.startsWith("/programming"),
+            isActive: pathname.startsWith('/programming'),
             items: URLS.programming,
         },
-    ]
+    ];
 
     return (
         <SidebarGroup>
             <SidebarMenu>
                 <SidebarMenuButton
                     tooltip="Home"
-                    aria-current={pathname === "/" ? "page" : undefined}
-                    {...(pathname.endsWith("/") && { "data-current": "" })}
-                    className="data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground cursor-pointer"
-                    asChild>
+                    aria-current={pathname === '/' ? 'page' : undefined}
+                    {...(pathname.endsWith('/') && { 'data-current': '' })}
+                    className="cursor-pointer data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground"
+                    asChild
+                >
                     <Link href="/">
                         <GaugeIcon aria-hidden className="mr-2" />
                         <span>Home</span>
@@ -97,26 +98,28 @@ export function NavMain() {
                 </SidebarMenuButton>
                 <SidebarMenuButton
                     tooltip="About"
-                    aria-current={pathname.endsWith("/about") ? "page" : undefined}
-                    {...(pathname.endsWith("/about") && { "data-current": "" })}
-                    className="data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground cursor-pointer"
-                    asChild>
+                    aria-current={pathname.endsWith('/about') ? 'page' : undefined}
+                    {...(pathname.endsWith('/about') && { 'data-current': '' })}
+                    className="cursor-pointer data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground"
+                    asChild
+                >
                     <Link href="/about">
                         <NotebookIcon aria-hidden className="mr-2" />
                         <span>About</span>
                     </Link>
                 </SidebarMenuButton>
-                {state === "collapsed" && !isMobile && (
+                {state === 'collapsed' && !isMobile && (
                     <Fragment>
-                        {LINKS.map(item => (
+                        {LINKS.map((item) => (
                             <DropdownMenu key={item.title}>
                                 <DropdownMenuTrigger asChild>
                                     <SidebarMenuButton
                                         tooltip={item.title}
                                         isActive={item.isActive}
-                                        aria-current={item.isActive ? "page" : undefined}
-                                        {...(item.isActive && { "data-current": "" })}
-                                        className="data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground cursor-pointer">
+                                        aria-current={item.isActive ? 'page' : undefined}
+                                        {...(item.isActive && { 'data-current': '' })}
+                                        className="cursor-pointer data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground"
+                                    >
                                         {item.icon && <item.icon />}
                                     </SidebarMenuButton>
                                 </DropdownMenuTrigger>
@@ -125,23 +128,25 @@ export function NavMain() {
                                     <DropdownMenuLabel>{item.title}</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuGroup className="space-y-1">
-                                        {item.items?.map(subItem => {
-                                            const isActive = pathname.endsWith(subItem.url)
+                                        {item.items?.map((subItem) => {
+                                            const isActive = pathname.endsWith(subItem.url);
 
                                             return (
                                                 <DropdownMenuItem
                                                     asChild
-                                                    {...(isActive && { "data-current": "" })}
-                                                    className="data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground cursor-pointer data-current:px-2 data-current:font-medium"
-                                                    key={subItem.title}>
+                                                    {...(isActive && { 'data-current': '' })}
+                                                    className="cursor-pointer data-current:bg-sidebar-accent data-current:px-2 data-current:font-medium data-current:text-sidebar-accent-foreground"
+                                                    key={subItem.title}
+                                                >
                                                     <Link
                                                         href={subItem.url}
-                                                        aria-current={isActive ? "page" : undefined}
-                                                        className="inline-flex w-full items-center gap-x-2">
+                                                        aria-current={isActive ? 'page' : undefined}
+                                                        className="inline-flex w-full items-center gap-x-2"
+                                                    >
                                                         <span>{subItem.title}</span>
                                                     </Link>
                                                 </DropdownMenuItem>
-                                            )
+                                            );
                                         })}
                                     </DropdownMenuGroup>
                                 </DropdownMenuContent>
@@ -149,22 +154,24 @@ export function NavMain() {
                         ))}
                     </Fragment>
                 )}
-                {(state === "expanded" || isMobile) && (
+                {(state === 'expanded' || isMobile) && (
                     <Fragment>
-                        {LINKS.map(item => (
+                        {LINKS.map((item) => (
                             <Collapsible
                                 key={item.title}
                                 asChild
                                 defaultOpen={item.isActive}
-                                className="group/collapsible">
+                                className="group/collapsible"
+                            >
                                 <SidebarMenuItem>
                                     <CollapsibleTrigger asChild>
                                         <SidebarMenuButton
                                             tooltip={item.title}
                                             isActive={item.isActive}
-                                            aria-current={item.isActive ? "page" : undefined}
-                                            {...(item.isActive && { "data-current": "" })}
-                                            className="data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground cursor-pointer">
+                                            aria-current={item.isActive ? 'page' : undefined}
+                                            {...(item.isActive && { 'data-current': '' })}
+                                            className="cursor-pointer data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground"
+                                        >
                                             {item.icon && <item.icon />}
                                             <span>{item.title}</span>
                                             <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -172,22 +179,23 @@ export function NavMain() {
                                     </CollapsibleTrigger>
                                     <CollapsibleContent>
                                         <SidebarMenuSub>
-                                            {item.items?.map(subItem => {
-                                                const isActive = pathname.endsWith(subItem.url)
+                                            {item.items?.map((subItem) => {
+                                                const isActive = pathname.endsWith(subItem.url);
 
                                                 return (
                                                     <SidebarMenuSubItem key={subItem.title}>
                                                         <SidebarMenuSubButton isActive={isActive} asChild>
                                                             <Link
                                                                 href={subItem.url}
-                                                                aria-current={isActive ? "page" : undefined}
-                                                                {...(isActive && { "data-current": "" })}
-                                                                className="inline-flex items-center gap-x-2">
+                                                                aria-current={isActive ? 'page' : undefined}
+                                                                {...(isActive && { 'data-current': '' })}
+                                                                className="inline-flex items-center gap-x-2"
+                                                            >
                                                                 <span>{subItem.title}</span>
                                                             </Link>
                                                         </SidebarMenuSubButton>
                                                     </SidebarMenuSubItem>
-                                                )
+                                                );
                                             })}
                                         </SidebarMenuSub>
                                     </CollapsibleContent>
@@ -195,8 +203,8 @@ export function NavMain() {
                             </Collapsible>
                         ))}
                     </Fragment>
-                )}{" "}
+                )}{' '}
             </SidebarMenu>
         </SidebarGroup>
-    )
+    );
 }

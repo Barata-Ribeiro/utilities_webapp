@@ -1,40 +1,40 @@
-"use client"
+'use client';
 
-import ButtonClipboard from "@/components/button-clipboard"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Textarea } from "@/components/ui/textarea"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod/v4"
+import ButtonClipboard from '@/components/button-clipboard';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod/v4';
 
 const FormSchema = z.object({
-    text: z.string("Text is required.").min(1, { error: "Text is required." }),
-})
+    text: z.string('Text is required.').min(1, { error: 'Text is required.' }),
+});
 
-type FormSchemaType = z.infer<typeof FormSchema>
+type FormSchemaType = z.infer<typeof FormSchema>;
 
 export default function Base64TextEncode() {
-    const [result, setResult] = useState<string | null>(null)
+    const [result, setResult] = useState<string | null>(null);
 
     const form = useForm<FormSchemaType>({
         resolver: zodResolver(FormSchema),
-        defaultValues: { text: "" },
-    })
+        defaultValues: { text: '' },
+    });
 
     function onSubmit(data: FormSchemaType) {
-        const { text } = data
-        const encoder = new TextEncoder()
-        const dataUint8Array = encoder.encode(text)
-        const base64String = btoa(String.fromCodePoint(...dataUint8Array))
-        setResult(base64String)
+        const { text } = data;
+        const encoder = new TextEncoder();
+        const dataUint8Array = encoder.encode(text);
+        const base64String = btoa(String.fromCodePoint(...dataUint8Array));
+        setResult(base64String);
     }
 
     function resetForm() {
-        form.reset()
-        setResult(null)
+        form.reset();
+        setResult(null);
     }
 
     return (
@@ -88,24 +88,24 @@ export default function Base64TextEncode() {
                 {result ? (
                     <div className="w-full space-y-1">
                         <p className="font-semibold">Partial Result:</p>
-                        <pre className="bg-muted rounded p-2 font-mono text-sm break-all whitespace-pre-wrap">
-                            {result.substring(0, 100) + (result.length > 100 ? "..." : "")}
+                        <pre className="rounded bg-muted p-2 font-mono text-sm break-all whitespace-pre-wrap">
+                            {result.substring(0, 100) + (result.length > 100 ? '...' : '')}
                         </pre>
                         <div className="flex flex-wrap items-center-safe justify-between gap-2">
-                            <p className="text-muted-foreground text-xs">
+                            <p className="text-xs text-muted-foreground">
                                 Use the &ldquo;Copy&rdquo; button for complete result.
                             </p>
-                            <p className="text-muted-foreground text-sm">
-                                Total Characters: <strong>{result.replaceAll(/\n/g, "").length}</strong>
+                            <p className="text-sm text-muted-foreground">
+                                Total Characters: <strong>{result.replaceAll(/\n/g, '').length}</strong>
                             </p>
                         </div>
                     </div>
                 ) : (
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-sm text-muted-foreground">
                         Paste text and click &ldquo;Encode&rdquo; to get the result.
                     </p>
                 )}
             </CardFooter>
         </Card>
-    )
+    );
 }

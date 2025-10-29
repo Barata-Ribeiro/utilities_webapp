@@ -1,6 +1,6 @@
-import Gcf from "@/components/calculators/gcf-and-lcm/gcf"
-import Lcm from "@/components/calculators/gcf-and-lcm/lcm"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import Gcf from '@/components/calculators/gcf-and-lcm/gcf';
+import Lcm from '@/components/calculators/gcf-and-lcm/lcm';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function GCFAndLCMCalcTab() {
     return (
@@ -18,5 +18,5 @@ export default function GCFAndLCMCalcTab() {
                 <Lcm />
             </TabsContent>
         </Tabs>
-    )
+    );
 }

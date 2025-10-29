@@ -1,27 +1,27 @@
-import LoremIpsumGenerator from "@/components/utilities/lorem-ipsum-generator"
-import type { Metadata } from "next"
+import LoremIpsumGenerator from '@/components/utilities/lorem-ipsum-generator';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Lorem Ipsum Generator",
+    title: 'Lorem Ipsum Generator',
     description:
-        "Generate placeholder text for your designs and layouts. Customize the number of paragraphs, words, or sentences to fit your needs.",
-    keywords: ["lorem ipsum", "placeholder text", "dummy text", "text generator", "design", "layout", "utilities"],
-    manifest: "/manifest.webmanifest",
-}
+        'Generate placeholder text for your designs and layouts. Customize the number of paragraphs, words, or sentences to fit your needs.',
+    keywords: ['lorem ipsum', 'placeholder text', 'dummy text', 'text generator', 'design', 'layout', 'utilities'],
+    manifest: '/manifest.webmanifest',
+};
 
 export default function Page() {
     return (
-        <article className="bg-card rounded-md p-6 shadow">
+        <article className="rounded-md bg-card p-6 shadow">
             <h1 className="font-serif text-xl">Lorem Ipsum Generator</h1>
 
-            <p className="text-muted-foreground mt-2 text-sm">
+            <p className="mt-2 text-sm text-muted-foreground">
                 Generate placeholder text for your designs and layouts. Customize the number of paragraphs, words, or
                 sentences to fit your needs.
             </p>
 
             <section className="mt-4">
                 <h2 className="sr-only">How it works</h2>
-                <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-sm">
+                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
                     <li>
                         <strong>Paragraphs</strong>: Generate multiple paragraphs of placeholder text.
                     </li>
@@ -44,10 +44,10 @@ export default function Page() {
                 <LoremIpsumGenerator />
             </div>
 
-            <footer className="text-muted-foreground mt-4 text-xs">
+            <footer className="mt-4 text-xs text-muted-foreground">
                 Tip: Use the generated text to fill in your designs and layouts. This utility runs locally in your
                 browser and does not transmit any data to a server.
             </footer>
         </article>
-    )
+    );
 }

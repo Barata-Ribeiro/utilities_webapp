@@ -1,69 +1,69 @@
-"use client"
+'use client';
 
-import ButtonClipboard                                                           from "@/components/button-clipboard"
-import { Button }                                                                from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label }                                                                 from "@/components/ui/label"
-import { Slider }                                                                from "@/components/ui/slider"
-import { Switch }                                                                from "@/components/ui/switch"
-import { useCallback, useEffect, useRef, useState }                              from "react"
+import ButtonClipboard from '@/components/button-clipboard';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
+import { Slider } from '@/components/ui/slider';
+import { Switch } from '@/components/ui/switch';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 function charClass(ch: string) {
-    if (/^[A-Za-z]$/.test(ch)) return ""
-    return "text-primary"
+    if (/^[A-Za-z]$/.test(ch)) return '';
+    return 'text-primary';
 }
 
 export default function MemorablePassword() {
-    const [password, setPassword] = useState<string | null>(null)
-    const [passSize, setPassSize] = useState(3)
-    const [firstLetterUppercase, setFirstLetterUppercase] = useState(true)
-    const [useFullWords, setUseFullWords] = useState(true)
-    const savedWord = useRef<string[] | null>(null)
+    const [password, setPassword] = useState<string | null>(null);
+    const [passSize, setPassSize] = useState(3);
+    const [firstLetterUppercase, setFirstLetterUppercase] = useState(true);
+    const [useFullWords, setUseFullWords] = useState(true);
+    const savedWord = useRef<string[] | null>(null);
 
     const shuffle = (arr: string[]) => {
-        const a = arr.slice()
+        const a = arr.slice();
         for (let i = a.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1))
-            ;[a[i], a[j]] = [a[j], a[i]]
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
         }
-        return a
-    }
+        return a;
+    };
 
     const generateMemorablePassword = useCallback(
         async (size: number, firstLetterUppercase: boolean, useFullWords: boolean) => {
             if (!savedWord.current) {
-                const res = await fetch("/words.json")
+                const res = await fetch('/words.json');
                 if (!res.ok) {
-                    alert("Failed to fetch word list")
-                    return
+                    alert('Failed to fetch word list');
+                    return;
                 }
-                savedWord.current = await res.json()
+                savedWord.current = await res.json();
             }
 
-            const pool = savedWord.current!
-            const candidates = shuffle(pool).slice(0, size)
+            const pool = savedWord.current!;
+            const candidates = shuffle(pool).slice(0, size);
 
-            const selectedWords = candidates.map(word => {
-                let w = word
-                const maxLen = w.length
+            const selectedWords = candidates.map((word) => {
+                let w = word;
+                const maxLen = w.length;
 
                 if (!useFullWords && maxLen > 3) {
-                    const take = 3 + Math.floor(Math.random() * (maxLen - 3 + 1))
-                    w = w.slice(0, take)
+                    const take = 3 + Math.floor(Math.random() * (maxLen - 3 + 1));
+                    w = w.slice(0, take);
                 }
-                if (firstLetterUppercase) w = w.replace(/^\w/, c => c.toUpperCase())
+                if (firstLetterUppercase) w = w.replace(/^\w/, (c) => c.toUpperCase());
 
-                return w
-            })
+                return w;
+            });
 
-            setPassword(selectedWords.join("-"))
+            setPassword(selectedWords.join('-'));
         },
         [],
-    )
+    );
 
     useEffect(() => {
-        void generateMemorablePassword(passSize, firstLetterUppercase, useFullWords)
-    }, [firstLetterUppercase, generateMemorablePassword, passSize, useFullWords])
+        void generateMemorablePassword(passSize, firstLetterUppercase, useFullWords);
+    }, [firstLetterUppercase, generateMemorablePassword, passSize, useFullWords]);
 
     return (
         <Card>
@@ -83,7 +83,7 @@ export default function MemorablePassword() {
                     <Slider
                         id="pin-size"
                         value={[passSize]}
-                        onValueChange={value => setPassSize(value[0])}
+                        onValueChange={(value) => setPassSize(value[0])}
                         min={3}
                         max={15}
                         step={1}
@@ -98,7 +98,7 @@ export default function MemorablePassword() {
                         <Switch
                             id="first-letter-uppercase"
                             checked={firstLetterUppercase}
-                            onCheckedChange={checked => setFirstLetterUppercase(checked)}
+                            onCheckedChange={(checked) => setFirstLetterUppercase(checked)}
                         />
                     </div>
 
@@ -109,7 +109,7 @@ export default function MemorablePassword() {
                         <Switch
                             id="use-full-words"
                             checked={useFullWords}
-                            onCheckedChange={checked => setUseFullWords(checked)}
+                            onCheckedChange={(checked) => setUseFullWords(checked)}
                         />
                     </div>
                 </div>
@@ -122,7 +122,7 @@ export default function MemorablePassword() {
                                       {ch}
                                   </span>
                               ))
-                            : "••••••••"}
+                            : '••••••••'}
                     </p>
                 </div>
             </CardContent>
@@ -131,12 +131,13 @@ export default function MemorablePassword() {
                 <Button
                     type="button"
                     onClick={() => generateMemorablePassword(passSize, firstLetterUppercase, useFullWords)}
-                    aria-label="Generate Password">
+                    aria-label="Generate Password"
+                >
                     Refresh
                 </Button>
 
                 <ButtonClipboard size="default" variant="outline" content={password} />
             </CardFooter>
         </Card>
-    )
+    );
 }

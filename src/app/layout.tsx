@@ -1,46 +1,45 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import Breadcrumbs from "@/components/breadcrumbs"
-import { SwRegister } from "@/components/sw-register"
-import { ThemeSwitcher } from "@/components/theme-switcher"
-import { Separator } from "@/components/ui/separator"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { cn } from "@/lib/utils"
-import { ThemeProvider } from "@/providers/theme-provider"
-import Cookies from "js-cookie"
-import type { Metadata, Viewport } from "next"
-import { Fira_Mono, Montserrat, Source_Sans_3 } from "next/font/google"
-import "./globals.css"
-import { type ReactNode } from "react"
-import { twMerge } from "tailwind-merge"
+import { AppSidebar } from '@/components/app-sidebar';
+import Breadcrumbs from '@/components/breadcrumbs';
+import { SwRegister } from '@/components/sw-register';
+import { ThemeSwitcher } from '@/components/theme-switcher';
+import { Separator } from '@/components/ui/separator';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { cn } from '@/lib/utils';
+import { ThemeProvider } from '@/providers/theme-provider';
+import Cookies from 'js-cookie';
+import type { Metadata, Viewport } from 'next';
+import { Fira_Mono, Montserrat, Source_Sans_3 } from 'next/font/google';
+import { type ReactNode } from 'react';
+import './globals.css';
 
 const montserrat = Montserrat({
-    variable: "--font-montserrat",
-    display: "swap",
-    subsets: ["latin"],
-    style: ["normal", "italic"],
-    weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-})
+    variable: '--font-montserrat',
+    display: 'swap',
+    subsets: ['latin'],
+    style: ['normal', 'italic'],
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+});
 
 const sourceSans3 = Source_Sans_3({
-    variable: "--font-source-sans-3",
-    display: "swap",
-    subsets: ["latin"],
-    style: ["normal", "italic"],
-    weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
-})
+    variable: '--font-source-sans-3',
+    display: 'swap',
+    subsets: ['latin'],
+    style: ['normal', 'italic'],
+    weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
+});
 
 const firaMono = Fira_Mono({
-    variable: "--font-fira-mono",
-    display: "swap",
-    subsets: ["latin"],
-    style: ["normal"],
-    weight: ["400", "500", "700"],
-})
+    variable: '--font-fira-mono',
+    display: 'swap',
+    subsets: ['latin'],
+    style: ['normal'],
+    weight: ['400', '500', '700'],
+});
 
-const APP_NAME = "Utilities Webapp"
-const APP_DEFAULT_TITLE = "Utilities Webapp"
-const APP_TITLE_TEMPLATE = "%s | Utilities Webapp"
-const APP_DESCRIPTION = `Welcome to Utilities Webapp, your go-to platform for a variety of handy tools and utilities designed to make your life easier. Whether you need to perform quick calculations, convert units, or access other useful functionalities, we've got you covered.`
+const APP_NAME = 'Utilities Webapp';
+const APP_DEFAULT_TITLE = 'Utilities Webapp';
+const APP_TITLE_TEMPLATE = '%s | Utilities Webapp';
+const APP_DESCRIPTION = `Welcome to Utilities Webapp, your go-to platform for a variety of handy tools and utilities designed to make your life easier. Whether you need to perform quick calculations, convert units, or access other useful functionalities, we've got you covered.`;
 
 export const metadata: Metadata = {
     applicationName: APP_NAME,
@@ -51,27 +50,27 @@ export const metadata: Metadata = {
     description: APP_DESCRIPTION,
     appleWebApp: {
         capable: true,
-        statusBarStyle: "default",
+        statusBarStyle: 'default',
         title: APP_DEFAULT_TITLE,
     },
     formatDetection: {
         telephone: false,
     },
     keywords: [
-        "utilities",
-        "webapp",
-        "tools",
-        "calculators",
-        "converters",
-        "productivity",
-        "time management",
-        "data analysis",
-        "online tools",
-        "handy utilities",
-        "digital tools",
+        'utilities',
+        'webapp',
+        'tools',
+        'calculators',
+        'converters',
+        'productivity',
+        'time management',
+        'data analysis',
+        'online tools',
+        'handy utilities',
+        'digital tools',
     ],
-    authors: [{ name: "João Mendes J. B. Ribeiro", url: "https://www.linkedin.com/in/barataribeiro/" }],
-    creator: "Barata Ribeiro",
+    authors: [{ name: 'João Mendes J. B. Ribeiro', url: 'https://www.linkedin.com/in/barataribeiro/' }],
+    creator: 'Barata Ribeiro',
     openGraph: {
         siteName: APP_NAME,
         title: {
@@ -79,18 +78,18 @@ export const metadata: Metadata = {
             template: APP_TITLE_TEMPLATE,
         },
         description: APP_DESCRIPTION,
-        url: "https://utilities-webapp.vercel.app/",
-        locale: "en-US",
-        type: "website",
+        url: 'https://utilities-webapp.vercel.app/',
+        locale: 'en-US',
+        type: 'website',
     },
     twitter: {
-        card: "summary",
+        card: 'summary',
         title: {
             default: APP_DEFAULT_TITLE,
             template: APP_TITLE_TEMPLATE,
         },
         description: APP_DESCRIPTION,
-        creator: "@JohnRoachy",
+        creator: '@JohnRoachy',
     },
     robots: {
         index: true,
@@ -98,25 +97,25 @@ export const metadata: Metadata = {
         googleBot: {
             index: true,
             follow: true,
-            "max-video-preview": -1,
-            "max-image-preview": "large",
-            "max-snippet": -1,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
         },
     },
-}
+};
 
 export const viewport: Viewport = {
-    themeColor: "oklch(0.6229 0.2012 35.9323)",
-}
+    themeColor: 'oklch(0.6229 0.2012 35.9323)',
+};
 
 export default async function RootLayout({
     children,
 }: Readonly<{
-    children: ReactNode
+    children: ReactNode;
 }>) {
-    const defaultOpen = Cookies.get("sidebar_state") === "true"
-    const fontVariables = `${montserrat.variable} ${sourceSans3.variable} ${firaMono.variable}`
-    const bodyStyles = twMerge(cn`h-full w-full !scroll-smooth antialiased`, fontVariables)
+    const defaultOpen = Cookies.get('sidebar_state') === 'true';
+    const fontVariables = `${montserrat.variable} ${sourceSans3.variable} ${firaMono.variable}`;
+    const bodyStyles = cn('h-full w-full scroll-smooth! antialiased', fontVariables);
 
     return (
         <html lang="en" dir="ltr" suppressHydrationWarning>
@@ -147,5 +146,5 @@ export default async function RootLayout({
                 </ThemeProvider>
             </body>
         </html>
-    )
+    );
 }

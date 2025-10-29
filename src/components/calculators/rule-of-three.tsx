@@ -1,40 +1,40 @@
-"use client"
+'use client';
 
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
-import { Resolver, useForm } from "react-hook-form"
-import { z } from "zod/v4"
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { Resolver, useForm } from 'react-hook-form';
+import { z } from 'zod/v4';
 
 const RuleOfThreeSchema = z.object({
-    a: z.coerce.number("Value must be a number.").nonnegative(),
-    b: z.coerce.number("Value must be a number.").nonnegative(),
-    c: z.coerce.number("Value must be a number.").nonnegative(),
-})
+    a: z.coerce.number('Value must be a number.').nonnegative(),
+    b: z.coerce.number('Value must be a number.').nonnegative(),
+    c: z.coerce.number('Value must be a number.').nonnegative(),
+});
 
-type FormValues = z.infer<typeof RuleOfThreeSchema>
+type FormValues = z.infer<typeof RuleOfThreeSchema>;
 
 export default function RuleOfThree() {
-    const [result, setResult] = useState<string | null>(null)
+    const [result, setResult] = useState<string | null>(null);
 
     const form = useForm<FormValues>({
         resolver: zodResolver(RuleOfThreeSchema) as Resolver<FormValues>,
         defaultValues: { a: 0, b: 0, c: 0 },
-    })
+    });
 
     const onFormSubmit = (data: z.infer<typeof RuleOfThreeSchema>) => {
-        const { a, b, c } = data
+        const { a, b, c } = data;
 
-        if (Object.values(data).some(value => value === null || value === undefined || isNaN(value) || value <= 0)) {
-            alert("Please fill in all fields with valid numbers.")
-            return
+        if (Object.values(data).some((value) => value === null || value === undefined || isNaN(value) || value <= 0)) {
+            alert('Please fill in all fields with valid numbers.');
+            return;
         }
 
-        const d = (b * c) / a
-        setResult(d.toFixed(2))
-    }
+        const d = (b * c) / a;
+        setResult(d.toFixed(2));
+    };
 
     return (
         <div className="mx-auto grid max-w-lg">
@@ -45,10 +45,10 @@ export default function RuleOfThree() {
                             control={form.control}
                             name="a"
                             render={({ field }) => {
-                                const fieldError = form.formState.errors[field.name]
-                                const descId = `${field.name}-desc`
-                                const errId = `${field.name}-error`
-                                const describedBy = fieldError ? descId + " " + errId : descId
+                                const fieldError = form.formState.errors[field.name];
+                                const descId = `${field.name}-desc`;
+                                const errId = `${field.name}-error`;
+                                const describedBy = fieldError ? descId + ' ' + errId : descId;
 
                                 return (
                                     <FormItem className="relative">
@@ -68,18 +68,18 @@ export default function RuleOfThree() {
                                             id={errId}
                                         />
                                     </FormItem>
-                                )
+                                );
                             }}
                         />
-                        <span className="bg-accent text-accent-foreground rounded-md px-6 text-center">is to</span>
+                        <span className="rounded-md bg-accent px-6 text-center text-accent-foreground">is to</span>
                         <FormField
                             control={form.control}
                             name="b"
                             render={({ field }) => {
-                                const fieldError = form.formState.errors[field.name]
-                                const descId = `${field.name}-desc`
-                                const errId = `${field.name}-error`
-                                const describedBy = fieldError ? descId + " " + errId : descId
+                                const fieldError = form.formState.errors[field.name];
+                                const descId = `${field.name}-desc`;
+                                const errId = `${field.name}-error`;
+                                const describedBy = fieldError ? descId + ' ' + errId : descId;
 
                                 return (
                                     <FormItem className="relative">
@@ -99,7 +99,7 @@ export default function RuleOfThree() {
                                             id={errId}
                                         />
                                     </FormItem>
-                                )
+                                );
                             }}
                         />
                     </div>
@@ -109,10 +109,10 @@ export default function RuleOfThree() {
                             control={form.control}
                             name="c"
                             render={({ field }) => {
-                                const fieldError = form.formState.errors[field.name]
-                                const descId = `${field.name}-desc`
-                                const errId = `${field.name}-error`
-                                const describedBy = fieldError ? descId + " " + errId : descId
+                                const fieldError = form.formState.errors[field.name];
+                                const descId = `${field.name}-desc`;
+                                const errId = `${field.name}-error`;
+                                const describedBy = fieldError ? descId + ' ' + errId : descId;
 
                                 return (
                                     <FormItem className="relative">
@@ -132,11 +132,11 @@ export default function RuleOfThree() {
                                             id={errId}
                                         />
                                     </FormItem>
-                                )
+                                );
                             }}
                         />
-                        <span className="bg-accent text-accent-foreground rounded-md px-6 text-center">is to</span>
-                        <Input type="text" value={result ?? ""} placeholder="Result" readOnly />
+                        <span className="rounded-md bg-accent px-6 text-center text-accent-foreground">is to</span>
+                        <Input type="text" value={result ?? ''} placeholder="Result" readOnly />
                     </div>
 
                     <div className="mx-auto mt-6 inline-flex items-center gap-x-2">
@@ -148,14 +148,15 @@ export default function RuleOfThree() {
                             type="button"
                             aria-label="Reset form"
                             onClick={() => {
-                                form.reset()
-                                setResult(null)
-                            }}>
+                                form.reset();
+                                setResult(null);
+                            }}
+                        >
                             Reset
                         </Button>
                     </div>
                 </form>
             </Form>
         </div>
-    )
+    );
 }

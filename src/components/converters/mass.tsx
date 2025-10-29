@@ -1,22 +1,22 @@
-"use client"
+'use client';
 
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { type ChangeEvent, useState } from "react"
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { type ChangeEvent, useState } from 'react';
 
 export default function Mass() {
     const [masses, setMasses] = useState({
-        tonne: "",
-        kilogram: "",
-        gram: "",
-        milligram: "",
-        microgram: "",
-        ukTon: "",
-        usTon: "",
-        pound: "",
-        ounce: "",
-        stone: "",
-    })
+        tonne: '',
+        kilogram: '',
+        gram: '',
+        milligram: '',
+        microgram: '',
+        ukTon: '',
+        usTon: '',
+        pound: '',
+        ounce: '',
+        stone: '',
+    });
 
     const factors = {
         tonne: [1, 1e3, 1e6, 1e9, 1e12, 0.984207, 1.10231, 2204.623, 35273.96, 157.4730444],
@@ -29,73 +29,73 @@ export default function Mass() {
         pound: [0.000453592, 0.453592, 453.592, 453592, 4.536e8, 0.0004464286, 0.0005, 1, 16, 0.0714285714],
         ounce: [2.83495e-5, 0.0283495, 28.3495, 28349.5, 2.83495e7, 2.79018e-5, 3.125e-5, 0.0625, 1, 0.004464285714],
         stone: [0.00635029318, 6.35029318, 6350.29318, 6.35029318e6, 6.35029318e9, 0.00625, 0.007, 14, 224, 1],
-    }
+    };
 
     function handleChange(event: ChangeEvent<HTMLInputElement>, unit: keyof typeof masses) {
-        const value = event.target.value
-        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(value) && value !== "" && value !== "-") return
+        const value = event.target.value;
+        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(value) && value !== '' && value !== '-') return;
 
-        const usesComma = value.includes(",")
-        const normalized = value.replace(/,/g, ".")
+        const usesComma = value.includes(',');
+        const normalized = value.replace(/,/g, '.');
 
-        let num = parseFloat(normalized)
-        if (isNaN(num)) num = 0
+        let num = parseFloat(normalized);
+        if (isNaN(num)) num = 0;
 
-        const isValueEmpty = value === "" || value === "-"
+        const isValueEmpty = value === '' || value === '-';
 
         const fmt = (n: number) => {
-            const out = n.toFixed(6).replace(/\.?0+$/, "")
-            return usesComma ? out.replace(".", ",") : out
-        }
+            const out = n.toFixed(6).replace(/\.?0+$/, '');
+            return usesComma ? out.replace('.', ',') : out;
+        };
 
-        const unitIndex = Object.keys(masses).indexOf(unit)
-        if (unitIndex === -1) return // Safety check
+        const unitIndex = Object.keys(masses).indexOf(unit);
+        if (unitIndex === -1) return; // Safety check
 
-        const newMasses: Record<string, string> = {}
+        const newMasses: Record<string, string> = {};
 
         Object.keys(masses).forEach((key, index) => {
-            if (key === unit) newMasses[key] = value
+            if (key === unit) newMasses[key] = value;
             else {
-                const factor = factors[unit][index]
-                newMasses[key] = isValueEmpty ? "" : fmt(num * factor)
+                const factor = factors[unit][index];
+                newMasses[key] = isValueEmpty ? '' : fmt(num * factor);
             }
-        })
+        });
 
-        setMasses(prev => ({
+        setMasses((prev) => ({
             ...prev,
             ...newMasses,
-        }))
+        }));
     }
 
     return (
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 last:row-span-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-            {Object.keys(masses).map(unit => (
+            {Object.keys(masses).map((unit) => (
                 <div className="space-y-4" key={unit}>
                     <Label htmlFor={unit}>
                         {(() => {
                             switch (unit) {
-                                case "tonne":
-                                    return "Tonnes (t)"
-                                case "kilogram":
-                                    return "Kilograms (kg)"
-                                case "gram":
-                                    return "Grams (g)"
-                                case "milligram":
-                                    return "Milligrams (mg)"
-                                case "microgram":
-                                    return "Micrograms (µg)"
-                                case "ukTon":
-                                    return "UK Tons (long tons)"
-                                case "usTon":
-                                    return "US Tons (short tons)"
-                                case "pound":
-                                    return "Pounds (lb)"
-                                case "ounce":
-                                    return "Ounces (oz)"
-                                case "stone":
-                                    return "Stones (st)"
+                                case 'tonne':
+                                    return 'Tonnes (t)';
+                                case 'kilogram':
+                                    return 'Kilograms (kg)';
+                                case 'gram':
+                                    return 'Grams (g)';
+                                case 'milligram':
+                                    return 'Milligrams (mg)';
+                                case 'microgram':
+                                    return 'Micrograms (µg)';
+                                case 'ukTon':
+                                    return 'UK Tons (long tons)';
+                                case 'usTon':
+                                    return 'US Tons (short tons)';
+                                case 'pound':
+                                    return 'Pounds (lb)';
+                                case 'ounce':
+                                    return 'Ounces (oz)';
+                                case 'stone':
+                                    return 'Stones (st)';
                                 default:
-                                    return unit
+                                    return unit;
                             }
                         })()}
                     </Label>
@@ -104,7 +104,7 @@ export default function Mass() {
                         id={unit}
                         name={unit}
                         value={masses[unit as keyof typeof masses]}
-                        onChange={e => handleChange(e, unit as keyof typeof masses)}
+                        onChange={(e) => handleChange(e, unit as keyof typeof masses)}
                         placeholder="0"
                         inputMode="decimal"
                         autoComplete="off"
@@ -112,5 +112,5 @@ export default function Mass() {
                 </div>
             ))}
         </div>
-    )
+    );
 }

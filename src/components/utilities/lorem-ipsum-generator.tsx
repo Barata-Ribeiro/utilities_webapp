@@ -1,49 +1,49 @@
-"use client"
+'use client';
 
-import ButtonClipboard from "@/components/button-clipboard"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { floor, random } from "mathjs"
-import { Fragment, useCallback, useRef, useState } from "react"
-import { Resolver, useForm } from "react-hook-form"
-import { z } from "zod/v4"
+import ButtonClipboard from '@/components/button-clipboard';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { floor, random } from 'mathjs';
+import { Fragment, useCallback, useRef, useState } from 'react';
+import { Resolver, useForm } from 'react-hook-form';
+import { z } from 'zod/v4';
 
-const START_SENTENCE = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+const START_SENTENCE = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
-type Mode = "paragraphs" | "sentences" | "words" | "bytes" | "lists"
+type Mode = 'paragraphs' | 'sentences' | 'words' | 'bytes' | 'lists';
 
 const LoremIpsumSchema = z
     .object({
-        mode: z.enum(["paragraphs", "sentences", "words", "bytes", "lists"], { error: "You must select a mode." }),
-        amount: z.coerce.number("Amount must be a number.").min(1, { message: "Amount must be at least 1." }),
+        mode: z.enum(['paragraphs', 'sentences', 'words', 'bytes', 'lists'], { error: 'You must select a mode.' }),
+        amount: z.coerce.number('Amount must be a number.').min(1, { message: 'Amount must be at least 1.' }),
     })
     .refine(
-        data => {
+        (data) => {
             const maxByMode: Record<Mode, number> = {
                 paragraphs: 170,
                 sentences: 1000,
                 words: 14769,
                 bytes: 100000,
                 lists: 500,
-            }
-            const max = maxByMode[data.mode as Mode] ?? 1000
-            return data.amount <= max
+            };
+            const max = maxByMode[data.mode as Mode] ?? 1000;
+            return data.amount <= max;
         },
-        { message: "Amount exceeds maximum for selected mode.", path: ["amount"] },
-    )
+        { message: 'Amount exceeds maximum for selected mode.', path: ['amount'] },
+    );
 
-type LoremIpsumSchemaType = z.infer<typeof LoremIpsumSchema>
+type LoremIpsumSchemaType = z.infer<typeof LoremIpsumSchema>;
 
 function capitalizeFirstLetter(str: string) {
-    if (!str || str.length === 0) return ""
-    return str[0].toUpperCase() + str.slice(1)
+    if (!str || str.length === 0) return '';
+    return str[0].toUpperCase() + str.slice(1);
 }
 
 function maybeAddComma(words: string[], index: number) {
-    return index > 0 && index < words.length - 1 && random() < 0.15 ? "," : ""
+    return index > 0 && index < words.length - 1 && random() < 0.15 ? ',' : '';
 }
 
 function makeSentence(
@@ -51,140 +51,140 @@ function makeSentence(
     nWords: number,
     pool: string[],
 ): { sentence: string; nextIndex: number } {
-    const words: string[] = []
-    const currentIndex = startingWordIndex
+    const words: string[] = [];
+    const currentIndex = startingWordIndex;
     for (let i = 0; i < nWords; i++) {
-        const word = pool[(currentIndex + i) % pool.length]
-        const comma = maybeAddComma(pool, i)
-        words.push(word + comma)
+        const word = pool[(currentIndex + i) % pool.length];
+        const comma = maybeAddComma(pool, i);
+        words.push(word + comma);
     }
-    let sentence = words.join(" ")
-    sentence = sentence.replaceAll(/\s,/g, ",") // Remove space before commas
-    sentence = capitalizeFirstLetter(sentence)
-    sentence = sentence.replaceAll(/,+$/g, "") // Remove trailing commas
+    let sentence = words.join(' ');
+    sentence = sentence.replaceAll(/\s,/g, ','); // Remove space before commas
+    sentence = capitalizeFirstLetter(sentence);
+    sentence = sentence.replaceAll(/,+$/g, ''); // Remove trailing commas
 
-    if (!/[.!?]$/.test(sentence)) sentence += "." // Ensure sentence ends with a period
+    if (!/[.!?]$/.test(sentence)) sentence += '.'; // Ensure sentence ends with a period
 
-    return { sentence, nextIndex: (currentIndex + nWords) % pool.length }
+    return { sentence, nextIndex: (currentIndex + nWords) % pool.length };
 }
 
 export default function LoremIpsumGenerator() {
-    const [output, setOutput] = useState<string>("")
-    const [rawOutput, setRawOutput] = useState<string>("")
-    const savedIpsum = useRef<string[] | null>(null)
+    const [output, setOutput] = useState<string>('');
+    const [rawOutput, setRawOutput] = useState<string>('');
+    const savedIpsum = useRef<string[] | null>(null);
 
     const form = useForm<LoremIpsumSchemaType>({
         resolver: zodResolver(LoremIpsumSchema) as Resolver<LoremIpsumSchemaType>,
-        defaultValues: { mode: "paragraphs", amount: 1 },
-    })
+        defaultValues: { mode: 'paragraphs', amount: 1 },
+    });
 
     const onSubmit = useCallback(async (data: LoremIpsumSchemaType) => {
-        const { mode, amount } = data
+        const { mode, amount } = data;
 
         if (!savedIpsum.current) {
-            const res = await fetch("/ipsum.json")
+            const res = await fetch('/ipsum.json');
             if (!res.ok) {
-                alert("Failed to fetch word list")
-                return
+                alert('Failed to fetch word list');
+                return;
             }
-            savedIpsum.current = await res.json()
+            savedIpsum.current = await res.json();
         }
 
-        const pool = savedIpsum.current!
+        const pool = savedIpsum.current!;
         switch (mode) {
-            case "paragraphs": {
-                const paragraphs: string[] = []
-                const rawParagraphs: string[] = []
-                let wordIndex = 0
+            case 'paragraphs': {
+                const paragraphs: string[] = [];
+                const rawParagraphs: string[] = [];
+                let wordIndex = 0;
                 for (let p = 0; p < amount; p++) {
-                    const sentencesCount = 5 + floor(random() * 10) // 5-14 sentences
-                    const sentences: string[] = []
+                    const sentencesCount = 5 + floor(random() * 10); // 5-14 sentences
+                    const sentences: string[] = [];
                     for (let s = 0; s < sentencesCount; s++) {
-                        const len = 8 + floor(random() * 8) // 8-15 words
-                        const { sentence, nextIndex } = makeSentence(wordIndex, len, pool)
-                        sentences.push(sentence)
-                        wordIndex = nextIndex
+                        const len = 8 + floor(random() * 8); // 8-15 words
+                        const { sentence, nextIndex } = makeSentence(wordIndex, len, pool);
+                        sentences.push(sentence);
+                        wordIndex = nextIndex;
                     }
-                    paragraphs.push(`<p>${sentences.join(" ")}</p>`)
-                    rawParagraphs.push(sentences.join(" "))
+                    paragraphs.push(`<p>${sentences.join(' ')}</p>`);
+                    rawParagraphs.push(sentences.join(' '));
                 }
-                setOutput(paragraphs.join("\n\n"))
-                setRawOutput(rawParagraphs.join("\n\n"))
-                break
+                setOutput(paragraphs.join('\n\n'));
+                setRawOutput(rawParagraphs.join('\n\n'));
+                break;
             }
-            case "sentences": {
-                const sentences: string[] = []
-                const rawSentences: string[] = []
-                let wordIndex = 0
+            case 'sentences': {
+                const sentences: string[] = [];
+                const rawSentences: string[] = [];
+                let wordIndex = 0;
                 for (let s = 0; s < amount; s++) {
-                    const len = 8 + floor(random() * 8) // 8-15 words
-                    const { sentence, nextIndex } = makeSentence(wordIndex, len, pool)
-                    sentences.push(`<p>${sentence}</p>`)
-                    rawSentences.push(sentence)
-                    wordIndex = nextIndex
+                    const len = 8 + floor(random() * 8); // 8-15 words
+                    const { sentence, nextIndex } = makeSentence(wordIndex, len, pool);
+                    sentences.push(`<p>${sentence}</p>`);
+                    rawSentences.push(sentence);
+                    wordIndex = nextIndex;
                 }
-                setOutput(sentences.join("\n\n"))
-                setRawOutput(rawSentences.join("\n\n"))
-                break
+                setOutput(sentences.join('\n\n'));
+                setRawOutput(rawSentences.join('\n\n'));
+                break;
             }
-            case "words": {
-                const words: string[] = []
+            case 'words': {
+                const words: string[] = [];
                 if (amount <= pool.length) {
-                    const poolCopy = pool.slice()
+                    const poolCopy = pool.slice();
                     for (let i = poolCopy.length - 1; i > 0; i--) {
-                        const j = floor(random() * (i + 1))
-                        ;[poolCopy[i], poolCopy[j]] = [poolCopy[j], poolCopy[i]]
+                        const j = floor(random() * (i + 1));
+                        [poolCopy[i], poolCopy[j]] = [poolCopy[j], poolCopy[i]];
                     }
                     for (let w = 0; w < amount; w++) {
-                        words.push(capitalizeFirstLetter(poolCopy[w]))
+                        words.push(capitalizeFirstLetter(poolCopy[w]));
                     }
                 } else {
                     for (let w = 0; w < amount; w++) {
-                        const idx = floor(random() * pool.length)
-                        words.push(capitalizeFirstLetter(pool[idx]))
+                        const idx = floor(random() * pool.length);
+                        words.push(capitalizeFirstLetter(pool[idx]));
                     }
                 }
-                setOutput(`<p>${words.join(" ")}</p>`)
-                setRawOutput(words.join(" "))
-                break
+                setOutput(`<p>${words.join(' ')}</p>`);
+                setRawOutput(words.join(' '));
+                break;
             }
-            case "bytes": {
-                let text = START_SENTENCE
+            case 'bytes': {
+                let text = START_SENTENCE;
                 while (text.length < amount) {
-                    const len = 8 + floor(random() * 8) // 8-15 words
-                    const { sentence } = makeSentence(floor(random() * pool.length), len, pool)
-                    text += " " + sentence
+                    const len = 8 + floor(random() * 8); // 8-15 words
+                    const { sentence } = makeSentence(floor(random() * pool.length), len, pool);
+                    text += ' ' + sentence;
                 }
-                setOutput(`<p>${text.slice(0, amount)}</p>`)
-                setRawOutput(text.slice(0, amount))
-                break
+                setOutput(`<p>${text.slice(0, amount)}</p>`);
+                setRawOutput(text.slice(0, amount));
+                break;
             }
-            case "lists": {
-                const items: string[] = []
-                const rawItems: string[] = []
-                let wordIndex = 0
+            case 'lists': {
+                const items: string[] = [];
+                const rawItems: string[] = [];
+                let wordIndex = 0;
                 for (let i = 0; i < amount; i++) {
-                    const len = 4 + floor(random() * 6) // 4-9 words
-                    const { sentence, nextIndex } = makeSentence(wordIndex, len, pool)
-                    items.push(`<li>${sentence.replace(/\.$/, "")}</li>`) // Remove trailing period for list items
-                    rawItems.push(`- ${sentence.replace(/\.$/, "")}`)
-                    wordIndex = nextIndex
+                    const len = 4 + floor(random() * 6); // 4-9 words
+                    const { sentence, nextIndex } = makeSentence(wordIndex, len, pool);
+                    items.push(`<li>${sentence.replace(/\.$/, '')}</li>`); // Remove trailing period for list items
+                    rawItems.push(`- ${sentence.replace(/\.$/, '')}`);
+                    wordIndex = nextIndex;
                 }
-                setOutput(`<ul>${items.join("\n")}</ul>`)
-                setRawOutput(rawItems.join("\n"))
-                break
+                setOutput(`<ul>${items.join('\n')}</ul>`);
+                setRawOutput(rawItems.join('\n'));
+                break;
             }
             default:
-                setOutput("")
-                setRawOutput("")
-                break
+                setOutput('');
+                setRawOutput('');
+                break;
         }
-    }, [])
+    }, []);
 
     function reset() {
-        form.reset()
-        setOutput("")
-        setRawOutput("")
+        form.reset();
+        setOutput('');
+        setRawOutput('');
     }
 
     return (
@@ -192,7 +192,8 @@ export default function LoremIpsumGenerator() {
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6">
+                    className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6"
+                >
                     <FormField
                         control={form.control}
                         name="amount"
@@ -225,8 +226,9 @@ export default function LoremIpsumGenerator() {
                                     <RadioGroup
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
-                                        className="flex flex-wrap items-center gap-4">
-                                        {["paragraphs", "sentences", "words", "bytes", "lists"].map(option => (
+                                        className="flex flex-wrap items-center gap-4"
+                                    >
+                                        {['paragraphs', 'sentences', 'words', 'bytes', 'lists'].map((option) => (
                                             <FormItem key={option} className="flex items-center gap-3">
                                                 <FormControl>
                                                     <RadioGroupItem value={option} />
@@ -265,11 +267,12 @@ export default function LoremIpsumGenerator() {
 
             {output.length > 0 && rawOutput.length > 0 ? (
                 <section
-                    className="prose md:prose-lg lg:prose-xl dark:prose-invert mx-auto max-h-96 overflow-auto rounded-md border p-4"
-                    dangerouslySetInnerHTML={{ __html: output }}></section>
+                    className="mx-auto prose max-h-96 overflow-auto rounded-md border p-4 md:prose-lg lg:prose-xl dark:prose-invert"
+                    dangerouslySetInnerHTML={{ __html: output }}
+                ></section>
             ) : (
-                <p className="text-muted-foreground text-center">Generate output above.</p>
+                <p className="text-center text-muted-foreground">Generate output above.</p>
             )}
         </Fragment>
-    )
+    );
 }

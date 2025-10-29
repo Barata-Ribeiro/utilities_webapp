@@ -1,24 +1,24 @@
-"use client"
+'use client';
 
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { type ChangeEvent, useState } from "react"
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { type ChangeEvent, useState } from 'react';
 
 export default function Time() {
     const [times, setTimes] = useState({
-        nanosecond: "",
-        microsecond: "",
-        millisecond: "",
-        second: "",
-        minute: "",
-        hour: "",
-        day: "",
-        week: "",
-        month: "",
-        year: "",
-        decade: "",
-        century: "",
-    })
+        nanosecond: '',
+        microsecond: '',
+        millisecond: '',
+        second: '',
+        minute: '',
+        hour: '',
+        day: '',
+        week: '',
+        month: '',
+        year: '',
+        decade: '',
+        century: '',
+    });
 
     const factors = {
         nanosecond: [
@@ -85,77 +85,77 @@ export default function Time() {
         year: [3.154e16, 3.154e13, 3.154e10, 3.154e7, 525600, 8760, 365.25, 52.178, 12, 1, 1 / 10, 1 / 100],
         decade: [3.154e17, 3.154e14, 3.154e11, 3.154e8, 5.256e6, 87600, 3652.5, 521.78, 120, 10, 1, 1 / 10],
         century: [3.154e18, 3.154e15, 3.154e12, 3.154e9, 5.256e7, 876000, 36525, 5217.8, 1200, 100, 10, 1],
-    }
+    };
 
     function handleChange(event: ChangeEvent<HTMLInputElement>, unit: keyof typeof times) {
-        const value = event.target.value
-        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(value) && value !== "" && value !== "-") return
+        const value = event.target.value;
+        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(value) && value !== '' && value !== '-') return;
 
-        const usesComma = value.includes(",")
-        const normalized = value.replace(/,/g, ".")
+        const usesComma = value.includes(',');
+        const normalized = value.replace(/,/g, '.');
 
-        let num = parseFloat(normalized)
-        if (isNaN(num)) num = 0
+        let num = parseFloat(normalized);
+        if (isNaN(num)) num = 0;
 
-        const isValueEmpty = value === "" || value === "-"
+        const isValueEmpty = value === '' || value === '-';
 
         const fmt = (n: number) => {
-            const out = n.toFixed(6).replace(/\.?0+$/, "")
-            return usesComma ? out.replace(".", ",") : out
-        }
+            const out = n.toFixed(6).replace(/\.?0+$/, '');
+            return usesComma ? out.replace('.', ',') : out;
+        };
 
-        const unitIndex = Object.keys(times).indexOf(unit)
-        if (unitIndex === -1) return // Safety check
+        const unitIndex = Object.keys(times).indexOf(unit);
+        if (unitIndex === -1) return; // Safety check
 
-        const newTimes: Record<string, string> = {}
+        const newTimes: Record<string, string> = {};
 
         Object.keys(times).forEach((key, index) => {
-            if (key === unit) newTimes[key] = value
+            if (key === unit) newTimes[key] = value;
             else {
-                const factor = factors[unit][index]
-                newTimes[key] = isValueEmpty ? "" : fmt(num * factor)
+                const factor = factors[unit][index];
+                newTimes[key] = isValueEmpty ? '' : fmt(num * factor);
             }
-        })
+        });
 
-        setTimes(prev => ({
+        setTimes((prev) => ({
             ...prev,
             ...newTimes,
-        }))
+        }));
     }
 
     return (
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 last:row-span-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {Object.keys(times).map(unit => (
+            {Object.keys(times).map((unit) => (
                 <div className="space-y-4" key={unit}>
                     <Label htmlFor={unit}>
                         {(() => {
                             switch (unit) {
-                                case "nanosecond":
-                                    return "Nanoseconds (ns)"
-                                case "microsecond":
-                                    return "Microseconds (µs)"
-                                case "millisecond":
-                                    return "Milliseconds (ms)"
-                                case "second":
-                                    return "Seconds (s)"
-                                case "minute":
-                                    return "Minutes (min)"
-                                case "hour":
-                                    return "Hours (h)"
-                                case "day":
-                                    return "Days (d)"
-                                case "week":
-                                    return "Weeks (wk)"
-                                case "month":
-                                    return "Months (mo)"
-                                case "year":
-                                    return "Years (yr)"
-                                case "decade":
-                                    return "Decades (dec)"
-                                case "century":
-                                    return "Centuries (cen)"
+                                case 'nanosecond':
+                                    return 'Nanoseconds (ns)';
+                                case 'microsecond':
+                                    return 'Microseconds (µs)';
+                                case 'millisecond':
+                                    return 'Milliseconds (ms)';
+                                case 'second':
+                                    return 'Seconds (s)';
+                                case 'minute':
+                                    return 'Minutes (min)';
+                                case 'hour':
+                                    return 'Hours (h)';
+                                case 'day':
+                                    return 'Days (d)';
+                                case 'week':
+                                    return 'Weeks (wk)';
+                                case 'month':
+                                    return 'Months (mo)';
+                                case 'year':
+                                    return 'Years (yr)';
+                                case 'decade':
+                                    return 'Decades (dec)';
+                                case 'century':
+                                    return 'Centuries (cen)';
                                 default:
-                                    return unit
+                                    return unit;
                             }
                         })()}
                     </Label>
@@ -164,7 +164,7 @@ export default function Time() {
                         id={unit}
                         name={unit}
                         value={times[unit as keyof typeof times]}
-                        onChange={e => handleChange(e, unit as keyof typeof times)}
+                        onChange={(e) => handleChange(e, unit as keyof typeof times)}
                         placeholder="0"
                         inputMode="decimal"
                         autoComplete="off"
@@ -172,5 +172,5 @@ export default function Time() {
                 </div>
             ))}
         </div>
-    )
+    );
 }

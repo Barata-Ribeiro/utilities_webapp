@@ -1,6 +1,6 @@
-import MdHashing from "@/components/programming/hashing/md-hashing"
-import ShaEncrypt from "@/components/programming/hashing/sha-hashing"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import MdHashing from '@/components/programming/hashing/md-hashing';
+import ShaEncrypt from '@/components/programming/hashing/sha-hashing';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function HashingTab() {
     return (
@@ -18,5 +18,5 @@ export default function HashingTab() {
                 <MdHashing />
             </TabsContent>
         </Tabs>
-    )
+    );
 }

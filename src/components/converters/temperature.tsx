@@ -1,15 +1,15 @@
-"use client"
+'use client';
 
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { ChangeEvent, useState } from "react"
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { ChangeEvent, useState } from 'react';
 
 export default function Temperature() {
     const [temp, setTemp] = useState({
-        fahrenheit: "",
-        celsius: "",
-        kelvin: "",
-    })
+        fahrenheit: '',
+        celsius: '',
+        kelvin: '',
+    });
 
     const factors = {
         fahrenheit: {
@@ -24,50 +24,50 @@ export default function Temperature() {
             fahrenheit: (value: number) => (value - 273.15) * (9 / 5) + 32,
             celsius: (value: number) => value - 273.15,
         },
-    } as const
+    } as const;
 
-    function handleChange(event: ChangeEvent<HTMLInputElement>, scale: "fahrenheit" | "celsius" | "kelvin") {
-        const value = event.target.value
-        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(value) && value !== "" && value !== "-") return
+    function handleChange(event: ChangeEvent<HTMLInputElement>, scale: 'fahrenheit' | 'celsius' | 'kelvin') {
+        const value = event.target.value;
+        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(value) && value !== '' && value !== '-') return;
 
-        const usesComma = value.includes(",")
-        const normalized = value.replace(/,/g, ".")
+        const usesComma = value.includes(',');
+        const normalized = value.replace(/,/g, '.');
 
-        let num = parseFloat(normalized)
-        if (isNaN(num)) num = 0
+        let num = parseFloat(normalized);
+        if (isNaN(num)) num = 0;
 
-        const isValueEmpty = value === "" || value === "-"
+        const isValueEmpty = value === '' || value === '-';
 
         const fmt = (n: number) => {
-            const out = n.toFixed(2)
-            return usesComma ? out.replace(".", ",") : out
-        }
+            const out = n.toFixed(2);
+            return usesComma ? out.replace('.', ',') : out;
+        };
 
         switch (scale) {
-            case "fahrenheit":
-                setTemp(prev => ({
+            case 'fahrenheit':
+                setTemp((prev) => ({
                     ...prev,
                     fahrenheit: value,
-                    celsius: isValueEmpty ? "" : fmt(factors.fahrenheit.celsius(num)),
-                    kelvin: isValueEmpty ? "" : fmt(factors.fahrenheit.kelvin(num)),
-                }))
-                break
-            case "celsius":
-                setTemp(prev => ({
+                    celsius: isValueEmpty ? '' : fmt(factors.fahrenheit.celsius(num)),
+                    kelvin: isValueEmpty ? '' : fmt(factors.fahrenheit.kelvin(num)),
+                }));
+                break;
+            case 'celsius':
+                setTemp((prev) => ({
                     ...prev,
                     celsius: value,
-                    fahrenheit: isValueEmpty ? "" : fmt(factors.celsius.fahrenheit(num)),
-                    kelvin: isValueEmpty ? "" : fmt(factors.celsius.kelvin(num)),
-                }))
-                break
-            case "kelvin":
-                setTemp(prev => ({
+                    fahrenheit: isValueEmpty ? '' : fmt(factors.celsius.fahrenheit(num)),
+                    kelvin: isValueEmpty ? '' : fmt(factors.celsius.kelvin(num)),
+                }));
+                break;
+            case 'kelvin':
+                setTemp((prev) => ({
                     ...prev,
                     kelvin: value,
-                    fahrenheit: isValueEmpty ? "" : fmt(factors.kelvin.fahrenheit(num)),
-                    celsius: isValueEmpty ? "" : fmt(factors.kelvin.celsius(num)),
-                }))
-                break
+                    fahrenheit: isValueEmpty ? '' : fmt(factors.kelvin.fahrenheit(num)),
+                    celsius: isValueEmpty ? '' : fmt(factors.kelvin.celsius(num)),
+                }));
+                break;
         }
     }
 
@@ -81,7 +81,7 @@ export default function Temperature() {
                     autoComplete="off"
                     placeholder="32"
                     value={temp.fahrenheit}
-                    onChange={e => handleChange(e, "fahrenheit")}
+                    onChange={(e) => handleChange(e, 'fahrenheit')}
                 />
             </div>
 
@@ -93,7 +93,7 @@ export default function Temperature() {
                     autoComplete="off"
                     placeholder="0"
                     value={temp.celsius}
-                    onChange={e => handleChange(e, "celsius")}
+                    onChange={(e) => handleChange(e, 'celsius')}
                 />
             </div>
 
@@ -105,9 +105,9 @@ export default function Temperature() {
                     autoComplete="off"
                     placeholder="273.15"
                     value={temp.kelvin}
-                    onChange={e => handleChange(e, "kelvin")}
+                    onChange={(e) => handleChange(e, 'kelvin')}
                 />
             </div>
         </div>
-    )
+    );
 }

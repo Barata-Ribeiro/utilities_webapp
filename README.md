@@ -42,29 +42,29 @@ MORE TO COME...
 
 1. Clone the repository
 
-   ```bash
-   git clone https://github.com/Barata-Ribeiro/utilities_webapp.git
-   cd utilities_webapp
-   ```
+    ```bash
+    git clone https://github.com/Barata-Ribeiro/utilities_webapp.git
+    cd utilities_webapp
+    ```
 
 2. Install dependencies (pnpm is recommended)
 
-   ```bash
-   pnpm install
-   ```
+    ```bash
+    pnpm install
+    ```
 
 3. Run the development server
 
-   ```bash
-   pnpm run dev
-   ```
+    ```bash
+    pnpm run dev
+    ```
 
 ## 🧩 Available scripts (from package.json)
 
-- `pnpm run dev`     — start Next.js in development (uses turbopack)
-- `pnpm run build`   — build for production
-- `pnpm run start`   — start built production server
-- `pnpm run lint`    — run linter
+- `pnpm run dev` — start Next.js in development (uses turbopack)
+- `pnpm run build` — build for production
+- `pnpm run start` — start built production server
+- `pnpm run lint` — run linter
 
 ## 📝 Notes
 

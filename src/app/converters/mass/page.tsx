@@ -1,26 +1,26 @@
-import Mass from "@/components/converters/mass"
-import type { Metadata } from "next"
+import Mass from '@/components/converters/mass';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Mass Converter",
+    title: 'Mass Converter',
     description:
-        "Easily convert masses between kilograms, pounds, and ounces. Perfect for cooking, shipping, and everyday use.",
-    keywords: ["mass converter", "kilograms", "pounds", "ounces", "convert mass", "units", "utilities"],
-    manifest: "/manifest.webmanifest",
-}
+        'Easily convert masses between kilograms, pounds, and ounces. Perfect for cooking, shipping, and everyday use.',
+    keywords: ['mass converter', 'kilograms', 'pounds', 'ounces', 'convert mass', 'units', 'utilities'],
+    manifest: '/manifest.webmanifest',
+};
 
 export default function Page() {
     return (
-        <article className="bg-card rounded-md p-6 shadow">
+        <article className="rounded-md bg-card p-6 shadow">
             <h1 className="font-serif text-xl">Mass Converter</h1>
-            <p className="text-muted-foreground mt-2 text-sm">
+            <p className="mt-2 text-sm text-muted-foreground">
                 Easily convert masses between kilograms, pounds, and ounces. Perfect for cooking, shipping, and everyday
                 use.
             </p>
 
             <section className="mt-4">
                 <h2 className="sr-only">How it works</h2>
-                <ul className="text-muted-foreground list-disc space-y-1 pl-5 text-sm">
+                <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
                     <li>
                         <strong>Tonnes (t)</strong>: A metric unit of mass equal to 1,000 kilograms, often used for
                         measuring larger masses.
@@ -66,10 +66,10 @@ export default function Page() {
                 <Mass />
             </div>
 
-            <footer className="text-muted-foreground text-xs">
+            <footer className="text-xs text-muted-foreground">
                 Tip: Use the mass converter to quickly switch between units when following recipes or calculating
                 shipping weights. This utility runs locally in your browser and does not transmit any data to a server.
             </footer>
         </article>
-    )
+    );
 }

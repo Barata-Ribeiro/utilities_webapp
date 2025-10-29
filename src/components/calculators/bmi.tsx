@@ -1,76 +1,76 @@
-"use client"
+'use client';
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Progress } from "@/components/ui/progress"
-import { cn } from "@/lib/utils"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { BadgeAlertIcon, BadgeCheckIcon } from "lucide-react"
-import { useState } from "react"
-import { Resolver, useForm } from "react-hook-form"
-import { twMerge } from "tailwind-merge"
-import { z } from "zod/v4"
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Progress } from '@/components/ui/progress';
+import { cn } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { BadgeAlertIcon, BadgeCheckIcon } from 'lucide-react';
+import { useState } from 'react';
+import { Resolver, useForm } from 'react-hook-form';
+import { twMerge } from 'tailwind-merge';
+import { z } from 'zod/v4';
 
 const BmiSchema = z.object({
     weight: z.coerce
-        .number("Weight must be a number.")
-        .min(1, { message: "Weight must be at least 1 kg." })
-        .max(500, { message: "Weight must be at most 500 kg." }),
+        .number('Weight must be a number.')
+        .min(1, { message: 'Weight must be at least 1 kg.' })
+        .max(500, { message: 'Weight must be at most 500 kg.' }),
     height: z.coerce
-        .number("Height must be a number.")
-        .min(30, { message: "Height must be at least 30 cm." })
-        .max(300, { message: "Height must be at most 300 cm." }),
-})
+        .number('Height must be a number.')
+        .min(30, { message: 'Height must be at least 30 cm.' })
+        .max(300, { message: 'Height must be at most 300 cm.' }),
+});
 
-type BmiSchemaType = z.infer<typeof BmiSchema>
+type BmiSchemaType = z.infer<typeof BmiSchema>;
 
 interface BmiResult {
-    bmi: number | null
-    height: number | null
-    weight: number | null
+    bmi: number | null;
+    height: number | null;
+    weight: number | null;
 }
 
 export default function Bmi() {
-    const [bmi, setBmi] = useState<BmiResult>({ bmi: null, height: null, weight: null })
+    const [bmi, setBmi] = useState<BmiResult>({ bmi: null, height: null, weight: null });
 
     const form = useForm<BmiSchemaType>({
         resolver: zodResolver(BmiSchema) as Resolver<BmiSchemaType>,
         defaultValues: { weight: 0, height: 0 },
-    })
+    });
 
     function onFormSubmit(data: BmiSchemaType) {
-        const heightInMeters = data.height / 100
-        const calculatedBmi = data.weight / (heightInMeters * heightInMeters)
-        setBmi({ bmi: parseFloat(calculatedBmi.toFixed(2)), height: data.height, weight: data.weight })
+        const heightInMeters = data.height / 100;
+        const calculatedBmi = data.weight / (heightInMeters * heightInMeters);
+        setBmi({ bmi: parseFloat(calculatedBmi.toFixed(2)), height: data.height, weight: data.weight });
     }
 
     function getProgressBarValue(bmi: number) {
-        if (bmi < 16) return 0
-        else if (bmi >= 16 && bmi < 18.5) return ((bmi - 16.0) / 2.5) * 25
-        else if (bmi >= 18.5 && bmi < 25) return 25 + ((bmi - 18.5) / 6.5) * 25
-        else if (bmi >= 25 && bmi < 30) return 50 + ((bmi - 25.0) / 5) * 25
-        else if (bmi >= 30 && bmi < 40) return 75 + ((bmi - 30.0) / 10) * 25
-        else return 100
+        if (bmi < 16) return 0;
+        else if (bmi >= 16 && bmi < 18.5) return ((bmi - 16.0) / 2.5) * 25;
+        else if (bmi >= 18.5 && bmi < 25) return 25 + ((bmi - 18.5) / 6.5) * 25;
+        else if (bmi >= 25 && bmi < 30) return 50 + ((bmi - 25.0) / 5) * 25;
+        else if (bmi >= 30 && bmi < 40) return 75 + ((bmi - 30.0) / 10) * 25;
+        else return 100;
     }
 
     function getBmiCategory(bmi: number) {
-        if (bmi < 16) return "Severely Underweight"
-        else if (bmi >= 16 && bmi < 18.5) return "Underweight"
-        else if (bmi >= 18.5 && bmi <= 24.9) return "Normal weight"
-        else if (bmi >= 25 && bmi <= 39.9) return "Overweight"
-        else return "Obese"
+        if (bmi < 16) return 'Severely Underweight';
+        else if (bmi >= 16 && bmi < 18.5) return 'Underweight';
+        else if (bmi >= 18.5 && bmi <= 24.9) return 'Normal weight';
+        else if (bmi >= 25 && bmi <= 39.9) return 'Overweight';
+        else return 'Obese';
     }
 
     const badgeStyle = {
-        "Severely Underweight": cn`bg-red-500 text-white dark:bg-red-700`,
+        'Severely Underweight': cn`bg-red-500 text-white dark:bg-red-700`,
         Underweight: cn`bg-yellow-500 text-black dark:bg-yellow-200`,
-        "Normal weight": cn`bg-green-500 text-white dark:bg-green-700`,
+        'Normal weight': cn`bg-green-500 text-white dark:bg-green-700`,
         Overweight: cn`bg-yellow-500 text-black dark:bg-yellow-200`,
         Obese: cn`bg-red-500 text-white dark:bg-red-700`,
-    }
+    };
 
     return (
         <div className="mx-auto grid max-w-4xl">
@@ -81,10 +81,10 @@ export default function Bmi() {
                             control={form.control}
                             name="height"
                             render={({ field }) => {
-                                const fieldError = form.formState.errors[field.name]
-                                const descId = `${field.name}-desc`
-                                const errId = `${field.name}-error`
-                                const describedBy = fieldError ? descId + " " + errId : descId
+                                const fieldError = form.formState.errors[field.name];
+                                const descId = `${field.name}-desc`;
+                                const errId = `${field.name}-error`;
+                                const describedBy = fieldError ? descId + ' ' + errId : descId;
 
                                 return (
                                     <FormItem>
@@ -109,7 +109,7 @@ export default function Bmi() {
                                         )}
                                         <FormMessage id={errId} />
                                     </FormItem>
-                                )
+                                );
                             }}
                         />
 
@@ -117,10 +117,10 @@ export default function Bmi() {
                             control={form.control}
                             name="weight"
                             render={({ field }) => {
-                                const fieldError = form.formState.errors[field.name]
-                                const descId = `${field.name}-desc`
-                                const errId = `${field.name}-error`
-                                const describedBy = fieldError ? descId + " " + errId : descId
+                                const fieldError = form.formState.errors[field.name];
+                                const descId = `${field.name}-desc`;
+                                const errId = `${field.name}-error`;
+                                const describedBy = fieldError ? descId + ' ' + errId : descId;
 
                                 return (
                                     <FormItem>
@@ -145,7 +145,7 @@ export default function Bmi() {
                                         )}
                                         <FormMessage id={errId} />
                                     </FormItem>
-                                )
+                                );
                             }}
                         />
                     </fieldset>
@@ -159,9 +159,10 @@ export default function Bmi() {
                             type="button"
                             aria-label="Reset BMI form"
                             onClick={() => {
-                                form.reset()
-                                setBmi({ bmi: null, height: null, weight: null })
-                            }}>
+                                form.reset();
+                                setBmi({ bmi: null, height: null, weight: null });
+                            }}
+                        >
                             Reset
                         </Button>
                     </div>
@@ -182,8 +183,9 @@ export default function Bmi() {
 
                         <Badge
                             variant="secondary"
-                            className={twMerge("mx-auto select-none", badgeStyle[getBmiCategory(bmi.bmi)])}>
-                            {getBmiCategory(bmi.bmi) === "Normal weight" ? (
+                            className={twMerge('mx-auto select-none', badgeStyle[getBmiCategory(bmi.bmi)])}
+                        >
+                            {getBmiCategory(bmi.bmi) === 'Normal weight' ? (
                                 <BadgeCheckIcon aria-hidden />
                             ) : (
                                 <BadgeAlertIcon aria-hidden />
@@ -200,7 +202,7 @@ export default function Bmi() {
                                 aria-valuemax={100}
                                 aria-valuenow={getProgressBarValue(bmi.bmi)}
                             />
-                            <small className="text-muted-foreground inline-flex w-full justify-between text-xs">
+                            <small className="inline-flex w-full justify-between text-xs text-muted-foreground">
                                 <span>16</span>
                                 <span>18.5</span>
                                 <span>25</span>
@@ -210,12 +212,12 @@ export default function Bmi() {
                         </div>
                     </CardContent>
 
-                    <CardFooter className="text-muted-foreground flex items-center justify-between text-xs">
+                    <CardFooter className="flex items-center justify-between text-xs text-muted-foreground">
                         <p>Weight: {bmi.weight} kg</p>
                         <p>Height: {bmi.height} cm</p>
                     </CardFooter>
                 </Card>
             )}
         </div>
-    )
+    );
 }
