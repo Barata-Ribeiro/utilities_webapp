@@ -13,8 +13,8 @@ const nextConfig: NextConfig = {
         qualities: [25, 50, 75, 100],
     },
     serverExternalPackages: ["postcss", "sharp"],
+    reactCompiler: true,
     experimental: {
-        reactCompiler: true,
         optimizePackageImports: [
             "@radix-ui/react-avatar",
             "@radix-ui/react-collapsible",
@@ -79,7 +79,7 @@ const nextConfig: NextConfig = {
                 ],
             },
             {
-                source: "/manifest\\.(json|webmanifest)",
+                source: String.raw`/manifest\.(json|webmanifest)`,
                 headers: [
                     {
                         key: "cache-control",
