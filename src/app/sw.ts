@@ -1,5 +1,5 @@
 import { URLS } from '@/lib/consts';
-import { defaultCache } from '@serwist/next/worker';
+import { defaultCache } from '@serwist/turbopack/worker';
 import {
     ExpirationPlugin,
     type PrecacheEntry,

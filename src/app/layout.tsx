@@ -1,3 +1,4 @@
+import { SerwistProvider } from '@/$lib/client';
 import { AppSidebar } from '@/components/app-sidebar';
 import Breadcrumbs from '@/components/breadcrumbs';
 import { SwRegister } from '@/components/sw-register';
@@ -121,30 +122,34 @@ export default async function RootLayout({
     return (
         <html lang="en" dir="ltr" suppressHydrationWarning>
             <body className={bodyStyles}>
-                <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-                    <ThemeSwitcher />
-                    <SwRegister />
+                <SerwistProvider swUrl="/serwist/sw.js">
+                    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+                        <ThemeSwitcher />
+                        <SwRegister />
 
-                    <SidebarProvider defaultOpen={defaultOpen}>
-                        <AppSidebar />
-                        <SidebarInset>
-                            <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-                                <div className="flex items-center gap-2 px-4">
-                                    <SidebarTrigger className="-ml-1" />
-                                    <Separator
-                                        orientation="vertical"
-                                        className="mr-2 data-[orientation=vertical]:h-4"
-                                    />
+                        <SidebarProvider defaultOpen={defaultOpen}>
+                            <AppSidebar />
+                            <SidebarInset>
+                                <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+                                    <div className="flex items-center gap-2 px-4">
+                                        <SidebarTrigger className="-ml-1" />
+                                        <Separator
+                                            orientation="vertical"
+                                            className="mr-2 data-[orientation=vertical]:h-4"
+                                        />
 
-                                    <Breadcrumbs />
+                                        <Breadcrumbs />
+                                    </div>
+                                </header>
+                                <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+                                    <main className="relative flex min-h-0 flex-1 flex-col gap-4 md:gap-6">
+                                        {children}
+                                    </main>
                                 </div>
-                            </header>
-                            <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-                                <main className="relative flex min-h-0 flex-1 flex-col gap-4 md:gap-6">{children}</main>
-                            </div>
-                        </SidebarInset>
-                    </SidebarProvider>
-                </ThemeProvider>
+                            </SidebarInset>
+                        </SidebarProvider>
+                    </ThemeProvider>
+                </SerwistProvider>
             </body>
         </html>
     );
