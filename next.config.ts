@@ -1,8 +1,5 @@
-import withSerwistInit from '@serwist/next';
 import type { NextConfig } from 'next';
-import { execSync } from 'node:child_process';
 
-const revision = execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim().slice(0, 7);
 const allowedDevOrigins = (process.env.ALLOWED_DEV_HOSTS ?? '').split(',').filter(Boolean);
 
 const nextConfig: NextConfig = {
@@ -12,7 +9,7 @@ const nextConfig: NextConfig = {
     images: {
         qualities: [25, 50, 75, 100],
     },
-    serverExternalPackages: ['postcss', 'sharp'],
+    serverExternalPackages: ['postcss', 'sharp', 'esbuild-wasm'],
     reactCompiler: true,
     experimental: {
         optimizePackageImports: [
@@ -91,16 +88,4 @@ const nextConfig: NextConfig = {
     },
 };
 
-const withSerwist = withSerwistInit({
-    cacheOnNavigation: true,
-    reloadOnOnline: false,
-    swSrc: 'src/app/sw.ts',
-    swDest: 'public/sw.js',
-    disable: process.env.NODE_ENV !== 'production',
-    additionalPrecacheEntries: [
-        { url: '/', revision },
-        { url: '/~offline', revision },
-    ],
-});
-
-export default withSerwist(nextConfig);
+export default nextConfig;
