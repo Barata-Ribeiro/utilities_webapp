@@ -11,7 +11,7 @@ export function SwRegister(): null {
             const sw = event.target as ServiceWorker | null;
             const state = sw?.state;
             if (state === 'installed') {
-                navigator.serviceWorker.getRegistration('/sw.js').then((r) => {
+                navigator.serviceWorker.getRegistration('/serwist/sw.js').then((r) => {
                     if (r?.waiting) r.waiting.postMessage({ type: 'SKIP_WAITING' });
                 });
             }
@@ -21,7 +21,7 @@ export function SwRegister(): null {
                 setTimeout(() => {
                     if (mounted) {
                         navigator.serviceWorker
-                            .register('/sw.js', { scope: '/' })
+                            .register('/serwist/sw.js', { scope: '/' })
                             .catch((e) => console.error('[SW] retry register failed: ', e));
                     }
                 }, 200);
@@ -50,18 +50,18 @@ export function SwRegister(): null {
             }
 
             try {
-                const resp = await fetch('/sw.js', { method: 'HEAD' });
+                const resp = await fetch('/serwist/sw.js', { method: 'HEAD' });
                 if (!resp.ok) {
-                    console.info('[SW] /sw.js not found (status ' + resp.status + '), skipping registration');
+                    console.info('[SW] /serwist/sw.js not found (status ' + resp.status + '), skipping registration');
                     return;
                 }
             } catch (err) {
-                console.info('[SW] could not fetch /sw.js, skipping registration: ', err);
+                console.info('[SW] could not fetch /serwist/sw.js, skipping registration: ', err);
                 return;
             }
 
             try {
-                const reg = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+                const reg = await navigator.serviceWorker.register('/serwist/sw.js', { scope: '/' });
 
                 if (!mounted) return;
 
