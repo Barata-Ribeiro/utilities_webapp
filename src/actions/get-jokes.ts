@@ -16,7 +16,7 @@ export default async function getJokes() {
 
     for (const category of categories) {
         const res = await fetch(`https://api.chucknorris.io/jokes/random?category=${category}`, {
-            next: { revalidate: 1800 },
+            cache: 'reload',
         });
         if (!res.ok) throw new Error(`Failed to fetch joke for category: ${category}`);
         const joke: Joke = await res.json();
