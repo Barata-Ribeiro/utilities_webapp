@@ -41,6 +41,11 @@ const utilities = [
         href: '/utilities/character-counter',
         description: 'Count characters, words, and lines for any text input quickly.',
     },
+    {
+        title: 'Text to Speech',
+        href: '/utilities/text-to-speech',
+        description: 'Convert written text into natural-sounding speech with customizable voices and languages.',
+    },
 ];
 
 export default function Page() {
