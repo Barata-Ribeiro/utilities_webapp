@@ -159,7 +159,7 @@ const urlsToCache = [...baseUrls, ...otherUrls];
 if (isDev) {
     self.addEventListener('install', (event) => {
         console.log('Event install (dev only)', event);
-        void self.skipWaiting();
+        self.skipWaiting();
     });
 
     self.addEventListener('activate', (event) => {
