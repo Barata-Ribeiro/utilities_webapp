@@ -1,6 +1,7 @@
 'use client';
 
 import getIp from '@/actions/get-ip';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useEffect, useState, useTransition } from 'react';
 
@@ -14,8 +15,16 @@ export default function SystemInfoClient() {
         const browserList = [
             { name: 'Microsoft Edge (Chromium Based)', regex: /edg\//i },
             { name: 'Microsoft Edge', regex: /edge/i },
-            { name: 'Opera', regex: /opr/i, condition: () => 'opr' in window },
-            { name: 'Chrome', regex: /chrome/i, condition: () => 'chrome' in window },
+            {
+                name: 'Opera',
+                regex: /opr/i,
+                condition: () => typeof globalThis !== 'undefined' && 'opr' in globalThis.window,
+            },
+            {
+                name: 'Chrome',
+                regex: /chrome/i,
+                condition: () => typeof globalThis !== 'undefined' && 'chrome' in globalThis.window,
+            },
             { name: 'MS IE', regex: /trident/i },
             { name: 'Mozilla Firefox', regex: /firefox/i },
             { name: 'Safari', regex: /safari/i },
@@ -56,32 +65,40 @@ export default function SystemInfoClient() {
     }, []);
 
     return (
-        <div aria-busy={isPending} className="rounded-md bg-card p-6 shadow">
-            <h2 className="font-serif text-lg">System Info</h2>
-            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <div className="rounded-md border p-3">
-                    <h3 className="text-xs font-medium text-muted-foreground">IP Address</h3>
-                    <div className="mt-1 text-sm">
-                        {isPending && ipAddress === null ? <Skeleton className="h-5 w-28" /> : <span>{ipAddress}</span>}
+        <Card aria-busy={isPending}>
+            <CardHeader>
+                <CardTitle className="font-serif text-lg">System Info</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    <div className="rounded-md border p-3">
+                        <h3 className="text-xs font-medium text-muted-foreground">IP Address</h3>
+                        <div className="mt-1 text-sm">
+                            {isPending && ipAddress === null ? (
+                                <Skeleton className="h-5 w-28" />
+                            ) : (
+                                <span>{ipAddress}</span>
+                            )}
+                        </div>
+                    </div>
+                    <div className="rounded-md border p-3">
+                        <h3 className="text-xs font-medium text-muted-foreground">Browser</h3>
+                        <div className="mt-1 text-sm">
+                            {isPending && browser === null ? <Skeleton className="h-5 w-40" /> : <span>{browser}</span>}
+                        </div>
+                    </div>
+                    <div className="rounded-md border p-3">
+                        <h3 className="text-xs font-medium text-muted-foreground">Operating System</h3>
+                        <div className="mt-1 text-sm">
+                            {isPending && operatingSystem === null ? (
+                                <Skeleton className="h-5 w-36" />
+                            ) : (
+                                <span>{operatingSystem}</span>
+                            )}
+                        </div>
                     </div>
                 </div>
-                <div className="rounded-md border p-3">
-                    <h3 className="text-xs font-medium text-muted-foreground">Browser</h3>
-                    <div className="mt-1 text-sm">
-                        {isPending && browser === null ? <Skeleton className="h-5 w-40" /> : <span>{browser}</span>}
-                    </div>
-                </div>
-                <div className="rounded-md border p-3">
-                    <h3 className="text-xs font-medium text-muted-foreground">Operating System</h3>
-                    <div className="mt-1 text-sm">
-                        {isPending && operatingSystem === null ? (
-                            <Skeleton className="h-5 w-36" />
-                        ) : (
-                            <span>{operatingSystem}</span>
-                        )}
-                    </div>
-                </div>
-            </div>
-        </div>
+            </CardContent>
+        </Card>
     );
 }

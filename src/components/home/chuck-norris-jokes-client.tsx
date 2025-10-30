@@ -2,6 +2,7 @@
 
 import getJokes, { Joke } from '@/actions/get-jokes';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useEffect, useState, useTransition } from 'react';
 
@@ -20,9 +21,11 @@ export default function ChuckNorrisJokesClient() {
     useEffect(() => fetchJokes(), []);
 
     return (
-        <div aria-busy={isPending} className="rounded-md bg-card p-6 shadow">
-            <h2 className="font-serif text-lg">Chuck Norris Jokes</h2>
-            <div className="mt-3 flex flex-col gap-3">
+        <Card aria-busy={isPending}>
+            <CardHeader>
+                <CardTitle className="font-serif text-lg">Chuck Norris Jokes</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-3">
                 {isPending || jokes === null ? (
                     <div className="space-y-2">
                         <Skeleton className="h-5 w-full" />
@@ -39,12 +42,12 @@ export default function ChuckNorrisJokesClient() {
                         </article>
                     ))
                 )}
-            </div>
-            <div className="mt-4 flex justify-end">
-                <Button variant="secondary" disabled={isPending} onClick={fetchJokes}>
+            </CardContent>
+            <CardFooter className="flex justify-end">
+                <Button type="button" variant="secondary" disabled={isPending} onClick={fetchJokes}>
                     {isPending ? 'Refreshing...' : 'Refresh'}
                 </Button>
-            </div>
-        </div>
+            </CardFooter>
+        </Card>
     );
 }
