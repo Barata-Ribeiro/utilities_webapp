@@ -1,17 +1,17 @@
 'use client';
 
+import { Slot } from '@radix-ui/react-slot';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { PanelLeftIcon } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { Slot } from '@radix-ui/react-slot';
-import { cva, VariantProps } from 'class-variance-authority';
-import { PanelLeftIcon } from 'lucide-react';
 import {
     type ComponentProps,
     createContext,
@@ -69,16 +69,13 @@ function SidebarProvider({
 
     // This is the internal state of the sidebar.
     // We use openProp and setOpenProp for control from outside the component.
-    const [_open, _setOpen] = useState(defaultOpen);
-    const open = openProp ?? _open;
+    const [internalOpen, setInternalOpen] = useState<boolean>(defaultOpen);
+    const open = openProp ?? internalOpen;
     const setOpen = useCallback(
         (value: boolean | ((value: boolean) => boolean)) => {
             const openState = typeof value === 'function' ? value(open) : value;
-            if (setOpenProp) {
-                setOpenProp(openState);
-            } else {
-                _setOpen(openState);
-            }
+            if (setOpenProp) setOpenProp(openState);
+            else setInternalOpen(openState);
 
             // This sets the cookie to keep the sidebar state.
             document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
@@ -254,7 +251,7 @@ function SidebarTrigger({ className, onClick, ...props }: ComponentProps<typeof 
             data-slot="sidebar-trigger"
             variant="ghost"
             size="icon"
-            className={cn('size-7 cursor-pointer', className)}
+            className={cn('size-7', className)}
             onClick={(event) => {
                 onClick?.(event);
                 toggleSidebar();
@@ -484,7 +481,7 @@ function SidebarMenuButton({
     tooltip?: string | ComponentProps<typeof TooltipContent>;
 } & VariantProps<typeof sidebarMenuButtonVariants>) {
     const Comp = asChild ? Slot : 'button';
-    const { isMobile, state, toggleSidebar } = useSidebar();
+    const { isMobile, state } = useSidebar();
 
     const button = (
         <Comp
@@ -493,7 +490,6 @@ function SidebarMenuButton({
             data-size={size}
             data-active={isActive}
             className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
-            onClick={() => isMobile && toggleSidebar()}
             {...props}
         />
     );
@@ -575,9 +571,7 @@ function SidebarMenuSkeleton({
     showIcon?: boolean;
 }) {
     // Random width between 50 to 90%.
-    const width = useMemo(() => {
-        return `${Math.floor(Math.random() * 40) + 50}%`;
-    }, []);
+    const [width] = useState(() => `${Math.floor(Math.random() * 40) + 50}%`);
 
     return (
         <div
@@ -638,7 +632,6 @@ function SidebarMenuSubButton({
     isActive?: boolean;
 }) {
     const Comp = asChild ? Slot : 'a';
-    const { isMobile, toggleSidebar } = useSidebar();
 
     return (
         <Comp
@@ -654,7 +647,6 @@ function SidebarMenuSubButton({
                 'group-data-[collapsible=icon]:hidden',
                 className,
             )}
-            onClick={() => isMobile && toggleSidebar()}
             {...props}
         />
     );
