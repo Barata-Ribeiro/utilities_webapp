@@ -78,7 +78,7 @@ export default function LoremIpsumGenerator() {
         defaultValues: { mode: 'paragraphs', amount: 1 },
     });
 
-    const onSubmit = useCallback(async (data: LoremIpsumSchemaType) => {
+    const onSubmitFn = useCallback(async (data: LoremIpsumSchemaType) => {
         const { mode, amount } = data;
 
         if (!savedIpsum.current) {
@@ -191,7 +191,7 @@ export default function LoremIpsumGenerator() {
         <Fragment>
             <Form {...form}>
                 <form
-                    onSubmit={form.handleSubmit(onSubmit)}
+                    onSubmit={(e) => void form.handleSubmit(onSubmitFn)(e)}
                     className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6"
                 >
                     <FormField
