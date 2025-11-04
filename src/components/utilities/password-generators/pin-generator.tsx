@@ -23,7 +23,10 @@ export default function PinGenerator() {
 
     const generatePin = useCallback((size: number) => setPin(generateRandomPin(size)), []);
 
-    useEffect(() => generatePin(pinSize), [pinSize, generatePin]);
+    useEffect(() => {
+        const id = setTimeout(() => generatePin(pinSize), 5);
+        return () => clearTimeout(id);
+    }, [generatePin, pinSize]);
 
     return (
         <Card>

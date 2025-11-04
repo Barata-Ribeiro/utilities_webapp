@@ -50,7 +50,8 @@ export default function PasswordGenerator() {
     }, []);
 
     useEffect(() => {
-        generatePassword(passSize, hasNumbers, hasSymbols);
+        const id = setTimeout(() => generatePassword(passSize, hasNumbers, hasSymbols), 5);
+        return () => clearTimeout(id);
     }, [generatePassword, hasNumbers, hasSymbols, passSize]);
 
     return (
@@ -102,7 +103,11 @@ export default function PasswordGenerator() {
                     <p className="mb-2 max-w-full text-center font-mono text-2xl tracking-widest break-all">
                         {password
                             ? Array.from(password).map((ch, i) => (
-                                  <span key={i} className={`${charClass(ch)} inline-block`} aria-hidden={false}>
+                                  <span
+                                      key={`char-${ch}-${i}`}
+                                      className={`${charClass(ch)} inline-block`}
+                                      aria-hidden={false}
+                                  >
                                       {ch}
                                   </span>
                               ))
