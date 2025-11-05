@@ -118,7 +118,11 @@ export default function MemorablePassword() {
                     <p className="mb-2 max-w-full text-center font-mono text-2xl tracking-widest break-all">
                         {password
                             ? Array.from(password).map((ch, i) => (
-                                  <span key={i} className={`${charClass(ch)} inline-block`} aria-hidden={false}>
+                                  <span
+                                      key={`char-${ch}-${i}`}
+                                      className={`${charClass(ch)} inline-block`}
+                                      aria-hidden={false}
+                                  >
                                       {ch}
                                   </span>
                               ))
