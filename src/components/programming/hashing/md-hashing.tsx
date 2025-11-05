@@ -88,7 +88,7 @@ export default function MdHashing() {
             </CardContent>
 
             <CardFooter className="grid border-t pt-4">
-                {Object.values(result).some((value) => value) ? (
+                {Object.values(result).some(Boolean) ? (
                     <div className="space-y-4">
                         {Object.entries(result).map(([algo, hash]) => (
                             <div key={algo} className="space-y-1">
