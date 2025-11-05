@@ -31,13 +31,13 @@ export default function Bytes() {
         const usesComma = value.includes(',');
         const normalized = value.replace(/,/g, '.');
 
-        let num = parseFloat(normalized);
-        if (isNaN(num)) num = 0;
+        let num = Number.parseFloat(normalized);
+        if (Number.isNaN(num)) num = 0;
 
         const isValueEmpty = value === '' || value === '-';
 
         const fmt = (n: number) => {
-            if (!isFinite(n)) return '∞';
+            if (!Number.isFinite(n)) return '∞';
             if (n === 0) return '0';
 
             const absolute = abs(n);
@@ -56,13 +56,13 @@ export default function Bytes() {
 
         const newBytes: Record<string, string> = {};
 
-        Object.keys(bytes).forEach((key) => {
+        for (const key of Object.keys(bytes)) {
             if (key === unit) newBytes[key] = value;
             else {
                 const factor = scales[unit] / scales[key as keyof typeof scales];
                 newBytes[key] = isValueEmpty ? '' : fmt(num * factor);
             }
-        });
+        }
 
         setBytes((prev) => ({
             ...prev,

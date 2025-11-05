@@ -33,8 +33,8 @@ export default function Temperature() {
         const usesComma = value.includes(',');
         const normalized = value.replace(/,/g, '.');
 
-        let num = parseFloat(normalized);
-        if (isNaN(num)) num = 0;
+        let num = Number.parseFloat(normalized);
+        if (Number.isNaN(num)) num = 0;
 
         const isValueEmpty = value === '' || value === '-';
 

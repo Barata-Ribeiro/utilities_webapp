@@ -40,8 +40,8 @@ export default function Length() {
         const usesComma = value.includes(',');
         const normalized = value.replace(/,/g, '.');
 
-        let num = parseFloat(normalized);
-        if (isNaN(num)) num = 0;
+        let num = Number.parseFloat(normalized);
+        if (Number.isNaN(num)) num = 0;
 
         const isValueEmpty = value === '' || value === '-';
 
@@ -55,13 +55,13 @@ export default function Length() {
 
         const newLengths: Record<string, string> = {};
 
-        Object.keys(length).forEach((key, index) => {
+        for (const [index, key] of Object.keys(length).entries()) {
             if (key === unit) newLengths[key] = value;
             else {
                 const factor = factors[unit][index];
                 newLengths[key] = isValueEmpty ? '' : fmt(num * factor);
             }
-        });
+        }
 
         setLength((prev) => ({
             ...prev,
