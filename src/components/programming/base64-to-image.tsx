@@ -40,7 +40,7 @@ export default function Base64ToImage() {
         const { base64, fileName, downloadFormat } = data;
         const mimeTypeRegex = /^data:(image\/[a-zA-Z]+);base64,/;
 
-        const mimeTypeMatch = RegExp(mimeTypeRegex).exec(data.base64);
+        const mimeTypeMatch = new RegExp(mimeTypeRegex).exec(data.base64);
         const mimeType = mimeTypeMatch ? mimeTypeMatch[1] : `image/${downloadFormat}`;
 
         const imageSrc = `data:${mimeType};base64,${base64}`;
