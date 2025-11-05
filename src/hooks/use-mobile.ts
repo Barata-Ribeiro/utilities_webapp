@@ -1,19 +1,74 @@
-import * as React from "react"
+'use client';
 
-const MOBILE_BREAKPOINT = 768
+import { useEffect, useState } from 'react';
 
-export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
-
-  React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    }
-    mql.addEventListener("change", onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    return () => mql.removeEventListener("change", onChange)
-  }, [])
-
-  return !!isMobile
+interface UseIsMobileReturn {
+    isMobile: boolean;
+    isLoading: boolean;
 }
+
+export const useIsMobile = (): UseIsMobileReturn => {
+    const [isMobile, setIsMobile] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const checkIsMobile = () => {
+            // Check using media query
+            const mediaQuery = globalThis.window.matchMedia('(max-width: 768px)');
+
+            // Check using user agent (additional detection)
+            const userAgent = navigator.userAgent.toLowerCase();
+            const mobileKeywords = [
+                'android',
+                'webos',
+                'iphone',
+                'ipad',
+                'ipod',
+                'blackberry',
+                'windows phone',
+                'mobile',
+            ];
+
+            const isMobileUA = mobileKeywords.some((keyword) => userAgent.includes(keyword));
+
+            // Combine both checks - prioritize media query but consider user agent
+            const isMobileDevice = mediaQuery.matches || (isMobileUA && globalThis.window.innerWidth <= 768);
+
+            setIsMobile(isMobileDevice);
+            setIsLoading(false);
+        };
+
+        // Initial check
+        checkIsMobile();
+
+        // Listen for media query changes
+        const mediaQuery = globalThis.window.matchMedia('(max-width: 768px)');
+        const handleChange = () => checkIsMobile();
+
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handleChange);
+        } else {
+            // Fallback for older browsers
+            mediaQuery.addListener(handleChange);
+        }
+
+        // Listen for window resize
+        globalThis.window.addEventListener('resize', checkIsMobile);
+
+        return () => {
+            if (mediaQuery.removeEventListener) {
+                mediaQuery.removeEventListener('change', handleChange);
+            } else {
+                mediaQuery.removeListener(handleChange);
+            }
+            globalThis.window.removeEventListener('resize', checkIsMobile);
+        };
+    }, []);
+
+    return {
+        isMobile,
+        isLoading,
+    };
+};
+
+export default useIsMobile;
