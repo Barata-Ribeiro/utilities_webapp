@@ -3,7 +3,7 @@
 import * as ProgressPrimitive from '@radix-ui/react-progress';
 
 import { cn } from '@/lib/utils';
-import { type ComponentProps } from 'react';
+import type { ComponentProps } from 'react';
 
 function Progress({ className, value, ...props }: Readonly<ComponentProps<typeof ProgressPrimitive.Root>>) {
     return (
