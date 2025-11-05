@@ -52,9 +52,9 @@ export default function ButtonClipboard({
                 {size === 'icon' ? <span className="sr-only">Copied</span> : 'Copied'}
             </span>
 
-            <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+            <output className="sr-only" aria-live="polite" aria-atomic="true">
                 {isCopied ? 'Copied' : 'Copy'}
-            </span>
+            </output>
         </Button>
     );
 }

@@ -22,8 +22,8 @@ export default function IsWhatPercentOfCalc() {
 
         if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(value) && value !== '' && value !== '-') return;
         const normalized = value.replace(/,/g, '.');
-        let num = parseFloat(normalized);
-        if (isNaN(num)) num = 0;
+        let num = Number.parseFloat(normalized);
+        if (Number.isNaN(num)) num = 0;
 
         switch (name) {
             case 'percentValue': {
@@ -32,8 +32,8 @@ export default function IsWhatPercentOfCalc() {
                     setResult(null);
                     return;
                 }
-                const ofNum = parseFloat(ofValue.replace(/,/g, '.'));
-                if (isNaN(ofNum) || ofNum === 0) {
+                const ofNum = Number.parseFloat(ofValue.replace(/,/g, '.'));
+                if (Number.isNaN(ofNum) || ofNum === 0) {
                     setResult(null);
                     return;
                 }
@@ -47,8 +47,8 @@ export default function IsWhatPercentOfCalc() {
                     setResult(null);
                     return;
                 }
-                const percentNum = parseFloat(percentValue.replace(/,/g, '.'));
-                if (isNaN(percentNum) || num === 0) {
+                const percentNum = Number.parseFloat(percentValue.replace(/,/g, '.'));
+                if (Number.isNaN(percentNum) || num === 0) {
                     setResult(null);
                     return;
                 }
@@ -132,18 +132,18 @@ export default function IsWhatPercentOfCalc() {
             </CardContent>
 
             <CardFooter className="border-t pt-4">
-                {!result ? (
-                    <p id={`${componentName}-formula`} className="text-sm font-medium text-muted-foreground">
-                        p = (x ⋅ 100) / y
-                    </p>
-                ) : (
+                {result ? (
                     <p id={`${componentName}-formula`} className="text-sm font-medium text-muted-foreground">
                         {result} = ({percentValue.replace(/,/g, '.')} ⋅ 100) / {ofValue.replace(/,/g, '.')}
                     </p>
+                ) : (
+                    <p id={`${componentName}-formula`} className="text-sm font-medium text-muted-foreground">
+                        p = (x ⋅ 100) / y
+                    </p>
                 )}
-                <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-                    {result !== null ? `Result is ${result}` : 'No result'}
-                </div>
+                <output className="sr-only" aria-live="polite" aria-atomic="true">
+                    {result === null ? 'No result' : `Result is ${result}`}
+                </output>
             </CardFooter>
         </Card>
     );

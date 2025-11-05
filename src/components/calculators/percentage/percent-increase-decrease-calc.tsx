@@ -37,8 +37,8 @@ export default function PercentIncreaseDecreaseCalc() {
 
         if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(raw) && raw !== '' && raw !== '-') return;
         const normalized = raw.replace(/,/g, '.');
-        let inputNum = parseFloat(normalized);
-        if (isNaN(inputNum)) inputNum = 0;
+        let inputNum = Number.parseFloat(normalized);
+        if (Number.isNaN(inputNum)) inputNum = 0;
 
         switch (name) {
             case 'initialValue': {
@@ -47,8 +47,8 @@ export default function PercentIncreaseDecreaseCalc() {
                     setResult(null);
                     return;
                 }
-                const finalNum = parseFloat(finalValue.replace(/,/g, '.'));
-                if (isNaN(finalNum) || inputNum === 0) {
+                const finalNum = Number.parseFloat(finalValue.replace(/,/g, '.'));
+                if (Number.isNaN(finalNum) || inputNum === 0) {
                     setResult(null);
                     return;
                 }
@@ -63,8 +63,8 @@ export default function PercentIncreaseDecreaseCalc() {
                     setResult(null);
                     return;
                 }
-                const initialNum = parseFloat(initialValue.replace(/,/g, '.'));
-                if (isNaN(initialNum) || initialNum === 0) {
+                const initialNum = Number.parseFloat(initialValue.replace(/,/g, '.'));
+                if (Number.isNaN(initialNum) || initialNum === 0) {
                     setResult(null);
                     return;
                 }
@@ -84,9 +84,9 @@ export default function PercentIncreaseDecreaseCalc() {
             setResult(null);
             return;
         }
-        const initialNum = parseFloat(initialValue.replace(/,/g, '.'));
-        const finalNum = parseFloat(finalValue.replace(/,/g, '.'));
-        if (isNaN(initialNum) || isNaN(finalNum) || initialNum === 0) {
+        const initialNum = Number.parseFloat(initialValue.replace(/,/g, '.'));
+        const finalNum = Number.parseFloat(finalValue.replace(/,/g, '.'));
+        if (Number.isNaN(initialNum) || Number.isNaN(finalNum) || initialNum === 0) {
             setResult(null);
             return;
         }
@@ -173,7 +173,7 @@ export default function PercentIncreaseDecreaseCalc() {
                             aria-label="Calculation result"
                             aria-describedby={`${componentName}-formula`}
                             className="font-bold"
-                            value={result !== null ? String(Number(result.toFixed(2))) : ''}
+                            value={result === null ? '' : String(Number(result.toFixed(2)))}
                             readOnly
                         />
                     </div>
@@ -204,9 +204,9 @@ export default function PercentIncreaseDecreaseCalc() {
                         </span>
                     </p>
                 )}
-                <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-                    {result !== null ? `Result is ${result}` : 'No result'}
-                </div>
+                <output className="sr-only" aria-live="polite" aria-atomic="true">
+                    {result === null ? 'No result' : `Result is ${result}`}
+                </output>
             </CardFooter>
         </Card>
     );

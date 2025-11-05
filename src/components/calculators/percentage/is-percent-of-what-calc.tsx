@@ -28,8 +28,8 @@ export default function IsPercentOfWhatCalc() {
 
         if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(raw) && raw !== '' && raw !== '-') return;
         const normalized = raw.replace(/,/g, '.');
-        let inputNum = parseFloat(normalized);
-        if (isNaN(inputNum)) inputNum = 0;
+        let inputNum = Number.parseFloat(normalized);
+        if (Number.isNaN(inputNum)) inputNum = 0;
 
         switch (name) {
             case 'value': {
@@ -38,8 +38,8 @@ export default function IsPercentOfWhatCalc() {
                     setResult(null);
                     return;
                 }
-                const percentNum = parseFloat(percentOf.replace(/,/g, '.'));
-                if (isNaN(percentNum) || percentNum === 0) {
+                const percentNum = Number.parseFloat(percentOf.replace(/,/g, '.'));
+                if (Number.isNaN(percentNum) || percentNum === 0) {
                     setResult(null);
                     return;
                 }
@@ -53,13 +53,13 @@ export default function IsPercentOfWhatCalc() {
                     setResult(null);
                     return;
                 }
-                const percentNum = parseFloat(raw.replace(/,/g, '.'));
-                if (isNaN(percentNum) || percentNum === 0) {
+                const percentNum = Number.parseFloat(raw.replace(/,/g, '.'));
+                if (Number.isNaN(percentNum) || percentNum === 0) {
                     setResult(null);
                     return;
                 }
-                const valueNum = parseFloat(value.replace(/,/g, '.'));
-                if (isNaN(valueNum)) {
+                const valueNum = Number.parseFloat(value.replace(/,/g, '.'));
+                if (Number.isNaN(valueNum)) {
                     setResult(null);
                     return;
                 }
@@ -126,7 +126,7 @@ export default function IsPercentOfWhatCalc() {
                         aria-label="Calculation result"
                         aria-describedby={`${componentName}-formula`}
                         className="font-bold"
-                        value={result !== null ? String(Number(result.toFixed(2))) : ''}
+                        value={result === null ? '' : String(Number(result.toFixed(2)))}
                         readOnly
                     />
                 </div>
@@ -146,9 +146,9 @@ export default function IsPercentOfWhatCalc() {
                         {result} = ({value.replace(/,/g, '.')} ⋅ 100) / {percentOf.replace(/,/g, '.')}
                     </p>
                 )}
-                <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-                    {result !== null ? `Result is ${result}` : 'No result'}
-                </div>
+                <output className="sr-only" aria-live="polite" aria-atomic="true">
+                    {result === null ? 'No Result' : `Result is ${result}`}
+                </output>
             </CardFooter>
         </Card>
     );

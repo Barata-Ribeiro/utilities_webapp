@@ -22,7 +22,7 @@ const GCFSchema = z
     .refine(
         (data) => {
             const inputs = [data.input1, data.input2, data.input3, data.input4, data.input5, data.input6];
-            return inputs.some((num) => !isNaN(num) && num > 0);
+            return inputs.some((num) => !Number.isNaN(num) && num > 0);
         },
         {
             path: ['input1'],
@@ -43,7 +43,7 @@ export default function Gcf() {
 
     function onSubmit(data: GCFInput) {
         const { input1, input2, input3, input4, input5, input6 } = data;
-        const inputs = [input1, input2, input3, input4, input5, input6].filter((num) => !isNaN(num) && num > 0);
+        const inputs = [input1, input2, input3, input4, input5, input6].filter((num) => !Number.isNaN(num) && num > 0);
 
         if (inputs.length === 0) {
             setMessage('Please enter at least one positive integer.');

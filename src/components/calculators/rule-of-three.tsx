@@ -27,7 +27,11 @@ export default function RuleOfThree() {
     const onFormSubmit = (data: z.infer<typeof RuleOfThreeSchema>) => {
         const { a, b, c } = data;
 
-        if (Object.values(data).some((value) => value === null || value === undefined || isNaN(value) || value <= 0)) {
+        if (
+            Object.values(data).some(
+                (value) => value === null || value === undefined || Number.isNaN(value) || value <= 0,
+            )
+        ) {
             alert('Please fill in all fields with valid numbers.');
             return;
         }
