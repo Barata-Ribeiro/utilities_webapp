@@ -33,6 +33,23 @@ interface BmiResult {
     weight: number | null;
 }
 
+function getProgressBarValue(bmi: number) {
+    if (bmi < 16) return 0;
+    else if (bmi >= 16 && bmi < 18.5) return ((bmi - 16) / 2.5) * 25;
+    else if (bmi >= 18.5 && bmi < 25) return 25 + ((bmi - 18.5) / 6.5) * 25;
+    else if (bmi >= 25 && bmi < 30) return 50 + ((bmi - 25) / 5) * 25;
+    else if (bmi >= 30 && bmi < 40) return 75 + ((bmi - 30) / 10) * 25;
+    else return 100;
+}
+
+function getBmiCategory(bmi: number) {
+    if (bmi < 16) return 'Severely Underweight';
+    else if (bmi >= 16 && bmi < 18.5) return 'Underweight';
+    else if (bmi >= 18.5 && bmi <= 24.9) return 'Normal weight';
+    else if (bmi >= 25 && bmi <= 39.9) return 'Overweight';
+    else return 'Obese';
+}
+
 export default function Bmi() {
     const [bmi, setBmi] = useState<BmiResult>({ bmi: null, height: null, weight: null });
 
@@ -44,24 +61,7 @@ export default function Bmi() {
     function onFormSubmit(data: BmiSchemaType) {
         const heightInMeters = data.height / 100;
         const calculatedBmi = data.weight / (heightInMeters * heightInMeters);
-        setBmi({ bmi: parseFloat(calculatedBmi.toFixed(2)), height: data.height, weight: data.weight });
-    }
-
-    function getProgressBarValue(bmi: number) {
-        if (bmi < 16) return 0;
-        else if (bmi >= 16 && bmi < 18.5) return ((bmi - 16.0) / 2.5) * 25;
-        else if (bmi >= 18.5 && bmi < 25) return 25 + ((bmi - 18.5) / 6.5) * 25;
-        else if (bmi >= 25 && bmi < 30) return 50 + ((bmi - 25.0) / 5) * 25;
-        else if (bmi >= 30 && bmi < 40) return 75 + ((bmi - 30.0) / 10) * 25;
-        else return 100;
-    }
-
-    function getBmiCategory(bmi: number) {
-        if (bmi < 16) return 'Severely Underweight';
-        else if (bmi >= 16 && bmi < 18.5) return 'Underweight';
-        else if (bmi >= 18.5 && bmi <= 24.9) return 'Normal weight';
-        else if (bmi >= 25 && bmi <= 39.9) return 'Overweight';
-        else return 'Obese';
+        setBmi({ bmi: Number.parseFloat(calculatedBmi.toFixed(2)), height: data.height, weight: data.weight });
     }
 
     const badgeStyle = {
@@ -170,7 +170,7 @@ export default function Bmi() {
             </Form>
 
             {bmi.bmi && (
-                <Card className="mx-auto mt-4 w-full max-w-md" role="region" aria-labelledby="bmi-card-title">
+                <Card className="mx-auto mt-4 w-full max-w-md" aria-labelledby="bmi-card-title">
                     <CardHeader>
                         <CardTitle id="bmi-card-title">BMI</CardTitle>
                         <CardDescription>Body Mass Index</CardDescription>
@@ -196,7 +196,6 @@ export default function Bmi() {
                         <div className="grid gap-1.5">
                             <Progress
                                 value={getProgressBarValue(bmi.bmi)}
-                                role="progressbar"
                                 aria-label="BMI progress"
                                 aria-valuemin={0}
                                 aria-valuemax={100}

@@ -5,38 +5,37 @@ import { evaluate, round } from 'mathjs';
 import { useEffect, useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+function isNumber(value: unknown) {
+    if (typeof value === 'number') return !Number.isNaN(value) && Number.isFinite(value);
+    return false;
+}
+
+function isBalanced(value: string) {
+    const stack: string[] = [];
+    let balanced = true;
+    for (const char of value) {
+        if (char === '(') stack.push(char);
+        else if (char === ')') {
+            if (stack.length === 0) {
+                balanced = false;
+                break;
+            }
+            stack.pop();
+        }
+    }
+
+    return balanced && stack.length === 0;
+}
+
+function roundNumber(value: number) {
+    return round(value * 1000) / 1000;
+}
 export default function GeneralCalculator() {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
-    const resultRef = useRef<HTMLDivElement>(null);
+    const resultRef = useRef<HTMLOutputElement>(null);
 
     const formStyles = cn`mx-auto my-0 grid max-w-7xl grid-cols-[1fr_auto] overflow-hidden rounded-md`;
     const areaStyles = cn`m-0 resize-none border-0 bg-accent p-4 font-mono text-lg leading-6 text-balance text-accent-foreground outline-none focus:ring-0 focus-visible:ring-0`;
-
-    function isNumber(value: unknown) {
-        if (typeof value === 'number') return !Number.isNaN(value) && Number.isFinite(value);
-        return false;
-    }
-
-    function isBalanced(value: string) {
-        const stack: string[] = [];
-        let balanced = true;
-        Array.from(value).forEach((char) => {
-            if (char === '(') stack.push(char);
-            else if (char === ')') {
-                if (stack.length === 0) {
-                    balanced = false;
-                    return;
-                }
-                stack.pop();
-            }
-        });
-
-        return balanced && stack.length === 0;
-    }
-
-    function roundNumber(value: number) {
-        return round(value * 1000) / 1000;
-    }
 
     function handleCalculation() {
         if (!textAreaRef.current || !resultRef.current) return;
@@ -46,15 +45,15 @@ export default function GeneralCalculator() {
 
         const lines = calculator.value.split(/\r?\n/).map((line) => {
             const l = line.trim();
-            if (l === '') return NaN;
-            if (!validExpr.test(l) || !isBalanced(l)) return NaN;
+            if (l === '') return Number.NaN;
+            if (!validExpr.test(l) || !isBalanced(l)) return Number.NaN;
 
             try {
                 return evaluate(l);
             } catch (err: unknown) {
                 if (err instanceof Error) console.error(`Failed to evaluate line "${l}": ${err.message}`);
                 console.error(`Failed to evaluate line "${l}": ${err}`);
-                return NaN;
+                return Number.NaN;
             }
         });
 
@@ -77,28 +76,25 @@ export default function GeneralCalculator() {
             textAreaRef.current.value = saved;
             handleCalculation();
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <form className={formStyles}>
             <textarea
                 ref={textAreaRef}
-                className={twMerge(areaStyles, '!resize-none')}
+                className={twMerge(areaStyles, 'resize-none!')}
                 id="calculator-textarea"
                 placeholder="Calculate here..."
                 onChange={handleCalculation}
                 rows={10}
                 aria-placeholder="Calculate here..."
             ></textarea>
-            <div
+            <output
                 ref={resultRef}
                 id="result"
                 className={twMerge(areaStyles, 'grid text-right')}
-                role="status"
                 aria-live="polite"
-            ></div>
+            ></output>
         </form>
     );
 }
