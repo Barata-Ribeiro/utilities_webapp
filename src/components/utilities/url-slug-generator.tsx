@@ -80,6 +80,8 @@ export default function UrlSlugGenerator() {
         async (data: SlugifyType) => {
             const { text, separator, lowercase, removeSpecialChars, removeNumbers } = data;
 
+            console.log(data);
+
             if (!savedCharMap.current || !savedLocale.current) {
                 const [resCM, resLol] = await Promise.all([
                     fetch('/slug-settings/charmap.json'),
@@ -97,7 +99,7 @@ export default function UrlSlugGenerator() {
 
             const charMap = sort(savedCharMap.current as Record<string, string>);
             const locales = cleanLocale(savedLocale.current as Record<string, Record<string, string>>);
-            const locale = locales[browserLocale] ?? locales['en'];
+            const locale = locales[browserLocale] ?? locales['en'] ?? {};
 
             const reduced = text
                 .normalize('NFKD')
