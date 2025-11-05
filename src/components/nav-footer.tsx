@@ -3,6 +3,7 @@
 import { SidebarMenu, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { CodeXmlIcon } from 'lucide-react';
 import Link from 'next/link';
+import { Activity } from 'react';
 
 export function NavFooter() {
     const { state, isMobile } = useSidebar();
@@ -10,12 +11,12 @@ export function NavFooter() {
     return (
         <SidebarMenu>
             <SidebarMenuItem className="mx-auto grid">
-                {state === 'expanded' ||
-                    (isMobile && (
-                        <span aria-hidden className="text-center">
-                            &copy; {new Date().getFullYear()}
-                        </span>
-                    ))}
+                <Activity mode={state === 'expanded' || isMobile ? 'visible' : 'hidden'}>
+                    <span aria-hidden className="text-center">
+                        &copy; {new Date().getFullYear()}
+                    </span>
+                </Activity>
+
                 <Link
                     href="https://barataribeiro.com/"
                     target="_blank"
