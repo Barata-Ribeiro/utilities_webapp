@@ -90,7 +90,13 @@ export default function LoremIpsumGenerator() {
             savedIpsum.current = await res.json();
         }
 
-        const pool = savedIpsum.current!;
+        const pool = savedIpsum.current;
+
+        if (!pool) {
+            alert('Failed to fetch word list');
+            return;
+        }
+
         switch (mode) {
             case 'paragraphs': {
                 const paragraphs: string[] = [];

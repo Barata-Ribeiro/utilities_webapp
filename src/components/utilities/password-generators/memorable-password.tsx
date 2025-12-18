@@ -40,7 +40,13 @@ export default function MemorablePassword() {
                 savedWord.current = await res.json();
             }
 
-            const pool = savedWord.current!;
+            const pool = savedWord.current;
+
+            if (!pool) {
+                alert('Failed to fetch word list');
+                return;
+            }
+
             const candidates = shuffle(pool).slice(0, size);
 
             const selectedWords = candidates.map((word) => {

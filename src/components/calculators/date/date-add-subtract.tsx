@@ -94,7 +94,8 @@ export default function DateAddSubtract() {
         if (parts.length === 1) return parts[0];
         if (parts.length === 2) return parts.join(' and ');
 
-        return parts.slice(0, -1).join(', ') + ', and ' + parts.at(-1)!;
+        const last = parts[parts.length - 1] ?? '';
+        return parts.slice(0, -1).join(', ') + ', and ' + last;
     }
 
     return (
