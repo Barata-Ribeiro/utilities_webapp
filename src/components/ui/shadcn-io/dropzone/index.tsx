@@ -7,13 +7,13 @@ import { createContext, ReactNode, useContext, useMemo } from 'react';
 import type { DropEvent, DropzoneOptions, FileRejection } from 'react-dropzone';
 import { useDropzone } from 'react-dropzone';
 
-type DropzoneContextType = {
+interface DropzoneContextType {
     src?: File[];
     accept?: DropzoneOptions['accept'];
     maxSize?: DropzoneOptions['maxSize'];
     minSize?: DropzoneOptions['minSize'];
     maxFiles?: DropzoneOptions['maxFiles'];
-};
+}
 
 const renderBytes = (bytes: number) => {
     const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
@@ -102,10 +102,10 @@ const useDropzoneContext = () => {
     return context;
 };
 
-export type DropzoneContentProps = {
+export interface DropzoneContentProps {
     children?: ReactNode;
     className?: string;
-};
+}
 
 const maxLabelItems = 3;
 
@@ -137,10 +137,10 @@ export const DropzoneContent = ({ children, className }: DropzoneContentProps) =
     );
 };
 
-export type DropzoneEmptyStateProps = {
+export interface DropzoneEmptyStateProps {
     children?: ReactNode;
     className?: string;
-};
+}
 
 export const DropzoneEmptyState = ({ children, className }: DropzoneEmptyStateProps) => {
     const { src, accept, maxSize, minSize, maxFiles } = useDropzoneContext();
