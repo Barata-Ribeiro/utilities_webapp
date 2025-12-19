@@ -9,7 +9,7 @@ import { ArrowUpDownIcon, PercentIcon } from 'lucide-react';
 export default function PercentageTab() {
     return (
         <Tabs defaultValue="percentage-calculators" className="w-full">
-            <TabsList className="flex h-auto flex-wrap items-center justify-start space-y-1">
+            <TabsList className="flex h-auto! flex-wrap items-center justify-start gap-1">
                 <TabsTrigger value="percentage-calculators">
                     <PercentIcon aria-hidden size={16} />
                     Percentage Calculators

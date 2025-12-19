@@ -6,7 +6,7 @@ import { CalendarRangeIcon, CalendarSyncIcon } from 'lucide-react';
 export default function DateTab() {
     return (
         <Tabs defaultValue="date-difference" className="mx-auto w-full max-w-lg">
-            <TabsList className="flex h-auto flex-wrap items-center justify-start space-y-1">
+            <TabsList className="flex h-auto! flex-wrap items-center justify-start gap-1">
                 <TabsTrigger value="date-difference">
                     <CalendarRangeIcon aria-hidden size={16} />
                     Date Difference

@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 export default function GCFAndLCMCalcTab() {
     return (
         <Tabs defaultValue="gcf-calc" className="mx-auto w-full max-w-5xl">
-            <TabsList className="flex h-auto flex-wrap items-center justify-start space-y-1">
+            <TabsList className="flex h-auto! flex-wrap items-center justify-start gap-1">
                 <TabsTrigger value="gcf-calc">GCF Calculator</TabsTrigger>
                 <TabsTrigger value="lcm-calc">LCM Calculator</TabsTrigger>
             </TabsList>

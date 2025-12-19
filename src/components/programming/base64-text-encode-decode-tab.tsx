@@ -6,7 +6,7 @@ import { BrainIcon, NewspaperIcon } from 'lucide-react';
 export default function Base64TextEncodeDecodeTab() {
     return (
         <Tabs defaultValue="base64-text-encode" className="mx-auto w-full max-w-lg">
-            <TabsList className="flex h-auto flex-wrap items-center justify-start space-y-1">
+            <TabsList className="flex h-auto! flex-wrap items-center justify-start gap-1">
                 <TabsTrigger value="base64-text-encode" className="inline-flex items-center gap-x-2">
                     <NewspaperIcon aria-hidden size={16} />
                     Text Encode
