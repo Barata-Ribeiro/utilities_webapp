@@ -1,13 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MoveRightIcon } from 'lucide-react';
 import { useState } from 'react';
 import type { Resolver } from 'react-hook-form';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 
 const RomanSchema = z.object({
@@ -87,40 +87,46 @@ export default function RomanConverter() {
                 <h3 className="inline-flex items-center gap-x-1 text-sm font-medium" aria-label="Roman to Arabic">
                     Roman <MoveRightIcon aria-hidden size={16} /> Arabic
                 </h3>
-                <Form {...romanToArabicForm}>
-                    <form onSubmit={romanToArabicForm.handleSubmit(onRomanFormSubmit)} className="mt-3 space-y-3">
-                        <FormField
-                            control={romanToArabicForm.control}
-                            name="value"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-xs">Roman numeral</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="e.g. XIV" {...field} />
-                                    </FormControl>
-                                    <FormDescription className="text-xs">
-                                        Enter a Roman numeral (uppercase or lowercase).
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                <form onSubmit={romanToArabicForm.handleSubmit(onRomanFormSubmit)} className="mt-3 space-y-3">
+                    <Controller
+                        control={romanToArabicForm.control}
+                        name="value"
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="roman-numeral" className="text-xs">
+                                    Roman numeral
+                                </FieldLabel>
 
-                        <div className="flex items-center gap-2">
-                            <Button type="submit">Convert</Button>
-                            <Button
-                                variant="secondary"
-                                type="button"
-                                onClick={() => {
-                                    romanToArabicForm.reset();
-                                    setResults((prev) => ({ ...prev, roman: null }));
-                                }}
-                            >
-                                Clear
-                            </Button>
-                        </div>
-                    </form>
-                </Form>
+                                <Input
+                                    id="roman-numeral"
+                                    placeholder="e.g. XIV"
+                                    aria-invalid={fieldState.invalid}
+                                    {...field}
+                                />
+
+                                <FieldDescription className="text-xs">
+                                    Enter a Roman numeral (uppercase or lowercase).
+                                </FieldDescription>
+
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                            </Field>
+                        )}
+                    />
+
+                    <div className="flex items-center gap-2">
+                        <Button type="submit">Convert</Button>
+                        <Button
+                            variant="secondary"
+                            type="button"
+                            onClick={() => {
+                                romanToArabicForm.reset();
+                                setResults((prev) => ({ ...prev, roman: null }));
+                            }}
+                        >
+                            Clear
+                        </Button>
+                    </div>
+                </form>
 
                 <div className="mt-4">
                     <div className="rounded-md bg-card p-3">
@@ -137,40 +143,49 @@ export default function RomanConverter() {
                 <h3 className="inline-flex items-center gap-x-1 text-sm font-medium" aria-label="Arabic to Roman">
                     Arabic <MoveRightIcon aria-hidden size={16} /> Roman
                 </h3>
-                <Form {...arabicToRomanForm}>
-                    <form onSubmit={arabicToRomanForm.handleSubmit(onArabicFormSubmit)} className="mt-3 space-y-3">
-                        <FormField
-                            control={arabicToRomanForm.control}
-                            name="value"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-xs">Number</FormLabel>
-                                    <FormControl>
-                                        <Input type="number" min={1} max={3999} placeholder="e.g. 14" {...field} />
-                                    </FormControl>
-                                    <FormDescription className="text-xs">
-                                        Enter an integer between 1 and 3999.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                <form onSubmit={arabicToRomanForm.handleSubmit(onArabicFormSubmit)} className="mt-3 space-y-3">
+                    <Controller
+                        control={arabicToRomanForm.control}
+                        name="value"
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="arabic-number" className="text-xs">
+                                    Number
+                                </FieldLabel>
 
-                        <div className="flex items-center gap-2">
-                            <Button type="submit">Convert</Button>
-                            <Button
-                                variant="secondary"
-                                type="button"
-                                onClick={() => {
-                                    arabicToRomanForm.reset();
-                                    setResults((prev) => ({ ...prev, arabic: null }));
-                                }}
-                            >
-                                Clear
-                            </Button>
-                        </div>
-                    </form>
-                </Form>
+                                <Input
+                                    id="arabic-number"
+                                    type="number"
+                                    min={1}
+                                    max={3999}
+                                    placeholder="e.g. 14"
+                                    aria-invalid={fieldState.invalid}
+                                    {...field}
+                                />
+
+                                <FieldDescription className="text-xs">
+                                    Enter an integer between 1 and 3999.
+                                </FieldDescription>
+
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                            </Field>
+                        )}
+                    />
+
+                    <div className="flex items-center gap-2">
+                        <Button type="submit">Convert</Button>
+                        <Button
+                            variant="secondary"
+                            type="button"
+                            onClick={() => {
+                                arabicToRomanForm.reset();
+                                setResults((prev) => ({ ...prev, arabic: null }));
+                            }}
+                        >
+                            Clear
+                        </Button>
+                    </div>
+                </form>
 
                 <div className="mt-4">
                     <div className="rounded-md bg-card p-3">

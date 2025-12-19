@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
@@ -21,7 +21,7 @@ import {
 import { enUS } from 'date-fns/locale';
 import { CalendarIcon } from 'lucide-react';
 import { Fragment, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 
 const DateSchema = z.object({
@@ -178,109 +178,100 @@ export function DateDifference() {
             </CardHeader>
 
             <CardContent>
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="grid w-full content-center items-center gap-4"
-                    >
-                        {Object.keys(DateSchema.shape).map((key) => (
-                            <FormField
-                                key={key}
-                                control={form.control}
-                                name={key as keyof DateFormData}
-                                render={({ field }) => (
-                                    <FormItem className="flex flex-col max-md:items-center">
-                                        <FormLabel>{key === 'startDate' ? 'Start Date' : 'End Date'}</FormLabel>
-                                        <div className="flex flex-wrap items-center gap-2 max-md:justify-center">
-                                            <Popover>
-                                                <PopoverTrigger asChild>
-                                                    <FormControl>
-                                                        <Button
-                                                            variant="outline"
-                                                            className={cn(
-                                                                'w-full max-w-[240px] pl-3 text-left font-normal',
-                                                                !field.value && 'text-muted-foreground',
-                                                            )}
-                                                        >
-                                                            {field.value ? (
-                                                                format(field.value, 'PPP')
-                                                            ) : (
-                                                                <span>Pick a date</span>
-                                                            )}
-                                                            <CalendarIcon
-                                                                aria-hidden
-                                                                className="ml-auto size-4 opacity-50"
-                                                            />
-                                                        </Button>
-                                                    </FormControl>
-                                                </PopoverTrigger>
-                                                <PopoverContent className="w-auto p-0" align="start">
-                                                    <Calendar
-                                                        mode="single"
-                                                        selected={field.value}
-                                                        onSelect={(date) => {
-                                                            if (!date) return;
-                                                            const hours = field.value ? field.value.getHours() : 0;
-                                                            const minutes = field.value ? field.value.getMinutes() : 0;
-                                                            const seconds = field.value ? field.value.getSeconds() : 0;
-                                                            date.setHours(hours, minutes, seconds, 0);
-                                                            field.onChange(date);
-                                                        }}
-                                                        disabled={(date) => date < new Date('1900-01-01')}
-                                                        captionLayout="dropdown"
-                                                    />
-                                                </PopoverContent>
-                                            </Popover>
-
-                                            <FormControl>
-                                                <Input
-                                                    type="time"
-                                                    step="2"
-                                                    className="w-max"
-                                                    value={field.value ? format(field.value, 'HH:mm:ss') : ''}
-                                                    onChange={(e) => {
-                                                        const val = e.target.value;
-                                                        const baseDate = field.value
-                                                            ? new Date(field.value)
-                                                            : new Date(new Date().setHours(0, 0, 0, 0));
-
-                                                        if (!val) {
-                                                            baseDate.setHours(0, 0, 0, 0);
-                                                            field.onChange(baseDate);
-                                                            return;
-                                                        }
-
-                                                        const parts = val.split(':');
-                                                        const hours = Number(parts[0]);
-                                                        const minutes = Number(parts[1]);
-                                                        const seconds = Number(parts[2] ?? 0);
-                                                        baseDate.setHours(
-                                                            Number.isFinite(hours) ? hours : 0,
-                                                            Number.isFinite(minutes) ? minutes : 0,
-                                                            Number.isFinite(seconds) ? seconds : 0,
-                                                            0,
-                                                        );
-                                                        field.onChange(baseDate);
+                <form onSubmit={form.handleSubmit(onSubmit)} className="grid w-full content-center items-center gap-4">
+                    {Object.keys(DateSchema.shape).map((key) => (
+                        <Controller
+                            key={key}
+                            control={form.control}
+                            name={key as keyof DateFormData}
+                            render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid} className="flex flex-col max-md:items-center">
+                                    <FieldLabel htmlFor={`calendar-${key}`}>
+                                        {key === 'startDate' ? 'Start Date' : 'End Date'}
+                                    </FieldLabel>
+                                    <div className="flex flex-wrap items-center gap-2 max-md:justify-center">
+                                        <Popover>
+                                            <PopoverTrigger id={`calendar-${key}`} asChild>
+                                                <Button
+                                                    variant="outline"
+                                                    className={cn(
+                                                        'w-full max-w-[240px] pl-3 text-left font-normal',
+                                                        !field.value && 'text-muted-foreground',
+                                                    )}
+                                                >
+                                                    {field.value ? (
+                                                        format(field.value, 'PPP')
+                                                    ) : (
+                                                        <span>Pick a date</span>
+                                                    )}
+                                                    <CalendarIcon aria-hidden className="ml-auto size-4 opacity-50" />
+                                                </Button>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0" align="start">
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={field.value}
+                                                    onSelect={(date) => {
+                                                        if (!date) return;
+                                                        const hours = field.value ? field.value.getHours() : 0;
+                                                        const minutes = field.value ? field.value.getMinutes() : 0;
+                                                        const seconds = field.value ? field.value.getSeconds() : 0;
+                                                        date.setHours(hours, minutes, seconds, 0);
+                                                        field.onChange(date);
                                                     }}
+                                                    disabled={(date) => date < new Date('1900-01-01')}
+                                                    captionLayout="dropdown"
                                                 />
-                                            </FormControl>
-                                        </div>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        ))}
+                                            </PopoverContent>
+                                        </Popover>
 
-                        <div className="inline-flex items-center gap-x-2 max-md:justify-self-center-safe">
-                            <Button type="submit" aria-label="Calculate difference">
-                                Calculate
-                            </Button>
-                            <Button variant="secondary" type="button" aria-label="Reset form" onClick={resetForm}>
-                                Reset
-                            </Button>
-                        </div>
-                    </form>
-                </Form>
+                                        <Input
+                                            type="time"
+                                            step="2"
+                                            className="w-max"
+                                            value={field.value ? format(field.value, 'HH:mm:ss') : ''}
+                                            onChange={(e) => {
+                                                const val = e.target.value;
+                                                const baseDate = field.value
+                                                    ? new Date(field.value)
+                                                    : new Date(new Date().setHours(0, 0, 0, 0));
+
+                                                if (!val) {
+                                                    baseDate.setHours(0, 0, 0, 0);
+                                                    field.onChange(baseDate);
+                                                    return;
+                                                }
+
+                                                const parts = val.split(':');
+                                                const hours = Number(parts[0]);
+                                                const minutes = Number(parts[1]);
+                                                const seconds = Number(parts[2] ?? 0);
+                                                baseDate.setHours(
+                                                    Number.isFinite(hours) ? hours : 0,
+                                                    Number.isFinite(minutes) ? minutes : 0,
+                                                    Number.isFinite(seconds) ? seconds : 0,
+                                                    0,
+                                                );
+                                                field.onChange(baseDate);
+                                            }}
+                                        />
+                                    </div>
+
+                                    {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                                </Field>
+                            )}
+                        />
+                    ))}
+
+                    <div className="inline-flex items-center gap-x-2 max-md:justify-self-center-safe">
+                        <Button type="submit" aria-label="Calculate difference">
+                            Calculate
+                        </Button>
+                        <Button variant="secondary" type="button" aria-label="Reset form" onClick={resetForm}>
+                            Reset
+                        </Button>
+                    </div>
+                </form>
             </CardContent>
 
             <CardFooter className="grid w-full grid-cols-1 items-start gap-2 border-t pt-4 md:grid-cols-2">

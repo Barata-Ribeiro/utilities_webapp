@@ -1,14 +1,14 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import QRCode from 'qrcode';
 import { Fragment, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 
 const FormSchema = z.object({
@@ -51,40 +51,38 @@ export default function QRCodeGenerator() {
 
     return (
         <Fragment>
-            <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6"
-                >
-                    <FormField
-                        control={form.control}
-                        name="url"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>URL</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="url"
-                                        placeholder="https://example.com"
-                                        aria-invalid={!!form.formState.errors.url}
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6"
+            >
+                <Controller
+                    control={form.control}
+                    name="url"
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                            <FieldLabel htmlFor="url">URL</FieldLabel>
 
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                        <Button type="submit" variant="default">
-                            Generate
-                        </Button>
-                        <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
-                            Reset
-                        </Button>
-                    </div>
-                </form>
-            </Form>
+                            <Input
+                                id="url"
+                                type="url"
+                                placeholder="https://example.com"
+                                aria-invalid={fieldState.invalid}
+                                {...field}
+                            />
+                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                        </Field>
+                    )}
+                />
+
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <Button type="submit" variant="default">
+                        Generate
+                    </Button>
+                    <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
+                        Reset
+                    </Button>
+                </div>
+            </form>
 
             {qrCode && (
                 <div className="mx-auto mt-6 grid w-full max-w-lg gap-4">

@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Field, FieldContent, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment, useState } from 'react';
-import { Resolver, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 
 const FormSchema = z.object({
@@ -58,93 +58,96 @@ export default function Base64ToImage() {
 
     return (
         <Fragment>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-2xl space-y-6 border-b pb-4">
-                    <FormField
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-2xl space-y-6 border-b pb-4">
+                <Controller
+                    control={form.control}
+                    name="base64"
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                            <FieldLabel htmlFor="base64-string">Base64 String</FieldLabel>
+                            <Textarea
+                                id="base64-string"
+                                className="max-h-32 resize-none font-mono"
+                                placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
+                                aria-invalid={fieldState.invalid}
+                                required
+                                aria-required
+                                {...field}
+                            />
+                            {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                        </Field>
+                    )}
+                />
+
+                <FieldGroup className="flex flex-col items-start gap-4 sm:flex-row">
+                    <Controller
                         control={form.control}
-                        name="base64"
-                        render={({ field }) => (
-                            <FormItem className="space-y-2">
-                                <FormLabel>Base64 String</FormLabel>
-                                <FormControl>
-                                    <Textarea
-                                        className="max-h-32 resize-none font-mono"
-                                        placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."
-                                        required
-                                        aria-required
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
+                        name="downloadFormat"
+                        render={({ field, fieldState }) => (
+                            <Field orientation="vertical" data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor="download-format">Download Format</FieldLabel>
+                                    {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                                </FieldContent>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <SelectTrigger id="download-format" aria-invalid={fieldState.invalid}>
+                                        <SelectValue placeholder="Image Format" />
+                                    </SelectTrigger>
+                                    <SelectContent position="item-aligned">
+                                        {['png', 'jpeg', 'webp'].map((format) => (
+                                            <SelectItem key={format} value={format}>
+                                                {format.toUpperCase()}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </Field>
                         )}
                     />
 
-                    <div className="flex flex-col items-start gap-4 sm:flex-row">
-                        <FormField
-                            control={form.control}
-                            name="downloadFormat"
-                            render={({ field }) => (
-                                <FormItem className="space-y-2">
-                                    <FormLabel>Download Format</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Image Format" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {['png', 'jpeg', 'webp'].map((format) => (
-                                                <SelectItem key={format} value={format}>
-                                                    {format.toUpperCase()}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </FormItem>
-                            )}
-                        />
+                    <Controller
+                        control={form.control}
+                        name="fileName"
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="fileName">File Name (optional)</FieldLabel>
+                                <Input
+                                    id="fileName"
+                                    className="max-h-9 font-mono"
+                                    placeholder="e.g. image"
+                                    aria-invalid={fieldState.invalid}
+                                    {...field}
+                                />
+                                {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                            </Field>
+                        )}
+                    />
+                </FieldGroup>
 
-                        <FormField
-                            control={form.control}
-                            name="fileName"
-                            render={({ field }) => (
-                                <FormItem className="space-y-2">
-                                    <FormLabel>File Name (optional)</FormLabel>
-                                    <FormControl>
-                                        <Input className="max-h-9 font-mono" placeholder="e.g. image" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
+                <div className="grid grid-rows-[auto_1fr] gap-2">
+                    <Button type="submit" variant="default">
+                        Parse
+                    </Button>
 
-                    <div className="grid grid-rows-[auto_1fr] gap-2">
-                        <Button type="submit" variant="default">
-                            Parse
+                    <div className="grid gap-2 sm:grid-cols-2">
+                        <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
+                            Reset
                         </Button>
 
-                        <div className="grid gap-2 sm:grid-cols-2">
-                            <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
-                                Reset
-                            </Button>
-
-                            <Button
-                                type="button"
-                                variant="outline"
-                                aria-label="Download Image"
-                                disabled={!result}
-                                asChild={!!result}
-                            >
-                                <Link href={result ?? ''} download={fileName}>
-                                    Download
-                                </Link>
-                            </Button>
-                        </div>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            aria-label="Download Image"
+                            disabled={!result}
+                            asChild={!!result}
+                        >
+                            <Link href={result ?? ''} download={fileName}>
+                                Download
+                            </Link>
+                        </Button>
                     </div>
-                </form>
-            </Form>
+                </div>
+            </form>
 
             {preview ? (
                 <div className="relative min-h-96 w-full max-w-2xl rounded-lg select-none">

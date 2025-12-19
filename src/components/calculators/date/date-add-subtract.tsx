@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Field, FieldContent, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -12,7 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { CalendarIcon, CircleMinusIcon, CirclePlusIcon } from 'lucide-react';
 import { useState } from 'react';
-import { Resolver, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 
 const DateAddSubtractSchema = z.object({
@@ -106,125 +106,116 @@ export default function DateAddSubtract() {
             </CardHeader>
 
             <CardContent>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                            <FormField
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <FieldGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <Controller
+                            control={form.control}
+                            name="date"
+                            render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid} className="flex flex-col">
+                                    <FieldLabel htmlFor="calendar">Select a Date</FieldLabel>
+                                    <Popover>
+                                        <PopoverTrigger id="calendar" asChild>
+                                            <Button
+                                                variant={'outline'}
+                                                className={cn(
+                                                    'pl-3 text-left font-normal max-sm:max-w-[240px] sm:w-full',
+                                                    !field.value && 'text-muted-foreground',
+                                                )}
+                                            >
+                                                {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0" align="start">
+                                            <Calendar
+                                                mode="single"
+                                                selected={field.value}
+                                                onSelect={field.onChange}
+                                                disabled={(date) => date < new Date('1900-01-01')}
+                                                captionLayout="dropdown"
+                                            />
+                                        </PopoverContent>
+                                    </Popover>
+
+                                    {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                                </Field>
+                            )}
+                        />
+
+                        <Controller
+                            control={form.control}
+                            name="action"
+                            render={({ field, fieldState }) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor="action">Action</FieldLabel>
+                                    </FieldContent>
+
+                                    <Select name={field.name} onValueChange={field.onChange} defaultValue={field.value}>
+                                        <SelectTrigger id="action" aria-invalid={fieldState.invalid}>
+                                            <SelectValue placeholder="Add/Subtract" />
+                                        </SelectTrigger>
+                                        <SelectContent position="item-aligned">
+                                            <SelectItem className="inline-flex items-center gap-x-2" value="add">
+                                                <CirclePlusIcon aria-hidden size={16} /> Add
+                                            </SelectItem>
+                                            <SelectItem className="inline-flex items-center gap-x-2" value="subtract">
+                                                <CircleMinusIcon aria-hidden size={16} /> Subtract
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
+
+                                    {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                                </Field>
+                            )}
+                        />
+                    </FieldGroup>
+
+                    <FieldGroup className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        {inputs.map((input) => (
+                            <Controller
                                 control={form.control}
-                                name="date"
-                                render={({ field }) => (
-                                    <FormItem className="flex flex-col">
-                                        <FormLabel>Select a Date</FormLabel>
-                                        <Popover>
-                                            <PopoverTrigger asChild>
-                                                <FormControl>
-                                                    <Button
-                                                        variant={'outline'}
-                                                        className={cn(
-                                                            'pl-3 text-left font-normal max-sm:max-w-[240px] sm:w-full',
-                                                            !field.value && 'text-muted-foreground',
-                                                        )}
-                                                    >
-                                                        {field.value ? (
-                                                            format(field.value, 'PPP')
-                                                        ) : (
-                                                            <span>Pick a date</span>
-                                                        )}
-                                                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                                    </Button>
-                                                </FormControl>
-                                            </PopoverTrigger>
-                                            <PopoverContent className="w-auto p-0" align="start">
-                                                <Calendar
-                                                    mode="single"
-                                                    selected={field.value}
-                                                    onSelect={field.onChange}
-                                                    disabled={(date) => date < new Date('1900-01-01')}
-                                                    captionLayout="dropdown"
-                                                />
-                                            </PopoverContent>
-                                        </Popover>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
+                                key={input}
+                                name={input as keyof Omit<DateAddSubtractType, 'action' | 'date'>}
+                                render={({ field, fieldState }) => {
+                                    const isInvalid = !!form.formState.errors[input as keyof DateAddSubtractType];
+                                    const randomPlaceholder = Math.floor(Math.random() * 100).toString();
+
+                                    const { value, ...rest } = field;
+
+                                    return (
+                                        <Field data-invalid={isInvalid}>
+                                            <FieldLabel htmlFor={`input-${input}`} className="text-xs capitalize">
+                                                {input}
+                                            </FieldLabel>
+                                            <Input
+                                                id={`input-${input}`}
+                                                type="text"
+                                                placeholder={`e.g. ${randomPlaceholder}`}
+                                                inputMode="decimal"
+                                                autoComplete="off"
+                                                aria-invalid={isInvalid}
+                                                value={value ?? ''}
+                                                {...rest}
+                                            />
+                                            {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                                        </Field>
+                                    );
+                                }}
                             />
+                        ))}
+                    </FieldGroup>
 
-                            <FormField
-                                control={form.control}
-                                name="action"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Action</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Add/Subtract" />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                <SelectItem className="inline-flex items-center gap-x-2" value="add">
-                                                    <CirclePlusIcon aria-hidden size={16} /> Add
-                                                </SelectItem>
-                                                <SelectItem
-                                                    className="inline-flex items-center gap-x-2"
-                                                    value="subtract"
-                                                >
-                                                    <CircleMinusIcon aria-hidden size={16} /> Subtract
-                                                </SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                            {inputs.map((input) => (
-                                <FormField
-                                    control={form.control}
-                                    key={input}
-                                    name={input as keyof Omit<DateAddSubtractType, 'action' | 'date'>}
-                                    render={({ field }) => {
-                                        const ariaDesc = `${input}-helper-text`;
-                                        const isInvalid = !!form.formState.errors[input as keyof DateAddSubtractType];
-                                        const randomPlaceholder = Math.floor(Math.random() * 100).toString();
-
-                                        const { value, ...rest } = field;
-
-                                        return (
-                                            <FormItem>
-                                                <FormLabel className="text-xs capitalize">{input}</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        type="text"
-                                                        placeholder={`e.g. ${randomPlaceholder}`}
-                                                        inputMode="decimal"
-                                                        autoComplete="off"
-                                                        aria-describedby={ariaDesc}
-                                                        aria-invalid={isInvalid}
-                                                        value={value ?? ''}
-                                                        {...rest}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        );
-                                    }}
-                                />
-                            ))}
-                        </div>
-
-                        <div className="inline-flex items-center gap-x-2">
-                            <Button type="submit" aria-label="Calculate Date Add/Subtract">
-                                Calculate
-                            </Button>
-                            <Button variant="secondary" type="button" aria-label="Reset form" onClick={resetForm}>
-                                Reset
-                            </Button>
-                        </div>
-                    </form>
-                </Form>
+                    <div className="inline-flex items-center gap-x-2">
+                        <Button type="submit" aria-label="Calculate Date Add/Subtract">
+                            Calculate
+                        </Button>
+                        <Button variant="secondary" type="button" aria-label="Reset form" onClick={resetForm}>
+                            Reset
+                        </Button>
+                    </div>
+                </form>
             </CardContent>
 
             <CardFooter className="w-full border-t pt-4">

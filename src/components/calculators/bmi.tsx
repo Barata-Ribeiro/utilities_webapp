@@ -3,14 +3,14 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { BadgeAlertIcon, BadgeCheckIcon } from 'lucide-react';
 import { useState } from 'react';
-import { Resolver, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import { twMerge } from 'tailwind-merge';
 import { z } from 'zod/v4';
 
@@ -74,100 +74,82 @@ export default function Bmi() {
 
     return (
         <div className="mx-auto grid max-w-4xl">
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onFormSubmit)} className="grid gap-4">
-                    <fieldset className="grid gap-4 sm:grid-cols-2" aria-label="BMI inputs">
-                        <FormField
-                            control={form.control}
-                            name="height"
-                            render={({ field }) => {
-                                const fieldError = form.formState.errors[field.name];
-                                const descId = `${field.name}-desc`;
-                                const errId = `${field.name}-error`;
-                                const describedBy = fieldError ? descId + ' ' + errId : descId;
+            <form onSubmit={form.handleSubmit(onFormSubmit)} className="grid gap-4">
+                <FieldGroup className="grid gap-4 sm:grid-cols-2" aria-label="BMI inputs">
+                    <Controller
+                        control={form.control}
+                        name="height"
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel className="text-xs" htmlFor="height">
+                                    Height
+                                </FieldLabel>
+                                <Input
+                                    id="height"
+                                    type="text"
+                                    placeholder="e.g. 170"
+                                    inputMode="decimal"
+                                    autoComplete="off"
+                                    aria-invalid={fieldState.invalid}
+                                    {...field}
+                                />
+                                {fieldState.error ? (
+                                    <FieldError errors={[fieldState.error]} />
+                                ) : (
+                                    <FieldDescription className="text-xs">
+                                        Enter your height in centimeters (cm).
+                                    </FieldDescription>
+                                )}
+                            </Field>
+                        )}
+                    />
 
-                                return (
-                                    <FormItem>
-                                        <FormLabel className="text-xs" htmlFor={field.name}>
-                                            Height
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="text"
-                                                placeholder="e.g. 170"
-                                                inputMode="decimal"
-                                                autoComplete="off"
-                                                aria-describedby={describedBy}
-                                                aria-invalid={!!fieldError}
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        {!fieldError && (
-                                            <FormDescription id={descId} className="text-xs">
-                                                Enter your height in centimeters (cm).
-                                            </FormDescription>
-                                        )}
-                                        <FormMessage id={errId} />
-                                    </FormItem>
-                                );
-                            }}
-                        />
+                    <Controller
+                        control={form.control}
+                        name="weight"
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel className="text-xs" htmlFor="weight">
+                                    Weight
+                                </FieldLabel>
+                                <Input
+                                    id="weight"
+                                    type="text"
+                                    placeholder="e.g. 65"
+                                    inputMode="decimal"
+                                    autoComplete="off"
+                                    aria-invalid={fieldState.invalid}
+                                    {...field}
+                                />
+                                {fieldState.error ? (
+                                    <FieldError errors={[fieldState.error]} />
+                                ) : (
+                                    <FieldDescription className="text-xs">
+                                        Enter your weight in kilograms (kg).
+                                    </FieldDescription>
+                                )}
+                            </Field>
+                        )}
+                    />
+                </FieldGroup>
 
-                        <FormField
-                            control={form.control}
-                            name="weight"
-                            render={({ field }) => {
-                                const fieldError = form.formState.errors[field.name];
-                                const descId = `${field.name}-desc`;
-                                const errId = `${field.name}-error`;
-                                const describedBy = fieldError ? descId + ' ' + errId : descId;
-
-                                return (
-                                    <FormItem>
-                                        <FormLabel className="text-xs" htmlFor={field.name}>
-                                            Weight
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="text"
-                                                placeholder="e.g. 65"
-                                                inputMode="decimal"
-                                                autoComplete="off"
-                                                aria-describedby={describedBy}
-                                                aria-invalid={!!fieldError}
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        {!fieldError && (
-                                            <FormDescription id={descId} className="text-xs">
-                                                Enter your weight in kilograms (kg).
-                                            </FormDescription>
-                                        )}
-                                        <FormMessage id={errId} />
-                                    </FormItem>
-                                );
-                            }}
-                        />
-                    </fieldset>
-
-                    <div className="mx-auto inline-flex items-center gap-x-2">
-                        <Button type="submit" aria-label="Calculate BMI">
-                            Calculate
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            type="button"
-                            aria-label="Reset BMI form"
-                            onClick={() => {
-                                form.reset();
-                                setBmi({ bmi: null, height: null, weight: null });
-                            }}
-                        >
-                            Reset
-                        </Button>
-                    </div>
-                </form>
-            </Form>
+                <div className="mx-auto inline-flex items-center gap-x-2">
+                    <Button type="submit" aria-label="Calculate BMI">
+                        Calculate
+                    </Button>
+                    <Button
+                        variant="secondary"
+                        type="button"
+                        aria-label="Reset BMI form"
+                        onClick={() => {
+                            form.reset();
+                            setBmi({ bmi: null, height: null, weight: null });
+                        }}
+                    >
+                        Reset
+                    </Button>
+                </div>
+            </form>
 
             {bmi.bmi && (
                 <Card className="mx-auto mt-4 w-full max-w-md" aria-labelledby="bmi-card-title">

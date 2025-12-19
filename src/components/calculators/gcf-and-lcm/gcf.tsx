@@ -2,12 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Field, FieldError, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { gcd } from 'mathjs';
-import { useState } from 'react';
-import { Resolver, useForm } from 'react-hook-form';
+import { Activity, useState } from 'react';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 
 const GCFSchema = z
@@ -73,42 +73,41 @@ export default function Gcf() {
             </CardHeader>
 
             <CardContent>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(6,auto)]">
-                            {Object.keys(GCFSchema.shape).map((key, index) => (
-                                <FormField
-                                    key={key}
-                                    control={form.control}
-                                    name={key as keyof GCFInput}
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormControl>
-                                                <Input
-                                                    type="text"
-                                                    placeholder={`Input ${index + 1}`}
-                                                    inputMode="decimal"
-                                                    autoComplete="off"
-                                                    aria-invalid={!!form.formState.errors[field.name]}
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage className="col-span-full" />
-                                        </FormItem>
-                                    )}
-                                />
-                            ))}
-                        </div>
-                        <div className="space-x-2">
-                            <Button type="submit" aria-label="Calculate GCF">
-                                Calculate
-                            </Button>
-                            <Button variant="secondary" type="button" aria-label="Reset form" onClick={resetForm}>
-                                Reset
-                            </Button>
-                        </div>
-                    </form>
-                </Form>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+                    <FieldGroup className="grid grid-cols-1 gap-4 sm:grid-cols-[repeat(6,auto)]">
+                        {Object.keys(GCFSchema.shape).map((key, index) => (
+                            <Controller
+                                key={key}
+                                control={form.control}
+                                name={key as keyof GCFInput}
+                                render={({ field, fieldState }) => (
+                                    <Field data-invalid={fieldState.invalid} className="relative">
+                                        <Input
+                                            type="text"
+                                            placeholder={`Input ${index + 1}`}
+                                            inputMode="decimal"
+                                            autoComplete="off"
+                                            aria-invalid={!!form.formState.errors[field.name]}
+                                            {...field}
+                                        />
+
+                                        {fieldState.error && (
+                                            <FieldError className="col-span-full" errors={[fieldState.error]} />
+                                        )}
+                                    </Field>
+                                )}
+                            />
+                        ))}
+                    </FieldGroup>
+                    <div className="space-x-2">
+                        <Button type="submit" aria-label="Calculate GCF">
+                            Calculate
+                        </Button>
+                        <Button variant="secondary" type="button" aria-label="Reset form" onClick={resetForm}>
+                            Reset
+                        </Button>
+                    </div>
+                </form>
             </CardContent>
 
             <CardFooter className="grid gap-2 border-t pt-4">
@@ -118,11 +117,11 @@ export default function Gcf() {
                         <p className="text-sm text-muted-foreground">{message}</p>
                     </>
                 )}
-                {(!result || !message) && (
+                <Activity mode={!result || !message ? 'visible' : 'hidden'}>
                     <p className="text-center text-sm text-muted-foreground">
                         Enter values and click <strong>Calculate</strong> to see the GCF.
                     </p>
-                )}
+                </Activity>
             </CardFooter>
         </Card>
     );

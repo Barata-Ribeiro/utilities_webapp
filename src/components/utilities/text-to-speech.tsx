@@ -1,15 +1,15 @@
 'use client';
 
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Field, FieldContent, FieldError, FieldLabel } from '@/components/ui/field';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
-import { Badge } from '../ui/badge';
-import { Button } from '../ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
 const TextToSpeechSchema = z.object({
     text: z
@@ -77,122 +77,116 @@ export default function TextToSpeech() {
     }
 
     return (
-        <Form {...form}>
-            <form
-                onSubmit={form.handleSubmit(onsubmit)}
-                className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6"
-            >
-                <FormField
-                    name="text"
-                    control={form.control}
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Text</FormLabel>
-                            <FormControl>
-                                <Textarea
-                                    maxLength={5000}
-                                    placeholder='e.g. "Hello, how are you today?"'
-                                    aria-invalid={!!form.formState.errors.text}
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+        <form onSubmit={form.handleSubmit(onsubmit)} className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6">
+            <Controller
+                name="text"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="text">Text</FieldLabel>
+                        <Textarea
+                            id="text"
+                            maxLength={5000}
+                            placeholder='e.g. "Hello, how are you today?"'
+                            aria-invalid={fieldState.invalid}
+                            {...field}
+                        />
+                        {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                    </Field>
+                )}
+            />
 
-                <FormField
-                    name="rate"
-                    control={form.control}
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Rate</FormLabel>
-                            <FormControl>
-                                <div className="flex items-center gap-4">
-                                    <Slider
-                                        value={[field.value ?? 1]}
-                                        onValueChange={([value]) => field.onChange(value)}
-                                        min={0.5}
-                                        max={2}
-                                        step={0.1}
-                                    />
-                                    <Badge aria-live="polite" className="w-12 tabular-nums select-none">
-                                        {(Math.round((field.value ?? 1) * 10) / 10).toFixed(1)}
-                                    </Badge>
-                                </div>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+            <Controller
+                name="rate"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                    <Field orientation="vertical" data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="rate">Rate</FieldLabel>
 
-                <FormField
-                    name="pitch"
-                    control={form.control}
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Pitch</FormLabel>
-                            <FormControl>
-                                <div className="flex items-center gap-4">
-                                    <Slider
-                                        value={[field.value ?? 1]}
-                                        onValueChange={([value]) => field.onChange(value)}
-                                        min={0}
-                                        max={2}
-                                        step={0.1}
-                                    />
-                                    <Badge aria-live="polite" className="w-12 tabular-nums select-none">
-                                        {(Math.round((field.value ?? 1) * 10) / 10).toFixed(1)}
-                                    </Badge>
-                                </div>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                        <div className="flex items-center gap-4">
+                            <Slider
+                                value={[field.value ?? 1]}
+                                onValueChange={([value]) => field.onChange(value)}
+                                min={0.5}
+                                max={2}
+                                step={0.1}
+                            />
+                            <Badge aria-live="polite" className="w-12 tabular-nums select-none">
+                                {(Math.round((field.value ?? 1) * 10) / 10).toFixed(1)}
+                            </Badge>
+                        </div>
 
-                <FormField
-                    control={form.control}
-                    name="voice"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Voice</FormLabel>
-                            <FormControl>
-                                <Select
-                                    value={field.value === undefined ? undefined : String(field.value)}
-                                    onValueChange={(val) => field.onChange(val === undefined ? undefined : Number(val))}
-                                    defaultValue={undefined}
-                                >
-                                    <FormControl>
-                                        <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="Select a voice..." />
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                        {voices.length > 0 ? (
-                                            voices.map((voice, idx) => (
-                                                <SelectItem key={`voice-${idx}-${voice.name}`} value={String(idx)}>
-                                                    {voice.name}
-                                                </SelectItem>
-                                            ))
-                                        ) : (
-                                            <SelectItem value={String(0)}>Default</SelectItem>
-                                        )}
-                                    </SelectContent>
-                                </Select>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                        {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                    </Field>
+                )}
+            />
 
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-                    <Button type="submit">Play</Button>
-                    <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
-                        Reset
-                    </Button>
-                </div>
-            </form>
-        </Form>
+            <Controller
+                name="pitch"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                    <Field orientation="vertical" data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="pitch">Pitch</FieldLabel>
+
+                        <div className="flex items-center gap-4">
+                            <Slider
+                                id="pitch"
+                                value={[field.value ?? 1]}
+                                onValueChange={([value]) => field.onChange(value)}
+                                min={0}
+                                max={2}
+                                step={0.1}
+                            />
+                            <Badge aria-live="polite" className="w-12 tabular-nums select-none">
+                                {(Math.round((field.value ?? 1) * 10) / 10).toFixed(1)}
+                            </Badge>
+                        </div>
+
+                        {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                    </Field>
+                )}
+            />
+
+            <Controller
+                control={form.control}
+                name="voice"
+                render={({ field, fieldState }) => (
+                    <Field orientation="responsive" data-invalid={fieldState.invalid}>
+                        <FieldContent>
+                            <FieldLabel htmlFor="voice">Voice</FieldLabel>
+                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                        </FieldContent>
+
+                        <Select
+                            value={field.value === undefined ? undefined : String(field.value)}
+                            onValueChange={(val) => field.onChange(val === undefined ? undefined : Number(val))}
+                            defaultValue={undefined}
+                        >
+                            <SelectTrigger id="voice" className="w-full" aria-invalid={fieldState.invalid}>
+                                <SelectValue placeholder="Select a voice..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {voices.length > 0 ? (
+                                    voices.map((voice, idx) => (
+                                        <SelectItem key={`voice-${idx}-${voice.name}`} value={String(idx)}>
+                                            {voice.name}
+                                        </SelectItem>
+                                    ))
+                                ) : (
+                                    <SelectItem value={String(0)}>Default</SelectItem>
+                                )}
+                            </SelectContent>
+                        </Select>
+                    </Field>
+                )}
+            />
+
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
+                <Button type="submit">Play</Button>
+                <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
+                    Reset
+                </Button>
+            </div>
+        </form>
     );
 }

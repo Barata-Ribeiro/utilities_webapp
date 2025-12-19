@@ -3,11 +3,11 @@
 import ButtonClipboard from '@/components/button-clipboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 
 const FormSchema = z.object({
@@ -45,43 +45,41 @@ export default function Base64TextEncode() {
             </CardHeader>
 
             <CardContent>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                        <FormField
-                            control={form.control}
-                            name="text"
-                            render={({ field }) => (
-                                <FormItem className="space-y-2">
-                                    <FormLabel>Text</FormLabel>
-                                    <FormControl>
-                                        <Textarea
-                                            className="max-h-32 resize-none font-mono"
-                                            placeholder="e.g. Hello, World!"
-                                            required
-                                            aria-required
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                    <Controller
+                        control={form.control}
+                        name="text"
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="text-to-encode">Text</FieldLabel>
+                                <Textarea
+                                    id="text-to-encode"
+                                    className="max-h-32 resize-none font-mono"
+                                    placeholder="e.g. Hello, World!"
+                                    aria-invalid={fieldState.invalid}
+                                    required
+                                    aria-required
+                                    {...field}
+                                />
+                                {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                            </Field>
+                        )}
+                    />
 
-                        <div className="grid grid-rows-[auto_1fr] gap-2">
-                            <Button type="submit" variant="default">
-                                Encode
+                    <div className="grid grid-rows-[auto_1fr] gap-2">
+                        <Button type="submit" variant="default">
+                            Encode
+                        </Button>
+
+                        <div className="grid gap-2 sm:grid-cols-2">
+                            <Button type="reset" variant="ghost" onClick={resetForm} aria-label="Reset Form">
+                                Reset
                             </Button>
 
-                            <div className="grid gap-2 sm:grid-cols-2">
-                                <Button type="reset" variant="ghost" onClick={resetForm} aria-label="Reset Form">
-                                    Reset
-                                </Button>
-
-                                <ButtonClipboard size="default" variant="outline" content={result} />
-                            </div>
+                            <ButtonClipboard size="default" variant="outline" content={result} />
                         </div>
-                    </form>
-                </Form>
+                    </div>
+                </form>
             </CardContent>
 
             <CardFooter className="w-full border-t pt-4">

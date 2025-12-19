@@ -2,13 +2,22 @@
 
 import ButtonClipboard from '@/components/button-clipboard';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+    Field,
+    FieldContent,
+    FieldDescription,
+    FieldError,
+    FieldLabel,
+    FieldLegend,
+    FieldSet,
+    FieldTitle,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { floor, random } from 'mathjs';
 import { Fragment, useCallback, useRef, useState } from 'react';
-import { Resolver, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 
 const START_SENTENCE = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
@@ -195,81 +204,80 @@ export default function LoremIpsumGenerator() {
 
     return (
         <Fragment>
-            <Form {...form}>
-                <form
-                    onSubmit={(e) => void form.handleSubmit(onSubmitFn)(e)}
-                    className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6"
-                >
-                    <FormField
-                        control={form.control}
-                        name="amount"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Amount</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        type="number"
-                                        min={1}
-                                        step={1}
-                                        autoComplete="off"
-                                        inputMode="decimal"
-                                        placeholder="e.g. 5"
-                                        aria-invalid={!!form.formState.errors.amount}
-                                        {...field}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="mode"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Options</FormLabel>
-                                <FormControl>
-                                    <RadioGroup
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        className="flex flex-wrap items-center gap-4"
-                                    >
-                                        {['paragraphs', 'sentences', 'words', 'bytes', 'lists'].map((option) => (
-                                            <FormItem key={option} className="flex items-center gap-3">
-                                                <FormControl>
-                                                    <RadioGroupItem value={option} />
-                                                </FormControl>
-                                                <FormLabel className="font-normal">
-                                                    {option.charAt(0).toUpperCase() + option.slice(1)}
-                                                </FormLabel>
-                                            </FormItem>
-                                        ))}
-                                    </RadioGroup>
-                                </FormControl>
-                                <FormDescription>
-                                    Limits: Paragraphs (170), Sentences (1000), Words (14769), Bytes (100000), Lists
-                                    (500).
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+            <form
+                onSubmit={(e) => void form.handleSubmit(onSubmitFn)(e)}
+                className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6"
+            >
+                <Controller
+                    control={form.control}
+                    name="amount"
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                            <FieldLabel htmlFor="amount">Amount</FieldLabel>
+                            <Input
+                                id="amount"
+                                type="number"
+                                min={1}
+                                step={1}
+                                autoComplete="off"
+                                inputMode="decimal"
+                                placeholder="e.g. 5"
+                                aria-invalid={!!form.formState.errors.amount}
+                                {...field}
+                            />
+                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                        </Field>
+                    )}
+                />
+                <Controller
+                    control={form.control}
+                    name="mode"
+                    render={({ field, fieldState }) => (
+                        <FieldSet data-invalid={fieldState.invalid}>
+                            <FieldLegend>Options</FieldLegend>
 
-                    <div className="grid grid-rows-[auto_1fr] gap-2">
-                        <Button type="submit" variant="default">
-                            Submit
+                            <RadioGroup
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                                className="flex flex-wrap items-center gap-4"
+                            >
+                                {['paragraphs', 'sentences', 'words', 'bytes', 'lists'].map((option) => (
+                                    <FieldLabel key={option} htmlFor={`mode-${option}`}>
+                                        <Field orientation="horizontal" data-invalid={fieldState.invalid}>
+                                            <RadioGroupItem value={option} id={`mode-${option}`} />
+
+                                            <FieldContent>
+                                                <FieldTitle className="font-normal">
+                                                    {option.charAt(0).toUpperCase() + option.slice(1)}
+                                                </FieldTitle>
+                                            </FieldContent>
+                                        </Field>
+                                    </FieldLabel>
+                                ))}
+                            </RadioGroup>
+                            <FieldDescription>
+                                Limits: Paragraphs (170), Sentences (1000), Words (14769), Bytes (100000), Lists (500).
+                            </FieldDescription>
+
+                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                        </FieldSet>
+                    )}
+                />
+
+                <div className="grid grid-rows-[auto_1fr] gap-2">
+                    <Button type="submit" variant="default">
+                        Submit
+                    </Button>
+
+                    <div className="grid gap-2 sm:grid-cols-2">
+                        <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
+                            Reset
                         </Button>
 
-                        <div className="grid gap-2 sm:grid-cols-2">
-                            <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
-                                Reset
-                            </Button>
-
-                            <ButtonClipboard size="default" variant="outline" content={rawOutput} />
-                        </div>
+                        <ButtonClipboard size="default" variant="outline" content={rawOutput} />
                     </div>
-                </form>
-            </Form>
+                </div>
+            </form>
 
             {output.length > 0 && rawOutput.length > 0 ? (
                 <section

@@ -2,7 +2,16 @@
 
 import ButtonClipboard from '@/components/button-clipboard';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import {
+    Field,
+    FieldContent,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+    FieldLegend,
+    FieldSet,
+    FieldTitle,
+} from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -10,7 +19,7 @@ import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
-import { Resolver, useForm } from 'react-hook-form';
+import { Controller, Resolver, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
 
 const SlugifySchema = z.object({
@@ -145,112 +154,137 @@ export default function UrlSlugGenerator() {
 
     return (
         <Fragment>
-            <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6"
-                >
-                    <FormField
-                        control={form.control}
-                        name="text"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Text to Slugify</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        autoComplete="off"
-                                        placeholder="Enter text here"
-                                        aria-invalid={!!form.formState.errors.text}
-                                        {...field}
-                                    />
-                                </FormControl>
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="separator"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Separator</FormLabel>
-                                <FormControl>
-                                    <RadioGroup
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        className="flex flex-wrap items-center gap-4"
-                                    >
-                                        {['-', '_'].map((separator) => (
-                                            <FormItem key={separator} className="flex items-center gap-3">
-                                                <FormControl>
-                                                    <RadioGroupItem value={separator} />
-                                                </FormControl>
-                                                <FormLabel className="text-sm">
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="mx-auto mb-6 w-full max-w-lg space-y-6 border-b pb-6"
+            >
+                <Controller
+                    control={form.control}
+                    name="text"
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                            <FieldLabel htmlFor="text-to-slugify">Text to Slugify</FieldLabel>
+                            <Input
+                                id="text-to-slugify"
+                                type="text"
+                                autoComplete="off"
+                                placeholder="Enter text here"
+                                aria-invalid={fieldState.invalid}
+                                {...field}
+                            />
+
+                            {fieldState.error && <FieldError errors={[fieldState.error]} />}
+                        </Field>
+                    )}
+                />
+
+                <Controller
+                    control={form.control}
+                    name="separator"
+                    render={({ field, fieldState }) => (
+                        <FieldSet data-invalid={fieldState.invalid}>
+                            <FieldLegend>Separator</FieldLegend>
+                            <RadioGroup
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                                aria-invalid={fieldState.invalid}
+                                className="flex flex-wrap items-center gap-4"
+                            >
+                                {['-', '_'].map((separator) => (
+                                    <FieldLabel key={separator} htmlFor={`type-${separator}`}>
+                                        <Field orientation="horizontal" data-invalid={fieldState.invalid}>
+                                            <RadioGroupItem
+                                                value={separator}
+                                                id={`type-${separator}`}
+                                                aria-invalid={fieldState.invalid}
+                                            />
+                                            <FieldContent>
+                                                <FieldTitle className="text-sm">
                                                     {separator === '-' ? 'Dash (-)' : 'Underscore (_)'}
-                                                </FormLabel>
-                                            </FormItem>
-                                        ))}
-                                    </RadioGroup>
-                                </FormControl>
-                            </FormItem>
+                                                </FieldTitle>
+                                            </FieldContent>
+                                        </Field>
+                                    </FieldLabel>
+                                ))}
+                            </RadioGroup>
+
+                            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                        </FieldSet>
+                    )}
+                />
+
+                <FieldGroup className="flex flex-row flex-wrap gap-3">
+                    <Controller
+                        control={form.control}
+                        name="lowercase"
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid} orientation="horizontal" className="w-fit">
+                                <Switch
+                                    id="lowercase"
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                    aria-invalid={fieldState.invalid}
+                                />
+                                <FieldContent>
+                                    <FieldLabel htmlFor="lowercase">To Lowercase?</FieldLabel>
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                                </FieldContent>
+                            </Field>
                         )}
                     />
 
-                    <div className="flex flex-wrap gap-3">
-                        <FormField
-                            control={form.control}
-                            name="lowercase"
-                            render={({ field }) => (
-                                <FormItem className="inline-flex items-center gap-x-2">
-                                    <FormControl>
-                                        <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                    </FormControl>
-                                    <FormLabel>To Lowercase?</FormLabel>
-                                </FormItem>
-                            )}
-                        />
+                    <Controller
+                        control={form.control}
+                        name="removeSpecialChars"
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid} orientation="horizontal" className="w-fit">
+                                <Switch
+                                    id="removeSpecialChars"
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                                <FieldContent>
+                                    <FieldLabel htmlFor="removeSpecialChars">No Special Characters?</FieldLabel>
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                                </FieldContent>
+                            </Field>
+                        )}
+                    />
 
-                        <FormField
-                            control={form.control}
-                            name="removeSpecialChars"
-                            render={({ field }) => (
-                                <FormItem className="inline-flex items-center gap-x-2">
-                                    <FormControl>
-                                        <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                    </FormControl>
-                                    <FormLabel>No Special Characters?</FormLabel>
-                                </FormItem>
-                            )}
-                        />
+                    <Controller
+                        control={form.control}
+                        name="removeNumbers"
+                        render={({ field, fieldState }) => (
+                            <Field data-invalid={fieldState.invalid} orientation="horizontal" className="w-fit">
+                                <Switch
+                                    id="removeNumbers"
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                    aria-invalid={fieldState.invalid}
+                                />
+                                <FieldContent>
+                                    <FieldLabel htmlFor="removeNumbers">No Numbers?</FieldLabel>
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                                </FieldContent>
+                            </Field>
+                        )}
+                    />
+                </FieldGroup>
 
-                        <FormField
-                            control={form.control}
-                            name="removeNumbers"
-                            render={({ field }) => (
-                                <FormItem className="inline-flex items-center gap-x-2">
-                                    <FormControl>
-                                        <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                    </FormControl>
-                                    <FormLabel>No Numbers?</FormLabel>
-                                </FormItem>
-                            )}
-                        />
-                    </div>
+                <div className="grid grid-rows-[auto_1fr] gap-2">
+                    <Button type="submit" variant="default">
+                        Slugify
+                    </Button>
 
-                    <div className="grid grid-rows-[auto_1fr] gap-2">
-                        <Button type="submit" variant="default">
-                            Slugify
+                    <div className="grid gap-2 sm:grid-cols-2">
+                        <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
+                            Reset
                         </Button>
 
-                        <div className="grid gap-2 sm:grid-cols-2">
-                            <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
-                                Reset
-                            </Button>
-
-                            <ButtonClipboard size="default" variant="outline" content={result} />
-                        </div>
+                        <ButtonClipboard size="default" variant="outline" content={result} />
                     </div>
-                </form>
-            </Form>
+                </div>
+            </form>
 
             {result !== null && (
                 <div className="mx-auto grid size-full max-w-lg gap-2 rounded-md bg-primary-foreground p-4">
