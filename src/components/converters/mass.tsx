@@ -67,38 +67,24 @@ export default function Mass() {
         }));
     }
 
+    const labels = {
+        tonne: 'Tonnes (t)',
+        kilogram: 'Kilograms (kg)',
+        gram: 'Grams (g)',
+        milligram: 'Milligrams (mg)',
+        microgram: 'Micrograms (µg)',
+        ukTon: 'UK Tons (long tons)',
+        usTon: 'US Tons (short tons)',
+        pound: 'Pounds (lb)',
+        ounce: 'Ounces (oz)',
+        stone: 'Stones (st)',
+    };
+
     return (
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 last:row-span-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {Object.keys(masses).map((unit) => (
                 <div className="space-y-4" key={unit}>
-                    <Label htmlFor={unit}>
-                        {(() => {
-                            switch (unit) {
-                                case 'tonne':
-                                    return 'Tonnes (t)';
-                                case 'kilogram':
-                                    return 'Kilograms (kg)';
-                                case 'gram':
-                                    return 'Grams (g)';
-                                case 'milligram':
-                                    return 'Milligrams (mg)';
-                                case 'microgram':
-                                    return 'Micrograms (µg)';
-                                case 'ukTon':
-                                    return 'UK Tons (long tons)';
-                                case 'usTon':
-                                    return 'US Tons (short tons)';
-                                case 'pound':
-                                    return 'Pounds (lb)';
-                                case 'ounce':
-                                    return 'Ounces (oz)';
-                                case 'stone':
-                                    return 'Stones (st)';
-                                default:
-                                    return unit;
-                            }
-                        })()}
-                    </Label>
+                    <Label htmlFor={unit}>{labels[unit as keyof typeof labels]}</Label>
                     <Input
                         type="text"
                         id={unit}

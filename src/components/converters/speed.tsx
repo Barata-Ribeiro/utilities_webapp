@@ -59,30 +59,20 @@ export default function Speed() {
         }));
     }
 
+    const labels = {
+        kilometerPerHour: 'Kilometers per hour (km/h)',
+        milePerHour: 'Miles per hour (mph)',
+        meterPerSecond: 'Meters per second (m/s)',
+        footPerSecond: 'Feet per second (ft/s)',
+        knots: 'Knots (kn)',
+        mach: 'Mach (Ma)',
+    };
+
     return (
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 last:row-span-full sm:grid-cols-2 md:grid-cols-3">
             {Object.keys(speeds).map((unit) => (
                 <div className="space-y-4" key={unit}>
-                    <Label htmlFor={unit}>
-                        {(() => {
-                            switch (unit) {
-                                case 'kilometerPerHour':
-                                    return 'Kilometers per hour (km/h)';
-                                case 'milePerHour':
-                                    return 'Miles per hour (mph)';
-                                case 'meterPerSecond':
-                                    return 'Meters per second (m/s)';
-                                case 'footPerSecond':
-                                    return 'Feet per second (ft/s)';
-                                case 'knots':
-                                    return 'Knots (kn)';
-                                case 'mach':
-                                    return 'Mach (Ma)';
-                                default:
-                                    return unit;
-                            }
-                        })()}
-                    </Label>
+                    <Label htmlFor={unit}>{labels[unit as keyof typeof labels]}</Label>
                     <Input
                         type="text"
                         id={unit}

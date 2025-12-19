@@ -69,40 +69,25 @@ export default function Length() {
         }));
     }
 
+    const labels = {
+        kilometer: 'Kilometers (km)',
+        meter: 'Meters (m)',
+        centimeter: 'Centimeters (cm)',
+        millimeter: 'Millimeters (mm)',
+        micrometer: 'Micrometers (µm)',
+        nanometer: 'Nanometers (nm)',
+        mile: 'Miles (mi)',
+        yard: 'Yards (yd)',
+        inch: 'Inches (in)',
+        foot: 'Feet (ft)',
+        nauticalMile: 'Nautical Miles (nmi)',
+    };
+
     return (
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 last:row-span-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {Object.keys(length).map((unit) => (
                 <div className="space-y-4 max-md:last:col-span-full lg:last:col-span-full" key={unit}>
-                    <Label htmlFor={unit}>
-                        {(() => {
-                            switch (unit) {
-                                case 'kilometer':
-                                    return 'Kilometers (km)';
-                                case 'meter':
-                                    return 'Meters (m)';
-                                case 'centimeter':
-                                    return 'Centimeters (cm)';
-                                case 'millimeter':
-                                    return 'Millimeters (mm)';
-                                case 'micrometer':
-                                    return 'Micrometers (µm)';
-                                case 'nanometer':
-                                    return 'Nanometers (nm)';
-                                case 'mile':
-                                    return 'Miles (mi)';
-                                case 'yard':
-                                    return 'Yards (yd)';
-                                case 'inch':
-                                    return 'Inches (in)';
-                                case 'foot':
-                                    return 'Feet (ft)';
-                                case 'nauticalMile':
-                                    return 'Nautical Miles (nmi)';
-                                default:
-                                    return unit;
-                            }
-                        })()}
-                    </Label>
+                    <Label htmlFor={unit}>{labels[unit as keyof typeof labels]}</Label>
                     <Input
                         type="text"
                         id={unit}

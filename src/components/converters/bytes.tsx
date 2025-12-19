@@ -70,30 +70,20 @@ export default function Bytes() {
         }));
     }
 
+    const labels = {
+        byte: 'Bytes (B)',
+        kilobyte: 'Kilobytes (KB)',
+        megabyte: 'Megabytes (MB)',
+        gigabyte: 'Gigabytes (GB)',
+        terabyte: 'Terabytes (TB)',
+        petabyte: 'Petabytes (PB)',
+    };
+
     return (
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 last:row-span-full sm:grid-cols-2 md:grid-cols-3">
             {Object.keys(bytes).map((unit) => (
                 <div className="space-y-4" key={unit}>
-                    <Label htmlFor={unit}>
-                        {(() => {
-                            switch (unit) {
-                                case 'byte':
-                                    return 'Bytes (B)';
-                                case 'kilobyte':
-                                    return 'Kilobytes (KB)';
-                                case 'megabyte':
-                                    return 'Megabytes (MB)';
-                                case 'gigabyte':
-                                    return 'Gigabytes (GB)';
-                                case 'terabyte':
-                                    return 'Terabytes (TB)';
-                                case 'petabyte':
-                                    return 'Petabytes (PB)';
-                                default:
-                                    return unit;
-                            }
-                        })()}
-                    </Label>
+                    <Label htmlFor={unit}>{labels[unit as keyof typeof labels]}</Label>
                     <Input
                         type="text"
                         id={unit}

@@ -123,42 +123,26 @@ export default function Time() {
         }));
     }
 
+    const labels = {
+        nanosecond: 'Nanoseconds (ns)',
+        microsecond: 'Microseconds (µs)',
+        millisecond: 'Milliseconds (ms)',
+        second: 'Seconds (s)',
+        minute: 'Minutes (min)',
+        hour: 'Hours (h)',
+        day: 'Days (d)',
+        week: 'Weeks (wk)',
+        month: 'Months (mo)',
+        year: 'Years (yr)',
+        decade: 'Decades (dec)',
+        century: 'Centuries (cen)',
+    };
+
     return (
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 last:row-span-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {Object.keys(times).map((unit) => (
                 <div className="space-y-4" key={unit}>
-                    <Label htmlFor={unit}>
-                        {(() => {
-                            switch (unit) {
-                                case 'nanosecond':
-                                    return 'Nanoseconds (ns)';
-                                case 'microsecond':
-                                    return 'Microseconds (µs)';
-                                case 'millisecond':
-                                    return 'Milliseconds (ms)';
-                                case 'second':
-                                    return 'Seconds (s)';
-                                case 'minute':
-                                    return 'Minutes (min)';
-                                case 'hour':
-                                    return 'Hours (h)';
-                                case 'day':
-                                    return 'Days (d)';
-                                case 'week':
-                                    return 'Weeks (wk)';
-                                case 'month':
-                                    return 'Months (mo)';
-                                case 'year':
-                                    return 'Years (yr)';
-                                case 'decade':
-                                    return 'Decades (dec)';
-                                case 'century':
-                                    return 'Centuries (cen)';
-                                default:
-                                    return unit;
-                            }
-                        })()}
-                    </Label>
+                    <Label htmlFor={unit}>{labels[unit as keyof typeof labels]}</Label>
                     <Input
                         type="text"
                         id={unit}
