@@ -2,12 +2,15 @@
 
 import { calculateStageSize, loadImageFromFile } from '@/lib/utils';
 import Konva from 'konva';
+import type { TextConfig } from 'konva/lib/shapes/Text';
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
 
 export interface StageSize {
     width: number;
     height: number;
 }
+
+export type TextElementAttributes = Partial<Pick<TextConfig, 'fontSize' | 'fontStyle' | 'text' | 'textDecoration'>>;
 
 export const useCanvas = () => {
     const [image, setImage] = useState<HTMLImageElement | null>(null);
@@ -44,6 +47,7 @@ export const useCanvas = () => {
             stroke: 'black',
             strokeWidth: 2,
             fontFamily: 'Impact, Arial Black, sans-serif',
+            fontStyle: 'normal',
             align: 'center',
         });
 
@@ -51,10 +55,10 @@ export const useCanvas = () => {
         setSelectedElementId(newText.id());
     }, [stageSize]);
 
-    const updateTextElement = useCallback((id: string, newText: string) => {
+    const updateTextElement = useCallback((id: string, attributes: TextElementAttributes) => {
         setTextElements((prev) =>
             prev.map((text) => {
-                if (text.id() === id) text.text(newText);
+                if (text.id() === id) text.setAttrs(attributes);
                 return text;
             }),
         );
