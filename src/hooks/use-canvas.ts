@@ -15,6 +15,7 @@ export const useCanvas = () => {
     const [textElements, setTextElements] = useState<Konva.Text[]>([]);
     const [selectedElementId, setSelectedElementId] = useState<string | null>(null);
     const stageRef = useRef<Konva.Stage>(null);
+    const layerRef = useRef<Konva.Layer>(null);
 
     const handleImageUpload = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -34,6 +35,7 @@ export const useCanvas = () => {
     const addTextElement = useCallback(() => {
         const newText = new Konva.Text({
             id: `text-${Date.now()}`,
+            name: 'object',
             text: 'New Text',
             x: stageSize.width / 2,
             y: stageSize.height / 2,
@@ -97,6 +99,7 @@ export const useCanvas = () => {
         selectedElementId,
         stageSize,
         stageRef,
+        layerRef,
         setSelectedElementId,
         handleImageUpload,
         addTextElement,
