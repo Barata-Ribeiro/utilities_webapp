@@ -46,7 +46,7 @@ export const useCanvas = () => {
         });
 
         setTextElements((prev) => [...prev, newText]);
-        setSelectedElementId(newText.id);
+        setSelectedElementId(newText.id());
     }, [stageSize]);
 
     const updateTextElement = useCallback((id: string, newText: string) => {
