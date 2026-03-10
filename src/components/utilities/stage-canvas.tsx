@@ -3,6 +3,7 @@ import CanvasText from '@/components/utilities/canvas/canvas-text';
 import type { StageSize } from '@/hooks/use-canvas';
 import type Konva from 'konva';
 import { ImageOffIcon } from 'lucide-react';
+import type { RefObject } from 'react';
 import { Image as KonvaImage, Layer, Stage } from 'react-konva';
 
 interface StageCanvasProps {
@@ -10,7 +11,8 @@ interface StageCanvasProps {
     textElements: Konva.Text[];
     stageSize: StageSize;
     onSelectText: (id: string) => void;
-    stageRef: React.RefObject<Konva.Stage | null>;
+    stageRef: RefObject<Konva.Stage | null>;
+    layerRef: RefObject<Konva.Layer | null>;
 }
 
 export default function StageCanvas({
@@ -19,6 +21,7 @@ export default function StageCanvas({
     stageSize,
     onSelectText,
     stageRef,
+    layerRef,
 }: Readonly<StageCanvasProps>) {
     if (!image) {
         return (
@@ -43,11 +46,17 @@ export default function StageCanvas({
             style={{ width: stageSize.width, height: stageSize.height }}
         >
             <Stage width={stageSize.width} height={stageSize.height} ref={stageRef}>
-                <Layer>
+                <Layer ref={layerRef}>
                     <KonvaImage image={image} width={stageSize.width} height={stageSize.height} />
 
                     {textElements.map((el) => (
-                        <CanvasText key={el.id()} props={el} onSelect={() => onSelectText(el.id())} />
+                        <CanvasText
+                            key={el.id()}
+                            props={el}
+                            onSelect={() => onSelectText(el.id())}
+                            stageRef={stageRef}
+                            layerRef={layerRef}
+                        />
                     ))}
                 </Layer>
             </Stage>
