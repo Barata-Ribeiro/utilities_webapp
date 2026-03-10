@@ -1,18 +1,20 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Field } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import type { TextElementAttributes } from '@/hooks/use-canvas';
+import { useUnmount } from '@/hooks/use-unmount';
 import type Konva from 'konva';
 import { debounce } from 'lodash';
-import { TypeIcon } from 'lucide-react';
-import { ChangeEvent, useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import { ALargeSmallIcon, BoldIcon, ItalicIcon, TypeIcon, UnderlineIcon } from 'lucide-react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
 interface CanvasTextControlsProps {
     hasImage: boolean;
     onAddText: () => void;
-    onUpdateText: (id: string, text: string) => void;
+    onUpdateText: (id: string, attributes: TextElementAttributes) => void;
     onDeleteText: (id: string) => void;
     selectedId: string | null;
     textElements: Konva.Text[];
@@ -28,28 +30,80 @@ export default function CanvasTextControls({
 }: Readonly<CanvasTextControlsProps>) {
     const selectedText = textElements.find((el) => el.id() === selectedId);
     const inputRef = useRef<HTMLInputElement>(null);
+    const selectedFontStyle = selectedText?.fontStyle() ?? 'normal';
+    const selectedTextDecoration = selectedText?.textDecoration() ?? '';
+    const selectedStyleValues = [
+        ...(selectedFontStyle.includes('bold') ? ['bold'] : []),
+        ...(selectedFontStyle.includes('italic') ? ['italic'] : []),
+        ...(selectedTextDecoration.includes('underline') ? ['underline'] : []),
+    ];
 
-    const deboudedUpdate = useMemo(
+    const debouncedTextUpdate = useMemo(
         () =>
             debounce((newValue: string) => {
                 if (!selectedId) return;
 
                 if (newValue.trim() === '') onDeleteText(selectedId);
-                else onUpdateText(selectedId, newValue);
+                else onUpdateText(selectedId, { text: newValue });
             }, 300),
         [selectedId, onUpdateText, onDeleteText],
     );
 
     const handleChange = useCallback(
-        (event: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-            deboudedUpdate(event.target.value);
+        (event: ChangeEvent<HTMLInputElement>) => {
+            debouncedTextUpdate(event.target.value);
         },
-        [deboudedUpdate],
+        [debouncedTextUpdate],
     );
 
-    useLayoutEffect(() => {
-        if (inputRef.current) inputRef.current.value = selectedText?.text() ?? '';
+    const debouncedFontSizeUpdate = useMemo(
+        () =>
+            debounce((size: number) => {
+                if (!selectedId) return;
+
+                const clamped = Math.max(16, Math.min(200, size));
+                onUpdateText(selectedId, { fontSize: clamped });
+            }, 300),
+        [selectedId, onUpdateText],
+    );
+
+    const updateFontSize = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            e.stopPropagation();
+            const value = Number.parseInt(e.target.value, 10);
+            if (Number.isNaN(value)) return;
+            debouncedFontSizeUpdate(value);
+        },
+        [debouncedFontSizeUpdate],
+    );
+
+    const updateTextStyle = useCallback(
+        (styles: string[]) => {
+            if (!selectedId) return;
+
+            const hasBold = styles.includes('bold');
+            const hasItalic = styles.includes('italic');
+            const hasUnderline = styles.includes('underline');
+
+            let fontStyle: TextElementAttributes['fontStyle'] = 'normal';
+            if (hasBold && hasItalic) fontStyle = 'bold italic';
+            else if (hasBold) fontStyle = 'bold';
+            else if (hasItalic) fontStyle = 'italic';
+
+            onUpdateText(selectedId, {
+                fontStyle,
+                textDecoration: hasUnderline ? 'underline' : '',
+            });
+        },
+        [selectedId, onUpdateText],
+    );
+
+    useEffect(() => {
+        if (selectedText && inputRef.current) inputRef.current.value = selectedText.text();
     }, [selectedText]);
+
+    useUnmount(() => debouncedTextUpdate.cancel());
+    useUnmount(() => debouncedFontSizeUpdate.cancel());
 
     return (
         <Fragment>
@@ -79,17 +133,82 @@ export default function CanvasTextControls({
                         </CardDescription>
                     </CardHeader>
 
-                    <CardContent>
-                        <Field>
-                            <Label htmlFor="text-content">Content</Label>
-                            <Input
+                    <CardContent className="flex flex-col gap-4">
+                        {/* CONTENT */}
+                        <InputGroup>
+                            <InputGroupAddon align="inline-start">
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <InputGroupButton size="icon-xs" variant="ghost">
+                                            <TypeIcon aria-hidden />
+                                        </InputGroupButton>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Text content</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </InputGroupAddon>
+                            <InputGroupInput
+                                key={selectedId}
                                 id="text-content"
                                 ref={inputRef}
                                 defaultValue={selectedText?.text()}
                                 onChange={handleChange}
                                 placeholder="Enter text content"
                             />
-                        </Field>
+                            <InputGroupAddon align="inline-end">
+                                <InputGroupButton
+                                    variant="destructive"
+                                    onClick={() => onDeleteText(selectedId)}
+                                    aria-label="Delete text element"
+                                >
+                                    Delete
+                                </InputGroupButton>
+                            </InputGroupAddon>
+                        </InputGroup>
+
+                        <div className="flex items-center gap-2">
+                            <InputGroup>
+                                <InputGroupAddon>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <InputGroupButton size="icon-xs" variant="ghost">
+                                                <ALargeSmallIcon aria-hidden />
+                                            </InputGroupButton>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>Font size</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </InputGroupAddon>
+                                <InputGroupInput
+                                    key={`font-size-${selectedId}`}
+                                    type="number"
+                                    min={16}
+                                    max={200}
+                                    defaultValue={selectedText?.fontSize() ?? 16}
+                                    onChange={updateFontSize}
+                                />
+                            </InputGroup>
+
+                            <ToggleGroup
+                                variant="outline"
+                                type="multiple"
+                                className="ml-auto"
+                                value={selectedStyleValues}
+                                onValueChange={updateTextStyle}
+                            >
+                                <ToggleGroupItem value="bold" aria-label="Toggle bold">
+                                    <BoldIcon aria-hidden />
+                                </ToggleGroupItem>
+                                <ToggleGroupItem value="italic" aria-label="Toggle italic">
+                                    <ItalicIcon aria-hidden />
+                                </ToggleGroupItem>
+                                <ToggleGroupItem value="underline" aria-label="Toggle underline">
+                                    <UnderlineIcon aria-hidden />
+                                </ToggleGroupItem>
+                            </ToggleGroup>
+                        </div>
                     </CardContent>
                 </Card>
             )}

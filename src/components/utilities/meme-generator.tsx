@@ -14,6 +14,7 @@ export default function MemeGenerator() {
         selectedElementId,
         stageSize,
         stageRef,
+        layerRef,
         setSelectedElementId,
         handleImageUpload,
         addTextElement,
@@ -61,6 +62,7 @@ export default function MemeGenerator() {
                             stageSize={stageSize}
                             onSelectText={setSelectedElementId}
                             stageRef={stageRef}
+                            layerRef={layerRef}
                         />
                     </CardContent>
                 </Card>
