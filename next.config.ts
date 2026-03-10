@@ -29,6 +29,13 @@ const nextConfig: NextConfig = {
         },
         resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json'],
     },
+    webpack: (config) => {
+        config.resolve.fallback = {
+            ...config.resolve.fallback,
+            canvas: false,
+        };
+        return config;
+    },
     allowedDevOrigins,
     headers: async () => {
         return [
