@@ -2,6 +2,7 @@ export const URLS = {
     utilities: [
         { title: 'Char. Counter', url: '/utilities/character-counter' },
         { title: 'Lorem Ipsum Generator', url: '/utilities/lorem-ipsum' },
+        { title: 'Meme Generator', url: '/utilities/meme-generator' },
         { title: 'Pass. Generator', url: '/utilities/password-generator' },
         { title: 'QR Code Generator', url: '/utilities/qrcode-generator' },
         { title: 'Roman Converter', url: '/utilities/roman-converter' },

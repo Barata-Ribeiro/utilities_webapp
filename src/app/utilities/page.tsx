@@ -46,6 +46,11 @@ const utilities = [
         href: '/utilities/text-to-speech',
         description: 'Convert written text into natural-sounding speech with customizable voices and languages.',
     },
+    {
+        title: 'Meme Generator',
+        href: '/utilities/meme-generator',
+        description: 'Create your own memes with customizable text, fonts, and styles.',
+    },
 ];
 
 export default function Page() {
