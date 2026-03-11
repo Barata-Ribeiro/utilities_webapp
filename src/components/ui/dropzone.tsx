@@ -3,7 +3,8 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { UploadIcon } from 'lucide-react';
-import { createContext, ReactNode, useContext, useMemo } from 'react';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import type { DropEvent, DropzoneOptions, FileRejection } from 'react-dropzone';
 import { useDropzone } from 'react-dropzone';
 
@@ -68,12 +69,14 @@ export const Dropzone = ({
         },
         ...props,
     });
-    const value = useMemo(
+
+    const values = useMemo(
         () => ({ src, accept, maxSize, minSize, maxFiles }),
         [src, accept, maxSize, minSize, maxFiles],
     );
+
     return (
-        <DropzoneContext.Provider key={JSON.stringify(src)} value={value}>
+        <DropzoneContext.Provider key={JSON.stringify(src)} value={values}>
             <Button
                 className={cn(
                     'relative h-auto w-full flex-col overflow-hidden p-8',

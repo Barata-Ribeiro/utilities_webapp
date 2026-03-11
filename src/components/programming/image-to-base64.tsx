@@ -1,9 +1,9 @@
 'use client';
 
 import ButtonClipboard from '@/components/button-clipboard';
+import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/ui/dropzone';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/ui/shadcn-io/dropzone';
 import Image from 'next/image';
 import { Fragment, useState } from 'react';
 
