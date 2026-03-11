@@ -124,10 +124,10 @@ export function NavMain() {
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>
 
-                            <DropdownMenuContent side="right" align="start">
+                            <DropdownMenuContent side="right" align="start" className="w-full">
                                 <DropdownMenuLabel>{item.title}</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuGroup className="space-y-1">
+                                <DropdownMenuGroup className="grid space-y-1">
                                     {item.items?.map((subItem) => {
                                         const isActive = pathname.endsWith(subItem.url);
 
@@ -135,14 +135,10 @@ export function NavMain() {
                                             <DropdownMenuItem
                                                 asChild
                                                 {...(isActive && { 'data-current': '' })}
-                                                className="cursor-pointer data-current:bg-sidebar-accent data-current:px-2 data-current:font-medium data-current:text-sidebar-accent-foreground"
+                                                className="inline-flex cursor-pointer items-center gap-x-2 data-current:bg-sidebar-accent data-current:px-2 data-current:font-medium data-current:text-sidebar-accent-foreground"
                                                 key={subItem.title}
                                             >
-                                                <Link
-                                                    href={subItem.url}
-                                                    aria-current={isActive ? 'page' : undefined}
-                                                    className="inline-flex w-full items-center gap-x-2"
-                                                >
+                                                <Link href={subItem.url} aria-current={isActive ? 'page' : undefined}>
                                                     <span>{subItem.title}</span>
                                                 </Link>
                                             </DropdownMenuItem>
