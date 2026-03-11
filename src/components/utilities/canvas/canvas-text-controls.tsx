@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import ColorPicker from '@/components/ui/color-picker';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useUnmount } from '@/hooks/use-unmount';
@@ -20,6 +21,17 @@ interface CanvasTextControlsProps {
     selectedId: string | null;
     textElements: Konva.Text[];
 }
+
+const FONT_FAMILIES = [
+    'Arial',
+    'Helvetica',
+    'Times New Roman',
+    'Courier New',
+    'Georgia',
+    'Verdana',
+    'Trebuchet MS',
+    'Impact',
+];
 
 export default function CanvasTextControls({
     hasImage,
@@ -42,6 +54,7 @@ export default function CanvasTextControls({
     const selectedTextColor = selectedText?.fill() as string | undefined;
     const selectedTextStrokeWidth = selectedText?.strokeWidth();
     const selectedTextStrokeColor = selectedText?.stroke() as string | undefined;
+    const selectedTextFontFamily = selectedText?.fontFamily();
 
     const debouncedTextUpdate = useMemo(
         () =>
@@ -160,38 +173,62 @@ export default function CanvasTextControls({
                     </CardHeader>
 
                     <CardContent className="flex flex-col gap-4">
-                        {/* CONTENT */}
-                        <InputGroup>
-                            <InputGroupAddon align="inline-start">
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <InputGroupButton size="icon-xs" variant="ghost">
-                                            <TypeIcon aria-hidden />
-                                        </InputGroupButton>
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p>Text content</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                            </InputGroupAddon>
-                            <InputGroupInput
-                                key={selectedId}
-                                id="text-content"
-                                ref={inputRef}
-                                defaultValue={selectedText?.text()}
-                                onChange={handleChange}
-                                placeholder="Enter text content"
-                            />
-                            <InputGroupAddon align="inline-end">
-                                <InputGroupButton
-                                    variant="destructive"
-                                    onClick={() => onDeleteText(selectedId)}
-                                    aria-label="Delete text element"
+                        <div className="flex flex-wrap items-center gap-2">
+                            {/* CONTENT */}
+                            <InputGroup className="w-auto flex-1">
+                                <InputGroupAddon align="inline-start">
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <InputGroupButton size="icon-xs" variant="ghost">
+                                                <TypeIcon aria-hidden />
+                                            </InputGroupButton>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>Text content</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </InputGroupAddon>
+                                <InputGroupInput
+                                    key={selectedId}
+                                    id="text-content"
+                                    ref={inputRef}
+                                    defaultValue={selectedText?.text()}
+                                    onChange={handleChange}
+                                    placeholder="Enter text content"
+                                />
+                                <InputGroupAddon align="inline-end">
+                                    <InputGroupButton
+                                        variant="destructive"
+                                        onClick={() => onDeleteText(selectedId)}
+                                        aria-label="Delete text element"
+                                    >
+                                        Delete
+                                    </InputGroupButton>
+                                </InputGroupAddon>
+                            </InputGroup>
+
+                            {/* FONT FAMILY */}
+                            <Select
+                                defaultValue={selectedTextFontFamily}
+                                onValueChange={(value) => onUpdateText(selectedId, { fontFamily: value })}
+                            >
+                                <SelectTrigger
+                                    style={{ fontFamily: selectedTextFontFamily }}
+                                    className="w-auto"
+                                    aria-label="Select font family"
+                                    title="Font family"
                                 >
-                                    Delete
-                                </InputGroupButton>
-                            </InputGroupAddon>
-                        </InputGroup>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent position="item-aligned">
+                                    {FONT_FAMILIES.map((font) => (
+                                        <SelectItem key={font} value={font} style={{ fontFamily: font }}>
+                                            {font}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
 
                         <div className="flex flex-wrap items-center gap-2">
                             {/* FONT SIZE */}
