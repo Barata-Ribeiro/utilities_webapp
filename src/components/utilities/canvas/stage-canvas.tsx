@@ -1,6 +1,8 @@
 import { Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from '@/components/ui/empty';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import CanvasText from '@/components/utilities/canvas/canvas-text';
 import type { StageSize } from '@/hooks/use-canvas';
+import { cn } from '@/lib/utils';
 import type Konva from 'konva';
 import { ImageOffIcon } from 'lucide-react';
 import type { RefObject } from 'react';
@@ -41,10 +43,7 @@ export default function StageCanvas({
     }
 
     return (
-        <div
-            className="overflow-hidden rounded-md border border-dashed"
-            style={{ width: stageSize.width, height: stageSize.height }}
-        >
+        <ScrollArea className={cn('overflow-auto rounded-md border border-dashed')}>
             <Stage width={stageSize.width} height={stageSize.height} ref={stageRef}>
                 <Layer ref={layerRef}>
                     <KonvaImage image={image} width={stageSize.width} height={stageSize.height} />
@@ -60,6 +59,7 @@ export default function StageCanvas({
                     ))}
                 </Layer>
             </Stage>
-        </div>
+            <ScrollBar orientation="horizontal" />
+        </ScrollArea>
     );
 }
