@@ -44,7 +44,7 @@ export const useCanvas = () => {
             fill: 'white',
             stroke: 'black',
             strokeWidth: 2,
-            fontFamily: 'Impact, Arial Black, sans-serif',
+            fontFamily: 'Impact',
             fontStyle: 'normal',
             align: 'center',
         });
