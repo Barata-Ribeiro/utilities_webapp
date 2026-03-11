@@ -1,16 +1,14 @@
 'use client';
 
 import { calculateStageSize, loadImageFromFile } from '@/lib/utils';
-import Konva from 'konva';
-import type { TextConfig } from 'konva/lib/shapes/Text';
+import type Konva from 'konva';
+import { Text, TextConfig } from 'konva/lib/shapes/Text';
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
 
 export interface StageSize {
     width: number;
     height: number;
 }
-
-export type TextElementAttributes = Partial<Pick<TextConfig, 'fontSize' | 'fontStyle' | 'text' | 'textDecoration'>>;
 
 export const useCanvas = () => {
     const [image, setImage] = useState<HTMLImageElement | null>(null);
@@ -36,7 +34,7 @@ export const useCanvas = () => {
     }, []);
 
     const addTextElement = useCallback(() => {
-        const newText = new Konva.Text({
+        const newText = new Text({
             id: `text-${Date.now()}`,
             name: 'object',
             text: 'New Text',
@@ -55,7 +53,7 @@ export const useCanvas = () => {
         setSelectedElementId(newText.id());
     }, [stageSize]);
 
-    const updateTextElement = useCallback((id: string, attributes: TextElementAttributes) => {
+    const updateTextElement = useCallback((id: string, attributes: TextConfig) => {
         setTextElements((prev) =>
             prev.map((text) => {
                 if (text.id() === id) text.setAttrs(attributes);
