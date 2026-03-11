@@ -8,7 +8,7 @@ import { useUnmount } from '@/hooks/use-unmount';
 import type Konva from 'konva';
 import type { TextConfig } from 'konva/lib/shapes/Text';
 import { debounce } from 'lodash';
-import { ALargeSmallIcon, BoldIcon, ItalicIcon, TypeIcon, UnderlineIcon } from 'lucide-react';
+import { ALargeSmallIcon, BoldIcon, ItalicIcon, TypeIcon, TypeOutlineIcon, UnderlineIcon } from 'lucide-react';
 import { ChangeEvent, useCallback, useEffect, useMemo, useRef } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
@@ -40,6 +40,8 @@ export default function CanvasTextControls({
         ...(selectedTextDecoration.includes('underline') ? ['underline'] : []),
     ];
     const selectedTextColor = selectedText?.fill() as string | undefined;
+    const selectedTextStrokeWidth = selectedText?.strokeWidth();
+    const selectedTextStrokeColor = selectedText?.stroke() as string | undefined;
 
     const debouncedTextUpdate = useMemo(
         () =>
@@ -99,6 +101,27 @@ export default function CanvasTextControls({
             });
         },
         [selectedId, onUpdateText],
+    );
+
+    const debouncedStrokeWidthUpdate = useMemo(
+        () =>
+            debounce((width: number) => {
+                if (!selectedId) return;
+
+                const clamped = Math.max(0, Math.min(20, width));
+                onUpdateText(selectedId, { strokeWidth: clamped });
+            }, 300),
+        [selectedId, onUpdateText],
+    );
+
+    const updateStrokeSize = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            e.stopPropagation();
+            const value = Number.parseInt(e.target.value, 10);
+            if (Number.isNaN(value)) return;
+            debouncedStrokeWidthUpdate(value);
+        },
+        [debouncedStrokeWidthUpdate],
     );
 
     useEffect(() => {
@@ -213,6 +236,7 @@ export default function CanvasTextControls({
                                 </ToggleGroupItem>
                             </ToggleGroup>
 
+                            {/* TEXT COLOR */}
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <ColorPicker
@@ -222,6 +246,44 @@ export default function CanvasTextControls({
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Text color</p>
+                                </TooltipContent>
+                            </Tooltip>
+
+                            {/* STROKE WIDTH */}
+                            <InputGroup className="w-auto">
+                                <InputGroupAddon>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <InputGroupButton size="icon-xs" variant="ghost">
+                                                <TypeOutlineIcon aria-hidden />
+                                            </InputGroupButton>
+                                        </TooltipTrigger>
+                                        <TooltipContent>
+                                            <p>Stroke width</p>
+                                        </TooltipContent>
+                                    </Tooltip>
+                                </InputGroupAddon>
+                                <InputGroupInput
+                                    key={`stroke-width-${selectedId}`}
+                                    type="number"
+                                    min={0}
+                                    max={10}
+                                    step={1}
+                                    defaultValue={selectedTextStrokeWidth ?? 0}
+                                    onChange={updateStrokeSize}
+                                />
+                            </InputGroup>
+
+                            {/* STROKE COLOR */}
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <ColorPicker
+                                        value={selectedTextStrokeColor ?? '#000000'}
+                                        onChange={(color) => onUpdateText(selectedId, { stroke: color })}
+                                    />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Stroke color</p>
                                 </TooltipContent>
                             </Tooltip>
                         </div>
