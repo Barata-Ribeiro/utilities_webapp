@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import ColorPicker from '@/components/ui/color-picker';
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/components/ui/input-group';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import type { TextElementAttributes } from '@/hooks/use-canvas';
 import { useUnmount } from '@/hooks/use-unmount';
 import type Konva from 'konva';
+import type { TextConfig } from 'konva/lib/shapes/Text';
 import { debounce } from 'lodash';
 import { ALargeSmallIcon, BoldIcon, ItalicIcon, TypeIcon, UnderlineIcon } from 'lucide-react';
 import { ChangeEvent, useCallback, useEffect, useMemo, useRef } from 'react';
@@ -14,7 +15,7 @@ import { Fragment } from 'react/jsx-runtime';
 interface CanvasTextControlsProps {
     hasImage: boolean;
     onAddText: () => void;
-    onUpdateText: (id: string, attributes: TextElementAttributes) => void;
+    onUpdateText: (id: string, attributes: TextConfig) => void;
     onDeleteText: (id: string) => void;
     selectedId: string | null;
     textElements: Konva.Text[];
@@ -28,8 +29,9 @@ export default function CanvasTextControls({
     selectedId,
     textElements,
 }: Readonly<CanvasTextControlsProps>) {
-    const selectedText = textElements.find((el) => el.id() === selectedId);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    const selectedText = textElements.find((el) => el.id() === selectedId);
     const selectedFontStyle = selectedText?.fontStyle() ?? 'normal';
     const selectedTextDecoration = selectedText?.textDecoration() ?? '';
     const selectedStyleValues = [
@@ -37,6 +39,7 @@ export default function CanvasTextControls({
         ...(selectedFontStyle.includes('italic') ? ['italic'] : []),
         ...(selectedTextDecoration.includes('underline') ? ['underline'] : []),
     ];
+    const selectedTextColor = selectedText?.fill() as string | undefined;
 
     const debouncedTextUpdate = useMemo(
         () =>
@@ -85,7 +88,7 @@ export default function CanvasTextControls({
             const hasItalic = styles.includes('italic');
             const hasUnderline = styles.includes('underline');
 
-            let fontStyle: TextElementAttributes['fontStyle'] = 'normal';
+            let fontStyle: TextConfig['fontStyle'] = 'normal';
             if (hasBold && hasItalic) fontStyle = 'bold italic';
             else if (hasBold) fontStyle = 'bold';
             else if (hasItalic) fontStyle = 'italic';
@@ -167,8 +170,9 @@ export default function CanvasTextControls({
                             </InputGroupAddon>
                         </InputGroup>
 
-                        <div className="flex items-center gap-2">
-                            <InputGroup>
+                        <div className="flex flex-wrap items-center gap-2">
+                            {/* FONT SIZE */}
+                            <InputGroup className="w-auto">
                                 <InputGroupAddon>
                                     <Tooltip>
                                         <TooltipTrigger asChild>
@@ -191,23 +195,35 @@ export default function CanvasTextControls({
                                 />
                             </InputGroup>
 
+                            {/* TEXT STYLE */}
                             <ToggleGroup
                                 variant="outline"
                                 type="multiple"
-                                className="ml-auto"
                                 value={selectedStyleValues}
                                 onValueChange={updateTextStyle}
                             >
-                                <ToggleGroupItem value="bold" aria-label="Toggle bold">
+                                <ToggleGroupItem value="bold" aria-label="Toggle bold" title="Bold">
                                     <BoldIcon aria-hidden />
                                 </ToggleGroupItem>
-                                <ToggleGroupItem value="italic" aria-label="Toggle italic">
+                                <ToggleGroupItem value="italic" aria-label="Toggle italic" title="Italic">
                                     <ItalicIcon aria-hidden />
                                 </ToggleGroupItem>
-                                <ToggleGroupItem value="underline" aria-label="Toggle underline">
+                                <ToggleGroupItem value="underline" aria-label="Toggle underline" title="Underline">
                                     <UnderlineIcon aria-hidden />
                                 </ToggleGroupItem>
                             </ToggleGroup>
+
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <ColorPicker
+                                        value={selectedTextColor ?? '#ffffff'}
+                                        onChange={(color) => onUpdateText(selectedId, { fill: color })}
+                                    />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Text color</p>
+                                </TooltipContent>
+                            </Tooltip>
                         </div>
                     </CardContent>
                 </Card>

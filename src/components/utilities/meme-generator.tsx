@@ -1,11 +1,11 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import CanvasExport from '@/components/utilities/canvas/canvas-export';
+import CanvasTextControls from '@/components/utilities/canvas/canvas-text-controls';
 import CanvasUpload from '@/components/utilities/canvas/canvas-upload';
-import StageCanvas from '@/components/utilities/stage-canvas';
+import StageCanvas from '@/components/utilities/canvas/stage-canvas';
 import { useCanvas } from '@/hooks/use-canvas';
-import CanvasExport from './canvas/canvas-export';
-import CanvasTextControls from './canvas/canvas-text-controlts';
 
 export default function MemeGenerator() {
     const {
