@@ -28,7 +28,7 @@ Demo: https://utilities-webapp.vercel.app/
 
 - **Converters**: bytes, length, mass, speed, temperature, time
 - **Calculators**: General, BMI, Dates, GCF/LCM, Percentage, Rule of Three
-- **Utilities**: Character Counter, Lorem Ipsum, Password Generator(random, memorable, pin), QR Code Generator,
+- **Utilities**: Character Counter, Lorem Ipsum, Meme Generator, Password Generator(random, memorable, pin), QR Code Generator,
   Roman Converter, Text to Speech, URL Slug Generator
 - **Programming Utilities**: Image to Base64
 - Light/dark theme switching (`next-themes`)
