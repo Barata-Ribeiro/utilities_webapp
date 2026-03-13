@@ -47,7 +47,7 @@ export default function MemeGenerator() {
 
             {/* Canvas Area */}
             <div className="lg:col-span-2">
-                <Card>
+                <Card className="h-full">
                     <CardHeader>
                         <CardTitle>Interactive Stage</CardTitle>
                         <CardDescription>
