@@ -9,7 +9,15 @@ import { useUnmount } from '@/hooks/use-unmount';
 import type Konva from 'konva';
 import type { TextConfig } from 'konva/lib/shapes/Text';
 import { debounce } from 'lodash';
-import { ALargeSmallIcon, BoldIcon, ItalicIcon, TypeIcon, TypeOutlineIcon, UnderlineIcon } from 'lucide-react';
+import {
+    ALargeSmallIcon,
+    BoldIcon,
+    ItalicIcon,
+    StrikethroughIcon,
+    TypeIcon,
+    TypeOutlineIcon,
+    UnderlineIcon,
+} from 'lucide-react';
 import { ChangeEvent, useCallback, useEffect, useMemo, useRef } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
@@ -50,6 +58,7 @@ export default function CanvasTextControls({
         ...(selectedFontStyle.includes('bold') ? ['bold'] : []),
         ...(selectedFontStyle.includes('italic') ? ['italic'] : []),
         ...(selectedTextDecoration.includes('underline') ? ['underline'] : []),
+        ...(selectedTextDecoration.includes('line-through') ? ['line-through'] : []),
     ];
     const selectedTextColor = selectedText?.fill() as string | undefined;
     const selectedTextStrokeWidth = selectedText?.strokeWidth();
@@ -102,6 +111,7 @@ export default function CanvasTextControls({
             const hasBold = styles.includes('bold');
             const hasItalic = styles.includes('italic');
             const hasUnderline = styles.includes('underline');
+            const hasStrikethrough = styles.includes('line-through');
 
             let fontStyle: TextConfig['fontStyle'] = 'normal';
             if (hasBold && hasItalic) fontStyle = 'bold italic';
@@ -110,7 +120,7 @@ export default function CanvasTextControls({
 
             onUpdateText(selectedId, {
                 fontStyle,
-                textDecoration: hasUnderline ? 'underline' : '',
+                textDecoration: `${hasUnderline ? 'underline ' : ''}${hasStrikethrough ? 'line-through' : ''}`.trim(),
             });
         },
         [selectedId, onUpdateText],
@@ -232,7 +242,7 @@ export default function CanvasTextControls({
 
                         <div className="flex flex-wrap items-center gap-2">
                             {/* FONT SIZE */}
-                            <InputGroup className="w-auto">
+                            <InputGroup className="w-full max-w-22">
                                 <InputGroupAddon>
                                     <Tooltip>
                                         <TooltipTrigger asChild>
@@ -250,6 +260,8 @@ export default function CanvasTextControls({
                                     type="number"
                                     min={16}
                                     max={200}
+                                    inputMode="numeric"
+                                    pattern="\d*"
                                     defaultValue={selectedText?.fontSize() ?? 16}
                                     onChange={updateFontSize}
                                 />
@@ -271,6 +283,13 @@ export default function CanvasTextControls({
                                 <ToggleGroupItem value="underline" aria-label="Toggle underline" title="Underline">
                                     <UnderlineIcon aria-hidden />
                                 </ToggleGroupItem>
+                                <ToggleGroupItem
+                                    value="line-through"
+                                    aria-label="Toggle strikethrough"
+                                    title="Strikethrough"
+                                >
+                                    <StrikethroughIcon aria-hidden />
+                                </ToggleGroupItem>
                             </ToggleGroup>
 
                             {/* TEXT COLOR */}
@@ -287,7 +306,7 @@ export default function CanvasTextControls({
                             </Tooltip>
 
                             {/* STROKE WIDTH */}
-                            <InputGroup className="w-auto">
+                            <InputGroup className="w-full max-w-20">
                                 <InputGroupAddon>
                                     <Tooltip>
                                         <TooltipTrigger asChild>
@@ -306,6 +325,8 @@ export default function CanvasTextControls({
                                     min={0}
                                     max={10}
                                     step={1}
+                                    inputMode="numeric"
+                                    pattern="\d*"
                                     defaultValue={selectedTextStrokeWidth ?? 0}
                                     onChange={updateStrokeSize}
                                 />
