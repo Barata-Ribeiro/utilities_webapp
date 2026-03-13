@@ -260,6 +260,7 @@ export default function CanvasText({ props, onSelect }: Readonly<CanvasTextProps
             onClick={onSelect}
             onDragMove={handleOnDragMove}
             onDragEnd={handleOnDragEnd}
+            fillAfterStrokeEnabled={true}
         />
     );
 }
