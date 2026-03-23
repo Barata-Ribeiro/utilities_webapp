@@ -23,7 +23,10 @@ export default function ChuckNorrisJokesClient() {
     return (
         <Card aria-busy={isPending}>
             <CardHeader>
-                <CardTitle className="font-serif text-lg">Chuck Norris Jokes</CardTitle>
+                <CardTitle className="font-serif text-lg">
+                    Chuck Norris{' '}
+                    <span className="align-super text-[0.62rem] leading-none text-muted-foreground">(rip)</span> Jokes
+                </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
                 {isPending || jokes === null ? (
