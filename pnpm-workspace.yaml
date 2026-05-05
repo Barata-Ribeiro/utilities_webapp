@@ -1,6 +1,7 @@
 onlyBuiltDependencies:
     - '@swc/core'
     - '@tailwindcss/oxide'
-    - 'msw'
+    - canvas
+    - msw
     - sharp
     - unrs-resolver
