@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
 import babel from '@rolldown/plugin-babel';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
+import { playwright } from '@vitest/browser-playwright';
 
 export default defineConfig({
     resolve: { tsconfigPaths: true },
@@ -28,6 +29,10 @@ export default defineConfig({
         environment: 'jsdom',
         include: ['tests/**/*.{test,spec}.{js,ts,jsx,tsx}'],
         restoreMocks: true,
+        browser: {
+            provider: playwright(),
+            instances: [{ browser: 'chromium' }, { browser: 'firefox' }],
+        },
     },
     assetsInclude: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp'],
 });
