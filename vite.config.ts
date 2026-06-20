@@ -1,6 +1,6 @@
 import { reactRouter } from '@react-router/dev/vite';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import babel from '@rolldown/plugin-babel';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 
@@ -22,6 +22,12 @@ export default defineConfig({
         cssCodeSplit: true,
         sourcemap: false,
         assetsInlineLimit: 4096,
+    },
+    test: {
+        globals: true,
+        environment: 'jsdom',
+        include: ['tests/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+        restoreMocks: true,
     },
     assetsInclude: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp'],
 });
