@@ -30,6 +30,8 @@ export default defineConfig({
         include: ['tests/**/*.{test,spec}.{js,ts,jsx,tsx}'],
         restoreMocks: true,
         browser: {
+            enabled: true,
+            headless: true,
             provider: playwright(),
             instances: [{ browser: 'chromium' }, { browser: 'firefox' }],
         },
