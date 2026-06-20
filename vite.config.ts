@@ -5,36 +5,43 @@ import babel from '@rolldown/plugin-babel';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 
-export default defineConfig({
-    resolve: { tsconfigPaths: true },
-    plugins: [tailwindcss(), react(), reactRouter(), babel({ presets: [reactCompilerPreset()] })],
-    build: {
-        target: 'esnext',
-        minify: 'oxc',
-        chunkSizeWarningLimit: 1000,
-        rolldownOptions: {
-            output: {
-                entryFileNames: '[hash].js',
-                chunkFileNames: `[hash].js`,
-                assetFileNames: `[hash].[ext]`,
-                minify: true,
+export default defineConfig(({ mode }) => {
+    const isTest = mode === 'test';
+
+    return {
+        resolve: { tsconfigPaths: true },
+        plugins: [tailwindcss(), react(), !isTest && reactRouter(), babel({ presets: [reactCompilerPreset()] })].filter(
+            Boolean,
+        ),
+        build: {
+            target: 'esnext',
+            minify: 'oxc',
+            chunkSizeWarningLimit: 1000,
+            rolldownOptions: {
+                output: {
+                    entryFileNames: '[hash].js',
+                    chunkFileNames: `[hash].js`,
+                    assetFileNames: `[hash].[ext]`,
+                    minify: true,
+                },
+            },
+            cssCodeSplit: true,
+            sourcemap: false,
+            assetsInlineLimit: 4096,
+        },
+        test: {
+            setupFiles: ['./tests/setup.ts'],
+            globals: true,
+            environment: 'jsdom',
+            include: ['tests/**/*.{test,spec}.{js,ts,jsx,tsx}'],
+            restoreMocks: true,
+            browser: {
+                enabled: true,
+                headless: true,
+                provider: playwright(),
+                instances: [{ browser: 'chromium' }, { browser: 'firefox' }],
             },
         },
-        cssCodeSplit: true,
-        sourcemap: false,
-        assetsInlineLimit: 4096,
-    },
-    test: {
-        globals: true,
-        environment: 'jsdom',
-        include: ['tests/**/*.{test,spec}.{js,ts,jsx,tsx}'],
-        restoreMocks: true,
-        browser: {
-            enabled: true,
-            headless: true,
-            provider: playwright(),
-            instances: [{ browser: 'chromium' }, { browser: 'firefox' }],
-        },
-    },
-    assetsInclude: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp'],
+        assetsInclude: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp'],
+    };
 });
