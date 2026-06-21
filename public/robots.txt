@@ -1,0 +1,29 @@
+User-Agent: Amazonbot
+Disallow: /
+
+User-Agent: Applebot-Extended
+Disallow: /
+
+User-Agent: Bytespider
+Disallow: /
+
+User-Agent: CCBot
+Disallow: /
+
+User-Agent: ClaudeBot
+Disallow: /
+
+User-Agent: Google-Extended
+Disallow: /
+
+User-Agent: GPTBot
+Disallow: /
+
+User-Agent: meta-externalagent
+Disallow: /
+
+User-Agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://utilities-webapp.vercel.app/sitemap.xml
