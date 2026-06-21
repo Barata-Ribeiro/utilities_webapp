@@ -16,6 +16,7 @@ on:
 
 jobs:
     ci:
+        timeout-minutes: 60
         runs-on: ubuntu-latest
 
         steps:
@@ -42,8 +43,8 @@ jobs:
               run: pnpm dlx playwright install --with-deps
 
             - name: Run tests
-              run: pnpm test
-              
+              run: pnpm run tests
+
             - uses: actions/upload-artifact@v4
               if: ${{ !cancelled() }}
               with:
