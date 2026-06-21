@@ -16,9 +16,9 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
                 <Meta />
                 <Links />
             </head>
-            <body className="h-full w-full scroll-smooth! antialiased">
-                {children}
+            <body className="relative h-full w-full scroll-smooth! antialiased">
                 <PWABadge />
+                {children}
                 <ScrollRestoration />
                 <Scripts />
             </body>

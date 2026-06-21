@@ -30,7 +30,7 @@ export default function PWABadge() {
     }
 
     return (
-        <div className="relative container mx-auto py-24 lg:py-32">
+        <div className="pointer-events-none fixed inset-x-1/6 bottom-0 mb-4">
             {(offlineReady || needRefresh) && (
                 <div className="pointer-events-auto flex items-center justify-between gap-x-6 bg-primary px-6 py-2.5 sm:rounded-xl sm:py-3 sm:pr-3.5 sm:pl-4">
                     <p className="text-sm leading-6 text-primary-foreground">
@@ -54,7 +54,7 @@ export default function PWABadge() {
                                 Reload <ArrowRight aria-hidden className="size-4" />
                             </Button>
                         )}
-                        <Button size="sm" variant="outline" onClick={close}>
+                        <Button size="sm" variant="secondary" onClick={close}>
                             Close
                         </Button>
                     </ButtonGroup>
