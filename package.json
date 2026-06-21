@@ -23,6 +23,7 @@
         "tests": "vitest run"
     },
     "dependencies": {
+        "@fontsource-variable/fira-code": "^5.2.7",
         "@fontsource-variable/montserrat": "^5.2.8",
         "@fontsource-variable/source-sans-3": "^5.2.9",
         "@react-router/node": "8.0.1",
