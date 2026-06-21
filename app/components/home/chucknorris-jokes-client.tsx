@@ -73,8 +73,8 @@ function renderJokeContent(isPending: boolean, jokes: Joke[]): ReactNode {
     if (isPending || jokes.length === 0) {
         return (
             <div className="space-y-2">
-                {new Array(3).fill(null).map((_, i) => (
-                    <Skeleton key={i} className="h-5 w-full" />
+                {[1, 2, 3].map((el, i) => (
+                    <Skeleton key={`skeleton-${i}-${el}`} className="h-5 w-full" />
                 ))}
             </div>
         );
