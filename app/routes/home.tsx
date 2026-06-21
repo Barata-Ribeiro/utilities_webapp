@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router';
 import ChuckNorrisJokesClient from '~/components/home/chucknorris-jokes-client';
+import SystemInfoClient from '~/components/home/systeminfo-client';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 
@@ -26,6 +27,9 @@ export default function Home() {
                     </CardContent>
                     <CardFooter />
                 </Card>
+
+                {/* System info is a client component */}
+                <SystemInfoClient />
 
                 <Card>
                     <CardHeader>
