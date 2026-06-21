@@ -1,5 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse } from 'react-router';
 
+import PWABadge from '~/components/application/pwa-badge';
 import type { Route } from './+types/root';
 import './app.css';
 
@@ -17,6 +18,7 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
             </head>
             <body className="h-full w-full scroll-smooth! antialiased">
                 {children}
+                <PWABadge />
                 <ScrollRestoration />
                 <Scripts />
             </body>
