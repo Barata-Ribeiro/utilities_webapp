@@ -68,17 +68,36 @@ export default defineConfig(({ mode }) => {
             assetsInlineLimit: 4096,
         },
         test: {
-            setupFiles: ['./tests/setup.ts'],
             globals: true,
             environment: 'jsdom',
-            include: ['tests/**/*.{test,spec}.{js,ts,jsx,tsx}'],
             restoreMocks: true,
-            browser: {
-                enabled: true,
-                headless: true,
-                provider: playwright(),
-                instances: [{ browser: 'chromium' }, { browser: 'firefox' }],
-            },
+            projects: [
+                {
+                    extends: true,
+                    test: {
+                        include: [
+                            'tests/functions/**/*.function.test.{js,ts,jsx,tsx}',
+                            'tests/functions/**/*.function.spec.{js,ts,jsx,tsx}',
+                        ],
+                    },
+                },
+                {
+                    extends: true,
+                    setupFiles: ['./tests/setup.ts'],
+                    test: {
+                        include: [
+                            'tests/browser/**/*.browser.test.{js,ts,jsx,tsx}',
+                            'tests/browser/**/*.browser.spec.{js,ts,jsx,tsx}',
+                        ],
+                        browser: {
+                            enabled: true,
+                            headless: true,
+                            provider: playwright(),
+                            instances: [{ browser: 'chromium' }, { browser: 'firefox' }],
+                        },
+                    },
+                },
+            ],
         },
         assetsInclude: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp'],
     };
