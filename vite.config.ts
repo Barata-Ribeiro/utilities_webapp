@@ -12,6 +12,7 @@ export default defineConfig(({ mode }) => {
         plugins: [
             tailwindcss(),
             VitePWA({
+                outDir: 'build/client',
                 registerType: 'prompt',
                 injectRegister: false,
 
