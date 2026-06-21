@@ -5,14 +5,17 @@ import './app.css';
 
 export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta name="dcterms:rightsHolder" content="João Mendes J. B. Ribeiro" />
+                <meta name="author" content="Barata Ribeiro" />
+                <meta name="author_url" content="https://www.linkedin.com/in/barataribeiro/" />
                 <Meta />
                 <Links />
             </head>
-            <body>
+            <body className="h-full w-full scroll-smooth! antialiased">
                 {children}
                 <ScrollRestoration />
                 <Scripts />
