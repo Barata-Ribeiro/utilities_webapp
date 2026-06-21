@@ -1,10 +1,8 @@
 import { reactRouter } from '@react-router/dev/vite';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'vitest/config';
-import babel from '@rolldown/plugin-babel';
-import react, { reactCompilerPreset } from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import { VitePWA } from 'vite-plugin-pwa';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig(({ mode }) => {
     const isTest = mode === 'test';
@@ -13,7 +11,6 @@ export default defineConfig(({ mode }) => {
         resolve: { tsconfigPaths: true },
         plugins: [
             tailwindcss(),
-            react(),
             VitePWA({
                 registerType: 'prompt',
                 injectRegister: false,
@@ -49,7 +46,6 @@ export default defineConfig(({ mode }) => {
                 },
             }),
             !isTest && reactRouter(),
-            babel({ presets: [reactCompilerPreset()] }),
         ].filter(Boolean),
         build: {
             target: 'esnext',
