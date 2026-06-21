@@ -1,7 +1,5 @@
 import { reactRouter } from '@react-router/dev/vite';
-import babel from '@rolldown/plugin-babel';
 import tailwindcss from '@tailwindcss/vite';
-import { reactCompilerPreset } from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
@@ -48,7 +46,6 @@ export default defineConfig(({ mode }) => {
                 },
             }),
             !isTest && reactRouter(),
-            babel({ presets: [reactCompilerPreset()] }),
         ].filter(Boolean),
         build: {
             target: 'esnext',
