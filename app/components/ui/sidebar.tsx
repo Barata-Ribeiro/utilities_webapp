@@ -3,6 +3,7 @@ import { Slot } from 'radix-ui';
 import * as React from 'react';
 
 import { PanelLeftIcon } from 'lucide-react';
+import { useFetcher } from 'react-router';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Separator } from '~/components/ui/separator';
@@ -12,8 +13,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip
 import { useIsMobile } from '~/hooks/use-mobile';
 import { cn } from '~/lib/utils';
 
-const SIDEBAR_COOKIE_NAME = 'sidebar_state';
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = '16rem';
 const SIDEBAR_WIDTH_MOBILE = '18rem';
 const SIDEBAR_WIDTH_ICON = '3rem';
@@ -53,6 +52,7 @@ function SidebarProvider({
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
 }) {
+    const fetcher = useFetcher();
     const { isMobile } = useIsMobile();
     const [openMobile, setOpenMobile] = React.useState(false);
 
@@ -70,7 +70,13 @@ function SidebarProvider({
             }
 
             // This sets the cookie to keep the sidebar state.
-            document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+            fetcher.submit(
+                { open: openState ? 'true' : 'false' },
+                {
+                    method: 'post',
+                    action: '/sidebar',
+                },
+            );
         },
         [setOpenProp, open],
     );
