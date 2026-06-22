@@ -12,13 +12,20 @@ export default defineConfig(({ mode }) => {
         plugins: [
             tailwindcss(),
             VitePWA({
+                outDir: 'build/client',
                 registerType: 'prompt',
                 injectRegister: false,
 
                 pwaAssets: {
                     disabled: false,
                     config: true,
+                    includeHtmlHeadLinks: true,
+                    integration: {
+                        outDir: 'build/client',
+                    },
                 },
+
+                includeAssets: ['*.{svg,png,ico,webp,avif}', 'manifest.webmanifest', 'robots.txt', 'sitemap.xml'],
 
                 manifest: {
                     name: 'Utilities Webapp',
@@ -30,19 +37,40 @@ export default defineConfig(({ mode }) => {
                     display: 'standalone',
                     theme_color: 'oklch(0.6229 0.2012 35.9323)',
                     background_color: 'oklch(0.9851 0 0)',
+                    icons: [
+                        {
+                            src: 'pwa-64x64.png',
+                            sizes: '64x64',
+                            type: 'image/png',
+                        },
+                        {
+                            src: 'pwa-192x192.png',
+                            sizes: '192x192',
+                            type: 'image/png',
+                        },
+                        {
+                            src: 'pwa-512x512.png',
+                            sizes: '512x512',
+                            type: 'image/png',
+                        },
+                    ],
+                    orientation: 'portrait',
                 },
 
                 workbox: {
-                    globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+                    globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
+                    globIgnores: ['manifest.webmanifest'],
                     cleanupOutdatedCaches: true,
                     clientsClaim: true,
+                    navigateFallback: null,
                 },
 
                 devOptions: {
-                    enabled: false,
-                    navigateFallback: 'index.html',
+                    enabled: process.env['NODE_ENV'] !== 'production',
+                    navigateFallbackAllowlist: [/^index.html$/],
                     suppressWarnings: true,
                     type: 'module',
+                    resolveTempFolder: () => 'build/client/dev',
                 },
             }),
             !isTest && reactRouter(),
