@@ -1,19 +1,20 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse } from 'react-router';
 
-import '~/app.css';
 import AppShell from '~/components/application/app-shell';
+import { useTheme } from '~/components/theme-provider';
+import { sidebarCookie } from '~/lib/sidebar-cookie.server';
 import { themeCookie } from '~/lib/theme-cookie.server';
 import type { Route } from './+types/root';
-import { useTheme } from './components/theme-provider';
+import './app.css';
 
 export async function loader({ request }: Route.LoaderArgs) {
     const cookieHeader = request.headers.get('Cookie');
 
     const theme = ((await themeCookie.parse(cookieHeader)) as 'light' | 'dark' | 'system' | undefined) ?? 'system';
 
-    return {
-        theme,
-    };
+    const sidebarState = ((await sidebarCookie.parse(cookieHeader)) as boolean | undefined) ?? false;
+
+    return { theme, sidebarState };
 }
 
 export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -41,7 +42,7 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
 
 export default function App({ loaderData }: Route.ComponentProps) {
     return (
-        <AppShell theme={loaderData.theme}>
+        <AppShell theme={loaderData.theme} sidebarOpen={loaderData.sidebarState}>
             <Outlet />
         </AppShell>
     );
