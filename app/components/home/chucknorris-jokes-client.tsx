@@ -1,8 +1,9 @@
-import { useEffect, useState, useTransition, type ReactNode } from 'react';
+import { useState, useTransition, type ReactNode } from 'react';
 import ContentError from '~/components/home/content-error';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Skeleton } from '~/components/ui/skeleton';
+import { useIsomorphicLayoutEffect } from '~/hooks/use-isomorphic-layout-effect';
 import type { Joke } from '~/types/jokes';
 
 async function getJokes(signal: AbortSignal): Promise<Joke[]> {
@@ -47,7 +48,7 @@ export default function ChuckNorrisJokesClient() {
         return () => controller.abort();
     }
 
-    useEffect(() => fetchJokes(), []);
+    useIsomorphicLayoutEffect(() => fetchJokes(), []);
 
     return (
         <Card aria-busy={isPending}>
