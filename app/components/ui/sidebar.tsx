@@ -71,7 +71,7 @@ function SidebarProvider({
 
             // This sets the cookie to keep the sidebar state.
             fetcher.submit(
-                { open: openState ? 'true' : 'false' },
+                { sidebar_state: openState.valueOf() },
                 {
                     method: 'post',
                     action: '/sidebar',
