@@ -1,12 +1,26 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse } from 'react-router';
 
-import PWABadge from '~/components/application/pwa-badge';
+import '~/app.css';
+import AppShell from '~/components/application/app-shell';
+import { themeCookie } from '~/lib/theme-cookie.server';
 import type { Route } from './+types/root';
-import './app.css';
+import { useTheme } from './components/theme-provider';
+
+export async function loader({ request }: Route.LoaderArgs) {
+    const cookieHeader = request.headers.get('Cookie');
+
+    const theme = ((await themeCookie.parse(cookieHeader)) as 'light' | 'dark' | 'system' | undefined) ?? 'system';
+
+    return {
+        theme,
+    };
+}
 
 export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
+    const { theme } = useTheme();
+
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en" className={theme} suppressHydrationWarning>
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,7 +31,6 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
                 <Links />
             </head>
             <body className="relative h-full w-full scroll-smooth! antialiased">
-                <PWABadge />
                 {children}
                 <ScrollRestoration />
                 <Scripts />
@@ -26,8 +39,12 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
     );
 }
 
-export default function App() {
-    return <Outlet />;
+export default function App({ loaderData }: Route.ComponentProps) {
+    return (
+        <AppShell theme={loaderData.theme}>
+            <Outlet />
+        </AppShell>
+    );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
