@@ -1,6 +1,7 @@
-import { useEffect, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Skeleton } from '~/components/ui/skeleton';
+import { useIsomorphicLayoutEffect } from '~/hooks/use-isomorphic-layout-effect';
 import { IpResponse } from '~/types/ip-response';
 
 async function getIpAddress(signal: AbortSignal): Promise<string> {
@@ -16,7 +17,7 @@ export default function SystemInfoClient() {
     const [browser, setBrowser] = useState<string | null>(null);
     const [operatingSystem, setOperatingSystem] = useState<string | null>(null);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const browserList = [
             { name: 'Microsoft Edge (Chromium Based)', regex: /edg\//i },
             { name: 'Microsoft Edge', regex: /edge/i },
