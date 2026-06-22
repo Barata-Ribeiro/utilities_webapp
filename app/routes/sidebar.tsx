@@ -5,7 +5,7 @@ import { Route } from '../routes/+types/sidebar';
 export async function action({ request }: Route.ActionArgs) {
     const formData = await request.formData();
 
-    const sidebar = String(formData.get('sidebar_state'));
+    const sidebar = formData.get('sidebar_state') === 'true';
 
     return data(
         { ok: true },
