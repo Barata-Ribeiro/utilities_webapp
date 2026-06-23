@@ -53,13 +53,17 @@ export default function ChuckNorrisJokesClient() {
     return (
         <Card aria-busy={isPending}>
             <CardHeader>
-                <CardTitle className="font-serif text-lg">
+                <CardTitle data-testid="chuck-norris-jokes-title" className="font-serif text-lg">
                     Chuck Norris{' '}
                     <span className="align-super text-[0.62rem] leading-none text-muted-foreground">(rip)</span> Jokes
                 </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-3">
-                {error ? <ContentError message={error} /> : renderJokeContent(isPending, jokes)}
+                {error ? (
+                    <ContentError data-testid="chuck-norris-jokes-error" message={error} />
+                ) : (
+                    renderJokeContent(isPending, jokes)
+                )}
             </CardContent>
             <CardFooter className="flex justify-end">
                 <Button type="button" variant="secondary" disabled={isPending} onClick={fetchJokes}>
@@ -82,7 +86,11 @@ function renderJokeContent(isPending: boolean, jokes: Joke[]): ReactNode {
     }
 
     return jokes.map((j) => (
-        <article key={j.id} className="rounded-md border bg-muted/50 p-3 hover:bg-muted">
+        <article
+            key={j.id}
+            className="rounded-md border bg-muted/50 p-3 hover:bg-muted"
+            data-testid={`chuck-norris-joke-${j.id}`}
+        >
             <p className="text-sm">{j.value}</p>
             <div className="mt-2 text-xs text-muted-foreground">
                 Category: {j.categories.join(', ') || 'uncategorized'}
