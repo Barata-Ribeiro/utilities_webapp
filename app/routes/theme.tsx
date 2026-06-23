@@ -5,7 +5,7 @@ import type { Route } from '../routes/+types/theme';
 export async function action({ request }: Route.ActionArgs) {
     const formData = await request.formData();
 
-    const theme = String(formData.get('theme'));
+    const theme = formData.get('theme') as 'light' | 'dark' | 'system' | undefined;
 
     return data(
         { ok: true },

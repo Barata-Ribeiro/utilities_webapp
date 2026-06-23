@@ -1,6 +1,7 @@
 import { reactRouter } from '@react-router/dev/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { playwright } from '@vitest/browser-playwright';
+import devtoolsJson from 'vite-plugin-devtools-json';
 import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
 
@@ -25,7 +26,7 @@ export default defineConfig(({ mode }) => {
                     },
                 },
 
-                includeAssets: ['*.{svg,png,ico,webp,avif}', 'manifest.webmanifest', 'robots.txt', 'sitemap.xml'],
+                includeAssets: ['**/*'],
 
                 manifest: {
                     name: 'Utilities Webapp',
@@ -58,22 +59,93 @@ export default defineConfig(({ mode }) => {
                 },
 
                 workbox: {
-                    globPatterns: ['**/*.{js,json,css,html,txt,svg,png,ico,webp,woff,woff2,ttf,eot,otf,wasm}'],
-                    globIgnores: ['manifest.webmanifest'],
+                    globPatterns: ['**/*'],
                     cleanupOutdatedCaches: true,
                     clientsClaim: true,
-                    navigateFallback: null,
+                    runtimeCaching: [
+                        {
+                            urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
+                                request.headers.get('RSC') === '1' &&
+                                request.headers.get('Next-Router-Prefetch') === '1' &&
+                                sameOrigin &&
+                                !pathname.startsWith('/api/'),
+                            handler: 'StaleWhileRevalidate',
+                            options: {
+                                cacheName: 'rsc-prefetch-cache',
+                                expiration: {
+                                    maxEntries: 200,
+                                    maxAgeSeconds: 60 * 60 * 24, // 1 day
+                                },
+                            },
+                        },
+                        {
+                            urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
+                                request.headers.get('RSC') === '1' && sameOrigin && !pathname.startsWith('/api/'),
+                            handler: 'StaleWhileRevalidate',
+                            options: {
+                                cacheName: 'rsc-cache',
+                                expiration: {
+                                    maxEntries: 200,
+                                    maxAgeSeconds: 60 * 60 * 24, // 1 day
+                                },
+                            },
+                        },
+                        {
+                            urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
+                                request.headers.get('Content-Type')?.includes('text/html') &&
+                                sameOrigin &&
+                                !pathname.startsWith('/api/'),
+                            handler: 'StaleWhileRevalidate',
+                            options: {
+                                cacheName: 'html-cache',
+                                expiration: {
+                                    maxEntries: 200,
+                                    maxAgeSeconds: 60 * 60 * 24, // 1 day
+                                },
+                            },
+                        },
+                        {
+                            urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
+                                (request.mode === 'navigate' ||
+                                    request.destination === 'document' ||
+                                    request.headers.get('Accept')?.includes('text/html')) &&
+                                sameOrigin &&
+                                !pathname.startsWith('/api/'),
+                            handler: 'StaleWhileRevalidate',
+                            options: {
+                                cacheName: 'navigate-cache',
+                                expiration: {
+                                    maxEntries: 200,
+                                    maxAgeSeconds: 60 * 60 * 24, // 1 day
+                                },
+                            },
+                        },
+                        {
+                            urlPattern: ({ url: { pathname }, sameOrigin }) =>
+                                /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i.test(pathname) && sameOrigin,
+                            handler: 'StaleWhileRevalidate',
+                            options: {
+                                cacheName: 'image-cache',
+                                expiration: {
+                                    maxEntries: 64,
+                                    maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+                                },
+                            },
+                        },
+                    ],
                 },
 
                 devOptions: {
                     enabled: process.env['NODE_ENV'] !== 'production',
-                    navigateFallbackAllowlist: [/^index.html$/],
                     suppressWarnings: true,
+                    navigateFallback: '/',
+                    navigateFallbackAllowlist: [/^\/$/],
                     type: 'module',
                     resolveTempFolder: () => 'build/client/dev',
                 },
             }),
             !isTest && reactRouter(),
+            devtoolsJson({ normalizeForWindowsContainer: true }),
         ].filter(Boolean),
         build: {
             target: 'esnext',

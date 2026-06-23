@@ -20,21 +20,17 @@ export default function SystemInfoClient() {
     useIsomorphicLayoutEffect(() => {
         const agent = navigator.userAgent.toLowerCase();
 
-        const browserName = /edg\//i.test(agent)
-            ? 'Microsoft Edge (Chromium Based)'
-            : /edge/i.test(agent)
-              ? 'Microsoft Edge'
-              : /opr/i.test(agent)
-                ? 'Opera'
-                : /chrome/i.test(agent) && !/edg\//i.test(agent) && !/opr/i.test(agent) && !/vivaldi/i.test(agent)
-                  ? 'Chrome'
-                  : /trident/i.test(agent)
-                    ? 'MS IE'
-                    : /firefox/i.test(agent)
-                      ? 'Mozilla Firefox'
-                      : /safari/i.test(agent) && !/chrome/i.test(agent) && !/crios/i.test(agent)
-                        ? 'Safari'
-                        : 'Unknown browser';
+        const safariCheckResult =
+            /safari/i.test(agent) && !/chrome/i.test(agent) && !/crios/i.test(agent) ? 'Safari' : 'Unknown browser';
+        const firefoxCheckResult = /firefox/i.test(agent) ? 'Mozilla Firefox' : safariCheckResult;
+        const msInternetExplorerCheckResult = /trident/i.test(agent) ? 'MS IE' : firefoxCheckResult;
+        const chromeBrowserNameCheckResult =
+            /chrome/i.test(agent) && !/edg\//i.test(agent) && !/opr/i.test(agent) && !/vivaldi/i.test(agent)
+                ? 'Chrome'
+                : msInternetExplorerCheckResult;
+        const operaCheckResult = /opr/i.test(agent) ? 'Opera' : chromeBrowserNameCheckResult;
+        const detectedBrowserName = /edge/i.test(agent) ? 'Microsoft Edge' : operaCheckResult;
+        const browserName = /edg\//i.test(agent) ? 'Microsoft Edge (Chromium Based)' : detectedBrowserName;
 
         const osList = [
             { name: 'Windows NT', regex: /Windows NT/i },
