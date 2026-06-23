@@ -177,4 +177,8 @@ sketch
 .history
 .ionide
 
+### Vitest ###
+.vitest-attachments/
+tests/**/__screenshots__/
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,react
