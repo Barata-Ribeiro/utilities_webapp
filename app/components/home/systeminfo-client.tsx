@@ -18,23 +18,23 @@ export default function SystemInfoClient() {
     const [operatingSystem, setOperatingSystem] = useState<string | null>(null);
 
     useIsomorphicLayoutEffect(() => {
-        const browserList = [
-            { name: 'Microsoft Edge (Chromium Based)', regex: /edg\//i },
-            { name: 'Microsoft Edge', regex: /edge/i },
-            {
-                name: 'Opera',
-                regex: /opr/i,
-                condition: () => typeof globalThis !== 'undefined' && 'opr' in globalThis.window,
-            },
-            {
-                name: 'Chrome',
-                regex: /chrome/i,
-                condition: () => typeof globalThis !== 'undefined' && 'chrome' in globalThis.window,
-            },
-            { name: 'MS IE', regex: /trident/i },
-            { name: 'Mozilla Firefox', regex: /firefox/i },
-            { name: 'Safari', regex: /safari/i },
-        ];
+        const agent = navigator.userAgent.toLowerCase();
+
+        const browserName = /edg\//i.test(agent)
+            ? 'Microsoft Edge (Chromium Based)'
+            : /edge/i.test(agent)
+              ? 'Microsoft Edge'
+              : /opr/i.test(agent)
+                ? 'Opera'
+                : /chrome/i.test(agent) && !/edg\//i.test(agent) && !/opr/i.test(agent) && !/vivaldi/i.test(agent)
+                  ? 'Chrome'
+                  : /trident/i.test(agent)
+                    ? 'MS IE'
+                    : /firefox/i.test(agent)
+                      ? 'Mozilla Firefox'
+                      : /safari/i.test(agent) && !/chrome/i.test(agent) && !/crios/i.test(agent)
+                        ? 'Safari'
+                        : 'Unknown browser';
 
         const osList = [
             { name: 'Windows NT', regex: /Windows NT/i },
@@ -50,17 +50,17 @@ export default function SystemInfoClient() {
         startTransition(() => {
             getIpAddress(controller.signal)
                 .then((ip) => setIpAddress(ip))
-                .catch((error) => console.error('Error fetching IP address: ', error));
+                .catch((error) => {
+                    if (error instanceof Error && error.name === 'AbortError') {
+                        return;
+                    }
+
+                    console.error('Error fetching IP address: ', error);
+                });
 
             const agent = navigator.userAgent.toLowerCase();
 
-            browserList.some((browser) => {
-                if (browser.regex.test(agent) && (!browser.condition || browser.condition())) {
-                    setBrowser(browser.name);
-                    return true;
-                }
-                return false;
-            });
+            setBrowser(browserName);
 
             osList.some((os) => {
                 if (os.regex.test(agent)) {
@@ -75,9 +75,11 @@ export default function SystemInfoClient() {
     }, []);
 
     return (
-        <Card aria-busy={isPending}>
+        <Card aria-busy={isPending} data-testid="system-info-card">
             <CardHeader>
-                <CardTitle className="font-serif text-lg">System Info</CardTitle>
+                <CardTitle data-testid="system-info-title" className="font-serif text-lg">
+                    System Info
+                </CardTitle>
             </CardHeader>
             <CardContent>
                 <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -87,14 +89,18 @@ export default function SystemInfoClient() {
                             {isPending && ipAddress === null ? (
                                 <Skeleton className="h-5 w-28" />
                             ) : (
-                                <span>{ipAddress}</span>
+                                <span data-testid="system-info-ip">{ipAddress}</span>
                             )}
                         </div>
                     </div>
                     <div className="rounded-md border p-3">
                         <h3 className="text-xs font-medium text-muted-foreground">Browser</h3>
                         <div className="mt-1 text-sm">
-                            {isPending && browser === null ? <Skeleton className="h-5 w-40" /> : <span>{browser}</span>}
+                            {isPending && browser === null ? (
+                                <Skeleton className="h-5 w-40" />
+                            ) : (
+                                <span data-testid="system-info-browser">{browser}</span>
+                            )}
                         </div>
                     </div>
                     <div className="rounded-md border p-3">
@@ -103,7 +109,7 @@ export default function SystemInfoClient() {
                             {isPending && operatingSystem === null ? (
                                 <Skeleton className="h-5 w-36" />
                             ) : (
-                                <span>{operatingSystem}</span>
+                                <span data-testid="system-info-os">{operatingSystem}</span>
                             )}
                         </div>
                     </div>
