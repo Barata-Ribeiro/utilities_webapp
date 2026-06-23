@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router';
 import ChuckNorrisJokesClient from '~/components/home/chucknorris-jokes-client';
 import SystemInfoClient from '~/components/home/systeminfo-client';
 import { Button } from '~/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 
 export default function Home() {
     return (
@@ -10,11 +10,15 @@ export default function Home() {
             <section className="flex flex-col gap-4 md:col-span-2">
                 <Card>
                     <CardHeader>
-                        <CardTitle className="font-serif text-2xl">Welcome to my Utilities Web App</CardTitle>
-                        <CardDescription>Quick handy tools to speed up everyday tasks.</CardDescription>
+                        <CardTitle data-testid="home-title" className="font-serif text-2xl">
+                            Welcome to my Utilities Web App
+                        </CardTitle>
+                        <CardDescription data-testid="home-description">
+                            Quick handy tools to speed up everyday tasks.
+                        </CardDescription>
                     </CardHeader>
 
-                    <CardContent className="flex flex-wrap items-center gap-2">
+                    <CardContent data-testid="home-buttons" className="flex flex-wrap items-center gap-2">
                         <Button variant="outline" asChild>
                             <NavLink to="/utilities/character-counter">Char. Counter</NavLink>
                         </Button>
@@ -25,7 +29,6 @@ export default function Home() {
                             <NavLink to="/utilities/lorem-ipsum">Lorem Ipsum Generator</NavLink>
                         </Button>
                     </CardContent>
-                    <CardFooter />
                 </Card>
 
                 {/* System info is a client component */}
@@ -33,10 +36,12 @@ export default function Home() {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle className="font-serif text-lg">About</CardTitle>
+                        <CardTitle data-testid="home-about-title" className="font-serif text-lg">
+                            About
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-sm text-muted-foreground">
+                        <p data-testid="home-about-description" className="text-sm text-muted-foreground">
                             This app groups small utilities and converters in a single, fast interface. Use the sidebar
                             to navigate through available tools.
                         </p>
@@ -49,10 +54,12 @@ export default function Home() {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle className="font-serif text-lg">Quick Links</CardTitle>
+                        <CardTitle data-testid="home-quick-links-title" className="font-serif text-lg">
+                            Quick Links
+                        </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <ul className="flex flex-col gap-2">
+                        <ul data-testid="home-quick-links" className="flex flex-col gap-2">
                             <li>
                                 <Button variant="link" asChild>
                                     <NavLink to="/about">About this project</NavLink>
