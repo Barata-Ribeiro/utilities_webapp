@@ -1,11 +1,13 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse } from 'react-router';
 
+import '~/app.css';
 import AppShell from '~/components/application/app-shell';
+import SocialMetadata from '~/components/application/social-metadata';
 import { useTheme } from '~/components/theme-provider';
+import { APP_DEFAULT_TITLE, APP_DESCRIPTION, APP_KEYWORDS, APP_URL } from '~/lib/consts';
 import { sidebarCookie } from '~/lib/sidebar-cookie.server';
 import { themeCookie } from '~/lib/theme-cookie.server';
 import type { Route } from './+types/root';
-import './app.css';
 
 export async function loader({ request }: Route.LoaderArgs) {
     const cookieHeader = request.headers.get('Cookie');
@@ -28,6 +30,21 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
                 <meta name="dcterms:rightsHolder" content="João Mendes J. B. Ribeiro" />
                 <meta name="author" content="Barata Ribeiro" />
                 <meta name="author_url" content="https://www.linkedin.com/in/barataribeiro/" />
+                <title>{APP_DEFAULT_TITLE}</title>
+                <meta name="description" content={APP_DESCRIPTION} />
+                <meta name="keywords" content={APP_KEYWORDS.join(', ')} />
+                <SocialMetadata
+                    openGraph={{
+                        title: APP_DEFAULT_TITLE,
+                        description: APP_DESCRIPTION,
+                        url: APP_URL,
+                    }}
+                    twitter={{
+                        creator: '@JohnRoachy',
+                        title: APP_DEFAULT_TITLE,
+                        description: APP_DESCRIPTION,
+                    }}
+                />
                 <Meta />
                 <Links />
             </head>
