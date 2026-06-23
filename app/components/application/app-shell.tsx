@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { AppSidebar } from '~/components/application/app-sidebar';
 import { AppThemeSwitcher } from '~/components/application/app-theme-switcher';
 import PWABadge from '~/components/application/pwa-badge';
 import Breadcrumbs from '~/components/breadcrumbs';
@@ -19,6 +20,8 @@ export default function AppShell({ children, theme, sidebarOpen }: Readonly<Prop
         <ThemeProvider initialTheme={theme}>
             <TooltipProvider>
                 <SidebarProvider defaultOpen={sidebarOpen}>
+                    <AppSidebar />
+
                     <SidebarInset>
                         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
                             <div className="flex items-center gap-2 px-4">
