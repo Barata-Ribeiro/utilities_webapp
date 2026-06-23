@@ -55,4 +55,4 @@ export const APP_KEYWORDS = [
     'handy utilities',
     'digital tools',
 ];
-export const APP_URL = process.env['APP_URL'] ?? 'https://utilities-webapp.vercel.app/';
+export const APP_URL = import.meta.env['VITE_APP_URL'] ?? 'https://utilities-webapp.vercel.app/';
