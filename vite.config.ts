@@ -1,6 +1,7 @@
 import { reactRouter } from '@react-router/dev/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { playwright } from '@vitest/browser-playwright';
+import devtoolsJson from 'vite-plugin-devtools-json';
 import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
 
@@ -74,6 +75,7 @@ export default defineConfig(({ mode }) => {
                 },
             }),
             !isTest && reactRouter(),
+            devtoolsJson({ normalizeForWindowsContainer: true }),
         ].filter(Boolean),
         build: {
             target: 'esnext',
