@@ -33,6 +33,7 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
                 <title>{APP_DEFAULT_TITLE}</title>
                 <meta name="description" content={APP_DESCRIPTION} />
                 <meta name="keywords" content={APP_KEYWORDS.join(', ')} />
+                <link rel="manifest" href="/manifest.webmanifest" />
                 <SocialMetadata
                     openGraph={{
                         title: APP_DEFAULT_TITLE,
