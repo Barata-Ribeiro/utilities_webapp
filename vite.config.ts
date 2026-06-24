@@ -136,7 +136,7 @@ export default defineConfig(({ mode }) => {
                 },
 
                 devOptions: {
-                    enabled: process.env['NODE_ENV'] !== 'production',
+                    enabled: mode === 'development',
                     suppressWarnings: true,
                     navigateFallback: '/',
                     navigateFallbackAllowlist: [/^\/$/],
