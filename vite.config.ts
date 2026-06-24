@@ -65,10 +65,7 @@ export default defineConfig(({ mode }) => {
                     runtimeCaching: [
                         {
                             urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
-                                request.headers.get('RSC') === '1' &&
-                                request.headers.get('Next-Router-Prefetch') === '1' &&
-                                sameOrigin &&
-                                !pathname.startsWith('/api/'),
+                                request.headers.get('RSC') === '1' && sameOrigin && !pathname.startsWith('/api/'),
                             handler: 'StaleWhileRevalidate',
                             options: {
                                 cacheName: 'rsc-prefetch-cache',
@@ -126,6 +123,18 @@ export default defineConfig(({ mode }) => {
                             handler: 'StaleWhileRevalidate',
                             options: {
                                 cacheName: 'image-cache',
+                                expiration: {
+                                    maxEntries: 64,
+                                    maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+                                },
+                            },
+                        },
+                        {
+                            urlPattern: ({ url: { pathname }, sameOrigin }) =>
+                                /\.(?:js|css|woff2?|eot|ttf|otf|json)$/i.test(pathname) && sameOrigin,
+                            handler: 'StaleWhileRevalidate',
+                            options: {
+                                cacheName: 'static-resources-cache',
                                 expiration: {
                                     maxEntries: 64,
                                     maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
