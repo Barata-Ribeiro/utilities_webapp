@@ -1,6 +1,7 @@
 import { MoveRightIcon } from 'lucide-react';
 import { NavLink } from 'react-router';
 import { Meta } from '~/components/application/meta';
+import { Metadata } from '~/types/metadata';
 
 const CONVERTERS = [
     {
@@ -36,7 +37,7 @@ const CONVERTERS = [
     },
 ];
 
-const METADATA = {
+const METADATA: Metadata = {
     title: 'Converters - Utilities WebApp',
     description: 'A variety of unit converters including length, temperature, weight, and more.',
     keywords: [
