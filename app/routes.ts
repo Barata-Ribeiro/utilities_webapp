@@ -9,6 +9,7 @@ export default [
         route('/length', 'routes/converters/length.tsx'),
         route('/mass', 'routes/converters/mass.tsx'),
         route('/speed', 'routes/converters/speed.tsx'),
+        route('/temperature', 'routes/converters/temperature.tsx'),
     ]),
     route('/theme', 'routes/theme.tsx'),
     route('/sidebar', 'routes/sidebar.tsx'),
