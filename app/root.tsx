@@ -1,7 +1,8 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse } from 'react-router';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse, useLocation } from 'react-router';
 
 import '~/app.css';
 import AppShell from '~/components/application/app-shell';
+import { Meta as Metadata } from '~/components/application/meta';
 import SocialMetadata from '~/components/application/social-metadata';
 import { useTheme } from '~/components/theme-provider';
 import { APP_DEFAULT_TITLE, APP_DESCRIPTION, APP_KEYWORDS, APP_URL } from '~/lib/consts';
@@ -21,6 +22,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
     const { theme } = useTheme();
+    const location = useLocation();
 
     return (
         <html lang="en" className={theme} suppressHydrationWarning>
@@ -30,22 +32,25 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
                 <meta name="dcterms:rightsHolder" content="João Mendes J. B. Ribeiro" />
                 <meta name="author" content="Barata Ribeiro" />
                 <meta name="author_url" content="https://www.linkedin.com/in/barataribeiro/" />
-                <title>{APP_DEFAULT_TITLE}</title>
-                <meta name="description" content={APP_DESCRIPTION} />
-                <meta name="keywords" content={APP_KEYWORDS.join(', ')} />
                 <link rel="manifest" href="/manifest.webmanifest" />
-                <SocialMetadata
-                    openGraph={{
-                        title: APP_DEFAULT_TITLE,
-                        description: APP_DESCRIPTION,
-                        url: APP_URL,
-                    }}
-                    twitter={{
-                        creator: '@JohnRoachy',
-                        title: APP_DEFAULT_TITLE,
-                        description: APP_DESCRIPTION,
-                    }}
-                />
+                {location.pathname === '/' && (
+                    <>
+                        <Metadata title={APP_DEFAULT_TITLE} description={APP_DESCRIPTION} keywords={APP_KEYWORDS} />
+                        <SocialMetadata
+                            openGraph={{
+                                title: APP_DEFAULT_TITLE,
+                                description: APP_DESCRIPTION,
+                                url: APP_URL,
+                            }}
+                            twitter={{
+                                creator: '@JohnRoachy',
+                                title: APP_DEFAULT_TITLE,
+                                description: APP_DESCRIPTION,
+                            }}
+                        />
+                    </>
+                )}
+
                 <Meta />
                 <Links />
             </head>
