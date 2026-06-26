@@ -204,6 +204,6 @@ export default defineConfig(({ mode }) => {
                 },
             ],
         },
-        assetsInclude: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp'],
+        assetsInclude: ['**/*.{svg,png,jpg,jpeg,gif,webp,ico,woff,woff2,eot,ttf,otf,json}'],
     };
 });
