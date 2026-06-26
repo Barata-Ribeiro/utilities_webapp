@@ -12,6 +12,7 @@ export default [
         route('/temperature', 'routes/converters/temperature.tsx'),
         route('/time', 'routes/converters/time.tsx'),
     ]),
+    ...prefix('/programming', [index('routes/programming/index.tsx')]),
     route('/theme', 'routes/theme.tsx'),
     route('/sidebar', 'routes/sidebar.tsx'),
 ] satisfies RouteConfig;
