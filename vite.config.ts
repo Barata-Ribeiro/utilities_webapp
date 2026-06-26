@@ -62,6 +62,7 @@ export default defineConfig(({ mode }) => {
                     globPatterns: ['**/*'],
                     cleanupOutdatedCaches: true,
                     clientsClaim: true,
+                    maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
                     runtimeCaching: [
                         {
                             urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
