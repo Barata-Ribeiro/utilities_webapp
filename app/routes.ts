@@ -14,6 +14,7 @@ export default [
     ]),
     ...prefix('/programming', [
         index('routes/programming/index.tsx'),
+        route('/base64-text-encode-decode', 'routes/programming/base64-text-encode-decode.tsx'),
         route('/text-hashing', 'routes/programming/text-hashing.tsx'),
     ]),
     route('/theme', 'routes/theme.tsx'),
