@@ -16,6 +16,7 @@ export default [
         index('routes/programming/index.tsx'),
         route('/base64-text-encode-decode', 'routes/programming/base64-text-encode-decode.tsx'),
         route('/base64-to-image', 'routes/programming/base64-to-image.tsx'),
+        route('/image-to-base64', 'routes/programming/image-to-base64.tsx'),
         route('/text-hashing', 'routes/programming/text-hashing.tsx'),
     ]),
     route('/theme', 'routes/theme.tsx'),
