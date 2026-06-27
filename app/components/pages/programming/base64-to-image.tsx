@@ -147,10 +147,10 @@ export default function Base64ToImage() {
             </form>
 
             {preview ? (
-                <div className="relative min-h-96 w-full max-w-2xl rounded-lg select-none">
-                    <div className="absolute top-2 right-2 z-10 rounded-md bg-muted px-2 py-1 text-xs font-medium">
+                <div className="relative max-w-2xl rounded-lg border shadow-lg select-none">
+                    <span className="absolute top-2 right-2 z-10 rounded-md bg-muted px-2 py-1 text-xs font-medium">
                         Preview
-                    </div>
+                    </span>
 
                     <img src={preview} alt="Preview" className="rounded-lg object-cover" />
                 </div>
