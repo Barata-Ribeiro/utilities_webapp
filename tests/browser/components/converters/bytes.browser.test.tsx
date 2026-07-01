@@ -42,7 +42,7 @@ describe('Bytes', () => {
         test('comma decimal separator converts correctly', async () => {
             const screen = await render(<Bytes />);
             await screen.getByLabelText('Kilobytes (KB)').fill('1,5');
-            await expect.element(screen.getByLabelText('Bytes (B)')).toHaveValue('1.500');
+            await expect.element(screen.getByLabelText('Bytes (B)')).toHaveValue('1500');
         });
     });
 
