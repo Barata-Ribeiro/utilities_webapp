@@ -6,6 +6,9 @@ describe('Base64TextDecode', () => {
     describe('validation', () => {
         test('shows error when submitting empty input', async () => {
             const screen = await render(<Base64TextDecode />);
+            const form = screen.container.querySelector('form');
+            expect(form).not.toBeNull();
+            form?.setAttribute('novalidate', '');
             await screen.getByRole('button', { name: /decode/i }).click();
             await expect.element(screen.getByRole('alert')).toBeInTheDocument();
         });

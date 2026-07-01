@@ -6,6 +6,9 @@ describe('Base64TextEncode', () => {
     describe('validation', () => {
         test('shows error when submitting empty text', async () => {
             const screen = await render(<Base64TextEncode />);
+            const form = screen.container.querySelector('form');
+            expect(form).not.toBeNull();
+            form?.setAttribute('novalidate', '');
             await screen.getByRole('button', { name: /encode/i }).click();
             await expect.element(screen.getByRole('alert')).toHaveTextContent('Text is required.');
         });
@@ -35,8 +38,7 @@ describe('Base64TextEncode', () => {
             const screen = await render(<Base64TextEncode />);
             await screen.getByLabelText('Text').fill('Hello');
             await screen.getByRole('button', { name: /encode/i }).click();
-            // "SGVsbG8=" is 8 characters
-            await expect.element(screen.getByText(/8/)).toBeInTheDocument();
+            expect(screen.container.querySelector('strong')?.textContent).toBe('8');
         });
     });
 

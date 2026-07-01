@@ -6,6 +6,9 @@ describe('ShaHashing', () => {
     describe('validation', () => {
         test('shows error when submitting empty text', async () => {
             const screen = await render(<ShaHashing />);
+            const form = screen.container.querySelector('form');
+            expect(form).not.toBeNull();
+            form?.setAttribute('novalidate', '');
             await screen.getByRole('button', { name: /^hash$/i }).click();
             await expect.element(screen.getByRole('alert')).toHaveTextContent('Text is required.');
         });

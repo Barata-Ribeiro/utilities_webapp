@@ -32,6 +32,9 @@ describe('Base64ToImage', () => {
     describe('validation', () => {
         test('shows error when submitting empty base64', async () => {
             const screen = await renderWithRouter();
+            const form = screen.container.querySelector('form');
+            expect(form).not.toBeNull();
+            form?.setAttribute('novalidate', '');
             await screen.getByRole('button', { name: /parse/i }).click();
             await expect.element(screen.getByRole('alert')).toBeInTheDocument();
         });

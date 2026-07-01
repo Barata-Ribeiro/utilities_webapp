@@ -17,15 +17,14 @@ async function uploadFile(screen: Awaited<ReturnType<typeof render>>, file: File
     input.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-// Minimal 1x1 transparent PNG as base64
-const PNG_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
-const PNG_BYTES = Uint8Array.from(atob(PNG_BASE64), (c) => c.codePointAt(0) ?? 0);
+// Use a file larger than the component minSize (1024 bytes)
+const PNG_BYTES = new Uint8Array(2048);
 
 describe('ImageToBase64', () => {
     describe('rendering', () => {
         test('shows the dropzone upload button', async () => {
             const screen = await render(<ImageToBase64 />);
-            await expect.element(screen.getByRole('button')).toBeInTheDocument();
+            await expect.element(screen.getByRole('button', { name: /upload a file/i })).toBeInTheDocument();
         });
 
         test('shows no error or result initially', async () => {
