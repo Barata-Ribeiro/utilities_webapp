@@ -1,0 +1,98 @@
+import { MoveRightIcon } from 'lucide-react';
+import { NavLink } from 'react-router';
+import { Meta } from '~/components/application/meta';
+import { Metadata } from '~/types/metadata';
+
+export const METADATA: Metadata = {
+    title: 'Calculators',
+    description: 'A variety of calculators including GCF, LCM, BMI, Dates, and more.',
+    keywords: [
+        'calculators',
+        'math calculators',
+        'GCF calculator',
+        'LCM calculator',
+        'BMI calculator',
+        'date calculator',
+        'percentage calculator',
+    ],
+};
+
+const calculators = [
+    {
+        title: 'BMI',
+        href: '/calculators/bmi',
+        description: 'Calculate your Body Mass Index (BMI) based on weight and height.',
+    },
+    {
+        title: 'Date Calculator',
+        href: '/calculators/dates',
+        description: 'Calculate the difference between two dates or add/subtract days from a specific date.',
+    },
+    {
+        title: 'GCF & LCM',
+        href: '/calculators/gcf-and-lcm',
+        description: 'Find the Greatest Common Factor (GCF) and Least Common Multiple (LCM) of two or more numbers.',
+    },
+    {
+        title: 'General Calculator',
+        href: '/calculators/general',
+        description: 'A simple general-purpose calculator for basic arithmetic operations.',
+    },
+    {
+        title: 'Percentage Calculator',
+        href: '/calculators/percentage',
+        description: 'Calculate percentages, percentage increases/decreases, and find the whole from a part.',
+    },
+    {
+        title: 'Rule of Three',
+        href: '/calculators/rule-of-three',
+        description: 'Solve proportion problems using the Rule of Three method.',
+    },
+];
+
+export default function Page() {
+    return (
+        <>
+            <Meta {...METADATA} />
+            <article className="rounded-md bg-card p-6 shadow">
+                <header>
+                    <h1 className="font-serif text-2xl">Calculators</h1>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                        A variety of calculators including GCF, LCM, BMI, Dates, and more.
+                    </p>
+                </header>
+
+                <nav aria-label="Calculators menu" className="mt-6">
+                    <h2 className="sr-only">Available calculators</h2>
+
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {calculators.map((calc, idx) => {
+                            const descId = `calc-desc-${idx}`;
+
+                            return (
+                                <NavLink
+                                    key={calc.href}
+                                    to={calc.href}
+                                    aria-describedby={descId}
+                                    className="block overflow-hidden rounded-md bg-background p-4 transition-shadow duration-150 hover:shadow-md focus:ring-2 focus:ring-ring focus:outline-none"
+                                >
+                                    <h3 className="text-lg font-medium">{calc.title}</h3>
+                                    <p id={descId} className="mt-2 text-sm text-muted-foreground">
+                                        {calc.description}
+                                    </p>
+                                    <div className="mt-3 inline-flex items-center gap-x-2 text-xs text-primary">
+                                        Open <MoveRightIcon aria-hidden size={16} />
+                                    </div>
+                                </NavLink>
+                            );
+                        })}
+                    </div>
+                </nav>
+
+                <footer className="mt-6 text-xs text-muted-foreground">
+                    Tip: All calculators run locally in your browser and do not transmit your data to any server.
+                </footer>
+            </article>
+        </>
+    );
+}
