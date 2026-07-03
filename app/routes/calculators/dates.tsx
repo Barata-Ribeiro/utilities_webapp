@@ -1,0 +1,66 @@
+import { Meta } from '~/components/application/meta';
+import DateTab from '~/components/pages/calculators/date-tab';
+import { Metadata } from '~/types/metadata';
+
+export const METADATA: Metadata = {
+    title: 'Date Calculator — Difference & Add/Subtract',
+    description:
+        'Calculate differences between two dates or add/subtract days, weeks, months, and years from a specific date. Includes time-of-day support and multiple output formats.',
+    keywords: [
+        'date calculator',
+        'date difference',
+        'add days',
+        'subtract days',
+        'date math',
+        'timezones',
+        'utilities',
+    ],
+};
+
+export default function Page() {
+    return (
+        <>
+            <Meta {...METADATA} />
+            <article className="rounded-md bg-card p-6 shadow">
+                <header>
+                    <h1 className="font-serif text-xl">Date Calculator</h1>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                        Use the tabs below to switch between calculating the difference between two dates or
+                        adding/subtractting an offset (days, weeks, months, years) to a given date. Both tools support
+                        selecting a time of day and provide human-friendly results along with alternative unit
+                        breakdowns.
+                    </p>
+                </header>
+
+                <section className="mt-4">
+                    <h2 className="sr-only">How it works</h2>
+                    <ul className="list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+                        <li>
+                            <strong>Date Difference</strong>: Pick a start and end date (including time) to compute the
+                            exact duration between them. Results are shown in seconds, minutes, hours, days, weeks,
+                            months, and years, plus a human-readable breakdown.
+                        </li>
+                        <li>
+                            <strong>Date Add/Subtract</strong>: Choose a base date and add or subtract days, weeks,
+                            months, or years. The tool displays the resulting date and a summary of the applied offset.
+                        </li>
+                        <li>
+                            <strong>Time precision</strong>: Both calculators support time-of-day selection so you can
+                            compute precise durations that include hours, minutes and seconds.
+                        </li>
+                    </ul>
+                </section>
+
+                <div className="mt-4">
+                    <DateTab />
+                </div>
+
+                <footer className="mt-4 text-xs text-muted-foreground">
+                    Note: This calculator is for informational purposes only. Date handling may vary across timezones
+                    and edge cases (leap seconds, DST transitions) — verify critical dates with authoritative sources
+                    when needed.
+                </footer>
+            </article>
+        </>
+    );
+}
