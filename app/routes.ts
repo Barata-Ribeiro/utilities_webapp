@@ -7,6 +7,7 @@ export default [
         index('routes/calculators/index.tsx'),
         route('/bmi', 'routes/calculators/bmi.tsx'),
         route('/dates', 'routes/calculators/dates.tsx'),
+        route('/gcf-and-lcm', 'routes/calculators/gcf-and-lcm.tsx'),
     ]),
     ...prefix('/converters', [
         index('routes/converters/index.tsx'),
