@@ -1,0 +1,43 @@
+import { Meta } from '~/components/application/meta';
+import GeneralCalculator from '~/components/pages/calculators/general-calculator';
+import { Metadata } from '~/types/metadata';
+
+export const METADATA: Metadata = {
+    title: 'Calculator',
+    description: 'A calculator for various general purposes.',
+    keywords: ['calculator', 'arithmetic', 'math', 'compute', 'utilities'],
+};
+
+export default function Page() {
+    return (
+        <>
+            <Meta {...METADATA} />
+            <article className="rounded-md bg-card p-6 shadow">
+                <h1 className="font-serif text-xl">General Calculator</h1>
+
+                <p className="mt-2 text-sm text-muted-foreground">
+                    A versatile calculator for performing a wide range of calculations, from basic arithmetic to more
+                    complex mathematical operations.
+                </p>
+
+                <section className="mt-4">
+                    <h2 className="sr-only">How it works</h2>
+                    <p>
+                        This is a general-purpose calculator that can perform a variety of calculations. Just type in
+                        your expression and watch the result update in real-time!
+                    </p>
+                </section>
+
+                <div className="mt-4">
+                    <GeneralCalculator />
+                </div>
+
+                <footer className="mt-4 text-xs text-muted-foreground">
+                    Note: This calculator runs advanced calculations through a library but should not replace
+                    professional advice. This utility runs locally in your browser and does not transmit the text to any
+                    server.
+                </footer>
+            </article>
+        </>
+    );
+}
