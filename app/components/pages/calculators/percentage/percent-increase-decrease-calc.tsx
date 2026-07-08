@@ -1,0 +1,213 @@
+import { type ChangeEvent, useId, useState } from 'react';
+import { Button } from '~/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
+import { Field, FieldGroup, FieldLabel } from '~/components/ui/field';
+import { Input } from '~/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
+
+const Action = {
+    INCREASE: 'Increase',
+    DECREASE: 'Decrease',
+} as const;
+
+type Action = (typeof Action)[keyof typeof Action];
+
+export default function PercentIncreaseDecreaseCalc() {
+    const [initialValue, setInitialValue] = useState('');
+    const [finalValue, setFinalValue] = useState('');
+    const [action, setAction] = useState<Action>(Action.INCREASE);
+    const [result, setResult] = useState<number | null>(null);
+
+    const componentName = PercentIncreaseDecreaseCalc.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+
+    const initialValueId = useId();
+    const finalValueId = useId();
+    const actionId = useId();
+    const resultId = useId();
+
+    function reset() {
+        setInitialValue('');
+        setFinalValue('');
+        setAction(Action.INCREASE);
+        setResult(null);
+    }
+
+    function handleCalculation(event: ChangeEvent<HTMLInputElement>) {
+        const { name, value: raw } = event.target;
+
+        if (!/^-?(?:\d+(?:[.,]\d*)?|[.,]\d+)$/.test(raw) && raw !== '' && raw !== '-') return;
+        const normalized = raw.replace(/,/g, '.');
+        let inputNum = Number.parseFloat(normalized);
+        if (Number.isNaN(inputNum)) inputNum = 0;
+
+        switch (name) {
+            case 'initialValue': {
+                setInitialValue(raw);
+                if (finalValue === '' || finalValue === '-') {
+                    setResult(null);
+                    return;
+                }
+                const finalNum = Number.parseFloat(finalValue.replace(/,/g, '.'));
+                if (Number.isNaN(finalNum) || inputNum === 0) {
+                    setResult(null);
+                    return;
+                }
+                const base = (100 * (finalNum - inputNum)) / Math.abs(inputNum);
+                const res = action === Action.DECREASE ? -base : base;
+                setResult(res);
+                break;
+            }
+            case 'finalValue': {
+                setFinalValue(raw);
+                if (initialValue === '' || initialValue === '-') {
+                    setResult(null);
+                    return;
+                }
+                const initialNum = Number.parseFloat(initialValue.replace(/,/g, '.'));
+                if (Number.isNaN(initialNum) || initialNum === 0) {
+                    setResult(null);
+                    return;
+                }
+                const base = (100 * (inputNum - initialNum)) / Math.abs(initialNum);
+                const res = action === Action.DECREASE ? -base : base;
+                setResult(res);
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    function handleActionChange(newAction: Action) {
+        setAction(newAction);
+        if (initialValue === '' || initialValue === '-' || finalValue === '' || finalValue === '-') {
+            setResult(null);
+            return;
+        }
+        const initialNum = Number.parseFloat(initialValue.replace(/,/g, '.'));
+        const finalNum = Number.parseFloat(finalValue.replace(/,/g, '.'));
+        if (Number.isNaN(initialNum) || Number.isNaN(finalNum) || initialNum === 0) {
+            setResult(null);
+            return;
+        }
+        const base = (100 * (finalNum - initialNum)) / Math.abs(initialNum);
+        const res = newAction === Action.DECREASE ? -base : base;
+        setResult(res);
+    }
+
+    return (
+        <Card className="w-full max-w-md">
+            <CardHeader>
+                <CardTitle>Percentage Increase/Decrease</CardTitle>
+                <CardDescription>Calculate the percentage increase or decrease between two values.</CardDescription>
+            </CardHeader>
+
+            <CardContent className="grid gap-4">
+                <FieldGroup>
+                    <Field data-invalid={initialValue === '-'}>
+                        <FieldLabel htmlFor={initialValueId}>Initial Value</FieldLabel>
+                        <Input
+                            id={initialValueId}
+                            name="initialValue"
+                            inputMode="decimal"
+                            placeholder="e.g. 80"
+                            aria-invalid={initialValue === '-' ? 'true' : undefined}
+                            aria-describedby="initial-value-help"
+                            value={initialValue}
+                            aria-label="Initial value"
+                            onChange={handleCalculation}
+                        />
+                        <p id="initial-value-help" className="sr-only">
+                            Enter the initial value.
+                        </p>
+                    </Field>
+                    <Field data-invalid={finalValue === '-'}>
+                        <FieldLabel htmlFor={finalValueId}>Final Value</FieldLabel>
+                        <Input
+                            id={finalValueId}
+                            name="finalValue"
+                            inputMode="decimal"
+                            placeholder="e.g. 20"
+                            aria-invalid={finalValue === '-' ? 'true' : undefined}
+                            aria-describedby="final-value-help"
+                            value={finalValue}
+                            aria-label="Final value"
+                            onChange={handleCalculation}
+                        />
+                        <p id="final-value-help" className="sr-only">
+                            Enter the final value.
+                        </p>
+                    </Field>
+                </FieldGroup>
+
+                <div className="flex flex-col gap-4 sm:flex sm:flex-row">
+                    <Field>
+                        <FieldLabel htmlFor={actionId}>Action</FieldLabel>
+                        <Select
+                            name="action"
+                            value={action}
+                            onValueChange={(val) => handleActionChange(val as Action)}
+                            aria-label="Select action"
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Increase/Decrease" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem className="inline-flex items-center gap-x-2" value={Action.INCREASE}>
+                                    Increase
+                                </SelectItem>
+                                <SelectItem className="inline-flex items-center gap-x-2" value={Action.DECREASE}>
+                                    Decrease
+                                </SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </Field>
+
+                    <div className="grid w-full gap-2">
+                        <FieldLabel htmlFor={resultId}>{action} (%)</FieldLabel>
+                        <Input
+                            id={resultId}
+                            name="result"
+                            placeholder="Result"
+                            aria-readonly="true"
+                            aria-label="Calculation result"
+                            aria-describedby={`${componentName}-formula`}
+                            className="font-bold"
+                            value={result === null ? '' : String(Number(result.toFixed(2)))}
+                            readOnly
+                        />
+                    </div>
+                </div>
+
+                <Button variant="outline" onClick={reset} aria-label="Reset calculator">
+                    Reset
+                </Button>
+            </CardContent>
+
+            <CardFooter className="mt-auto border-t pt-4">
+                {result === null ? (
+                    <p id={`${componentName}-formula`} className="text-sm font-medium text-muted-foreground">
+                        p = 100 ⋅ (Vf ± Vi) / |Vi|
+                    </p>
+                ) : (
+                    <p id={`${componentName}-formula`} className="grid w-full gap-1">
+                        <span className="text-sm font-medium text-muted-foreground">
+                            {result} = 100 ⋅ ({finalValue.replace(/,/g, '.')} {action === Action.INCREASE ? '+' : '-'}{' '}
+                            {initialValue.replace(/,/g, '.')}) / |{initialValue.replace(/,/g, '.')}|
+                        </span>
+                        <span className="text-sm font-medium text-muted-foreground">
+                            {finalValue.replace(/,/g, '.')} is a{' '}
+                            <strong>
+                                {result}% {action}
+                            </strong>{' '}
+                            from {initialValue.replace(/,/g, '.')}.
+                        </span>
+                    </p>
+                )}
+                <output className="sr-only" aria-live="polite" aria-atomic="true">
+                    {result === null ? 'No result' : `Result is ${result}`}
+                </output>
+            </CardFooter>
+        </Card>
+    );
+}
