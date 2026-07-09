@@ -10,6 +10,7 @@ export default [
         route('/gcf-and-lcm', 'routes/calculators/gcf-and-lcm.tsx'),
         route('/general', 'routes/calculators/general.tsx'),
         route('/percentage', 'routes/calculators/percentage.tsx'),
+        route('/rule-of-three', 'routes/calculators/rule-of-three.tsx'),
     ]),
     ...prefix('/converters', [
         index('routes/converters/index.tsx'),
