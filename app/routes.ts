@@ -28,6 +28,7 @@ export default [
         route('/image-to-base64', 'routes/programming/image-to-base64.tsx'),
         route('/text-hashing', 'routes/programming/text-hashing.tsx'),
     ]),
+    ...prefix('/utilities', [index('routes/utilities/index.tsx')]),
     route('/theme', 'routes/theme.tsx'),
     route('/sidebar', 'routes/sidebar.tsx'),
 ] satisfies RouteConfig;
