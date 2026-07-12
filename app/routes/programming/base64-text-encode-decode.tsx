@@ -1,4 +1,5 @@
 import { Meta } from '~/components/application/meta';
+import Base64TextEncodeDecodeTab from '~/components/pages/programming/base64-text-encode-decode-tab';
 import { Metadata } from '~/types/metadata';
 
 export const METADATA: Metadata = {
