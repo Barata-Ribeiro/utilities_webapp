@@ -4,11 +4,12 @@ allowBuilds:
     esbuild: true
     msw: true
     sharp: true
-overrides:
-    'vite-plugin-devtools-json>vite': '^7.0.0'
+peerDependencyRules:
+    allowedVersions:
+        'vite-plugin-devtools-json>vite': '^8'
 minimumReleaseAgeExclude:
     - isbot@5.1.44
-    - vite@8.1.0 || 8.1.2
+    - vite@8.1.0 || 8.1.4
     - prettier@3.9.4
     - shadcn@4.12.0
     - lucide-react@1.22.0
@@ -77,3 +78,4 @@ minimumReleaseAgeExclude:
     - '@radix-ui/react-visually-hidden@1.2.7'
     - radix-ui@1.6.1
     - '@types/node@26.1.1'
+    - react-dropzone@17.0.0
