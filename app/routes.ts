@@ -31,6 +31,7 @@ export default [
     ...prefix('/utilities', [
         index('routes/utilities/index.tsx'),
         route('/character-counter', 'routes/utilities/character-counter.tsx'),
+        route('/lorem-ipsum', 'routes/utilities/lorem-ipsum.tsx'),
     ]),
     route('/theme', 'routes/theme.tsx'),
     route('/sidebar', 'routes/sidebar.tsx'),
