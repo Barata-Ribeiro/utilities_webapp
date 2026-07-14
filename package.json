@@ -73,14 +73,5 @@
         "workbox-precaching": "^7.4.1",
         "workbox-routing": "^7.4.1",
         "workbox-window": "^7.4.1"
-    },
-    "resolutions": {
-        "sharp": "^0.33.5",
-        "sharp-ico": "^0.1.5"
-    },
-    "overrides": {
-        "vite-plugin-devtools-json": {
-            "vite": "^7.0.0"
-        }
     }
 }

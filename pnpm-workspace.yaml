@@ -7,6 +7,18 @@ allowBuilds:
 peerDependencyRules:
     allowedVersions:
         'vite-plugin-devtools-json>vite': '^8'
+overrides:
+    'sharp': '^0.33.5'
+    'sharp-ico': '^0.1.5'
+    'vite-plugin-devtools-json>vite': '^7'
+supportedArchitectures:
+    os:
+        - win32
+        - darwin
+        - current
+    cpu:
+        - x64
+        - arm64
 minimumReleaseAgeExclude:
     - isbot@5.1.44
     - vite@8.1.0 || 8.1.4
