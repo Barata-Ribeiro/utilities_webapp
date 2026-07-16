@@ -1,6 +1,7 @@
 packages:
     - '.'
 allowBuilds:
+    canvas: true
     esbuild: true
     msw: true
     sharp: true
@@ -91,3 +92,4 @@ minimumReleaseAgeExclude:
     - radix-ui@1.6.1
     - '@types/node@26.1.1'
     - react-dropzone@17.0.0
+    - prettier-plugin-tailwindcss@0.8.1
