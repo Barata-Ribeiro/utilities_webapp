@@ -32,6 +32,7 @@ export default [
         index('routes/utilities/index.tsx'),
         route('/character-counter', 'routes/utilities/character-counter.tsx'),
         route('/lorem-ipsum', 'routes/utilities/lorem-ipsum.tsx'),
+        route('/meme-generator', 'routes/utilities/meme-generator.tsx'),
     ]),
     route('/theme', 'routes/theme.tsx'),
     route('/sidebar', 'routes/sidebar.tsx'),
