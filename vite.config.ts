@@ -10,6 +10,10 @@ export default defineConfig(({ mode }) => {
 
     return {
         resolve: { tsconfigPaths: true },
+        ssr: {
+            optimizeDeps: { include: ['lodash'] },
+            noExternal: ['lodash'],
+        },
         plugins: [
             tailwindcss(),
             VitePWA({
