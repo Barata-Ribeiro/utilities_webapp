@@ -5,34 +5,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from '~/components/ui/label';
 import { Slider } from '~/components/ui/slider';
 import { Switch } from '~/components/ui/switch';
+import { secureRandomInt } from '~/lib/utils';
 
 function charClass(ch: string) {
     if (/^[A-Za-z]$/.test(ch)) return '';
     return 'text-primary';
-}
-
-function secureRandomInt(maxExclusive: number) {
-    if (maxExclusive <= 0) {
-        throw new Error('maxExclusive must be greater than 0');
-    }
-
-    const cryptoObj = globalThis.crypto;
-
-    if (!cryptoObj) {
-        throw new Error('Crypto API is not available');
-    }
-
-    const limit = Math.floor(0x100000000 / maxExclusive) * maxExclusive;
-    const buffer = new Uint32Array(1);
-
-    while (true) {
-        cryptoObj.getRandomValues(buffer);
-        const value = buffer[0];
-
-        if (value !== undefined && value < limit) {
-            return value % maxExclusive;
-        }
-    }
 }
 
 export default function MemorablePassword() {
