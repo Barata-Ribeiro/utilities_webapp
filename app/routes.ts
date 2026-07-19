@@ -34,6 +34,7 @@ export default [
         route('/lorem-ipsum', 'routes/utilities/lorem-ipsum.tsx'),
         route('/meme-generator', 'routes/utilities/meme-generator.tsx'),
         route('/password-generator', 'routes/utilities/password-generator.tsx'),
+        route('/qrcode-generator', 'routes/utilities/qrcode-generator.tsx'),
     ]),
     route('/theme', 'routes/theme.tsx'),
     route('/sidebar', 'routes/sidebar.tsx'),
