@@ -35,6 +35,7 @@ export default [
         route('/meme-generator', 'routes/utilities/meme-generator.tsx'),
         route('/password-generator', 'routes/utilities/password-generator.tsx'),
         route('/qrcode-generator', 'routes/utilities/qrcode-generator.tsx'),
+        route('/roman-converter', 'routes/utilities/roman-converter.tsx'),
     ]),
     route('/theme', 'routes/theme.tsx'),
     route('/sidebar', 'routes/sidebar.tsx'),
