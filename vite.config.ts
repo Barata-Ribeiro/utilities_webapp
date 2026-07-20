@@ -17,6 +17,7 @@ export default defineConfig(({ mode }) => {
         plugins: [
             tailwindcss(),
             VitePWA({
+                base: '/',
                 outDir: 'build/client',
                 registerType: 'prompt',
                 injectRegister: false,
@@ -176,6 +177,17 @@ export default defineConfig(({ mode }) => {
             cssCodeSplit: true,
             sourcemap: false,
             assetsInlineLimit: 4096,
+        },
+        server: {
+            port: 5173,
+            headers: {
+                'x-content-type-options': 'nosniff',
+                'Referrer-Policy': 'no-referrer',
+                'Permissions-Policy': 'geolocation=(), microphone=(), camera=()',
+                'X-Frame-Options': 'DENY',
+                'X-XSS-Protection': '1; mode=block',
+                'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+            },
         },
         test: {
             globals: true,
