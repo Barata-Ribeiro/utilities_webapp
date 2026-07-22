@@ -1,6 +1,8 @@
 import { reactRouter } from '@react-router/dev/vite';
+import { serwist } from '@serwist/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { playwright } from '@vitest/browser-playwright';
+import path from 'node:path';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import { defineConfig } from 'vitest/config';
 import { routesManifest } from './routes-manifest';
@@ -18,6 +20,25 @@ export default defineConfig(({ mode }) => {
             tailwindcss(),
             routesManifest(),
             !isTest && reactRouter(),
+            !isTest &&
+                serwist({
+                    swSrc: null!,
+                    swDest: null!,
+                    globDirectory: null!,
+                    swUrl: '/sw.js',
+                    injectionPoint: 'self.__SW_MANIFEST',
+                    rollupFormat: 'iife',
+                    integration: {
+                        closeBundleOrder: 'pre',
+                        configureOptions(viteConfig, options) {
+                            const clientOutDir = path.resolve(viteConfig.root, 'build', 'client');
+                            const swDest = path.resolve(clientOutDir, 'sw.js');
+                            options.swSrc = path.resolve(viteConfig.root, 'app', 'sw.ts');
+                            options.swDest = swDest;
+                            options.globDirectory = clientOutDir;
+                        },
+                    },
+                }),
             devtoolsJson({ normalizeForWindowsContainer: true }),
         ].filter(Boolean),
         build: {
