@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { AppSidebar } from '~/components/application/app-sidebar';
 import { AppThemeSwitcher } from '~/components/application/app-theme-switcher';
-import PWABadge from '~/components/application/pwa-badge';
 import Breadcrumbs from '~/components/breadcrumbs';
 import { ThemeProvider } from '~/components/theme-provider';
 import { Separator } from '~/components/ui/separator';
@@ -37,7 +36,6 @@ export default function AppShell({ children, theme, sidebarOpen }: Readonly<Prop
                     </SidebarInset>
                 </SidebarProvider>
                 <AppThemeSwitcher />
-                <PWABadge />
             </TooltipProvider>
         </ThemeProvider>
     );
