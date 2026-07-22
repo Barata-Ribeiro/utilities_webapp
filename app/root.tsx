@@ -3,6 +3,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse, 
 import '~/app.css';
 import AppShell from '~/components/application/app-shell';
 import { Meta as Metadata } from '~/components/application/meta';
+import PwaMetadata from '~/components/application/pwa-metadata';
 import SocialMetadata from '~/components/application/social-metadata';
 import { useTheme } from '~/components/theme-provider';
 import { APP_DEFAULT_TITLE, APP_DESCRIPTION, APP_KEYWORDS, APP_URL } from '~/lib/consts';
@@ -33,13 +34,7 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
                 <meta name="author" content="Barata Ribeiro" />
                 <meta name="author_url" content="https://www.linkedin.com/in/barataribeiro/" />
 
-                <meta name="theme-color" content="#e64919" />
-                <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" type="image/png" />
-                <link rel="icon" href="/icons/pwa-512x512.png" sizes="512x512" type="image/png" />
-                <link rel="icon" href="/icons/pwa-192x192.png" sizes="192x192" type="image/png" />
-                <link rel="icon" href="/icons/pwa-64x64.png" sizes="64x64" type="image/png" />
-                <link rel="icon" href="/icons/maskable-icon-512x512.png" sizes="512x512" type="image/png" />
-                <link rel="manifest" href="/manifest.json" />
+                <PwaMetadata />
                 {location.pathname === '/' && (
                     <>
                         <Metadata title={APP_DEFAULT_TITLE} description={APP_DESCRIPTION} keywords={APP_KEYWORDS} />
