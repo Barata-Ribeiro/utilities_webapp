@@ -4,6 +4,7 @@ import { playwright } from '@vitest/browser-playwright';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
+import { routesManifest } from './routes-manifest';
 
 export default defineConfig(({ mode }) => {
     const isTest = mode === 'test';
@@ -16,6 +17,7 @@ export default defineConfig(({ mode }) => {
         },
         plugins: [
             tailwindcss(),
+            routesManifest(),
             VitePWA({
                 base: '/',
                 outDir: 'build/client',
