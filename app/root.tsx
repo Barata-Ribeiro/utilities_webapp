@@ -32,7 +32,14 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
                 <meta name="dcterms:rightsHolder" content="João Mendes J. B. Ribeiro" />
                 <meta name="author" content="Barata Ribeiro" />
                 <meta name="author_url" content="https://www.linkedin.com/in/barataribeiro/" />
-                <link rel="manifest" href="/manifest.webmanifest" />
+
+                <meta name="theme-color" content="#e64919" />
+                <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" type="image/png" />
+                <link rel="icon" href="/icons/pwa-512x512.png" sizes="512x512" type="image/png" />
+                <link rel="icon" href="/icons/pwa-192x192.png" sizes="192x192" type="image/png" />
+                <link rel="icon" href="/icons/pwa-64x64.png" sizes="64x64" type="image/png" />
+                <link rel="icon" href="/icons/maskable-icon-512x512.png" sizes="512x512" type="image/png" />
+                <link rel="manifest" href="/manifest.json" />
                 {location.pathname === '/' && (
                     <>
                         <Metadata title={APP_DEFAULT_TITLE} description={APP_DESCRIPTION} keywords={APP_KEYWORDS} />
