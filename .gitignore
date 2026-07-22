@@ -181,4 +181,8 @@ sketch
 .vitest-attachments/
 tests/**/__screenshots__/
 
+# Serwist
+public/sw*
+public/swe-worker*
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,react
