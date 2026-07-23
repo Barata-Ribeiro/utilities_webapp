@@ -88,7 +88,7 @@ export function NavMain() {
                     className="cursor-pointer data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground"
                     asChild
                 >
-                    <NavLink to="/">
+                    <NavLink to="/" prefetch="render">
                         <GaugeIcon aria-hidden className="mr-2" />
                         <span>Home</span>
                     </NavLink>
@@ -100,7 +100,7 @@ export function NavMain() {
                     className="cursor-pointer data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground"
                     asChild
                 >
-                    <NavLink to="/about">
+                    <NavLink to="/about" prefetch="render" end>
                         <NotebookIcon aria-hidden className="mr-2" />
                         <span>About</span>
                     </NavLink>
@@ -135,7 +135,12 @@ export function NavMain() {
                                                 className="inline-flex cursor-pointer items-center gap-x-2 data-current:bg-sidebar-accent data-current:px-2 data-current:font-medium data-current:text-sidebar-accent-foreground"
                                                 key={subItem.title}
                                             >
-                                                <NavLink to={subItem.url} aria-current={isActive ? 'page' : undefined}>
+                                                <NavLink
+                                                    to={subItem.url}
+                                                    aria-current={isActive ? 'page' : undefined}
+                                                    prefetch="render"
+                                                    end
+                                                >
                                                     <span>{subItem.title}</span>
                                                 </NavLink>
                                             </DropdownMenuItem>
@@ -176,6 +181,9 @@ export function NavMain() {
                                                             to={subItem.url}
                                                             {...(isActive && { 'data-current': '' })}
                                                             className="inline-flex items-center gap-x-2"
+                                                            aria-current={isActive ? 'page' : undefined}
+                                                            prefetch="render"
+                                                            end
                                                         >
                                                             <span>{subItem.title}</span>
                                                         </NavLink>
