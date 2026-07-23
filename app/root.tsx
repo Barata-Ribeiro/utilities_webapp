@@ -3,6 +3,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse, 
 import '~/app.css';
 import AppShell from '~/components/application/app-shell';
 import { Meta as Metadata } from '~/components/application/meta';
+import PwaMetadata from '~/components/application/pwa-metadata';
 import SocialMetadata from '~/components/application/social-metadata';
 import { useTheme } from '~/components/theme-provider';
 import { APP_DEFAULT_TITLE, APP_DESCRIPTION, APP_KEYWORDS, APP_URL } from '~/lib/consts';
@@ -32,7 +33,8 @@ export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
                 <meta name="dcterms:rightsHolder" content="João Mendes J. B. Ribeiro" />
                 <meta name="author" content="Barata Ribeiro" />
                 <meta name="author_url" content="https://www.linkedin.com/in/barataribeiro/" />
-                <link rel="manifest" href="/manifest.webmanifest" />
+
+                <PwaMetadata />
                 {location.pathname === '/' && (
                     <>
                         <Metadata title={APP_DEFAULT_TITLE} description={APP_DESCRIPTION} keywords={APP_KEYWORDS} />

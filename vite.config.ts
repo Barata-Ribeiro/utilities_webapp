@@ -1,8 +1,9 @@
 import { reactRouter } from '@react-router/dev/vite';
+import { serwist } from '@serwist/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { playwright } from '@vitest/browser-playwright';
+import path from 'node:path';
 import devtoolsJson from 'vite-plugin-devtools-json';
-import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
 import { routesManifest } from './routes-manifest';
 
@@ -18,150 +19,26 @@ export default defineConfig(({ mode }) => {
         plugins: [
             tailwindcss(),
             routesManifest(),
-            VitePWA({
-                base: '/',
-                outDir: 'build/client',
-                registerType: 'prompt',
-                injectRegister: false,
-
-                pwaAssets: {
-                    disabled: false,
-                    config: true,
-                    includeHtmlHeadLinks: true,
-                    integration: {
-                        outDir: 'build/client',
-                    },
-                },
-
-                includeAssets: ['**/*'],
-
-                manifest: {
-                    name: 'Utilities Webapp',
-                    short_name: 'Web Utilities',
-                    description:
-                        'A collection of web utilities built with React and Vite, including a password generator, calculators, and more.',
-                    start_url: '/',
-                    scope: '/',
-                    display: 'standalone',
-                    theme_color: 'oklch(0.6229 0.2012 35.9323)',
-                    background_color: 'oklch(0.9851 0 0)',
-                    icons: [
-                        {
-                            src: 'pwa-64x64.png',
-                            sizes: '64x64',
-                            type: 'image/png',
-                        },
-                        {
-                            src: 'pwa-192x192.png',
-                            sizes: '192x192',
-                            type: 'image/png',
-                        },
-                        {
-                            src: 'pwa-512x512.png',
-                            sizes: '512x512',
-                            type: 'image/png',
-                        },
-                    ],
-                    orientation: 'portrait',
-                },
-
-                workbox: {
-                    globPatterns: ['**/*'],
-                    cleanupOutdatedCaches: true,
-                    clientsClaim: true,
-                    maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
-                    runtimeCaching: [
-                        {
-                            urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
-                                request.headers.get('RSC') === '1' && sameOrigin && !pathname.startsWith('/api/'),
-                            handler: 'StaleWhileRevalidate',
-                            options: {
-                                cacheName: 'rsc-prefetch-cache',
-                                expiration: {
-                                    maxEntries: 200,
-                                    maxAgeSeconds: 60 * 60 * 24, // 1 day
-                                },
-                            },
-                        },
-                        {
-                            urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
-                                request.headers.get('RSC') === '1' && sameOrigin && !pathname.startsWith('/api/'),
-                            handler: 'StaleWhileRevalidate',
-                            options: {
-                                cacheName: 'rsc-cache',
-                                expiration: {
-                                    maxEntries: 200,
-                                    maxAgeSeconds: 60 * 60 * 24, // 1 day
-                                },
-                            },
-                        },
-                        {
-                            urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
-                                request.headers.get('Content-Type')?.includes('text/html') &&
-                                sameOrigin &&
-                                !pathname.startsWith('/api/'),
-                            handler: 'StaleWhileRevalidate',
-                            options: {
-                                cacheName: 'html-cache',
-                                expiration: {
-                                    maxEntries: 200,
-                                    maxAgeSeconds: 60 * 60 * 24, // 1 day
-                                },
-                            },
-                        },
-                        {
-                            urlPattern: ({ request, url: { pathname }, sameOrigin }) =>
-                                (request.mode === 'navigate' ||
-                                    request.destination === 'document' ||
-                                    request.headers.get('Accept')?.includes('text/html')) &&
-                                sameOrigin &&
-                                !pathname.startsWith('/api/'),
-                            handler: 'StaleWhileRevalidate',
-                            options: {
-                                cacheName: 'navigate-cache',
-                                expiration: {
-                                    maxEntries: 200,
-                                    maxAgeSeconds: 60 * 60 * 24, // 1 day
-                                },
-                            },
-                        },
-                        {
-                            urlPattern: ({ url: { pathname }, sameOrigin }) =>
-                                /\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i.test(pathname) && sameOrigin,
-                            handler: 'StaleWhileRevalidate',
-                            options: {
-                                cacheName: 'image-cache',
-                                expiration: {
-                                    maxEntries: 64,
-                                    maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
-                                },
-                            },
-                        },
-                        {
-                            urlPattern: ({ url: { pathname }, sameOrigin }) =>
-                                /\.(?:js|css|woff2?|eot|ttf|otf|json)$/i.test(pathname) && sameOrigin,
-                            handler: 'StaleWhileRevalidate',
-                            options: {
-                                cacheName: 'static-resources-cache',
-                                expiration: {
-                                    maxEntries: 64,
-                                    maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
-                                },
-                            },
-                        },
-                    ],
-                },
-
-                devOptions: {
-                    enabled: mode === 'development',
-                    suppressWarnings: true,
-                    navigateFallback: '/',
-                    navigateFallbackAllowlist: [/^\/$/],
-                    type: 'module',
-                    resolveTempFolder: () => 'build/client/dev',
-                },
-            }),
             !isTest && reactRouter(),
+            !isTest &&
+                serwist({
+                    swSrc: null!,
+                    swDest: null!,
+                    globDirectory: null!,
+                    swUrl: '/sw.js',
+                    injectionPoint: 'self.__SW_MANIFEST',
+                    rollupFormat: 'iife',
+                    integration: {
+                        closeBundleOrder: 'pre',
+                        configureOptions(viteConfig, options) {
+                            const clientOutDir = path.resolve(viteConfig.root, 'build', 'client');
+                            const swDest = path.resolve(clientOutDir, 'sw.js');
+                            options.swSrc = path.resolve(viteConfig.root, 'app', 'sw.ts');
+                            options.swDest = swDest;
+                            options.globDirectory = clientOutDir;
+                        },
+                    },
+                }),
             devtoolsJson({ normalizeForWindowsContainer: true }),
         ].filter(Boolean),
         build: {
