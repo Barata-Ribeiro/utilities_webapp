@@ -78,6 +78,7 @@ export default function Page() {
                                     to={u.href}
                                     aria-describedby={descId}
                                     className="block overflow-hidden rounded-md bg-background p-4 transition-shadow duration-150 hover:shadow-md focus:ring-2 focus:ring-ring focus:outline-none"
+                                    prefetch="viewport"
                                 >
                                     <h3 className="text-lg font-medium">{u.title}</h3>
                                     <p id={descId} className="mt-2 text-sm text-muted-foreground">
