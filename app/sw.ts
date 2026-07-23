@@ -56,4 +56,31 @@ const serwist = new Serwist({
     ],
 });
 
+if (isDev) {
+    self.addEventListener('install', (event) => {
+        console.log('Event install (dev only)', event);
+        self.skipWaiting();
+    });
+
+    self.addEventListener('activate', (event) => {
+        event.waitUntil(self.clients.claim());
+    });
+
+    self.addEventListener('fetch', (event) => console.log('Fetch event (dev only)', event));
+}
+
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        (async () => {
+            const routes: string[] = await fetch('/routes.json').then((r) => r.json());
+
+            const requestPromises = routes.map((route) =>
+                Promise.resolve(serwist.handleRequest({ request: new Request(route), event })),
+            );
+
+            await Promise.allSettled(requestPromises);
+        })(),
+    );
+});
+
 serwist.addEventListeners();
