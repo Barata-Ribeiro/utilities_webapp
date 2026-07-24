@@ -5,14 +5,36 @@ import DateAddSubtract from '~/components/pages/calculators/date/date-add-subtra
 // Radix Popover renders the calendar in a portal on document.body —
 // we query document.body directly and use vi.waitFor to handle async opening/closing.
 async function openCalendarAndPickDay(triggerId = 'calendar', index = 0) {
-    document.getElementById(triggerId)!.click();
+    const trigger = document.getElementById(triggerId) as HTMLButtonElement | null;
 
-    await vi.waitFor(() => {
-        if (!document.body.querySelector('[role="grid"]')) throw new Error('calendar not open');
-    });
+    if (!trigger) throw new Error(`calendar trigger not found: ${triggerId}`);
+
+    let openPopover: HTMLElement | null = null;
+
+    // Firefox can occasionally drop the first click while a previous popover animation settles.
+    for (let attempt = 0; attempt < 3; attempt++) {
+        trigger.click();
+
+        try {
+            await vi.waitFor(
+                () => {
+                    openPopover = document.body.querySelector<HTMLElement>(
+                        '[data-slot="popover-content"][data-state="open"]',
+                    );
+
+                    if (!openPopover?.querySelector('[role="grid"]')) throw new Error('calendar not open');
+                },
+                { timeout: 2500 },
+            );
+            break;
+        } catch (error) {
+            if (attempt === 2) throw error;
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
+        }
+    }
 
     const buttons = Array.from(
-        document.body.querySelectorAll<HTMLButtonElement>('[role="grid"] button:not([disabled])'),
+        openPopover!.querySelectorAll<HTMLButtonElement>('[role="grid"] button:not([disabled])'),
     );
     buttons[index]!.click();
 
@@ -20,17 +42,34 @@ async function openCalendarAndPickDay(triggerId = 'calendar', index = 0) {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
 
     await vi.waitFor(() => {
-        if (document.body.querySelector('[role="grid"]')) throw new Error('calendar still open');
+        if (document.body.querySelector('[data-slot="popover-content"][data-state="open"]')) {
+            throw new Error('calendar still open');
+        }
     });
 }
 
 // Radix Select content is also a portal.
 async function selectAction(action: 'Add' | 'Subtract') {
-    document.getElementById('action')!.click();
+    const trigger = document.getElementById('action') as HTMLButtonElement | null;
 
-    await vi.waitFor(() => {
-        if (!document.body.querySelector('[role="option"]')) throw new Error('options not visible');
-    });
+    if (!trigger) throw new Error('action select trigger not found');
+
+    for (let attempt = 0; attempt < 3; attempt++) {
+        trigger.click();
+
+        try {
+            await vi.waitFor(
+                () => {
+                    if (!document.body.querySelector('[role="option"]')) throw new Error('options not visible');
+                },
+                { timeout: 2500 },
+            );
+            break;
+        } catch (error) {
+            if (attempt === 2) throw error;
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
+        }
+    }
 
     const option = Array.from(document.body.querySelectorAll<HTMLElement>('[role="option"]')).find((el) =>
         el.textContent?.includes(action),
