@@ -1,10 +1,12 @@
+import { useIsMounted } from '~/hooks/use-is-mounted';
 import { useIsomorphicLayoutEffect } from '~/hooks/use-isomorphic-layout-effect';
 
 const SW_URL = '/sw.js';
 
 export function SwRegister(): null {
+    const isMounted = useIsMounted();
+
     useIsomorphicLayoutEffect(() => {
-        let mounted = true;
         let retryRegistered = false;
 
         function handleNewWorkerStateChange(event: Event) {
@@ -19,7 +21,7 @@ export function SwRegister(): null {
             if (state === 'redundant' && !retryRegistered) {
                 retryRegistered = true;
                 setTimeout(() => {
-                    if (mounted) {
+                    if (isMounted()) {
                         navigator.serviceWorker
                             .register(SW_URL, { scope: '/' })
                             .catch((e) => console.error('[SW] retry register failed: ', e));
@@ -63,7 +65,7 @@ export function SwRegister(): null {
             try {
                 const reg = await navigator.serviceWorker.register(SW_URL, { scope: '/' });
 
-                if (!mounted) return;
+                if (!isMounted()) return;
 
                 reg.addEventListener('updatefound', () => {
                     const newWorker = reg.installing;
@@ -75,9 +77,9 @@ export function SwRegister(): null {
 
                 reg.update().catch((e) => console.error('[SW] update check failed: ', e));
 
-                const ready = await navigator.serviceWorker.ready;
+                await navigator.serviceWorker.ready;
 
-                console.log('[SW] ready: ', ready);
+                console.log('[SW] service worker registered with scope: ', reg.scope);
             } catch (err) {
                 console.error('[SW] registration failed: ', err);
             }
@@ -86,9 +88,13 @@ export function SwRegister(): null {
         void tryRegister();
 
         return () => {
-            mounted = false;
+            navigator.serviceWorker.getRegistration(SW_URL).then((reg) => {
+                if (reg?.installing) reg.installing.removeEventListener('statechange', handleNewWorkerStateChange);
+                if (reg?.waiting) reg.waiting.removeEventListener('statechange', handleNewWorkerStateChange);
+                if (reg?.active) reg.active.removeEventListener('statechange', handleNewWorkerStateChange);
+            });
         };
-    }, []);
+    }, [isMounted]);
 
     return null;
 }
