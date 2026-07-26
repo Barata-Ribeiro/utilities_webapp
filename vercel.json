@@ -19,7 +19,7 @@
             ]
         },
         {
-            "source": "build/client/manifest.webmanifest",
+            "source": "build/client/manifest.json",
             "headers": [
                 {
                     "key": "Content-Type",
@@ -29,6 +29,15 @@
         },
         {
             "source": "build/client/assets/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "build/client/icons/(.*)",
             "headers": [
                 {
                     "key": "Cache-Control",
