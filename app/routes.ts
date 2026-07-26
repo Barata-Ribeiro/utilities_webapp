@@ -37,6 +37,7 @@ export default [
         route('/qrcode-generator', 'routes/utilities/qrcode-generator.tsx'),
         route('/roman-converter', 'routes/utilities/roman-converter.tsx'),
         route('/text-to-speech', 'routes/utilities/text-to-speech.tsx'),
+        route('/url-slug-generator', 'routes/utilities/url-slug-generator.tsx'),
     ]),
     route('/theme', 'routes/theme.tsx'),
     route('/sidebar', 'routes/sidebar.tsx'),
