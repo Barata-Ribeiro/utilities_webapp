@@ -181,8 +181,11 @@ sketch
 .vitest-attachments/
 tests/**/__screenshots__/
 
-# Serwist
+### Serwist ###
 public/sw*
 public/swe-worker*
+
+### Vercel ###
+.vercel
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,react
