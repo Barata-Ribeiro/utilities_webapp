@@ -1,11 +1,24 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse, useLocation } from 'react-router';
-
+import { RefreshCcw } from 'lucide-react';
+import { useEffect } from 'react';
+import {
+    Link,
+    Links,
+    Meta,
+    Outlet,
+    Scripts,
+    ScrollRestoration,
+    isRouteErrorResponse,
+    useLocation,
+    useNavigate,
+} from 'react-router';
 import '~/app.css';
+import errorImage from '~/assets/images/error-image.jpg';
 import AppShell from '~/components/application/app-shell';
 import { Meta as Metadata } from '~/components/application/meta';
 import PwaMetadata from '~/components/application/pwa-metadata';
 import SocialMetadata from '~/components/application/social-metadata';
 import { useTheme } from '~/components/theme-provider';
+import { Button } from '~/components/ui/button';
 import { APP_DEFAULT_TITLE, APP_DESCRIPTION, APP_KEYWORDS, APP_URL } from '~/lib/consts';
 import { sidebarCookie } from '~/lib/sidebar-cookie.server';
 import { themeCookie } from '~/lib/theme-cookie.server';
@@ -74,6 +87,9 @@ export default function App({ loaderData }: Route.ComponentProps) {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+    const location = useLocation();
+    const navigate = useNavigate();
+
     let message = 'Oops!';
     let details = 'An unexpected error occurred.';
     let stack: string | undefined;
@@ -86,15 +102,43 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
         stack = error.stack;
     }
 
+    useEffect(() => {
+        if (!error) {
+            navigate(location.pathname, { replace: true });
+        }
+    }, [error, location.pathname, navigate]);
+
     return (
-        <main className="container mx-auto p-4 pt-16">
-            <h1>{message}</h1>
-            <p>{details}</p>
-            {stack && (
-                <pre className="w-full overflow-x-auto p-4">
-                    <code>{stack}</code>
-                </pre>
-            )}
+        <main className="mx-auto flex min-h-dvh max-w-7xl flex-col items-center justify-center gap-8 p-8 md:gap-12 md:p-16">
+            <img
+                src={errorImage}
+                alt="there was an error"
+                className="aspect-video w-full max-w-4xl rounded-xl object-cover italic dark:brightness-[0.95] dark:invert"
+            />
+            <div className="text-center text-balance">
+                <h1 className="mb-2 text-5xl font-bold">{message}</h1>
+                <p>{details}</p>
+                {stack && (
+                    <pre className="w-full overflow-x-auto p-4">
+                        <code>{stack}</code>
+                    </pre>
+                )}
+                <div className="mt-6 flex flex-wrap items-center justify-center gap-4 md:mt-8">
+                    <Button className="h-9 px-4 py-2" asChild>
+                        <Link to="/" reloadDocument>
+                            Go Back Home
+                        </Link>
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        className="h-9 px-4 py-2"
+                        onClick={() => navigate(location.pathname, { replace: true })}
+                    >
+                        <span>Refresh</span>
+                        <RefreshCcw aria-hidden />
+                    </Button>
+                </div>
+            </div>
         </main>
     );
 }
