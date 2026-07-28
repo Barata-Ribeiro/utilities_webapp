@@ -1,9 +1,9 @@
 import { AlertCircleIcon } from 'lucide-react';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { Meta } from '~/components/application/meta';
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
 import { Skeleton } from '~/components/ui/skeleton';
-import { useIsMounted } from '~/hooks/use-is-mounted';
+import { useUnmount } from '~/hooks/use-unmount';
 import { Metadata } from '~/types/metadata';
 
 const MemeGenerator = lazy(() => import('~/components/pages/utilities/meme-generator'));
@@ -16,7 +16,10 @@ export const METADATA: Metadata = {
 };
 
 export default function Page() {
-    const isMounted = useIsMounted();
+    const [isHydrated, setIsHydrated] = useState(false);
+
+    useEffect(() => setIsHydrated(true), []);
+    useUnmount(() => setIsHydrated(false));
 
     return (
         <>
@@ -46,7 +49,7 @@ export default function Page() {
                 </section>
 
                 <div className="mt-4 w-full">
-                    {isMounted() ? (
+                    {isHydrated ? (
                         <Suspense
                             fallback={
                                 <Skeleton
