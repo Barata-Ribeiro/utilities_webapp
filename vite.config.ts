@@ -1,3 +1,5 @@
+/// <reference types="vitest/config" />
+
 import { reactRouter } from '@react-router/dev/vite';
 import { serwist } from '@serwist/vite';
 import tailwindcss from '@tailwindcss/vite';
@@ -5,7 +7,7 @@ import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import { defineConfig } from 'vitest/config';
-import { routesManifest } from './routes-manifest';
+import { routesManifest } from './routes-manifest.ts';
 
 export default defineConfig(({ mode }) => {
     const isTest = mode === 'test';
