@@ -85,7 +85,7 @@ export function SwRegister(): null {
             }
         }
 
-        void tryRegister();
+        !import.meta.env.DEV && void tryRegister();
 
         return () => {
             navigator.serviceWorker.getRegistration(SW_URL).then((reg) => {
