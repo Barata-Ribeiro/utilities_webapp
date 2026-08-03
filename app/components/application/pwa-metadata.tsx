@@ -1,4 +1,4 @@
-import { Fragment } from 'react/jsx-runtime';
+import { memo } from 'react';
 
 type Icon = {
     rel?: string;
@@ -7,7 +7,7 @@ type Icon = {
     type: string;
 };
 
-export default function PwaMetadata() {
+const PwaMetadata = memo(() => {
     const icons: Icon[] = [
         {
             rel: 'apple-touch-icon',
@@ -27,12 +27,14 @@ export default function PwaMetadata() {
     ];
 
     return (
-        <Fragment>
+        <>
             <meta name="theme-color" content="#e64919" />
             {icons.map((icon) => (
                 <link key={icon.src} rel={icon.rel ?? 'icon'} href={icon.src} sizes={icon.sizes} type={icon.type} />
             ))}
             <link rel="manifest" href="/manifest.json" />
-        </Fragment>
+        </>
     );
-}
+});
+
+export default PwaMetadata;

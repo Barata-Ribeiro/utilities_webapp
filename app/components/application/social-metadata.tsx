@@ -1,4 +1,4 @@
-import { Fragment } from 'react/jsx-runtime';
+import { memo } from 'react';
 
 type OpenGraphMetadata = {
     title: string;
@@ -21,7 +21,7 @@ type Props = {
     twitter: TwitterMetadata;
 };
 
-export default function SocialMetadata({ openGraph, twitter }: Readonly<Props>) {
+const SocialMetadata = memo(({ openGraph, twitter }: Readonly<Props>) => {
     const openGraphMetadata = {
         title: openGraph.title,
         description: openGraph.description,
@@ -39,13 +39,15 @@ export default function SocialMetadata({ openGraph, twitter }: Readonly<Props>) 
     };
 
     return (
-        <Fragment>
+        <>
             {Object.entries(openGraphMetadata).map(([key, value]) => (
                 <meta key={`og-${key}`} property={`og:${key}`} content={value} />
             ))}
             {Object.entries(twitterMetadata).map(([key, value]) => (
                 <meta key={`twitter-${key}`} name={`twitter:${key}`} content={value} />
             ))}
-        </Fragment>
+        </>
     );
-}
+});
+
+export default SocialMetadata;
