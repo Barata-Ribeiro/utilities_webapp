@@ -11,6 +11,26 @@ export const metadata: Metadata = {
 
 const utilities = [
     {
+        title: 'Character Counter',
+        href: '/utilities/character-counter',
+        description: 'Count characters, words, and lines for any text input quickly.',
+    },
+    {
+        title: 'Dice Roller',
+        href: '/utilities/dice-roller',
+        description: 'Roll virtual dice for games or simulations with customizable options.',
+    },
+    {
+        title: 'Lorem Ipsum',
+        href: '/utilities/lorem-ipsum',
+        description: 'Generate placeholder text (Lorem Ipsum) with adjustable length and structure.',
+    },
+    {
+        title: 'Meme Generator',
+        href: '/utilities/meme-generator',
+        description: 'Create your own memes with customizable text, fonts, and styles.',
+    },
+    {
         title: 'Password & PIN Generator',
         href: '/utilities/password-generator',
         description:
@@ -27,29 +47,14 @@ const utilities = [
         description: 'Convert between Roman numerals and Arabic numbers (1–3999).',
     },
     {
-        title: 'URL Slug Generator',
-        href: '/utilities/url-slug-generator',
-        description: 'Turn titles or phrases into SEO-friendly URL slugs with formatting options.',
-    },
-    {
-        title: 'Lorem Ipsum',
-        href: '/utilities/lorem-ipsum',
-        description: 'Generate placeholder text (Lorem Ipsum) with adjustable length and structure.',
-    },
-    {
-        title: 'Character Counter',
-        href: '/utilities/character-counter',
-        description: 'Count characters, words, and lines for any text input quickly.',
-    },
-    {
         title: 'Text to Speech',
         href: '/utilities/text-to-speech',
         description: 'Convert written text into natural-sounding speech with customizable voices and languages.',
     },
     {
-        title: 'Meme Generator',
-        href: '/utilities/meme-generator',
-        description: 'Create your own memes with customizable text, fonts, and styles.',
+        title: 'URL Slug Generator',
+        href: '/utilities/url-slug-generator',
+        description: 'Turn titles or phrases into SEO-friendly URL slugs with formatting options.',
     },
 ];
 
