@@ -1,4 +1,5 @@
 import { Meta } from '~/components/application/meta';
+import DiceRollerTab from '~/components/pages/utilities/dice-roller-tab';
 import { Metadata } from '~/types/metadata';
 
 export const METADATA: Metadata = {
@@ -37,7 +38,9 @@ export default function Page() {
                     </ul>
                 </section>
 
-                <div className="mt-4">{/* COMPONENT HERE */}</div>
+                <div className="mt-4">
+                    <DiceRollerTab />
+                </div>
 
                 <footer className="mt-4 text-xs text-muted-foreground">
                     Tip: This utility runs locally in your browser and does not transmit the results to any server.
