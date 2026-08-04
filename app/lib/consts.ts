@@ -1,6 +1,7 @@
 export const URLS = {
     utilities: [
         { title: 'Char. Counter', url: '/utilities/character-counter' },
+        { title: 'Dice Roller', url: '/utilities/dice-roller' },
         { title: 'Lorem Ipsum Generator', url: '/utilities/lorem-ipsum' },
         { title: 'Meme Generator', url: '/utilities/meme-generator' },
         { title: 'Pass. Generator', url: '/utilities/password-generator' },
