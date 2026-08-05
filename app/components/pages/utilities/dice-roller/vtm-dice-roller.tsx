@@ -138,14 +138,14 @@ export default function VtmDiceRoller() {
                         />
                     </FieldGroup>
 
-                    <ButtonGroup className="mx-auto h-fit" orientation={isMobile ? 'vertical' : 'horizontal'}>
-                        <Button type="submit" id="roll-dice">
+                    <ButtonGroup className="w-full" orientation={isMobile ? 'vertical' : 'horizontal'}>
+                        <Button type="submit" id="roll-dice" className="flex-1 max-md:min-h-8">
                             Roll Dice
                         </Button>
-                        <Button type="submit" id="rouse-check" variant="secondary">
+                        <Button type="submit" id="rouse-check" variant="secondary" className="flex-1 max-md:min-h-8">
                             Rouse Check
                         </Button>
-                        <Button type="button" variant="destructive" onClick={reset}>
+                        <Button type="button" variant="destructive" className="flex-1 max-md:min-h-8" onClick={reset}>
                             Reset
                         </Button>
                     </ButtonGroup>
