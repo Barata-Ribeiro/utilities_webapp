@@ -31,6 +31,7 @@ export default [
     ...prefix('/utilities', [
         index('routes/utilities/index.tsx'),
         route('/character-counter', 'routes/utilities/character-counter.tsx'),
+        route('/dice-roller', 'routes/utilities/dice-roller.tsx'),
         route('/lorem-ipsum', 'routes/utilities/lorem-ipsum.tsx'),
         route('/meme-generator', 'routes/utilities/meme-generator.tsx'),
         route('/password-generator', 'routes/utilities/password-generator.tsx'),

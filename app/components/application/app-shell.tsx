@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { AppSidebar } from '~/components/application/app-sidebar';
 import { AppThemeSwitcher } from '~/components/application/app-theme-switcher';
 import { SwRegister } from '~/components/application/sw-register';
@@ -8,6 +8,7 @@ import { Separator } from '~/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '~/components/ui/sidebar';
 import { TooltipProvider } from '~/components/ui/tooltip';
 import type { Theme } from '~/lib/theme-cookie.server';
+import AppGlobalEvents from './app-global-events';
 
 type Props = {
     children: ReactNode;
@@ -38,6 +39,7 @@ export default function AppShell({ children, theme, sidebarOpen }: Readonly<Prop
                 </SidebarProvider>
                 <AppThemeSwitcher />
                 <SwRegister />
+                <AppGlobalEvents />
             </TooltipProvider>
         </ThemeProvider>
     );
