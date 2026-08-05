@@ -1,9 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { InfoIcon } from 'lucide-react';
 import { type BaseSyntheticEvent, useCallback, useState, useTransition } from 'react';
 import { Controller, type Resolver, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
-import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert';
+import VtmAlert from '~/components/pages/utilities/dice-roller/vtm-alert';
 import { Button } from '~/components/ui/button';
 import { ButtonGroup } from '~/components/ui/button-group';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
@@ -108,15 +107,7 @@ export default function VtmDiceRoller() {
             </CardHeader>
 
             <CardContent className="space-y-4">
-                <Alert className="bg-muted/50">
-                    <InfoIcon />
-                    <AlertTitle>Important!</AlertTitle>
-                    <AlertDescription>
-                        Regular dice are summed with hunger dice to determine the total dice rolled. Hunger dice are a
-                        special type of die that can result in critical successes or failures, so read the rules
-                        carefully!
-                    </AlertDescription>
-                </Alert>
+                <VtmAlert />
 
                 <form
                     onSubmit={form.handleSubmit(onSubmitFn)}
