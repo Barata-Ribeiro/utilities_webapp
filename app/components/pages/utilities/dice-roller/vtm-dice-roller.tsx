@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { floor } from 'mathjs';
 import { type BaseSyntheticEvent, useCallback, useState, useTransition } from 'react';
 import { Controller, type Resolver, useForm } from 'react-hook-form';
 import { Link } from 'react-router';
@@ -20,43 +21,49 @@ import hungerDieSuccess from '~/assets/dice/vtm/Dice_Hunger_Success.png';
 import regularDieCritical from '~/assets/dice/vtm/Dice_Regular_Critical.png';
 import regularDieFailure from '~/assets/dice/vtm/Dice_Regular_Failure.png';
 import regularDieSuccess from '~/assets/dice/vtm/Dice_Regular_Success.png';
+import { cn } from '~/lib/utils';
 
 type DiceRollData = {
     regularDiceRoll: number[];
     hungerDiceRoll: number[];
+    difficulty: number | undefined;
 };
 
 const VtmDiceRollerSchema = z.object({
     regularDice: z.coerce.number().min(1).max(10).default(1),
     hungerDice: z.coerce.number().min(0).max(5).default(0),
-    difficulty: z.coerce.number().min(2).max(10).default(4).optional(),
+    difficulty: z.coerce.number().min(1).max(10).default(3).optional(),
 });
 
 type VtmDiceRollerSchemaType = z.infer<typeof VtmDiceRollerSchema>;
 
 export default function VtmDiceRoller() {
-    const [currentRoll, setCurrentRoll] = useState<DiceRollData>({ regularDiceRoll: [], hungerDiceRoll: [] });
+    const [currentRoll, setCurrentRoll] = useState<DiceRollData>({
+        regularDiceRoll: [],
+        hungerDiceRoll: [],
+        difficulty: undefined,
+    });
     const [isPending, startTransition] = useTransition();
     const { isMobile } = useIsMobile();
 
     const form = useForm<VtmDiceRollerSchemaType>({
         resolver: zodResolver(VtmDiceRollerSchema) as Resolver<VtmDiceRollerSchemaType>,
-        defaultValues: { regularDice: 1, hungerDice: 0, difficulty: 4 },
+        defaultValues: { regularDice: 1, hungerDice: 0, difficulty: 3 },
     });
 
-    function rollDice(regularDice: number, hungerDice: number, difficulty: number | undefined) {
-        if (hungerDice > regularDice) {
+    function rollDice(regularDice: number, hungerDice: number, difficulty: number | undefined, isRouseCheck: boolean) {
+        if (hungerDice > regularDice && !isRouseCheck) {
             alert('Hunger dice cannot exceed total dice.');
             return;
         }
 
-        if (difficulty && (difficulty < 2 || difficulty > 10)) {
-            alert('Difficulty must be between 2 and 10.');
+        if (difficulty && (difficulty < 1 || difficulty > 10) && !isRouseCheck) {
+            alert('Difficulty must be between 1 and 10.');
             return;
         }
 
-        if (regularDice < 1 || regularDice > 10) {
-            alert('Total dice must be between 1 and 10.');
+        if ((regularDice < 1 || regularDice > 10) && !isRouseCheck) {
+            alert('Regular dice must be between 1 and 10.');
             return;
         }
 
@@ -65,7 +72,17 @@ export default function VtmDiceRoller() {
             return;
         }
 
-        setCurrentRoll({ regularDiceRoll: [], hungerDiceRoll: [] });
+        if (difficulty && !isRouseCheck) {
+            const totalAvailableDice = regularDice + hungerDice;
+            const maximumPotentialSuccesses = totalAvailableDice * 2;
+
+            if (maximumPotentialSuccesses < difficulty) {
+                alert('Not enough dice to potentially meet the difficulty.');
+                return;
+            }
+        }
+
+        setCurrentRoll({ regularDiceRoll: [], hungerDiceRoll: [], difficulty });
 
         for (let i = 0; i < regularDice; i++) {
             const roll = rollDie(10);
@@ -86,12 +103,10 @@ export default function VtmDiceRoller() {
 
                 switch (buttonClicked) {
                     case 'roll-dice':
-                        rollDice(regularDice, hungerDice, difficulty);
+                        rollDice(regularDice, hungerDice, difficulty, false);
                         break;
                     case 'rouse-check':
-                        console.log(
-                            `Performing rouse check with ${regularDice} regular dice and ${hungerDice} hunger dice.`,
-                        );
+                        rollDice(0, 1, 1, true);
                         break;
                     default:
                         throw new Error('Something went wrong. Please try again.');
@@ -101,10 +116,101 @@ export default function VtmDiceRoller() {
         [startTransition],
     );
 
+    function calculateResults(regularDiceRoll: number[], hungerDiceRoll: number[], difficulty: number | undefined) {
+        let successCount = 0;
+        let criticalCount = 0;
+        let messyCriticalCount = 0;
+        let bestialFailureCount = 0;
+
+        // Process regular dice rolls
+        for (const roll of regularDiceRoll) {
+            if (roll >= 6 && roll < 10) {
+                successCount++;
+            } else if (roll === 10) {
+                criticalCount++;
+                successCount += 2; // Each critical counts as two successes
+            }
+        }
+
+        for (const roll of hungerDiceRoll) {
+            if (roll >= 6 && roll < 10) {
+                successCount++;
+            } else if (roll === 10) {
+                messyCriticalCount++;
+                successCount += 2; // Each messy critical counts as two successes
+            } else if (roll === 1) {
+                bestialFailureCount++;
+            }
+        }
+
+        // Adjust critical successes
+        const totalCriticals = criticalCount + messyCriticalCount;
+        const criticalPairs = floor(totalCriticals / 2);
+        successCount += criticalPairs * 2; // Each pair of criticals counts as two successes
+
+        const hasCritical = criticalPairs >= 1;
+        const hasMessyCritical = hasCritical && messyCriticalCount > 0;
+
+        // Determine the outcome
+        let outcome: string;
+        let outcomeClassName: string;
+
+        const isRouseCheck = regularDiceRoll.length === 0 && hungerDiceRoll.length === 1 && difficulty === 1;
+
+        if (isRouseCheck) {
+            if (successCount >= 1) {
+                outcome = 'Rouse Check Success';
+                outcomeClassName = cn('bg-green-100 text-green-800');
+            } else {
+                outcome = 'Rouse Check Failure (Increase Hunger by 1)';
+                outcomeClassName = cn('bg-red-100 text-red-800');
+                if (bestialFailureCount > 0) {
+                    outcome += ' and Bestial Failure (Compulsion Check)';
+                    outcomeClassName = cn('bg-red-100 text-red-800');
+                }
+            }
+
+            return { outcome, outcomeClassName };
+        }
+
+        if (difficulty !== undefined) {
+            if (successCount >= difficulty) {
+                if (hasMessyCritical) {
+                    outcome = `Messy Critical Success (${successCount}/${difficulty})`;
+                    outcomeClassName = cn('bg-yellow-100 text-yellow-800');
+                } else if (hasCritical) {
+                    outcome = `Critical Success (${successCount}/${difficulty})`;
+                    outcomeClassName = cn('bg-green-100 text-green-800');
+                } else {
+                    outcome = `Success (${successCount}/${difficulty})`;
+                    outcomeClassName = cn('bg-green-100 text-green-800');
+                }
+            } else if (bestialFailureCount > 0) {
+                outcome = `Bestial Failure (${successCount}/${difficulty})`;
+                outcomeClassName = cn('bg-red-100 text-red-800');
+            } else {
+                outcome = `Failure (${successCount}/${difficulty})`;
+                outcomeClassName = cn('bg-red-100 text-red-800');
+            }
+        } else {
+            outcome = `Successes: ${successCount}`;
+            outcomeClassName = cn('bg-green-100 text-green-800');
+            if (hasMessyCritical) {
+                outcome += `\n Messy Critical Possible`;
+            } else if (hasCritical) {
+                outcome += `\n Critical Possible`;
+            }
+        }
+
+        return { outcome, outcomeClassName };
+    }
+
     function reset() {
         form.reset();
-        setCurrentRoll({ regularDiceRoll: [], hungerDiceRoll: [] });
+        setCurrentRoll({ regularDiceRoll: [], hungerDiceRoll: [], difficulty: undefined });
     }
+
+    const hasRolledDice = currentRoll.regularDiceRoll.length > 0 || currentRoll.hungerDiceRoll.length > 0;
 
     return (
         <Card>
@@ -222,12 +328,26 @@ export default function VtmDiceRoller() {
                 </form>
 
                 <div className="rounded-md border border-dashed p-4">
-                    {currentRoll.regularDiceRoll.length > 0 || currentRoll.hungerDiceRoll.length > 0 ? (
+                    {hasRolledDice &&
+                        (() => {
+                            const { outcome, outcomeClassName } = calculateResults(
+                                currentRoll.regularDiceRoll,
+                                currentRoll.hungerDiceRoll,
+                                currentRoll.difficulty,
+                            );
+
+                            return (
+                                <div className={cn('-mx-4 -mt-4 mb-4 rounded-t-md p-2 text-center', outcomeClassName)}>
+                                    <strong>{outcome}</strong>
+                                </div>
+                            );
+                        })()}
+                    {hasRolledDice ? (
                         <div className="flex w-full flex-col items-center justify-center gap-2">
                             <div className="flex flex-wrap items-center gap-2 select-none">
                                 {currentRoll.regularDiceRoll.map((roll, index) => {
                                     switch (true) {
-                                        case roll < 8:
+                                        case roll < 6:
                                             return (
                                                 <img
                                                     key={`regular-dice-${index}-${roll}`}
@@ -237,7 +357,7 @@ export default function VtmDiceRoller() {
                                                     className="h-12 italic"
                                                 />
                                             );
-                                        case roll >= 8 && roll < 10:
+                                        case roll >= 6 && roll < 10:
                                             return (
                                                 <img
                                                     key={`regular-dice-${index}-${roll}`}
@@ -263,7 +383,7 @@ export default function VtmDiceRoller() {
                                 })}
                                 {currentRoll.hungerDiceRoll.map((roll, index) => {
                                     switch (true) {
-                                        case roll > 1 && roll < 8:
+                                        case roll > 1 && roll < 6:
                                             return (
                                                 <img
                                                     key={`hunger-dice-${index}-${roll}`}
@@ -273,7 +393,7 @@ export default function VtmDiceRoller() {
                                                     className="h-12 italic"
                                                 />
                                             );
-                                        case roll >= 8 && roll < 10:
+                                        case roll >= 6 && roll < 10:
                                             return (
                                                 <img
                                                     key={`hunger-dice-${index}-${roll}`}
