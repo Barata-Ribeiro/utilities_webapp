@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type BaseSyntheticEvent, useCallback, useState, useTransition } from 'react';
 import { Controller, type Resolver, useForm } from 'react-hook-form';
+import { Link } from 'react-router';
 import { z } from 'zod/v4';
 import VtmAlert from '~/components/pages/utilities/dice-roller/vtm-alert';
 import { Button } from '~/components/ui/button';
@@ -10,6 +11,15 @@ import { Field, FieldError, FieldGroup, FieldLabel } from '~/components/ui/field
 import { Input } from '~/components/ui/input';
 import useIsMobile from '~/hooks/use-mobile';
 import { rollDie } from '~/lib/dice-roller.utils';
+
+// Dice import
+import hungerDieBestialFailure from '~/assets/dice/vtm/Dice_Hunger_BestialFailure.png';
+import hungerDieFailure from '~/assets/dice/vtm/Dice_Hunger_Failure.png';
+import hungerDieMessyCritical from '~/assets/dice/vtm/Dice_Hunger_MessyCritical.png';
+import hungerDieSuccess from '~/assets/dice/vtm/Dice_Hunger_Success.png';
+import regularDieCritical from '~/assets/dice/vtm/Dice_Regular_Critical.png';
+import regularDieFailure from '~/assets/dice/vtm/Dice_Regular_Failure.png';
+import regularDieSuccess from '~/assets/dice/vtm/Dice_Regular_Success.png';
 
 type DiceRollData = {
     regularDiceRoll: number[];
@@ -210,25 +220,114 @@ export default function VtmDiceRoller() {
                         </Button>
                     </ButtonGroup>
                 </form>
-            </CardContent>
-            <CardFooter className="border-t">
-                {currentRoll.regularDiceRoll.length > 0 || currentRoll.hungerDiceRoll.length > 0 ? (
-                    <div className="flex flex-col gap-2">
-                        <p className="text-sm font-medium">Current Roll:</p>
-                        <div className="flex flex-wrap gap-2">
-                            {currentRoll.regularDiceRoll.map((roll, index) => (
-                                <span key={`regular-dice-${index}-${roll}`}>{roll}</span>
-                            ))}
-                        </div>
-                        {currentRoll.hungerDiceRoll.length > 0 && (
-                            <div className="flex flex-wrap gap-2">
-                                {currentRoll.hungerDiceRoll.map((roll, index) => (
-                                    <span key={`hunger-dice-${index}-${roll}`}>{roll}</span>
-                                ))}
+
+                <div className="rounded-md border border-dashed p-4">
+                    {currentRoll.regularDiceRoll.length > 0 || currentRoll.hungerDiceRoll.length > 0 ? (
+                        <div className="flex w-full flex-col items-center justify-center gap-2">
+                            <div className="flex flex-wrap items-center gap-2 select-none">
+                                {currentRoll.regularDiceRoll.map((roll, index) => {
+                                    switch (true) {
+                                        case roll < 8:
+                                            return (
+                                                <img
+                                                    key={`regular-dice-${index}-${roll}`}
+                                                    src={regularDieFailure}
+                                                    alt={`Regular Die Roll: ${roll}`}
+                                                    title="Failure"
+                                                    className="h-12 italic"
+                                                />
+                                            );
+                                        case roll >= 8 && roll < 10:
+                                            return (
+                                                <img
+                                                    key={`regular-dice-${index}-${roll}`}
+                                                    src={regularDieSuccess}
+                                                    alt={`Regular Die Roll: ${roll}`}
+                                                    title="Success"
+                                                    className="h-12 italic"
+                                                />
+                                            );
+                                        case roll === 10:
+                                            return (
+                                                <img
+                                                    key={`regular-dice-${index}-${roll}`}
+                                                    src={regularDieCritical}
+                                                    alt={`Regular Die Roll: ${roll}`}
+                                                    title="Critical Success"
+                                                    className="h-12 italic drop-shadow-lg drop-shadow-yellow-400"
+                                                />
+                                            );
+                                        default:
+                                            return null;
+                                    }
+                                })}
+                                {currentRoll.hungerDiceRoll.map((roll, index) => {
+                                    switch (true) {
+                                        case roll > 1 && roll < 8:
+                                            return (
+                                                <img
+                                                    key={`hunger-dice-${index}-${roll}`}
+                                                    src={hungerDieFailure}
+                                                    alt={`Hunger Die Roll: ${roll}`}
+                                                    title="Failure"
+                                                    className="h-12 italic"
+                                                />
+                                            );
+                                        case roll >= 8 && roll < 10:
+                                            return (
+                                                <img
+                                                    key={`hunger-dice-${index}-${roll}`}
+                                                    src={hungerDieSuccess}
+                                                    alt={`Hunger Die Roll: ${roll}`}
+                                                    title="Success"
+                                                    className="h-12 italic"
+                                                />
+                                            );
+                                        case roll === 10:
+                                            return (
+                                                <img
+                                                    key={`hunger-dice-${index}-${roll}`}
+                                                    src={hungerDieMessyCritical}
+                                                    alt={`Hunger Die Roll: ${roll}`}
+                                                    title="Messy Critical Success"
+                                                    className="h-12 italic drop-shadow-lg drop-shadow-red-400"
+                                                />
+                                            );
+                                        case roll === 1:
+                                            return (
+                                                <img
+                                                    key={`hunger-dice-${index}-${roll}`}
+                                                    src={hungerDieBestialFailure}
+                                                    alt={`Hunger Die Roll: ${roll}`}
+                                                    title="Bestial Failure"
+                                                    className="h-12 italic drop-shadow-lg drop-shadow-red-400"
+                                                />
+                                            );
+                                        default:
+                                            return null;
+                                    }
+                                })}
                             </div>
-                        )}
-                    </div>
-                ) : null}
+                        </div>
+                    ) : (
+                        <p className="text-center text-sm text-muted-foreground">No dice rolled yet.</p>
+                    )}
+                </div>
+            </CardContent>
+
+            <CardFooter className="border-t text-sm text-muted-foreground">
+                <p>
+                    <strong>Disclaimer:</strong> Dice Images from the{' '}
+                    <Link
+                        to="https://www.storytellersvault.com/en/product/464430/5th-edition-art-pack-dark-pack-unbound-and-stv-only"
+                        target="_blank"
+                        rel="noopener noreferrer external"
+                        className="underline"
+                    >
+                        5th Edition Art Pack
+                    </Link>{' '}
+                    from White Wolf.
+                </p>
             </CardFooter>
         </Card>
     );
