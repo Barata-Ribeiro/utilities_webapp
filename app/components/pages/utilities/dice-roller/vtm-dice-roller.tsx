@@ -10,9 +10,9 @@ import { Input } from '~/components/ui/input';
 import useIsMobile from '~/hooks/use-mobile';
 
 const VtmDiceRollerSchema = z.object({
-    totalDice: z.number().min(1).max(20).default(1),
-    hungerDice: z.number().min(0).max(20).default(0),
-    difficulty: z.number().min(2).max(10).default(6).optional(),
+    regularDice: z.coerce.number().min(1).max(20).default(1),
+    hungerDice: z.coerce.number().min(0).max(20).default(0),
+    difficulty: z.coerce.number().min(2).max(10).default(6).optional(),
 });
 
 type VtmDiceRollerSchemaType = z.infer<typeof VtmDiceRollerSchema>;
@@ -22,21 +22,21 @@ export default function VtmDiceRoller() {
 
     const form = useForm<VtmDiceRollerSchemaType>({
         resolver: zodResolver(VtmDiceRollerSchema) as Resolver<VtmDiceRollerSchemaType>,
-        defaultValues: { totalDice: 1, hungerDice: 0, difficulty: 6 },
+        defaultValues: { regularDice: 1, hungerDice: 0, difficulty: 6 },
     });
 
     const onSubmitFn = useCallback(async (data: VtmDiceRollerSchemaType, event?: BaseSyntheticEvent) => {
-        const { totalDice, hungerDice, difficulty } = data;
+        const { regularDice, hungerDice, difficulty } = data;
         const buttonClicked = (event?.nativeEvent as SubmitEvent | undefined)?.submitter?.id;
 
         if (buttonClicked === 'roll-dice') {
             console.log('Rolling dice with the following parameters:');
-            console.log(`Total Dice: ${totalDice}`);
+            console.log(`Total Dice: ${regularDice}`);
             console.log(`Hunger Dice: ${hungerDice}`);
             console.log(`Difficulty: ${difficulty}`);
         } else if (buttonClicked === 'rouse-check') {
             console.log('Performing a rouse check with the following parameters:');
-            console.log(`Total Dice: ${totalDice}`);
+            console.log(`Total Dice: ${regularDice}`);
             console.log(`Hunger Dice: ${hungerDice}`);
         }
     }, []);
@@ -57,7 +57,7 @@ export default function VtmDiceRoller() {
                     <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                         <Controller
                             control={form.control}
-                            name="totalDice"
+                            name="regularDice"
                             render={({ field, fieldState }) => (
                                 <Field data-invalid={fieldState.invalid} className="relative">
                                     <FieldLabel htmlFor={field.name}>Total Dice</FieldLabel>
@@ -69,7 +69,7 @@ export default function VtmDiceRoller() {
                                         step={1}
                                         inputMode="decimal"
                                         placeholder="e.g. 5"
-                                        aria-invalid={!!form.formState.errors.totalDice}
+                                        aria-invalid={!!form.formState.errors.regularDice}
                                         {...field}
                                     />
                                     {fieldState.invalid && (
