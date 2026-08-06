@@ -14,6 +14,7 @@ import useIsMobile from '~/hooks/use-mobile';
 import { rollDie } from '~/lib/dice-roller.utils';
 
 // Dice import
+import { Checkbox } from 'radix-ui';
 import hungerDieBestialFailure from '~/assets/dice/vtm/Dice_Hunger_BestialFailure.png';
 import hungerDieFailure from '~/assets/dice/vtm/Dice_Hunger_Failure.png';
 import hungerDieMessyCritical from '~/assets/dice/vtm/Dice_Hunger_MessyCritical.png';
@@ -48,6 +49,7 @@ export default function VtmDiceRoller() {
         hungerDiceRoll: [],
         difficulty: undefined,
     });
+    const [selectedRegularDice, setSelectedRegularDice] = useState<Set<string>>(new Set());
     const [isPending, startTransition] = useTransition();
     const { isMobile } = useIsMobile();
 
@@ -192,6 +194,9 @@ export default function VtmDiceRoller() {
                 } else if (hasCritical) {
                     outcome = `Critical Success (${successCount}/${difficulty})`;
                     outcomeClassName = cn('bg-green-100 text-green-800');
+                } else if (bestialFailureCount > 0) {
+                    outcome = `Success (Bestial Compulsion Possible) (${successCount}/${difficulty})`;
+                    outcomeClassName = cn('bg-yellow-100 text-yellow-800');
                 } else {
                     outcome = `Success (${successCount}/${difficulty})`;
                     outcomeClassName = cn('bg-green-100 text-green-800');
@@ -220,6 +225,26 @@ export default function VtmDiceRoller() {
         form.reset();
         setCurrentRoll({ regularDiceRoll: [], hungerDiceRoll: [], difficulty: undefined });
     }
+
+    // Willpower reroll fns
+    const onItemSelect = useCallback((die: DieResult, checked: boolean) => {
+        setSelectedRegularDice((prev) => {
+            const next = new Set(prev);
+
+            if (checked) {
+                if (!next.has(die.id) && next.size >= 3) {
+                    alert('You can only reroll up to 3 regular dice at a time.');
+                    return prev;
+                }
+
+                next.add(die.id);
+            } else {
+                next.delete(die.id);
+            }
+
+            return next;
+        });
+    }, []);
 
     const hasRolledDice = currentRoll.regularDiceRoll.length > 0 || currentRoll.hungerDiceRoll.length > 0;
 
@@ -360,33 +385,57 @@ export default function VtmDiceRoller() {
                                     switch (true) {
                                         case result < 6:
                                             return (
-                                                <img
+                                                <Checkbox.Root
                                                     key={id}
-                                                    src={regularDieFailure}
-                                                    alt={`Regular Die Roll: ${result}`}
-                                                    title="Failure"
-                                                    className="h-12 italic"
-                                                />
+                                                    className="transition-all duration-100 ease-in-out hover:scale-105 data-checked:scale-110 data-checked:drop-shadow-lg data-checked:drop-shadow-yellow-400"
+                                                    checked={selectedRegularDice.has(id)}
+                                                    onCheckedChange={(checked) =>
+                                                        onItemSelect({ id, result }, checked as boolean)
+                                                    }
+                                                >
+                                                    <img
+                                                        src={regularDieFailure}
+                                                        alt={`Regular Die Roll: ${result}`}
+                                                        title="Failure"
+                                                        className="h-12 italic"
+                                                    />
+                                                </Checkbox.Root>
                                             );
                                         case result >= 6 && result < 10:
                                             return (
-                                                <img
+                                                <Checkbox.Root
                                                     key={id}
-                                                    src={regularDieSuccess}
-                                                    alt={`Regular Die Roll: ${result}`}
-                                                    title="Success"
-                                                    className="h-12 italic"
-                                                />
+                                                    className="transition-all duration-100 ease-in-out hover:scale-105 data-checked:scale-110 data-checked:drop-shadow-lg data-checked:drop-shadow-yellow-400"
+                                                    checked={selectedRegularDice.has(id)}
+                                                    onCheckedChange={(checked) =>
+                                                        onItemSelect({ id, result }, checked as boolean)
+                                                    }
+                                                >
+                                                    <img
+                                                        src={regularDieSuccess}
+                                                        alt={`Regular Die Roll: ${result}`}
+                                                        title="Success"
+                                                        className="h-12 italic"
+                                                    />
+                                                </Checkbox.Root>
                                             );
                                         case result === 10:
                                             return (
-                                                <img
+                                                <Checkbox.Root
                                                     key={id}
-                                                    src={regularDieCritical}
-                                                    alt={`Regular Die Roll: ${result}`}
-                                                    title="Critical Success"
-                                                    className="h-12 italic drop-shadow-lg drop-shadow-yellow-400"
-                                                />
+                                                    className="transition-all duration-100 ease-in-out hover:scale-105 data-checked:scale-110 data-checked:drop-shadow-lg data-checked:drop-shadow-yellow-400"
+                                                    checked={selectedRegularDice.has(id)}
+                                                    onCheckedChange={(checked) =>
+                                                        onItemSelect({ id, result }, checked as boolean)
+                                                    }
+                                                >
+                                                    <img
+                                                        src={regularDieCritical}
+                                                        alt={`Regular Die Roll: ${result}`}
+                                                        title="Critical Success"
+                                                        className="drop-orange-yellow-400 h-12 italic drop-shadow-lg"
+                                                    />
+                                                </Checkbox.Root>
                                             );
                                         default:
                                             return null;
