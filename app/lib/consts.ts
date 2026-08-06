@@ -1,3 +1,12 @@
+import D00Icon from '~/components/icons/d00.icon';
+import D10Icon from '~/components/icons/d10.icon';
+import D12Icon from '~/components/icons/d12.icon';
+import D20Icon from '~/components/icons/d20.icon';
+import D4Icon from '~/components/icons/d4.icon';
+import D6Icon from '~/components/icons/d6.icon';
+import D8Icon from '~/components/icons/d8.icon';
+
+// Navigation URLs
 export const URLS = {
     utilities: [
         { title: 'Char. Counter', url: '/utilities/character-counter' },
@@ -40,6 +49,46 @@ export const URLS = {
 export type NavCategory = keyof typeof URLS;
 export type NavItem = (typeof URLS)[NavCategory][number];
 
+// Dice Constants
+export const DICE = [
+    {
+        label: 'D4',
+        sides: 4,
+        vector: D4Icon,
+    },
+    {
+        label: 'D6',
+        sides: 6,
+        vector: D6Icon,
+    },
+    {
+        label: 'D8',
+        sides: 8,
+        vector: D8Icon,
+    },
+    {
+        label: 'D10',
+        sides: 10,
+        vector: D10Icon,
+    },
+    {
+        label: 'D12',
+        sides: 12,
+        vector: D12Icon,
+    },
+    {
+        label: 'D20',
+        sides: 20,
+        vector: D20Icon,
+    },
+    {
+        label: 'D100',
+        sides: 100,
+        vector: D00Icon,
+    },
+] as const;
+
+// App Constants
 export const APP_NAME = 'Utilities Webapp';
 export const APP_DEFAULT_TITLE = 'Utilities Webapp';
 export const APP_DESCRIPTION = `Welcome to Utilities Webapp, your go-to platform for a variety of handy tools and utilities designed to make your life easier. Whether you need to perform quick calculations, convert units, or access other useful functionalities, we've got you covered.`;
