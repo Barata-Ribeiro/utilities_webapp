@@ -111,6 +111,10 @@ export default function VtmDiceRoller() {
             const id = crypto.randomUUID();
             setCurrentRoll((prev) => ({ ...prev, hungerDiceRoll: [...prev.hungerDiceRoll, { id, result: roll }] }));
         }
+
+        if (navigator.vibrate) {
+            navigator.vibrate([100, 50, 100]);
+        }
     }
 
     const onSubmitFn = useCallback(
@@ -246,6 +250,10 @@ export default function VtmDiceRoller() {
                     return prev;
                 }
 
+                if (navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+
                 next.add(die.id);
             } else {
                 next.delete(die.id);
@@ -263,6 +271,10 @@ export default function VtmDiceRoller() {
 
     const onClearSelection = useCallback(() => {
         setSelectedRegularDice(new Set());
+
+        if (navigator.vibrate) {
+            navigator.vibrate(100);
+        }
     }, []);
 
     const onWillpowerReroll = useCallback(() => {
@@ -282,6 +294,10 @@ export default function VtmDiceRoller() {
         setCurrentRoll((prev) => ({ ...prev, regularDiceRoll: newRegularDiceRoll }));
 
         setSelectedRegularDice(new Set());
+
+        if (navigator.vibrate) {
+            navigator.vibrate([100, 50, 100]);
+        }
     }, [currentRoll.regularDiceRoll, selectedRegularDice]);
 
     const hasRolledDice = currentRoll.regularDiceRoll.length > 0 || currentRoll.hungerDiceRoll.length > 0;
