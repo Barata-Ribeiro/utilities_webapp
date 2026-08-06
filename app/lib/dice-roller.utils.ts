@@ -33,7 +33,7 @@ function buildDiceRollGroups(dice: DiceSpecification[], modifier: number): DiceR
         .filter((die) => die.count > 0)
         .map((die) => rollDiceGroup(die.sides, die.count));
     const subtotal: number = groups.reduce((sum, group) => sum + group.total, 0);
-    const notationParts: string[] = groups.map((group) => `${group.count}${group.label}`);
+    const notationParts: string[] = groups.map((group) => group.label);
 
     if (modifier !== 0) {
         notationParts.push(modifier > 0 ? `+${modifier}` : `${modifier}`);
