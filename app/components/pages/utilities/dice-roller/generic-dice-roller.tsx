@@ -1,8 +1,8 @@
 import { useState } from 'react';
+import DiceText from '~/components/pages/utilities/dice-roller/helpers/dice-text';
 import { ButtonGroup } from '~/components/ui/button-group';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { DICE } from '~/lib/consts';
-import { cn } from '~/lib/utils';
 
 type SelectedDie = {
     sides: number;
@@ -36,22 +36,13 @@ export default function GenericDiceRoller() {
                                 className="relative transition-transform duration-100 ease-in-out hover:scale-110 hover:drop-shadow-lg focus:scale-110 focus:drop-shadow-lg"
                             >
                                 <die.vector
-                                    backgroundFill="oklch(0.553 0.195 38.402)"
-                                    shadowStrokeColor="oklch(0.705 0.213 47.604)"
+                                    backgroundFill="var(--primary)"
+                                    shadowStrokeColor="var(--sidebar-primary)"
                                     aria-hidden
                                     className="h-14"
                                 />
 
-                                <span
-                                    id={`die-${die.sides}-number`}
-                                    aria-hidden
-                                    className={cn(
-                                        isThreeDigits ? 'text-3xl' : 'text-4xl',
-                                        'pointer-events-none absolute inset-0 flex items-center justify-center bg-linear-to-b/oklch from-orange-50 to-orange-200 bg-clip-text font-heading leading-none font-bold text-transparent drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]',
-                                    )}
-                                >
-                                    {die.sides}
-                                </span>
+                                <DiceText sides={die.sides} isThreeDigits={isThreeDigits} />
                             </button>
                         );
                     })}
