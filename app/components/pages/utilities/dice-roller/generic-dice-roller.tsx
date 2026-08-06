@@ -3,6 +3,7 @@ import DiceText from '~/components/pages/utilities/dice-roller/helpers/dice-text
 import { ButtonGroup } from '~/components/ui/button-group';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { DICE } from '~/lib/consts';
+import DiceRollCounterBadge from './helpers/dice-roll-counter.badge';
 
 type SelectedDie = {
     sides: number;
@@ -41,6 +42,8 @@ export default function GenericDiceRoller() {
                                     aria-hidden
                                     className="h-14"
                                 />
+
+                                {rollCount && <DiceRollCounterBadge count={rollCount} />}
 
                                 <DiceText sides={die.sides} isThreeDigits={isThreeDigits} />
                             </button>
