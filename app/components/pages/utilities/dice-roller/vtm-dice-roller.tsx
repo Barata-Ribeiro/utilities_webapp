@@ -23,9 +23,14 @@ import regularDieFailure from '~/assets/dice/vtm/Dice_Regular_Failure.png';
 import regularDieSuccess from '~/assets/dice/vtm/Dice_Regular_Success.png';
 import { cn } from '~/lib/utils';
 
+type DieResult = {
+    id: string;
+    result: number;
+};
+
 type DiceRollData = {
-    regularDiceRoll: number[];
-    hungerDiceRoll: number[];
+    regularDiceRoll: DieResult[];
+    hungerDiceRoll: DieResult[];
     difficulty: number | undefined;
 };
 
@@ -86,12 +91,14 @@ export default function VtmDiceRoller() {
 
         for (let i = 0; i < regularDice; i++) {
             const roll = rollDie(10);
-            setCurrentRoll((prev) => ({ ...prev, regularDiceRoll: [...prev.regularDiceRoll, roll] }));
+            const id = crypto.randomUUID();
+            setCurrentRoll((prev) => ({ ...prev, regularDiceRoll: [...prev.regularDiceRoll, { id, result: roll }] }));
         }
 
         for (let i = 0; i < hungerDice; i++) {
             const roll = rollDie(10);
-            setCurrentRoll((prev) => ({ ...prev, hungerDiceRoll: [...prev.hungerDiceRoll, roll] }));
+            const id = crypto.randomUUID();
+            setCurrentRoll((prev) => ({ ...prev, hungerDiceRoll: [...prev.hungerDiceRoll, { id, result: roll }] }));
         }
     }
 
@@ -116,29 +123,33 @@ export default function VtmDiceRoller() {
         [startTransition],
     );
 
-    function calculateResults(regularDiceRoll: number[], hungerDiceRoll: number[], difficulty: number | undefined) {
+    function calculateResults(
+        regularDiceRoll: DieResult[],
+        hungerDiceRoll: DieResult[],
+        difficulty: number | undefined,
+    ) {
         let successCount = 0;
         let criticalCount = 0;
         let messyCriticalCount = 0;
         let bestialFailureCount = 0;
 
         // Process regular dice rolls
-        for (const roll of regularDiceRoll) {
-            if (roll >= 6 && roll < 10) {
+        for (const { result } of regularDiceRoll) {
+            if (result >= 6 && result < 10) {
                 successCount++;
-            } else if (roll === 10) {
+            } else if (result === 10) {
                 criticalCount++;
                 successCount += 2; // Each critical counts as two successes
             }
         }
 
-        for (const roll of hungerDiceRoll) {
-            if (roll >= 6 && roll < 10) {
+        for (const { result } of hungerDiceRoll) {
+            if (result >= 6 && result < 10) {
                 successCount++;
-            } else if (roll === 10) {
+            } else if (result === 10) {
                 messyCriticalCount++;
                 successCount += 2; // Each messy critical counts as two successes
-            } else if (roll === 1) {
+            } else if (result === 1) {
                 bestialFailureCount++;
             }
         }
@@ -345,34 +356,34 @@ export default function VtmDiceRoller() {
                     {hasRolledDice ? (
                         <div className="flex w-full flex-col items-center justify-center gap-2">
                             <div className="flex flex-wrap items-center gap-2 select-none">
-                                {currentRoll.regularDiceRoll.map((roll, index) => {
+                                {currentRoll.regularDiceRoll.map(({ result, id }) => {
                                     switch (true) {
-                                        case roll < 6:
+                                        case result < 6:
                                             return (
                                                 <img
-                                                    key={`regular-dice-${index}-${roll}`}
+                                                    key={id}
                                                     src={regularDieFailure}
-                                                    alt={`Regular Die Roll: ${roll}`}
+                                                    alt={`Regular Die Roll: ${result}`}
                                                     title="Failure"
                                                     className="h-12 italic"
                                                 />
                                             );
-                                        case roll >= 6 && roll < 10:
+                                        case result >= 6 && result < 10:
                                             return (
                                                 <img
-                                                    key={`regular-dice-${index}-${roll}`}
+                                                    key={id}
                                                     src={regularDieSuccess}
-                                                    alt={`Regular Die Roll: ${roll}`}
+                                                    alt={`Regular Die Roll: ${result}`}
                                                     title="Success"
                                                     className="h-12 italic"
                                                 />
                                             );
-                                        case roll === 10:
+                                        case result === 10:
                                             return (
                                                 <img
-                                                    key={`regular-dice-${index}-${roll}`}
+                                                    key={id}
                                                     src={regularDieCritical}
-                                                    alt={`Regular Die Roll: ${roll}`}
+                                                    alt={`Regular Die Roll: ${result}`}
                                                     title="Critical Success"
                                                     className="h-12 italic drop-shadow-lg drop-shadow-yellow-400"
                                                 />
@@ -381,44 +392,44 @@ export default function VtmDiceRoller() {
                                             return null;
                                     }
                                 })}
-                                {currentRoll.hungerDiceRoll.map((roll, index) => {
+                                {currentRoll.hungerDiceRoll.map(({ id, result }) => {
                                     switch (true) {
-                                        case roll > 1 && roll < 6:
+                                        case result > 1 && result < 6:
                                             return (
                                                 <img
-                                                    key={`hunger-dice-${index}-${roll}`}
+                                                    key={id}
                                                     src={hungerDieFailure}
-                                                    alt={`Hunger Die Roll: ${roll}`}
+                                                    alt={`Hunger Die Roll: ${result}`}
                                                     title="Failure"
                                                     className="h-12 italic"
                                                 />
                                             );
-                                        case roll >= 6 && roll < 10:
+                                        case result >= 6 && result < 10:
                                             return (
                                                 <img
-                                                    key={`hunger-dice-${index}-${roll}`}
+                                                    key={id}
                                                     src={hungerDieSuccess}
-                                                    alt={`Hunger Die Roll: ${roll}`}
+                                                    alt={`Hunger Die Roll: ${result}`}
                                                     title="Success"
                                                     className="h-12 italic"
                                                 />
                                             );
-                                        case roll === 10:
+                                        case result === 10:
                                             return (
                                                 <img
-                                                    key={`hunger-dice-${index}-${roll}`}
+                                                    key={id}
                                                     src={hungerDieMessyCritical}
-                                                    alt={`Hunger Die Roll: ${roll}`}
+                                                    alt={`Hunger Die Roll: ${result}`}
                                                     title="Messy Critical Success"
                                                     className="h-12 italic drop-shadow-lg drop-shadow-red-400"
                                                 />
                                             );
-                                        case roll === 1:
+                                        case result === 1:
                                             return (
                                                 <img
-                                                    key={`hunger-dice-${index}-${roll}`}
+                                                    key={id}
                                                     src={hungerDieBestialFailure}
-                                                    alt={`Hunger Die Roll: ${roll}`}
+                                                    alt={`Hunger Die Roll: ${result}`}
                                                     title="Bestial Failure"
                                                     className="h-12 italic drop-shadow-lg drop-shadow-red-400"
                                                 />
