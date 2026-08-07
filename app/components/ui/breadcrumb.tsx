@@ -1,8 +1,9 @@
-import { Slot } from 'radix-ui';
 import * as React from 'react';
+import { mergeProps } from '@base-ui/react/merge-props';
+import { useRender } from '@base-ui/react/use-render';
 
-import { ChevronRightIcon, MoreHorizontalIcon } from 'lucide-react';
 import { cn } from '~/lib/utils';
+import { ChevronRightIcon, MoreHorizontalIcon } from 'lucide-react';
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<'nav'>) {
     return <nav aria-label="breadcrumb" data-slot="breadcrumb" className={cn(className)} {...props} />;
@@ -25,22 +26,20 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<'li'>) {
     return <li data-slot="breadcrumb-item" className={cn('inline-flex items-center gap-1.5', className)} {...props} />;
 }
 
-function BreadcrumbLink({
-    asChild,
-    className,
-    ...props
-}: React.ComponentProps<'a'> & {
-    asChild?: boolean;
-}) {
-    const Comp = asChild ? Slot.Root : 'a';
-
-    return (
-        <Comp
-            data-slot="breadcrumb-link"
-            className={cn('transition-colors hover:text-foreground', className)}
-            {...props}
-        />
-    );
+function BreadcrumbLink({ className, render, ...props }: useRender.ComponentProps<'a'>) {
+    return useRender({
+        defaultTagName: 'a',
+        props: mergeProps<'a'>(
+            {
+                className: cn('transition-colors hover:text-foreground', className),
+            },
+            props,
+        ),
+        render,
+        state: {
+            slot: 'breadcrumb-link',
+        },
+    });
 }
 
 function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
@@ -87,10 +86,10 @@ function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<'span'
 
 export {
     Breadcrumb,
-    BreadcrumbEllipsis,
+    BreadcrumbList,
     BreadcrumbItem,
     BreadcrumbLink,
-    BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
+    BreadcrumbEllipsis,
 };
