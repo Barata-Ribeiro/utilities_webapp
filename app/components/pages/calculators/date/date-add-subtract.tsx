@@ -159,9 +159,9 @@ export default function DateAddSubtract() {
                                         <FieldLabel htmlFor="action">Action</FieldLabel>
                                     </FieldContent>
 
-                                    <Select name={field.name} onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select name={field.name} onValueChange={field.onChange} value={field.value ?? ''}>
                                         <SelectTrigger id="action" aria-invalid={fieldState.invalid}>
-                                            <SelectValue placeholder="Add/Subtract" />
+                                            <SelectValue placeholder="Add/Subtract" className="capitalize" />
                                         </SelectTrigger>
                                         <SelectContent alignItemWithTrigger>
                                             <SelectItem className="inline-flex items-center gap-x-2" value="add">
