@@ -32,8 +32,10 @@ export default function GeneralCalculator() {
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const resultRef = useRef<HTMLOutputElement>(null);
 
-    const formStyles = cn`mx-auto my-0 grid max-w-7xl grid-cols-[1fr_auto] overflow-hidden rounded-md`;
-    const areaStyles = cn`m-0 resize-none border-0 bg-accent p-4 font-mono text-lg leading-6 text-balance text-accent-foreground outline-none focus:ring-0 focus-visible:ring-0`;
+    const formStyles = cn('mx-auto my-0 grid max-w-7xl grid-cols-[1fr_auto] overflow-hidden rounded-md');
+    const areaStyles = cn(
+        'm-0 resize-none border-0 bg-secondary p-4 font-mono text-lg leading-6 text-balance text-accent outline-none focus:ring-0 focus-visible:ring-0',
+    );
 
     function handleCalculation() {
         if (!textAreaRef.current || !resultRef.current) return;
