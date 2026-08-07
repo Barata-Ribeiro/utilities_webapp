@@ -1,7 +1,9 @@
-import { Direction as DirectionPrimitive, Slot as SlotPrimitive } from 'radix-ui';
+import { mergeProps } from '@base-ui/react/merge-props';
+import { useRender } from '@base-ui/react/use-render';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Button } from '~/components/ui/button';
+import { useDirection } from '~/components/ui/direction';
 import { useAsRef } from '~/hooks/use-as-ref';
 import { useIsomorphicLayoutEffect } from '~/hooks/use-isomorphic-layout-effect';
 import { useComposedRefs } from '~/lib/compose-refs';
@@ -19,13 +21,10 @@ const EVENT_OPTIONS = { bubbles: false, cancelable: true };
 type Direction = 'ltr' | 'rtl';
 type Orientation = 'horizontal' | 'vertical';
 
-interface DivProps extends React.ComponentProps<'div'> {
-    asChild?: boolean;
-}
+interface DivProps extends useRender.ComponentProps<'div'>, React.ComponentProps<'div'> {}
 
 type RootElement = React.ComponentRef<typeof ActionBar>;
 type ItemElement = React.ComponentRef<typeof ActionBarItem>;
-type CloseElement = React.ComponentRef<typeof ActionBarClose>;
 
 function focusFirst(candidates: React.RefObject<HTMLElement | null>[], preventScroll = false) {
     const PREVIOUSLY_FOCUSED_ELEMENT = document.activeElement;
@@ -122,7 +121,7 @@ function ActionBar(props: Readonly<ActionBarProps>) {
         className,
         style,
         ref,
-        asChild,
+        render,
         ...rootProps
     } = props;
 
@@ -136,7 +135,8 @@ function ActionBar(props: Readonly<ActionBarProps>) {
         onOpenChange,
     });
 
-    const dir = DirectionPrimitive.useDirection(dirProp);
+    const contextDir = useDirection();
+    const dir = dirProp ?? contextDir;
 
     React.useLayoutEffect(() => {
         setMounted(true);
@@ -172,65 +172,74 @@ function ActionBar(props: Readonly<ActionBarProps>) {
 
     const portalContainer = portalContainerProp ?? (mounted ? globalThis.document?.body : null);
 
-    if (!portalContainer || !open) return null;
+    const element = useRender({
+        defaultTagName: 'div',
+        props: mergeProps<'div'>(
+            {
+                role: 'toolbar' as const,
+                'aria-orientation': orientation,
+                dir,
+                ref: composedRef,
+                className: cn(
+                    'fixed z-50 rounded-lg border bg-card shadow-lg outline-none',
+                    'animate-in duration-250 fade-in-0 zoom-in-95 [animation-timing-function:cubic-bezier(0.16,1,0.3,1)]',
+                    'data-[side=bottom]:slide-in-from-bottom-4 data-[side=top]:slide-in-from-top-4',
+                    'motion-reduce:animate-none motion-reduce:transition-none',
+                    orientation === 'horizontal'
+                        ? 'flex flex-row items-center gap-2 px-2 py-1.5'
+                        : 'flex flex-col items-start gap-2 px-1.5 py-2',
+                    className,
+                ),
+                style: {
+                    [side]: `${sideOffset}px`,
+                    ...(align === 'center' && {
+                        left: '50%',
+                        translate: '-50% 0',
+                    }),
+                    ...(align === 'start' && { left: `${alignOffset}px` }),
+                    ...(align === 'end' && { right: `${alignOffset}px` }),
+                    ...style,
+                },
+            },
+            rootProps,
+        ),
+        render,
+        state: {
+            slot: 'action-bar',
+            side,
+            align,
+            orientation,
+        },
+    });
 
-    const RootPrimitive = asChild ? SlotPrimitive.Slot : 'div';
+    if (!portalContainer || !open) return null;
 
     return (
         <ActionBarContext.Provider value={contextValue}>
-            {ReactDOM.createPortal(
-                <RootPrimitive
-                    role="toolbar"
-                    aria-orientation={orientation}
-                    data-slot="action-bar"
-                    data-side={side}
-                    data-align={align}
-                    data-orientation={orientation}
-                    dir={dir}
-                    {...rootProps}
-                    ref={composedRef}
-                    className={cn(
-                        'fixed z-50 rounded-lg border bg-card shadow-lg outline-none',
-                        'animate-in duration-250 fade-in-0 zoom-in-95 [animation-timing-function:cubic-bezier(0.16,1,0.3,1)]',
-                        'data-[side=bottom]:slide-in-from-bottom-4 data-[side=top]:slide-in-from-top-4',
-                        'motion-reduce:animate-none motion-reduce:transition-none',
-                        orientation === 'horizontal'
-                            ? 'flex flex-row items-center gap-2 px-2 py-1.5'
-                            : 'flex flex-col items-start gap-2 px-1.5 py-2',
-                        className,
-                    )}
-                    style={{
-                        [side]: `${sideOffset}px`,
-                        ...(align === 'center' && {
-                            left: '50%',
-                            translate: '-50% 0',
-                        }),
-                        ...(align === 'start' && { left: `${alignOffset}px` }),
-                        ...(align === 'end' && { right: `${alignOffset}px` }),
-                        ...style,
-                    }}
-                />,
-                portalContainer,
-            )}
+            {ReactDOM.createPortal(element, portalContainer)}
         </ActionBarContext.Provider>
     );
 }
 
-function ActionBarSelection(props: Readonly<DivProps>) {
-    const { className, asChild, ...selectionProps } = props;
+function ActionBarSelection(props: DivProps) {
+    const { className, render, ...selectionProps } = props;
 
-    const SelectionPrimitive = asChild ? SlotPrimitive.Slot : 'div';
-
-    return (
-        <SelectionPrimitive
-            data-slot="action-bar-selection"
-            {...selectionProps}
-            className={cn(
-                'flex items-center gap-1 rounded-sm border px-2 py-1 text-sm font-medium tabular-nums',
-                className,
-            )}
-        />
-    );
+    return useRender({
+        defaultTagName: 'div',
+        props: mergeProps<'div'>(
+            {
+                className: cn(
+                    'flex items-center gap-1 rounded-sm border px-2 py-1 text-sm font-medium tabular-nums',
+                    className,
+                ),
+            },
+            selectionProps,
+        ),
+        render,
+        state: {
+            slot: 'action-bar-selection',
+        },
+    });
 }
 
 function ActionBarGroup(props: Readonly<DivProps>) {
@@ -239,7 +248,7 @@ function ActionBarGroup(props: Readonly<DivProps>) {
         onFocus: onFocusProp,
         onMouseDown: onMouseDownProp,
         className,
-        asChild,
+        render,
         ref,
         ...groupProps
     } = props;
@@ -364,29 +373,33 @@ function ActionBarGroup(props: Readonly<DivProps>) {
         ],
     );
 
-    const GroupPrimitive = asChild ? SlotPrimitive.Slot : 'div';
-
-    return (
-        <FocusContext.Provider value={focusContextValue}>
-            <GroupPrimitive
-                role="group"
-                data-slot="action-bar-group"
-                data-orientation={orientation}
-                dir={dir}
-                tabIndex={isTabbingBackOut || focusableItemCount === 0 ? -1 : 0}
-                {...groupProps}
-                ref={composedRef}
-                className={cn(
+    const element = useRender({
+        defaultTagName: 'div',
+        props: mergeProps<'div'>(
+            {
+                role: 'group' as const,
+                dir,
+                tabIndex: isTabbingBackOut || focusableItemCount === 0 ? -1 : 0,
+                ref: composedRef,
+                className: cn(
                     'flex gap-2 outline-none',
                     orientation === 'horizontal' ? 'items-center' : 'w-full flex-col items-start',
                     className,
-                )}
-                onBlur={onBlur}
-                onFocus={onFocus}
-                onMouseDown={onMouseDown}
-            />
-        </FocusContext.Provider>
-    );
+                ),
+                onBlur,
+                onFocus,
+                onMouseDown,
+            },
+            groupProps,
+        ),
+        render,
+        state: {
+            slot: 'action-bar-group',
+            orientation,
+        },
+    });
+
+    return <FocusContext.Provider value={focusContextValue}>{element}</FocusContext.Provider>;
 }
 
 interface ActionBarItemProps extends Omit<React.ComponentProps<typeof Button>, 'onSelect'> {
@@ -435,8 +448,8 @@ function ActionBarItem(props: Readonly<ActionBarItemProps>) {
         };
     }, [focusContext, itemId, disabled]);
 
-    const onClick = React.useCallback(
-        (event: React.MouseEvent<ItemElement>) => {
+    const onClick: ActionBarItemProps['onClick'] = React.useCallback(
+        (event) => {
             onClickProp?.(event);
             if (event.defaultPrevented) return;
 
@@ -448,7 +461,7 @@ function ActionBarItem(props: Readonly<ActionBarItemProps>) {
                 cancelable: true,
             });
 
-            item.addEventListener(ITEM_SELECT, (event) => onSelect?.(event), {
+            item.addEventListener(ITEM_SELECT, (evt) => onSelect?.(evt), {
                 once: true,
             });
 
@@ -461,8 +474,8 @@ function ActionBarItem(props: Readonly<ActionBarItemProps>) {
         [onClickProp, onOpenChange, onSelect],
     );
 
-    const onFocus = React.useCallback(
-        (event: React.FocusEvent<ItemElement>) => {
+    const onFocus: ActionBarItemProps['onFocus'] = React.useCallback(
+        (event) => {
             onFocusProp?.(event);
             if (event.defaultPrevented) return;
 
@@ -472,8 +485,8 @@ function ActionBarItem(props: Readonly<ActionBarItemProps>) {
         [onFocusProp, focusContext, itemId],
     );
 
-    const onKeyDown = React.useCallback(
-        (event: React.KeyboardEvent<ItemElement>) => {
+    const onKeyDown: ActionBarItemProps['onKeyDown'] = React.useCallback(
+        (event) => {
             onKeyDownProp?.(event);
             if (event.defaultPrevented) return;
 
@@ -520,8 +533,8 @@ function ActionBarItem(props: Readonly<ActionBarItemProps>) {
         [onKeyDownProp, focusContext, dir, orientation, loop],
     );
 
-    const onMouseDown = React.useCallback(
-        (event: React.MouseEvent<ItemElement>) => {
+    const onMouseDown: ActionBarItemProps['onMouseDown'] = React.useCallback(
+        (event) => {
             onMouseDownProp?.(event);
             if (event.defaultPrevented) return;
 
@@ -555,17 +568,13 @@ function ActionBarItem(props: Readonly<ActionBarItemProps>) {
     );
 }
 
-interface ActionBarCloseProps extends React.ComponentProps<'button'> {
-    asChild?: boolean;
-}
+interface ActionBarCloseProps extends useRender.ComponentProps<'button'>, React.ComponentProps<'button'> {}
 
-function ActionBarClose(props: Readonly<ActionBarCloseProps>) {
-    const { asChild, className, onClick, ...closeProps } = props;
-
+function ActionBarClose({ render, className, onClick, ...props }: ActionBarCloseProps) {
     const { onOpenChange } = useActionBarContext(CLOSE_NAME);
 
-    const onCloseClick = React.useCallback(
-        (event: React.MouseEvent<CloseElement>) => {
+    const onCloseClick: ActionBarCloseProps['onClick'] = React.useCallback(
+        (event) => {
             onClick?.(event);
             if (event.defaultPrevented) return;
 
@@ -574,48 +583,57 @@ function ActionBarClose(props: Readonly<ActionBarCloseProps>) {
         [onOpenChange, onClick],
     );
 
-    const ClosePrimitive = asChild ? SlotPrimitive.Slot : 'button';
-
-    return (
-        <ClosePrimitive
-            type="button"
-            data-slot="action-bar-close"
-            {...closeProps}
-            className={cn(
-                "rounded-xs opacity-70 outline-none hover:opacity-100 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
-                className,
-            )}
-            onClick={onCloseClick}
-        />
-    );
+    return useRender({
+        defaultTagName: 'button',
+        props: mergeProps<'button'>(
+            {
+                type: 'button' as const,
+                className: cn(
+                    "rounded-xs opacity-70 outline-none hover:opacity-100 focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
+                    className,
+                ),
+                onClick: onCloseClick,
+            },
+            props,
+        ),
+        render,
+        state: {
+            slot: 'action-bar-close',
+        },
+    });
 }
 
-interface ActionBarSeparatorProps extends Readonly<DivProps> {
+interface ActionBarSeparatorProps extends DivProps {
     orientation?: Orientation;
 }
 
-function ActionBarSeparator(props: Readonly<ActionBarSeparatorProps>) {
-    const { orientation: orientationProp, asChild, className, ...separatorProps } = props;
+function ActionBarSeparator(props: ActionBarSeparatorProps) {
+    const { orientation: orientationProp, render, className, ...separatorProps } = props;
 
     const context = useActionBarContext(SEPARATOR_NAME);
     const orientation = orientationProp ?? context.orientation;
 
-    const SeparatorPrimitive = asChild ? SlotPrimitive.Slot : 'div';
-
-    return (
-        <SeparatorPrimitive
-            role="separator"
-            aria-orientation={orientation}
-            aria-hidden="true"
-            data-slot="action-bar-separator"
-            {...separatorProps}
-            className={cn(
-                'bg-border in-data-[slot=action-bar-selection]:ml-0.5 in-data-[slot=action-bar-selection]:h-4 in-data-[slot=action-bar-selection]:w-px',
-                orientation === 'horizontal' ? 'h-6 w-px' : 'h-px w-full',
-                className,
-            )}
-        />
-    );
+    return useRender({
+        defaultTagName: 'div',
+        props: mergeProps<'div'>(
+            {
+                role: 'separator' as const,
+                'aria-orientation': orientation,
+                'aria-hidden': 'true' as const,
+                className: cn(
+                    'bg-border in-data-[slot=action-bar-selection]:ml-0.5 in-data-[slot=action-bar-selection]:h-4 in-data-[slot=action-bar-selection]:w-px',
+                    orientation === 'horizontal' ? 'h-6 w-px' : 'h-px w-full',
+                    className,
+                ),
+            },
+            separatorProps,
+        ),
+        render,
+        state: {
+            slot: 'action-bar-separator',
+            orientation,
+        },
+    });
 }
 
 export {
