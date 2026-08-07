@@ -103,8 +103,6 @@ export default function UrlSlugGenerator() {
         async (data: SlugifyType) => {
             const { text, separator, lowercase, removeSpecialChars, removeNumbers } = data;
 
-            console.log(data);
-
             if (!savedCharMap.current || !savedLocale.current) {
                 const [resCM, resLol] = await Promise.all([
                     fetch('/slug-settings/charmap.json'),
@@ -154,6 +152,7 @@ export default function UrlSlugGenerator() {
                 : reduced;
 
             const slug = afterSpecials
+                .trim()
                 .replaceAll(/\s+/g, separator)
                 .replaceAll(new RegExp(`\\${separator}+`, 'g'), separator)
                 .trim();
@@ -206,8 +205,8 @@ export default function UrlSlugGenerator() {
                         <FieldSet data-invalid={fieldState.invalid}>
                             <FieldLegend>Separator</FieldLegend>
                             <RadioGroup
+                                value={field.value}
                                 onValueChange={field.onChange}
-                                defaultValue={field.value}
                                 aria-invalid={fieldState.invalid}
                                 className="flex flex-wrap items-center gap-4"
                             >
