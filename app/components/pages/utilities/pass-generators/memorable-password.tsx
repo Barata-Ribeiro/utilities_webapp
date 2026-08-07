@@ -97,7 +97,7 @@ export default function MemorablePassword() {
                     <Slider
                         id="pin-size"
                         value={[passSize]}
-                        onValueChange={(value) => setPassSize(value[0] ?? 3)}
+                        onValueChange={(value) => setPassSize(Array.isArray(value) ? (value[0] ?? 3) : value)}
                         min={3}
                         max={15}
                         step={1}

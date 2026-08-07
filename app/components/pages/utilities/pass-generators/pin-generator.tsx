@@ -46,7 +46,7 @@ export default function PinGenerator() {
                     <Slider
                         id="pin-size"
                         value={[pinSize]}
-                        onValueChange={(value) => setPinSize(value[0] ?? 3)}
+                        onValueChange={(value) => setPinSize(Array.isArray(value) ? (value[0] ?? 3) : value)}
                         min={3}
                         max={12}
                         step={1}

@@ -66,7 +66,7 @@ export default function PasswordGenerator() {
                     <Slider
                         id="pin-size"
                         value={[passSize]}
-                        onValueChange={(value) => setPassSize(value[0] ?? 8)}
+                        onValueChange={(value) => setPassSize(Array.isArray(value) ? (value[0] ?? 8) : value)}
                         min={8}
                         max={128}
                         step={1}

@@ -86,11 +86,11 @@ export default function Base64ToImage() {
                                     <FieldLabel htmlFor="download-format">Download Format</FieldLabel>
                                     {fieldState.error && <FieldError errors={[fieldState.error]} />}
                                 </FieldContent>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                <Select onValueChange={field.onChange} value={field.value}>
                                     <SelectTrigger id="download-format" aria-invalid={fieldState.invalid}>
-                                        <SelectValue placeholder="Image Format" />
+                                        <SelectValue placeholder="Image Format" className="uppercase" />
                                     </SelectTrigger>
-                                    <SelectContent position="item-aligned">
+                                    <SelectContent alignItemWithTrigger>
                                         {['png', 'jpeg', 'webp'].map((format) => (
                                             <SelectItem key={format} value={format}>
                                                 {format.toUpperCase()}
@@ -136,12 +136,13 @@ export default function Base64ToImage() {
                             variant="outline"
                             aria-label="Download Image"
                             disabled={!result}
-                            asChild={!!result}
-                        >
-                            <Link to={result ?? ''} download={fileName}>
-                                Download
-                            </Link>
-                        </Button>
+                            nativeButton={false}
+                            render={
+                                <Link to={result ?? ''} download={fileName}>
+                                    Download
+                                </Link>
+                            }
+                        />
                     </div>
                 </div>
             </form>

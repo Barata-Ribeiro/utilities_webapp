@@ -188,11 +188,13 @@ export default function CanvasTextControls({
                             <InputGroup className="w-auto flex-1">
                                 <InputGroupAddon align="inline-start">
                                     <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <InputGroupButton size="icon-xs" variant="ghost">
-                                                <TypeIcon aria-hidden />
-                                            </InputGroupButton>
-                                        </TooltipTrigger>
+                                        <TooltipTrigger
+                                            render={
+                                                <InputGroupButton size="icon-xs" variant="ghost">
+                                                    <TypeIcon aria-hidden />
+                                                </InputGroupButton>
+                                            }
+                                        />
                                         <TooltipContent>
                                             <p>Text content</p>
                                         </TooltipContent>
@@ -219,8 +221,8 @@ export default function CanvasTextControls({
 
                             {/* FONT FAMILY */}
                             <Select
-                                defaultValue={selectedTextFontFamily}
-                                onValueChange={(value) => onUpdateText(selectedId, { fontFamily: value })}
+                                value={selectedTextFontFamily}
+                                onValueChange={(value) => onUpdateText(selectedId, { fontFamily: value ?? 'Arial' })}
                             >
                                 <SelectTrigger
                                     style={{ fontFamily: selectedTextFontFamily }}
@@ -230,7 +232,7 @@ export default function CanvasTextControls({
                                 >
                                     <SelectValue />
                                 </SelectTrigger>
-                                <SelectContent position="item-aligned">
+                                <SelectContent alignItemWithTrigger>
                                     {FONT_FAMILIES.map((font) => (
                                         <SelectItem key={font} value={font} style={{ fontFamily: font }}>
                                             {font}
@@ -245,11 +247,13 @@ export default function CanvasTextControls({
                             <InputGroup className="w-full max-w-22">
                                 <InputGroupAddon>
                                     <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <InputGroupButton size="icon-xs" variant="ghost">
-                                                <ALargeSmallIcon aria-hidden />
-                                            </InputGroupButton>
-                                        </TooltipTrigger>
+                                        <TooltipTrigger
+                                            render={
+                                                <InputGroupButton size="icon-xs" variant="ghost">
+                                                    <ALargeSmallIcon aria-hidden />
+                                                </InputGroupButton>
+                                            }
+                                        />
                                         <TooltipContent>
                                             <p>Font size</p>
                                         </TooltipContent>
@@ -270,9 +274,9 @@ export default function CanvasTextControls({
                             {/* TEXT STYLE */}
                             <ToggleGroup
                                 variant="outline"
-                                type="multiple"
                                 value={selectedStyleValues}
                                 onValueChange={updateTextStyle}
+                                multiple
                             >
                                 <ToggleGroupItem value="bold" aria-label="Toggle bold" title="Bold">
                                     <BoldIcon aria-hidden />
@@ -294,12 +298,14 @@ export default function CanvasTextControls({
 
                             {/* TEXT COLOR */}
                             <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <ColorPicker
-                                        value={selectedTextColor ?? '#ffffff'}
-                                        onChange={(color) => onUpdateText(selectedId, { fill: color })}
-                                    />
-                                </TooltipTrigger>
+                                <TooltipTrigger
+                                    render={
+                                        <ColorPicker
+                                            value={selectedTextColor ?? '#ffffff'}
+                                            onChange={(color) => onUpdateText(selectedId, { fill: color })}
+                                        />
+                                    }
+                                />
                                 <TooltipContent>
                                     <p>Text color</p>
                                 </TooltipContent>
@@ -309,11 +315,13 @@ export default function CanvasTextControls({
                             <InputGroup className="w-full max-w-20">
                                 <InputGroupAddon>
                                     <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <InputGroupButton size="icon-xs" variant="ghost">
-                                                <TypeOutlineIcon aria-hidden />
-                                            </InputGroupButton>
-                                        </TooltipTrigger>
+                                        <TooltipTrigger
+                                            render={
+                                                <InputGroupButton size="icon-xs" variant="ghost">
+                                                    <TypeOutlineIcon aria-hidden />
+                                                </InputGroupButton>
+                                            }
+                                        />
                                         <TooltipContent>
                                             <p>Stroke width</p>
                                         </TooltipContent>
@@ -334,12 +342,14 @@ export default function CanvasTextControls({
 
                             {/* STROKE COLOR */}
                             <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <ColorPicker
-                                        value={selectedTextStrokeColor ?? '#000000'}
-                                        onChange={(color) => onUpdateText(selectedId, { stroke: color })}
-                                    />
-                                </TooltipTrigger>
+                                <TooltipTrigger
+                                    render={
+                                        <ColorPicker
+                                            value={selectedTextStrokeColor ?? '#000000'}
+                                            onChange={(color) => onUpdateText(selectedId, { stroke: color })}
+                                        />
+                                    }
+                                />
                                 <TooltipContent>
                                     <p>Stroke color</p>
                                 </TooltipContent>

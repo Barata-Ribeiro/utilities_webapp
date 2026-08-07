@@ -23,6 +23,7 @@
         "tests": "vitest run"
     },
     "dependencies": {
+        "@base-ui/react": "^1.7.0",
         "@fontsource-variable/fira-code": "^5.3.0",
         "@fontsource-variable/montserrat": "^5.3.0",
         "@fontsource-variable/source-sans-3": "^5.3.0",
@@ -42,7 +43,6 @@
         "mathjs": "^15.2.0",
         "optional": "^0.1.4",
         "qrcode": "^1.5.4",
-        "radix-ui": "^1.6.7",
         "react": "^19.2.8",
         "react-colorful": "^5.8.0",
         "react-day-picker": "^10.0.1",

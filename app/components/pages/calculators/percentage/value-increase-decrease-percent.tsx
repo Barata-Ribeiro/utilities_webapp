@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Field, FieldGroup, FieldLabel } from '~/components/ui/field';
 import { Input } from '~/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
+import { cn } from '~/lib/utils';
 
 const Action = {
     INCREASE: 'increase',
@@ -135,7 +136,7 @@ export default function ValueIncreaseDecreasePercent() {
                             aria-label="Select action"
                         >
                             <SelectTrigger>
-                                <SelectValue placeholder="Increase/Decrease" />
+                                <SelectValue placeholder="Increase/Decrease" className="capitalize" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem className="inline-flex items-center gap-x-2" value={Action.INCREASE}>
@@ -176,7 +177,7 @@ export default function ValueIncreaseDecreasePercent() {
                         aria-readonly="true"
                         aria-label="Calculation result"
                         aria-describedby={`${componentName}-formula`}
-                        className="font-bold"
+                        className={cn(result !== null && 'font-bold')}
                         value={result === null ? '' : String(Number(result.toFixed(2)))}
                         readOnly
                     />

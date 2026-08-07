@@ -101,27 +101,29 @@ export default function GenericDiceRoller() {
 
                             return (
                                 <Tooltip key={die.label}>
-                                    <TooltipTrigger asChild>
-                                        <button
-                                            key={die.sides}
-                                            type="button"
-                                            aria-label={rollInstruction}
-                                            title={rollInstruction}
-                                            className="relative transition-transform duration-100 ease-in-out hover:scale-110 hover:drop-shadow-lg focus-visible:scale-110 focus-visible:drop-shadow-lg active:scale-95 active:drop-shadow-sm"
-                                            onClick={(e) => increaseDiceCount(die, e)}
-                                        >
-                                            <die.vector
-                                                backgroundFill="var(--primary)"
-                                                shadowStrokeColor="var(--sidebar-primary)"
-                                                aria-hidden
-                                                className="h-14"
-                                            />
+                                    <TooltipTrigger
+                                        render={
+                                            <button
+                                                key={die.sides}
+                                                type="button"
+                                                aria-label={rollInstruction}
+                                                title={rollInstruction}
+                                                className="relative transition-transform duration-100 ease-in-out hover:scale-110 hover:drop-shadow-lg focus-visible:scale-110 focus-visible:drop-shadow-lg active:scale-95 active:drop-shadow-sm"
+                                                onClick={(e) => increaseDiceCount(die, e)}
+                                            >
+                                                <die.vector
+                                                    backgroundFill="var(--primary)"
+                                                    shadowStrokeColor="var(--sidebar-primary)"
+                                                    aria-hidden
+                                                    className="h-14"
+                                                />
 
-                                            {rollCount && <DiceRollCounterBadge count={rollCount} />}
+                                                {rollCount && <DiceRollCounterBadge count={rollCount} />}
 
-                                            <DiceText sides={die.sides} isThreeDigits={isThreeDigits} />
-                                        </button>
-                                    </TooltipTrigger>
+                                                <DiceText sides={die.sides} isThreeDigits={isThreeDigits} />
+                                            </button>
+                                        }
+                                    />
                                     <TooltipContent>
                                         <p>{die.label}</p>
                                     </TooltipContent>
@@ -133,17 +135,20 @@ export default function GenericDiceRoller() {
                     <div className="flex flex-col items-center gap-2 sm:flex-row">
                         <InputGroup className="max-w-40 flex-1">
                             <Popover>
-                                <PopoverTrigger asChild>
-                                    <InputGroupAddon>
-                                        <InputGroupButton
-                                            variant="secondary"
-                                            size="icon-xs"
-                                            className="rounded-full p-1!"
-                                        >
-                                            <InfoIcon aria-hidden />
-                                        </InputGroupButton>
-                                    </InputGroupAddon>
-                                </PopoverTrigger>
+                                <PopoverTrigger
+                                    nativeButton={false}
+                                    render={
+                                        <InputGroupAddon>
+                                            <InputGroupButton
+                                                variant="secondary"
+                                                size="icon-xs"
+                                                className="rounded-full p-1!"
+                                            >
+                                                <InfoIcon aria-hidden />
+                                            </InputGroupButton>
+                                        </InputGroupAddon>
+                                    }
+                                />
                                 <PopoverContent align="start" className="flex flex-col gap-1 rounded-xl text-sm">
                                     <p className="font-medium">Modifiers</p>
                                     <p>

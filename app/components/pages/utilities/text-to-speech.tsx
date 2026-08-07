@@ -16,7 +16,7 @@ const TextToSpeechSchema = z.object({
         .max(5000, 'Text exceeds maximum length of 5000 characters.'),
     rate: z.number().min(0.5).max(2).default(1).optional(),
     pitch: z.number().min(0).max(2).default(1).optional(),
-    voice: z.number().min(0).optional(),
+    voice: z.string().optional(),
 });
 
 type TextToSpeechType = z.infer<typeof TextToSpeechSchema>;
@@ -46,7 +46,7 @@ export default function TextToSpeech() {
 
     const form = useForm<TextToSpeechType>({
         resolver: zodResolver(TextToSpeechSchema),
-        defaultValues: { text: '', rate: 1, pitch: 1, voice: undefined },
+        defaultValues: { text: '', rate: 1, pitch: 1, voice: '' },
     });
 
     function onsubmit(data: TextToSpeechType) {
@@ -59,10 +59,9 @@ export default function TextToSpeech() {
         utter.rate = data.rate ?? 1;
         utter.pitch = data.pitch ?? 1;
 
-        if (data.voice !== undefined && data.voice !== null) {
-            const idx = Number(data.voice);
-
-            if (!Number.isNaN(idx) && voices[idx]) utter.voice = voices[idx];
+        if (data.voice) {
+            const selectedVoice = voices.find((voice) => voice.voiceURI === data.voice);
+            if (selectedVoice) utter.voice = selectedVoice;
         }
 
         s.speak?.(utter);
@@ -104,7 +103,7 @@ export default function TextToSpeech() {
                         <div className="flex items-center gap-4">
                             <Slider
                                 value={[field.value ?? 1]}
-                                onValueChange={([value]) => field.onChange(value)}
+                                onValueChange={(value) => field.onChange(Array.isArray(value) ? value[0] : value)}
                                 min={0.5}
                                 max={2}
                                 step={0.1}
@@ -130,7 +129,7 @@ export default function TextToSpeech() {
                             <Slider
                                 id="pitch"
                                 value={[field.value ?? 1]}
-                                onValueChange={([value]) => field.onChange(value)}
+                                onValueChange={(value) => field.onChange(Array.isArray(value) ? value[0] : value)}
                                 min={0}
                                 max={2}
                                 step={0.1}
@@ -155,23 +154,19 @@ export default function TextToSpeech() {
                             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                         </FieldContent>
 
-                        <Select
-                            value={field.value === undefined ? undefined : String(field.value)}
-                            onValueChange={(val) => field.onChange(val === undefined ? undefined : Number(val))}
-                            defaultValue={undefined}
-                        >
+                        <Select value={field.value ?? ''} onValueChange={(val) => field.onChange(val ?? '')}>
                             <SelectTrigger id="voice" className="w-full" aria-invalid={fieldState.invalid}>
                                 <SelectValue placeholder="Select a voice..." />
                             </SelectTrigger>
                             <SelectContent>
                                 {voices.length > 0 ? (
-                                    voices.map((voice, idx) => (
-                                        <SelectItem key={`voice-${idx}-${voice.name}`} value={String(idx)}>
+                                    voices.map((voice) => (
+                                        <SelectItem key={voice.voiceURI} value={voice.voiceURI}>
                                             {voice.name}
                                         </SelectItem>
                                     ))
                                 ) : (
-                                    <SelectItem value={String(0)}>Default</SelectItem>
+                                    <SelectItem value="">Default</SelectItem>
                                 )}
                             </SelectContent>
                         </Select>
@@ -180,7 +175,13 @@ export default function TextToSpeech() {
             />
 
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-                <Button type="submit">Play</Button>
+                <Button
+                    type="submit"
+                    disabled={!form.formState.isValid || !form.formState.isDirty}
+                    aria-label="Play Text to Speech"
+                >
+                    Play
+                </Button>
                 <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
                     Reset
                 </Button>

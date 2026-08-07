@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { CalendarIcon, CircleMinusIcon, CirclePlusIcon } from 'lucide-react';
+import { floor, random } from 'mathjs';
 import { useState } from 'react';
 import { Controller, Resolver, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
@@ -113,18 +114,26 @@ export default function DateAddSubtract() {
                                 <Field data-invalid={fieldState.invalid} className="flex flex-col">
                                     <FieldLabel htmlFor="calendar">Select a Date</FieldLabel>
                                     <Popover>
-                                        <PopoverTrigger id="calendar" asChild>
-                                            <Button
-                                                variant={'outline'}
-                                                className={cn(
-                                                    'pl-3 text-left font-normal max-sm:max-w-60 sm:w-full',
-                                                    !field.value && 'text-muted-foreground',
-                                                )}
-                                            >
-                                                {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
-                                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                            </Button>
-                                        </PopoverTrigger>
+                                        <PopoverTrigger
+                                            id="calendar"
+                                            render={
+                                                <Button
+                                                    variant={'outline'}
+                                                    className={cn(
+                                                        'pl-3 text-left font-normal max-sm:max-w-60 sm:w-full',
+                                                        !field.value && 'text-muted-foreground',
+                                                    )}
+                                                >
+                                                    {field.value ? (
+                                                        format(field.value, 'PPP')
+                                                    ) : (
+                                                        <span>Pick a date</span>
+                                                    )}
+                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                </Button>
+                                            }
+                                        />
+
                                         <PopoverContent className="w-auto p-0" align="start">
                                             <Calendar
                                                 mode="single"
@@ -150,11 +159,11 @@ export default function DateAddSubtract() {
                                         <FieldLabel htmlFor="action">Action</FieldLabel>
                                     </FieldContent>
 
-                                    <Select name={field.name} onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select name={field.name} onValueChange={field.onChange} value={field.value ?? ''}>
                                         <SelectTrigger id="action" aria-invalid={fieldState.invalid}>
-                                            <SelectValue placeholder="Add/Subtract" />
+                                            <SelectValue placeholder="Add/Subtract" className="capitalize" />
                                         </SelectTrigger>
-                                        <SelectContent position="item-aligned">
+                                        <SelectContent alignItemWithTrigger>
                                             <SelectItem className="inline-flex items-center gap-x-2" value="add">
                                                 <CirclePlusIcon aria-hidden size={16} /> Add
                                             </SelectItem>
@@ -178,7 +187,7 @@ export default function DateAddSubtract() {
                                 name={input as keyof Omit<DateAddSubtractType, 'action' | 'date'>}
                                 render={({ field, fieldState }) => {
                                     const isInvalid = !!form.formState.errors[input as keyof DateAddSubtractType];
-                                    const randomPlaceholder = Math.floor(Math.random() * 100).toString();
+                                    const randomPlaceholder = floor(random(100)).toString();
 
                                     const { value, ...rest } = field;
 

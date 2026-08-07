@@ -3,6 +3,7 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Field, FieldLabel } from '~/components/ui/field';
 import { Input } from '~/components/ui/input';
+import { cn } from '~/lib/utils';
 
 export default function PercentOfCalc() {
     const [percentValue, setPercentValue] = useState('');
@@ -118,8 +119,8 @@ export default function PercentOfCalc() {
                         aria-readonly="true"
                         aria-label="Calculation result"
                         aria-describedby={`${componentName}-formula`}
-                        className="font-bold"
-                        defaultValue={result ?? ''}
+                        className={cn(result !== null && 'font-bold')}
+                        value={result ?? ''}
                         readOnly
                     />
                 </Field>

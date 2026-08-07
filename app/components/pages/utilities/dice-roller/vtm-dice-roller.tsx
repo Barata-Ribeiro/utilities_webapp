@@ -14,8 +14,8 @@ import useIsMobile from '~/hooks/use-mobile';
 import { rollDie } from '~/lib/dice-roller.utils';
 
 // Dice import
+import { Checkbox } from '@base-ui/react/checkbox';
 import { XIcon } from 'lucide-react';
-import { Checkbox } from 'radix-ui';
 import hungerDieBestialFailure from '~/assets/dice/vtm/Dice_Hunger_BestialFailure.png';
 import hungerDieFailure from '~/assets/dice/vtm/Dice_Hunger_Failure.png';
 import hungerDieMessyCritical from '~/assets/dice/vtm/Dice_Hunger_MessyCritical.png';

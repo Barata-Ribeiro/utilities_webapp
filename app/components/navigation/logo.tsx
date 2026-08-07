@@ -11,18 +11,18 @@ export function Logo() {
                     tooltip="Home"
                     aria-label="Logo"
                     className="cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                    asChild
-                >
-                    <Link to="/">
-                        <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                            <CogIcon aria-hidden className="size-6" />
-                        </div>
-                        <div className="grid flex-1 text-left text-sm leading-tight">
-                            <span className="truncate font-medium">Utilities</span>
-                            <span className="truncate text-xs">Webapp</span>
-                        </div>
-                    </Link>
-                </SidebarMenuButton>
+                    render={
+                        <Link to="/">
+                            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                                <CogIcon aria-hidden className="size-6" />
+                            </div>
+                            <div className="grid flex-1 text-left text-sm leading-tight">
+                                <span className="truncate font-medium">Utilities</span>
+                                <span className="truncate text-xs">Webapp</span>
+                            </div>
+                        </Link>
+                    }
+                />
             </SidebarMenuItem>
         </SidebarMenu>
     );
