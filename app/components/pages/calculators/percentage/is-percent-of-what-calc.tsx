@@ -3,6 +3,7 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Field, FieldLabel } from '~/components/ui/field';
 import { Input } from '~/components/ui/input';
+import { cn } from '~/lib/utils';
 
 export default function IsPercentOfWhatCalc() {
     const [value, setValue] = useState('');
@@ -123,7 +124,7 @@ export default function IsPercentOfWhatCalc() {
                         aria-readonly="true"
                         aria-label="Calculation result"
                         aria-describedby={`${componentName}-formula`}
-                        className="font-bold"
+                        className={cn(result !== null && 'font-bold')}
                         value={result === null ? '' : String(Number(result.toFixed(2)))}
                         readOnly
                     />
