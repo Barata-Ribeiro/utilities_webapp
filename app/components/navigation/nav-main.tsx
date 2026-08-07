@@ -8,7 +8,7 @@ import {
     PencilRulerIcon,
     RefreshCcwDotIcon,
 } from 'lucide-react';
-import { Activity } from 'react';
+import { Activity, useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '~/components/ui/collapsible';
 import {
@@ -77,6 +77,31 @@ export function NavMain() {
             items: URLS.programming,
         },
     ];
+
+    const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
+        Object.fromEntries(LINKS.map((item) => [item.title, Boolean(item.isActive)])),
+    );
+
+    useEffect(() => {
+        setOpenGroups((prev) => {
+            const next = { ...prev };
+            let hasChanges = false;
+
+            for (const item of LINKS) {
+                if (next[item.title] === undefined) {
+                    next[item.title] = Boolean(item.isActive);
+                    hasChanges = true;
+                }
+
+                if (item.isActive && !next[item.title]) {
+                    next[item.title] = true;
+                    hasChanges = true;
+                }
+            }
+
+            return hasChanges ? next : prev;
+        });
+    }, [LINKS]);
 
     return (
         <SidebarGroup>
@@ -161,7 +186,13 @@ export function NavMain() {
                     {LINKS.map((item) => (
                         <Collapsible
                             key={item.title}
-                            defaultOpen={item.isActive}
+                            open={openGroups[item.title] ?? false}
+                            onOpenChange={(open) =>
+                                setOpenGroups((prev) => ({
+                                    ...prev,
+                                    [item.title]: open,
+                                }))
+                            }
                             className="group/collapsible"
                             render={
                                 <SidebarMenuItem>
