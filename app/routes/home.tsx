@@ -18,26 +18,26 @@ export default function Home() {
                         </CardDescription>
                     </CardHeader>
 
-                    <CardContent data-testid="home-buttons" className="flex flex-wrap items-center gap-2">
+                    <CardContent data-testid="home-buttons" className="flex flex-row flex-wrap">
                         <Button
                             variant="outline"
+                            nativeButton={false}
                             render={<NavLink to="/utilities/character-counter">Char. Counter</NavLink>}
                         />
                         <Button
                             variant="outline"
+                            nativeButton={false}
                             render={<NavLink to="/utilities/password-generator">Pass. Generator</NavLink>}
                         />
                         <Button
                             variant="outline"
+                            nativeButton={false}
                             render={<NavLink to="/utilities/lorem-ipsum">Lorem Ipsum Generator</NavLink>}
                         />
                         <Button
                             variant="outline"
-                            render={<NavLink to="/utilities/uuid-generator">UUID Generator</NavLink>}
-                        />
-                        <Button
-                            variant="outline"
-                            render={<NavLink to="/utilities/markdown-editor">Markdown Editor</NavLink>}
+                            nativeButton={false}
+                            render={<NavLink to="/utilities/dice-roller">Dice Roller</NavLink>}
                         />
                     </CardContent>
                 </Card>
@@ -72,11 +72,16 @@ export default function Home() {
                     <CardContent>
                         <ul data-testid="home-quick-links" className="flex flex-col gap-2">
                             <li>
-                                <Button variant="link" render={<NavLink to="/about">About this project</NavLink>} />
+                                <Button
+                                    variant="link"
+                                    nativeButton={false}
+                                    render={<NavLink to="/about">About this project</NavLink>}
+                                />
                             </li>
                             <li>
                                 <Button
                                     variant="link"
+                                    nativeButton={false}
                                     render={
                                         <Link
                                             to="https://github.com/Barata-Ribeiro/utilities_webapp/issues"

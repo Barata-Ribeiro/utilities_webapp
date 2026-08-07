@@ -87,6 +87,7 @@ export default function QRCodeGenerator() {
                     <Button
                         variant="secondary"
                         aria-label="Download QRCode image"
+                        nativeButton={false}
                         render={
                             <a href={qrCode} download="qrcode.png">
                                 Download

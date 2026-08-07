@@ -136,6 +136,7 @@ export default function GenericDiceRoller() {
                         <InputGroup className="max-w-40 flex-1">
                             <Popover>
                                 <PopoverTrigger
+                                    nativeButton={false}
                                     render={
                                         <InputGroupAddon>
                                             <InputGroupButton
