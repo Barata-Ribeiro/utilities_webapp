@@ -30,19 +30,23 @@ export default function ColorPicker({
 
     return (
         <Popover onOpenChange={setOpen} open={open}>
-            <PopoverTrigger disabled={disabled} onBlur={onBlur} asChild>
-                <Button
-                    {...props}
-                    className={cn('block aspect-square', className)}
-                    name={name}
-                    onClick={() => setOpen(true)}
-                    size={size}
-                    style={{ backgroundColor: parsedValue }}
-                    variant="outline"
-                >
-                    <PaletteIcon aria-hidden />
-                </Button>
-            </PopoverTrigger>
+            <PopoverTrigger
+                disabled={disabled}
+                onBlur={onBlur}
+                render={
+                    <Button
+                        {...props}
+                        className={cn('block aspect-square', className)}
+                        name={name}
+                        onClick={() => setOpen(true)}
+                        size={size}
+                        style={{ backgroundColor: parsedValue }}
+                        variant="outline"
+                    >
+                        <PaletteIcon aria-hidden />
+                    </Button>
+                }
+            />
             <PopoverContent className="w-full">
                 <HexColorPicker color={parsedValue} onChange={onChange} />
                 <Input maxLength={7} onChange={(e) => onChange(e?.currentTarget?.value)} value={parsedValue} />

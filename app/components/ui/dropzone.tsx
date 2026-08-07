@@ -8,10 +8,10 @@ import { cn } from '~/lib/utils';
 
 interface DropzoneContextType {
     src?: File[];
-    accept?: DropzoneOptions['accept'];
-    maxSize?: DropzoneOptions['maxSize'];
-    minSize?: DropzoneOptions['minSize'];
-    maxFiles?: DropzoneOptions['maxFiles'];
+    accept: DropzoneOptions['accept'];
+    maxSize: DropzoneOptions['maxSize'];
+    minSize: DropzoneOptions['minSize'];
+    maxFiles: DropzoneOptions['maxFiles'];
 }
 
 const renderBytes = (bytes: number) => {
