@@ -125,9 +125,11 @@ export function NavMain() {
                             />
 
                             <DropdownMenuContent side="right" align="start" className="w-full">
-                                <DropdownMenuLabel>{item.title}</DropdownMenuLabel>
+                                <DropdownMenuGroup>
+                                    <DropdownMenuLabel>{item.title}</DropdownMenuLabel>
+                                </DropdownMenuGroup>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuGroup className="grid space-y-1">
+                                <DropdownMenuGroup className="grid gap-y-1">
                                     {item.items?.map((subItem) => {
                                         const isActive = location.pathname.endsWith(subItem.url);
 

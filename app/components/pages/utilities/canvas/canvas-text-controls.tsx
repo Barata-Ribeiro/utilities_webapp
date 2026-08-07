@@ -221,7 +221,7 @@ export default function CanvasTextControls({
 
                             {/* FONT FAMILY */}
                             <Select
-                                defaultValue={selectedTextFontFamily}
+                                value={selectedTextFontFamily}
                                 onValueChange={(value) => onUpdateText(selectedId, { fontFamily: value ?? 'Arial' })}
                             >
                                 <SelectTrigger
