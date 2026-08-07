@@ -5,7 +5,7 @@ import { floor, random } from 'mathjs';
 import { useState } from 'react';
 import { Controller, Resolver, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
-import { Button } from '~/components/ui/button';
+import { Button, buttonVariants } from '~/components/ui/button';
 import { Calendar } from '~/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Field, FieldContent, FieldError, FieldGroup, FieldLabel } from '~/components/ui/field';
@@ -116,23 +116,17 @@ export default function DateAddSubtract() {
                                     <Popover>
                                         <PopoverTrigger
                                             id="calendar"
-                                            render={
-                                                <Button
-                                                    variant={'outline'}
-                                                    className={cn(
-                                                        'pl-3 text-left font-normal max-sm:max-w-60 sm:w-full',
-                                                        !field.value && 'text-muted-foreground',
-                                                    )}
-                                                >
-                                                    {field.value ? (
-                                                        format(field.value, 'PPP')
-                                                    ) : (
-                                                        <span>Pick a date</span>
-                                                    )}
-                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                                </Button>
-                                            }
-                                        />
+                                            className={buttonVariants({
+                                                variant: 'outline',
+                                                className: cn(
+                                                    'pl-3 text-left font-normal max-sm:max-w-60 sm:w-full',
+                                                    !field.value && 'text-muted-foreground',
+                                                ),
+                                            })}
+                                        >
+                                            {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                        </PopoverTrigger>
 
                                         <PopoverContent className="w-auto p-0" align="start">
                                             <Calendar
