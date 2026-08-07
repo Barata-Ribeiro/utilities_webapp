@@ -124,11 +124,15 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
                     </pre>
                 )}
                 <div className="mt-6 flex flex-wrap items-center justify-center gap-4 md:mt-8">
-                    <Button className="h-9 px-4 py-2" asChild>
-                        <Link to="/" reloadDocument>
-                            Go Back Home
-                        </Link>
-                    </Button>
+                    <Button
+                        className="h-9 px-4 py-2"
+                        render={
+                            <Link to="/" reloadDocument>
+                                Go Back Home
+                            </Link>
+                        }
+                    />
+
                     <Button
                         variant="ghost"
                         className="h-9 px-4 py-2"

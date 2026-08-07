@@ -189,22 +189,29 @@ export function DateDifference() {
                                     </FieldLabel>
                                     <div className="flex flex-wrap items-center gap-2 max-md:justify-center">
                                         <Popover>
-                                            <PopoverTrigger id={`calendar-${key}`} asChild>
-                                                <Button
-                                                    variant="outline"
-                                                    className={cn(
-                                                        'w-full max-w-60 pl-3 text-left font-normal',
-                                                        !field.value && 'text-muted-foreground',
-                                                    )}
-                                                >
-                                                    {field.value ? (
-                                                        format(field.value, 'PPP')
-                                                    ) : (
-                                                        <span>Pick a date</span>
-                                                    )}
-                                                    <CalendarIcon aria-hidden className="ml-auto size-4 opacity-50" />
-                                                </Button>
-                                            </PopoverTrigger>
+                                            <PopoverTrigger
+                                                id={`calendar-${key}`}
+                                                render={
+                                                    <Button
+                                                        variant="outline"
+                                                        className={cn(
+                                                            'w-full max-w-60 pl-3 text-left font-normal',
+                                                            !field.value && 'text-muted-foreground',
+                                                        )}
+                                                    >
+                                                        {field.value ? (
+                                                            format(field.value, 'PPP')
+                                                        ) : (
+                                                            <span>Pick a date</span>
+                                                        )}
+                                                        <CalendarIcon
+                                                            aria-hidden
+                                                            className="ml-auto size-4 opacity-50"
+                                                        />
+                                                    </Button>
+                                                }
+                                            />
+
                                             <PopoverContent className="w-auto p-0" align="start">
                                                 <Calendar
                                                     mode="single"

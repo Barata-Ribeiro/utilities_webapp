@@ -84,11 +84,15 @@ export default function QRCodeGenerator() {
             {qrCode && (
                 <div className="mx-auto mt-6 grid w-full max-w-lg gap-4">
                     <img src={qrCode} alt="QrCode" width={800} height={800} />
-                    <Button variant="secondary" aria-label="Download QRCode image" asChild>
-                        <a href={qrCode} download="qrcode.png">
-                            Download
-                        </a>
-                    </Button>
+                    <Button
+                        variant="secondary"
+                        aria-label="Download QRCode image"
+                        render={
+                            <a href={qrCode} download="qrcode.png">
+                                Download
+                            </a>
+                        }
+                    />
                 </div>
             )}
         </Fragment>

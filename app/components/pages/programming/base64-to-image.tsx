@@ -90,7 +90,7 @@ export default function Base64ToImage() {
                                     <SelectTrigger id="download-format" aria-invalid={fieldState.invalid}>
                                         <SelectValue placeholder="Image Format" />
                                     </SelectTrigger>
-                                    <SelectContent position="item-aligned">
+                                    <SelectContent alignItemWithTrigger>
                                         {['png', 'jpeg', 'webp'].map((format) => (
                                             <SelectItem key={format} value={format}>
                                                 {format.toUpperCase()}
@@ -136,12 +136,12 @@ export default function Base64ToImage() {
                             variant="outline"
                             aria-label="Download Image"
                             disabled={!result}
-                            asChild={!!result}
-                        >
-                            <Link to={result ?? ''} download={fileName}>
-                                Download
-                            </Link>
-                        </Button>
+                            render={
+                                <Link to={result ?? ''} download={fileName}>
+                                    Download
+                                </Link>
+                            }
+                        />
                     </div>
                 </div>
             </form>
