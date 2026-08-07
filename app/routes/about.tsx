@@ -28,7 +28,7 @@ export default function About() {
                         <h3 className="text-sm font-medium">Highlights</h3>
                         <ul className="mt-2 list-inside list-disc text-sm text-muted-foreground">
                             <li>Client-first utilities: most tools run entirely in the browser.</li>
-                            <li>Accessible UI primitives (Radix, Tailwind, shadcn patterns).</li>
+                            <li>Accessible UI primitives (Base UI, Tailwind, shadcn patterns).</li>
                             <li>Simple, composable components so new tools are quick to add.</li>
                         </ul>
                     </div>
