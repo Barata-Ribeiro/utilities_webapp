@@ -3,7 +3,7 @@ import { Fragment, useState } from 'react';
 import { Controller, Resolver, useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import { z } from 'zod/v4';
-import { Button } from '~/components/ui/button';
+import { Button, buttonVariants } from '~/components/ui/button';
 import { Field, FieldContent, FieldError, FieldGroup, FieldLabel } from '~/components/ui/field';
 import { Input } from '~/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
@@ -131,18 +131,19 @@ export default function Base64ToImage() {
                             Reset
                         </Button>
 
-                        <Button
-                            type="button"
-                            variant="outline"
+                        <Link
+                            to={result ?? ''}
+                            download={fileName}
                             aria-label="Download Image"
-                            disabled={!result}
-                            nativeButton={false}
-                            render={
-                                <Link to={result ?? ''} download={fileName}>
-                                    Download
-                                </Link>
-                            }
-                        />
+                            aria-disabled={!result}
+                            tabIndex={!result ? -1 : undefined}
+                            className={buttonVariants({
+                                variant: 'outline',
+                                className: 'pointer-events-auto',
+                            })}
+                        >
+                            Download
+                        </Link>
                     </div>
                 </div>
             </form>

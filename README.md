@@ -1,7 +1,7 @@
 # Utilities Web App
 
 A collection of focused utilities implemented as a modern Vite.js + React Router application using the `app` folder, and the `framework` mode for routing from React Router with TypeScript and Tailwind CSS.
-Built with composable UI primitives (Radix + shadcn/ui), the project organizes converters, calculators and utilities
+Built with composable UI primitives (Base UI + shadcn/ui), the project organizes converters, calculators and utilities
 into reusable components and routes for easy extension.
 Provides PWA/service worker support and light/dark theming.
 
@@ -12,7 +12,7 @@ Demo: https://utilities-webapp.vercel.app/
 - **Framework**: Vite.js + React Router (framework mode) — v8.x (see `package.json`)
 - **Language**: TypeScript + React — React v19.x
 - **Styling**: Tailwind CSS
-- **UI primitives**: Radix UI + shadcn/ui
+- **UI primitives**: Base UI + shadcn/ui
 - **Package manager**: pnpm (recommended)
 
 ## 📁 What this repository contains
@@ -31,7 +31,7 @@ Demo: https://utilities-webapp.vercel.app/
   Roman Converter, Text to Speech, URL Slug Generator
 - **Programming Utilities**: Image to Base64
 - Light/dark theme switching (`next-themes`)
-- Responsive layout with accessible UI primitives (Radix + custom shadcn/ui components)
+- Responsive layout with accessible UI primitives (Base UI + custom shadcn/ui components)
 - Project built with modern tooling: Vite.js, React, TypeScript, Tailwind and ESLint/Prettier
 - Service Worker for offline support (experimental) and PWA features (workbox)
 

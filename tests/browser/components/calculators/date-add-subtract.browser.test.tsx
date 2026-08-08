@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { render } from 'vitest-browser-react';
 import DateAddSubtract from '~/components/pages/calculators/date/date-add-subtract';
 
-// Radix Popover renders the calendar in a portal on document.body —
+// Base UI Popover renders the calendar in a portal on document.body —
 // we query document.body directly and use vi.waitFor to handle async opening/closing.
 async function openCalendarAndPickDay(triggerId = 'calendar', index = 0) {
     const trigger = document.getElementById(triggerId) as HTMLButtonElement | null;
@@ -18,9 +18,7 @@ async function openCalendarAndPickDay(triggerId = 'calendar', index = 0) {
         try {
             await vi.waitFor(
                 () => {
-                    openPopover = document.body.querySelector<HTMLElement>(
-                        '[data-slot="popover-content"][data-state="open"]',
-                    );
+                    openPopover = document.body.querySelector<HTMLElement>('[data-slot="popover-content"][data-open]');
 
                     if (!openPopover?.querySelector('[role="grid"]')) throw new Error('calendar not open');
                 },
@@ -38,7 +36,6 @@ async function openCalendarAndPickDay(triggerId = 'calendar', index = 0) {
     );
     buttons[index]!.click();
 
-    // Dismiss the popover with Escape (Radix listens on document)
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
 
     await vi.waitFor(() => {
@@ -48,7 +45,6 @@ async function openCalendarAndPickDay(triggerId = 'calendar', index = 0) {
     });
 }
 
-// Radix Select content is also a portal.
 async function selectAction(action: 'Add' | 'Subtract') {
     const trigger = document.getElementById('action') as HTMLButtonElement | null;
 

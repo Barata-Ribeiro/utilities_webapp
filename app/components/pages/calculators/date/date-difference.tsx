@@ -14,7 +14,7 @@ import { CalendarIcon } from 'lucide-react';
 import { Fragment, useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod/v4';
-import { Button } from '~/components/ui/button';
+import { Button, buttonVariants } from '~/components/ui/button';
 import { Calendar } from '~/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Field, FieldError, FieldLabel } from '~/components/ui/field';
@@ -191,26 +191,17 @@ export function DateDifference() {
                                         <Popover>
                                             <PopoverTrigger
                                                 id={`calendar-${key}`}
-                                                render={
-                                                    <Button
-                                                        variant="outline"
-                                                        className={cn(
-                                                            'w-full max-w-60 pl-3 text-left font-normal',
-                                                            !field.value && 'text-muted-foreground',
-                                                        )}
-                                                    >
-                                                        {field.value ? (
-                                                            format(field.value, 'PPP')
-                                                        ) : (
-                                                            <span>Pick a date</span>
-                                                        )}
-                                                        <CalendarIcon
-                                                            aria-hidden
-                                                            className="ml-auto size-4 opacity-50"
-                                                        />
-                                                    </Button>
-                                                }
-                                            />
+                                                className={buttonVariants({
+                                                    variant: 'outline',
+                                                    className: cn(
+                                                        'w-full max-w-60 pl-3 text-left font-normal',
+                                                        !field.value && 'text-muted-foreground',
+                                                    ),
+                                                })}
+                                            >
+                                                {field.value ? format(field.value, 'PPP') : <span>Pick a date</span>}
+                                                <CalendarIcon aria-hidden className="ml-auto size-4 opacity-50" />
+                                            </PopoverTrigger>
 
                                             <PopoverContent className="w-auto p-0" align="start">
                                                 <Calendar
