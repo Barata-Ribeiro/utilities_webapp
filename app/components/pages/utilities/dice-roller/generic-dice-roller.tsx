@@ -3,11 +3,19 @@ import type { MouseEvent } from 'react';
 import { Fragment, useState, useTransition } from 'react';
 import DiceRollCounterBadge from '~/components/pages/utilities/dice-roller/helpers/dice-roll-counter.badge';
 import DiceText from '~/components/pages/utilities/dice-roller/helpers/dice-text';
+import {
+    NumberField,
+    NumberFieldDecrement,
+    NumberFieldGroup,
+    NumberFieldIncrement,
+    NumberFieldInput,
+    NumberFieldScrubArea,
+} from '~/components/reui/number-field';
 import { Button } from '~/components/ui/button';
 import { ButtonGroup } from '~/components/ui/button-group';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { Dialog, DialogContent, DialogHeader } from '~/components/ui/dialog';
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '~/components/ui/input-group';
+import { InputGroupAddon, InputGroupButton } from '~/components/ui/input-group';
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
 import { Separator } from '~/components/ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
@@ -132,52 +140,66 @@ export default function GenericDiceRoller() {
                         })}
                     </ButtonGroup>
 
-                    <div className="flex flex-col items-center gap-2 sm:flex-row">
-                        <InputGroup className="max-w-40 flex-1">
-                            <Popover>
-                                <PopoverTrigger
-                                    nativeButton={false}
-                                    render={
-                                        <InputGroupAddon>
-                                            <InputGroupButton
-                                                variant="secondary"
-                                                size="icon-xs"
-                                                className="rounded-full p-1!"
-                                            >
-                                                <InfoIcon aria-hidden />
-                                            </InputGroupButton>
-                                        </InputGroupAddon>
-                                    }
+                    <div className="flex flex-col items-center gap-2 md:flex-row">
+                        <NumberField
+                            id="modifier-input"
+                            name="modifier-input"
+                            aria-label="Modifier input"
+                            className="flex-1 md:max-w-44"
+                            value={modifier}
+                            min={-100}
+                            max={100}
+                            step={1}
+                            onValueChange={(value) => setModifier(Number(value))}
+                        >
+                            <NumberFieldGroup>
+                                <Popover>
+                                    <PopoverTrigger
+                                        nativeButton={false}
+                                        render={
+                                            <InputGroupAddon>
+                                                <InputGroupButton
+                                                    variant="secondary"
+                                                    size="icon-xs"
+                                                    className="rounded-full p-1!"
+                                                >
+                                                    <InfoIcon aria-hidden />
+                                                </InputGroupButton>
+                                            </InputGroupAddon>
+                                        }
+                                    />
+                                    <PopoverContent align="start" className="flex flex-col gap-1 rounded-xl text-sm">
+                                        <p className="font-medium">Modifiers</p>
+                                        <p>
+                                            Use these modifiers to adjust your dice rolls. You can add or subtract
+                                            values as needed. Check your game rules for more details.
+                                        </p>
+                                    </PopoverContent>
+                                </Popover>
+                                <NumberFieldScrubArea
+                                    className="pl-1.5 text-muted-foreground"
+                                    labelClassName="font-sans"
+                                    label="Mod."
                                 />
-                                <PopoverContent align="start" className="flex flex-col gap-1 rounded-xl text-sm">
-                                    <p className="font-medium">Modifiers</p>
-                                    <p>
-                                        Use these modifiers to adjust your dice rolls. You can add or subtract values as
-                                        needed. Check your game rules for more details.
-                                    </p>
-                                </PopoverContent>
-                            </Popover>
-                            <InputGroupAddon className="pl-1.5 text-muted-foreground">Mod.</InputGroupAddon>
-                            <InputGroupInput
-                                id="modifier-input"
-                                name="modifier-input"
-                                aria-label="Modifier input"
-                                type="number"
-                                inputMode="numeric"
-                                value={modifier}
-                                step={1}
-                                onChange={(e) => setModifier(Number(e.target.value))}
-                            />
-                        </InputGroup>
+                                <NumberFieldInput className="md:text-left" />
+                                <NumberFieldDecrement className="rounded-none!" />
+                                <NumberFieldIncrement />
+                            </NumberFieldGroup>
+                        </NumberField>
 
                         <Separator orientation={isMobile ? 'horizontal' : 'vertical'} />
 
-                        <ButtonGroup>
-                            <Button disabled={selectedDice.length === 0 || isPending} onClick={handleDiceRoll}>
+                        <ButtonGroup className="w-full">
+                            <Button
+                                className="flex-1"
+                                disabled={selectedDice.length === 0 || isPending}
+                                onClick={handleDiceRoll}
+                            >
                                 <PlayIcon aria-hidden /> Roll!
                             </Button>
                             <Button
                                 variant="secondary"
+                                className="flex-1"
                                 onClick={handleReset}
                                 disabled={selectedDice.length === 0 || isPending}
                             >
