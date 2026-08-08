@@ -362,17 +362,21 @@ export default function VtmDiceRoller() {
                                 render={({ field, fieldState }) => (
                                     <Field data-invalid={fieldState.invalid} className="relative">
                                         <FieldLabel htmlFor={field.name}>Hunger Dice</FieldLabel>
-                                        <Input
-                                            type="number"
+                                        <NumberField
                                             id={field.name}
+                                            name={field.name}
                                             min={0}
                                             max={5}
                                             step={1}
-                                            inputMode="decimal"
-                                            placeholder="e.g. 3"
-                                            aria-invalid={!!form.formState.errors.hungerDice}
-                                            {...field}
-                                        />
+                                            value={field.value}
+                                            onValueChange={(value) => field.onChange(value)}
+                                        >
+                                            <NumberFieldGroup aria-invalid={!!form.formState.errors.hungerDice}>
+                                                <NumberFieldDecrement />
+                                                <NumberFieldInput />
+                                                <NumberFieldIncrement />
+                                            </NumberFieldGroup>
+                                        </NumberField>
                                         {fieldState.invalid && (
                                             <FieldError
                                                 className="absolute rounded-md bg-red-100 px-2 py-1 max-sm:-bottom-6 sm:-top-8"
@@ -391,6 +395,7 @@ export default function VtmDiceRoller() {
                                         <FieldLabel htmlFor={field.name}>Difficulty</FieldLabel>
                                         <NumberField
                                             id={field.name}
+                                            name={field.name}
                                             min={1}
                                             max={10}
                                             step={1}
