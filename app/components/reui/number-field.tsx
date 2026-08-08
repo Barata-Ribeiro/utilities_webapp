@@ -179,9 +179,11 @@ function NumberFieldInput({
 function NumberFieldScrubArea({
     className,
     label,
+    labelClassName,
     ...props
 }: NumberFieldPrimitive.ScrubArea.Props & {
     label: string;
+    labelClassName?: string;
 }) {
     const context = useContext(NumberFieldContext);
     if (!context) {
@@ -194,7 +196,7 @@ function NumberFieldScrubArea({
             data-slot="number-field-scrub-area"
             {...props}
         >
-            <Label className="cursor-ew-resize" htmlFor={context.fieldId}>
+            <Label className={cn('cursor-ew-resize', labelClassName)} htmlFor={context.fieldId}>
                 {label}
             </Label>
             <NumberFieldPrimitive.ScrubAreaCursor className="drop-shadow-[0_1px_1px_#0008] filter">
