@@ -1,28 +1,19 @@
+import { Checkbox } from '@base-ui/react/checkbox';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { XIcon } from 'lucide-react';
 import { floor } from 'mathjs';
 import { type BaseSyntheticEvent, Fragment, useCallback, useState, useTransition } from 'react';
 import { Controller, type Resolver, useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import { z } from 'zod/v4';
 import VtmAlert from '~/components/pages/utilities/dice-roller/vtm-alert';
-import { Button } from '~/components/ui/button';
-import { ButtonGroup } from '~/components/ui/button-group';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
-import { Field, FieldError, FieldGroup, FieldLabel } from '~/components/ui/field';
-import { Input } from '~/components/ui/input';
-import useIsMobile from '~/hooks/use-mobile';
-import { rollDie } from '~/lib/dice-roller.utils';
-
-// Dice import
-import { Checkbox } from '@base-ui/react/checkbox';
-import { XIcon } from 'lucide-react';
-import hungerDieBestialFailure from '~/assets/dice/vtm/Dice_Hunger_BestialFailure.png';
-import hungerDieFailure from '~/assets/dice/vtm/Dice_Hunger_Failure.png';
-import hungerDieMessyCritical from '~/assets/dice/vtm/Dice_Hunger_MessyCritical.png';
-import hungerDieSuccess from '~/assets/dice/vtm/Dice_Hunger_Success.png';
-import regularDieCritical from '~/assets/dice/vtm/Dice_Regular_Critical.png';
-import regularDieFailure from '~/assets/dice/vtm/Dice_Regular_Failure.png';
-import regularDieSuccess from '~/assets/dice/vtm/Dice_Regular_Success.png';
+import {
+    NumberField,
+    NumberFieldDecrement,
+    NumberFieldGroup,
+    NumberFieldIncrement,
+    NumberFieldInput,
+} from '~/components/reui/number-field';
 import {
     ActionBar,
     ActionBarClose,
@@ -31,7 +22,23 @@ import {
     ActionBarSelection,
     ActionBarSeparator,
 } from '~/components/ui/action-bar';
+import { Button } from '~/components/ui/button';
+import { ButtonGroup } from '~/components/ui/button-group';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
+import { Field, FieldError, FieldGroup, FieldLabel } from '~/components/ui/field';
+import { Input } from '~/components/ui/input';
+import useIsMobile from '~/hooks/use-mobile';
+import { rollDie } from '~/lib/dice-roller.utils';
 import { cn } from '~/lib/utils';
+
+// Dice import
+import hungerDieBestialFailure from '~/assets/dice/vtm/Dice_Hunger_BestialFailure.png';
+import hungerDieFailure from '~/assets/dice/vtm/Dice_Hunger_Failure.png';
+import hungerDieMessyCritical from '~/assets/dice/vtm/Dice_Hunger_MessyCritical.png';
+import hungerDieSuccess from '~/assets/dice/vtm/Dice_Hunger_Success.png';
+import regularDieCritical from '~/assets/dice/vtm/Dice_Regular_Critical.png';
+import regularDieFailure from '~/assets/dice/vtm/Dice_Regular_Failure.png';
+import regularDieSuccess from '~/assets/dice/vtm/Dice_Regular_Success.png';
 
 type DieResult = {
     id: string;
@@ -382,18 +389,20 @@ export default function VtmDiceRoller() {
                                 render={({ field, fieldState }) => (
                                     <Field data-invalid={fieldState.invalid} className="relative">
                                         <FieldLabel htmlFor={field.name}>Difficulty</FieldLabel>
-                                        <Input
-                                            type="number"
+                                        <NumberField
                                             id={field.name}
                                             min={1}
                                             max={10}
                                             step={1}
-                                            inputMode="decimal"
-                                            placeholder="e.g. 5"
-
-                                            aria-invalid={!!form.formState.errors.difficulty}
-                                            {...field}
-                                        />
+                                            value={field.value}
+                                            onValueChange={(value) => field.onChange(value)}
+                                        >
+                                            <NumberFieldGroup aria-invalid={!!form.formState.errors.difficulty}>
+                                                <NumberFieldDecrement />
+                                                <NumberFieldInput />
+                                                <NumberFieldIncrement />
+                                            </NumberFieldGroup>
+                                        </NumberField>
                                         {fieldState.invalid && (
                                             <FieldError
                                                 className="absolute rounded-md bg-red-100 px-2 py-1 max-sm:-bottom-6 sm:-top-8"
