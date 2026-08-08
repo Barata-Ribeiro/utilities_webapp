@@ -26,7 +26,6 @@ import { Button } from '~/components/ui/button';
 import { ButtonGroup } from '~/components/ui/button-group';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Field, FieldError, FieldGroup, FieldLabel } from '~/components/ui/field';
-import { Input } from '~/components/ui/input';
 import useIsMobile from '~/hooks/use-mobile';
 import { rollDie } from '~/lib/dice-roller.utils';
 import { cn } from '~/lib/utils';
@@ -335,17 +334,21 @@ export default function VtmDiceRoller() {
                                 render={({ field, fieldState }) => (
                                     <Field data-invalid={fieldState.invalid} className="relative">
                                         <FieldLabel htmlFor={field.name}>Regular Dice</FieldLabel>
-                                        <Input
-                                            type="number"
+                                        <NumberField
                                             id={field.name}
+                                            name={field.name}
                                             min={1}
                                             max={10}
                                             step={1}
-                                            inputMode="decimal"
-                                            placeholder="e.g. 5"
-                                            aria-invalid={!!form.formState.errors.regularDice}
-                                            {...field}
-                                        />
+                                            value={field.value}
+                                            onValueChange={(value) => field.onChange(value)}
+                                        >
+                                            <NumberFieldGroup aria-invalid={!!form.formState.errors.regularDice}>
+                                                <NumberFieldDecrement />
+                                                <NumberFieldInput />
+                                                <NumberFieldIncrement />
+                                            </NumberFieldGroup>
+                                        </NumberField>
                                         {fieldState.invalid && (
                                             <FieldError
                                                 className="absolute rounded-md bg-red-100 px-2 py-1 max-sm:-bottom-6 sm:-top-8"
