@@ -4,6 +4,7 @@ import { cva } from 'class-variance-authority';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useId, useMemo } from 'react';
 
+import { ClassValue } from 'clsx';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 import { Label } from '~/components/ui/label';
 import { cn } from '~/lib/utils';
@@ -125,7 +126,7 @@ function NumberFieldDecrement({
             data-slot="number-field-decrement"
             {...props}
         >
-            {children ?? <MinusIcon />}
+            {children ?? <MinusIcon aria-hidden />}
         </NumberFieldPrimitive.Decrement>
     );
 }
@@ -151,7 +152,7 @@ function NumberFieldIncrement({
             data-slot="number-field-increment"
             {...props}
         >
-            {children ?? <PlusIcon />}
+            {children ?? <PlusIcon aria-hidden />}
         </NumberFieldPrimitive.Increment>
     );
 }
@@ -183,7 +184,7 @@ function NumberFieldScrubArea({
     ...props
 }: NumberFieldPrimitive.ScrubArea.Props & {
     label: string;
-    labelClassName?: string;
+    labelClassName?: ClassValue;
 }) {
     const context = useContext(NumberFieldContext);
     if (!context) {
@@ -200,7 +201,7 @@ function NumberFieldScrubArea({
                 {label}
             </Label>
             <NumberFieldPrimitive.ScrubAreaCursor className="drop-shadow-[0_1px_1px_#0008] filter">
-                <CursorGrowIcon />
+                <CursorGrowIcon aria-hidden />
             </NumberFieldPrimitive.ScrubAreaCursor>
         </NumberFieldPrimitive.ScrubArea>
     );

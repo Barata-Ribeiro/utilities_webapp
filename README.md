@@ -27,13 +27,13 @@ Demo: https://utilities-webapp.vercel.app/
 
 - **Converters**: bytes, length, mass, speed, temperature, time
 - **Calculators**: General, BMI, Dates, GCF/LCM, Percentage, Rule of Three
-- **Utilities**: Character Counter, Lorem Ipsum, Meme Generator, Password Generator(random, memorable, pin), QR Code Generator,
+- **Utilities**: Character Counter, Dice Roller (including Vampire: The Masquerade v5), Lorem Ipsum, Meme Generator, Password Generator(random, memorable, pin), QR Code Generator,
   Roman Converter, Text to Speech, URL Slug Generator
 - **Programming Utilities**: Image to Base64
-- Light/dark theme switching (`next-themes`)
+- Light/dark theme switching (through cookies and `useTheme` hook)
 - Responsive layout with accessible UI primitives (Base UI + custom shadcn/ui components)
 - Project built with modern tooling: Vite.js, React, TypeScript, Tailwind and ESLint/Prettier
-- Service Worker for offline support (experimental) and PWA features (workbox)
+- Service Worker for offline support (experimental) and PWA features (Serwist)
 
 MORE TO COME...
 

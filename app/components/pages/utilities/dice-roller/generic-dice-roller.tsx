@@ -1,4 +1,4 @@
-import { InfoIcon, PlayIcon, RefreshCwIcon } from 'lucide-react';
+import { PlayIcon, RefreshCwIcon } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { Fragment, useState, useTransition } from 'react';
 import DiceRollCounterBadge from '~/components/pages/utilities/dice-roller/helpers/dice-roll-counter.badge';
@@ -15,8 +15,7 @@ import { Button } from '~/components/ui/button';
 import { ButtonGroup } from '~/components/ui/button-group';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '~/components/ui/card';
 import { Dialog, DialogContent, DialogHeader } from '~/components/ui/dialog';
-import { InputGroupAddon, InputGroupButton } from '~/components/ui/input-group';
-import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover';
+import { InputGroup, InputGroupAddon } from '~/components/ui/input-group';
 import { Separator } from '~/components/ui/separator';
 import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
 import useIsMobile from '~/hooks/use-mobile';
@@ -145,46 +144,24 @@ export default function GenericDiceRoller() {
                             id="modifier-input"
                             name="modifier-input"
                             aria-label="Modifier input"
-                            className="flex-1 md:max-w-44"
-                            value={modifier}
+                            className="flex-1 focus-within:rounded-md focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 focus-within:ring-offset-0 focus-within:has-aria-invalid:border-destructive focus-within:has-aria-invalid:ring-destructive/20 md:max-w-44"
                             min={-100}
                             max={100}
-                            step={1}
+                            smallStep={1}
+                            largeStep={5}
+                            value={modifier}
                             onValueChange={(value) => setModifier(Number(value))}
                         >
-                            <NumberFieldGroup>
-                                <Popover>
-                                    <PopoverTrigger
-                                        nativeButton={false}
-                                        render={
-                                            <InputGroupAddon>
-                                                <InputGroupButton
-                                                    variant="secondary"
-                                                    size="icon-xs"
-                                                    className="rounded-full p-1!"
-                                                >
-                                                    <InfoIcon aria-hidden />
-                                                </InputGroupButton>
-                                            </InputGroupAddon>
-                                        }
-                                    />
-                                    <PopoverContent align="start" className="flex flex-col gap-1 rounded-xl text-sm">
-                                        <p className="font-medium">Modifiers</p>
-                                        <p>
-                                            Use these modifiers to adjust your dice rolls. You can add or subtract
-                                            values as needed. Check your game rules for more details.
-                                        </p>
-                                    </PopoverContent>
-                                </Popover>
-                                <NumberFieldScrubArea
-                                    className="pl-1.5 text-muted-foreground"
-                                    labelClassName="font-sans"
-                                    label="Mod."
-                                />
-                                <NumberFieldInput className="md:text-left" />
-                                <NumberFieldDecrement className="rounded-none!" />
-                                <NumberFieldIncrement />
-                            </NumberFieldGroup>
+                            <InputGroup className="w-full flex-1">
+                                <InputGroupAddon>
+                                    <NumberFieldScrubArea label="Mod." labelClassName="font-sans" />
+                                </InputGroupAddon>
+                                <NumberFieldGroup className="ml-2 border-none focus-within:ring-0 focus-within:ring-offset-0">
+                                    <NumberFieldInput className="min-w-12 md:text-left" />
+                                    <NumberFieldDecrement aria-label="Decrement" className="rounded-none!" />
+                                    <NumberFieldIncrement aria-label="Increment" />
+                                </NumberFieldGroup>
+                            </InputGroup>
                         </NumberField>
 
                         <Separator orientation={isMobile ? 'horizontal' : 'vertical'} />
