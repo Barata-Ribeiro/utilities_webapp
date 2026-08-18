@@ -108,7 +108,6 @@ export function NavMain() {
             <SidebarMenu>
                 <SidebarMenuButton
                     tooltip="Home"
-                    aria-current={location.pathname === '/' ? 'page' : undefined}
                     {...(location.pathname.endsWith('/') && { 'data-current': '' })}
                     className="cursor-pointer data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground"
                     render={
@@ -121,7 +120,6 @@ export function NavMain() {
 
                 <SidebarMenuButton
                     tooltip="About"
-                    aria-current={location.pathname.endsWith('/about') ? 'page' : undefined}
                     {...(location.pathname.endsWith('/about') && { 'data-current': '' })}
                     className="cursor-pointer data-current:bg-sidebar-accent data-current:text-sidebar-accent-foreground"
                     render={
@@ -164,12 +162,7 @@ export function NavMain() {
                                                 className="inline-flex cursor-pointer items-center gap-x-2 data-current:bg-sidebar-accent data-current:px-2 data-current:font-medium data-current:text-sidebar-accent-foreground"
                                                 key={subItem.title}
                                                 render={
-                                                    <NavLink
-                                                        to={subItem.url}
-                                                        aria-current={isActive ? 'page' : undefined}
-                                                        prefetch="render"
-                                                        end
-                                                    >
+                                                    <NavLink to={subItem.url} prefetch="render" end>
                                                         <span>{subItem.title}</span>
                                                     </NavLink>
                                                 }
@@ -226,7 +219,6 @@ export function NavMain() {
                                                                     to={subItem.url}
                                                                     {...(isActive && { 'data-current': '' })}
                                                                     className="inline-flex items-center gap-x-2"
-                                                                    aria-current={isActive ? 'page' : undefined}
                                                                     prefetch="render"
                                                                     end
                                                                 >
