@@ -13,7 +13,7 @@ export function SwRegister(): null {
             const sw = event.target as ServiceWorker | null;
             const state = sw?.state;
             if (state === 'installed') {
-                navigator.serviceWorker.getRegistration('/').then((r) => {
+                void navigator.serviceWorker.getRegistration('/').then((r) => {
                     if (r?.waiting) r.waiting.postMessage({ type: 'SKIP_WAITING' });
                 });
             }
@@ -85,10 +85,12 @@ export function SwRegister(): null {
             }
         }
 
-        !import.meta.env.DEV && void tryRegister();
+        if (!import.meta.env.DEV) {
+            void tryRegister();
+        }
 
         return () => {
-            navigator.serviceWorker.getRegistration(SW_URL).then((reg) => {
+            void navigator.serviceWorker.getRegistration(SW_URL).then((reg) => {
                 if (reg?.installing) reg.installing.removeEventListener('statechange', handleNewWorkerStateChange);
                 if (reg?.waiting) reg.waiting.removeEventListener('statechange', handleNewWorkerStateChange);
                 if (reg?.active) reg.active.removeEventListener('statechange', handleNewWorkerStateChange);

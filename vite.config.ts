@@ -1,12 +1,10 @@
-/// <reference types="vite-plus" />
-
 import { reactRouter } from '@react-router/dev/vite';
 import { serwist } from '@serwist/vite';
 import tailwindcss from '@tailwindcss/vite';
-import { playwright } from 'vite-plus/test/browser-playwright';
 import path from 'node:path';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import { defineConfig } from 'vite-plus';
+import { playwright } from 'vite-plus/test/browser-playwright';
 import { routesManifest } from './routes-manifest.ts';
 
 export default defineConfig(({ mode }) => {

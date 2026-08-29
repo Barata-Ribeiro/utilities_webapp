@@ -8,8 +8,8 @@ describe('Bmi', () => {
             const screen = await render(<Bmi />);
             await screen.getByRole('button', { name: /calculate bmi/i }).click();
 
-            const heightError = await screen.getByText('Height must be at least 30 cm.');
-            const weightError = await screen.getByText('Weight must be at least 1 kg.');
+            const heightError = screen.getByText('Height must be at least 30 cm.');
+            const weightError = screen.getByText('Weight must be at least 1 kg.');
 
             expect(heightError.element().textContent).toMatchInlineSnapshot('"Height must be at least 30 cm."');
             expect(weightError.element().textContent).toMatchInlineSnapshot('"Weight must be at least 1 kg."');
@@ -26,7 +26,7 @@ describe('Bmi', () => {
             await screen.getByLabelText('Weight').fill(weight);
             await screen.getByRole('button', { name: /calculate bmi/i }).click();
 
-            const error = await screen.getByText(expectedError);
+            const error = screen.getByText(expectedError);
             expect(error.element().textContent).toBe(expectedError);
         });
     });

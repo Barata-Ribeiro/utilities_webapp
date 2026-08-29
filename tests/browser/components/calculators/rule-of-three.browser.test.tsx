@@ -16,7 +16,7 @@ describe('RuleOfThree', () => {
             await screen.getByPlaceholder('Value C').fill(c);
             await screen.getByRole('button', { name: /calculate rule of three/i }).click();
 
-            const error = await screen.getByText('Value must be a number.');
+            const error = screen.getByText('Value must be a number.');
             expect(error.element().textContent).toMatchInlineSnapshot('"Value must be a number."');
         });
 

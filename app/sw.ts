@@ -63,7 +63,7 @@ async function matchCached(cacheName: string, request: Request) {
     return cache.match(normalizeCacheKey(request), { ignoreSearch: true });
 }
 
-async function warmApplicationShell(event: ExtendableEvent) {
+async function warmApplicationShell(_event: ExtendableEvent) {
     const response = await fetch('/routes.json', { cache: 'no-store' });
 
     if (!response.ok) {
@@ -170,7 +170,7 @@ const serwist = new Serwist({
 if (isDev) {
     self.addEventListener('install', (event) => {
         console.log('Event install (dev only)', event);
-        self.skipWaiting();
+        void self.skipWaiting();
     });
 
     self.addEventListener('activate', (event) => {

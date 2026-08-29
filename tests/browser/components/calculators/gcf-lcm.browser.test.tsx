@@ -10,7 +10,7 @@ describe('Gcf', () => {
             await screen.getByPlaceholder('Input 1').fill('abc');
             await screen.getByRole('button', { name: /calculate gcf/i }).click();
 
-            const error = await screen.getByText('Input must be a number.');
+            const error = screen.getByText('Input must be a number.');
             expect(error.element().textContent).toMatchInlineSnapshot('"Input must be a number."');
         });
 
@@ -21,7 +21,7 @@ describe('Gcf', () => {
             }
             await screen.getByRole('button', { name: /calculate gcf/i }).click();
 
-            const error = await screen.getByText('At least one positive integer is required.');
+            const error = screen.getByText('At least one positive integer is required.');
             expect(error.element().textContent).toMatchInlineSnapshot('"At least one positive integer is required."');
         });
     });
@@ -66,7 +66,7 @@ describe('Lcm', () => {
             await screen.getByPlaceholder('Input 1').fill('abc');
             await screen.getByRole('button', { name: /calculate lcm/i }).click();
 
-            const error = await screen.getByText('Input must be a number.');
+            const error = screen.getByText('Input must be a number.');
             expect(error.element().textContent).toMatchInlineSnapshot('"Input must be a number."');
         });
 
@@ -77,7 +77,7 @@ describe('Lcm', () => {
             }
             await screen.getByRole('button', { name: /calculate lcm/i }).click();
 
-            const error = await screen.getByText('At least one positive integer is required.');
+            const error = screen.getByText('At least one positive integer is required.');
             expect(error.element().textContent).toMatchInlineSnapshot('"At least one positive integer is required."');
         });
     });

@@ -79,8 +79,8 @@ describe('DateAddSubtract', () => {
             const screen = await render(<DateAddSubtract />);
             await screen.getByRole('button', { name: /calculate date add\/subtract/i }).click();
 
-            const dateError = await screen.getByText('A valid date is required.');
-            const actionError = await screen.getByText('Select a valid action.');
+            const dateError = screen.getByText('A valid date is required.');
+            const actionError = screen.getByText('Select a valid action.');
 
             expect(dateError.element().textContent).toMatchInlineSnapshot('"A valid date is required."');
             expect(actionError.element().textContent).toMatchInlineSnapshot('"Select a valid action."');
@@ -99,7 +99,7 @@ describe('DateAddSubtract', () => {
             await screen.getByLabelText(unit).fill(value);
             await screen.getByRole('button', { name: /calculate date add\/subtract/i }).click();
 
-            const error = await screen.getByText(expectedError);
+            const error = screen.getByText(expectedError);
             expect(error.element().textContent).toBe(expectedError);
         });
     });

@@ -104,7 +104,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
     useEffect(() => {
         if (!error) {
-            navigate(location.pathname, { replace: true });
+            void navigate(location.pathname, { replace: true });
         }
     }, [error, location.pathname, navigate]);
 
