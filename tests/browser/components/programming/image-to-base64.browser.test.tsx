@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vite-plus/test';
 import { render } from 'vitest-browser-react';
 import ImageToBase64 from '~/components/pages/programming/image-to-base64';
 

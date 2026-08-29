@@ -1,5 +1,5 @@
 import { MemoryRouter } from 'react-router';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vite-plus/test';
 import { render } from 'vitest-browser-react';
 import Base64ToImage from '~/components/pages/programming/base64-to-image';
 

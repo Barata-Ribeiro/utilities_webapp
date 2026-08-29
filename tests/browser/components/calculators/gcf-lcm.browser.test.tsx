@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vite-plus/test';
 import { render } from 'vitest-browser-react';
 import Gcf from '~/components/pages/calculators/gcm-and-lcf/gcm';
 import Lcm from '~/components/pages/calculators/gcm-and-lcf/lcm';

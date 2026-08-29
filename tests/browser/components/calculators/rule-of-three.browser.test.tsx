@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vite-plus/test';
 import { render } from 'vitest-browser-react';
 import RuleOfThree from '~/components/pages/calculators/rule-of-three';
 

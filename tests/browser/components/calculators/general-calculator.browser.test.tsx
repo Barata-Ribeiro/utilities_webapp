@@ -1,4 +1,4 @@
-import { test as baseTest, describe, expect } from 'vitest';
+import { test as baseTest, describe, expect } from 'vite-plus/test';
 import { render } from 'vitest-browser-react';
 import GeneralCalculator from '~/components/pages/calculators/general-calculator';
 
