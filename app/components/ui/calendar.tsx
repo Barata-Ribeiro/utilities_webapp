@@ -5,6 +5,10 @@ import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react
 import { Button, buttonVariants } from '~/components/ui/button';
 import { cn } from '~/lib/utils';
 
+type CalendarProps<T> = T extends unknown
+    ? T & { buttonVariant?: Exclude<React.ComponentProps<typeof Button>['variant'], undefined> }
+    : never;
+
 function Calendar({
     className,
     classNames,
@@ -15,9 +19,7 @@ function Calendar({
     formatters,
     components,
     ...props
-}: React.ComponentProps<typeof DayPicker> & {
-    buttonVariant: React.ComponentProps<typeof Button>['variant'];
-}) {
+}: CalendarProps<React.ComponentProps<typeof DayPicker>>) {
     const defaultClassNames = getDefaultClassNames();
 
     return (

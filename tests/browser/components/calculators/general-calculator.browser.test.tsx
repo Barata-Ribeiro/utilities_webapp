@@ -1,9 +1,9 @@
-import { test as baseTest, describe, expect } from 'vitest';
+import { test as baseTest, describe, expect } from 'vite-plus/test';
 import { render } from 'vitest-browser-react';
 import GeneralCalculator from '~/components/pages/calculators/general-calculator';
 
 const test = baseTest.extend<{ db: Storage }>({
-    db: async ({}, use) => {
+    db: async ({ task: _task }, use) => {
         localStorage.clear();
         await use(localStorage);
         localStorage.clear();

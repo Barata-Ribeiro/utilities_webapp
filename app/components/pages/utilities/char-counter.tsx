@@ -11,7 +11,7 @@ export default function CharCounter() {
     useEffect(() => {
         function handleCharCount() {
             let words;
-            const isLatin = content.replace(/\s+/g, '').match(/([^\x00-\x7F\u2013\u2014])+/gi);
+            const isLatin = content.replace(/\s+/g, '').match(/([^\u0020-\u007F\u2013\u2014])+/gi);
 
             if (isLatin) words = content.match(/[\p{L}\p{N}]+/gu);
             else {

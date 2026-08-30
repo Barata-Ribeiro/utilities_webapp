@@ -45,7 +45,7 @@ export function ThemeProvider({ children, initialTheme }: Readonly<ThemeProvider
             setTheme: (theme: Theme) => {
                 setTheme(theme);
 
-                fetcher.submit(
+                void fetcher.submit(
                     { theme },
                     {
                         method: 'post',

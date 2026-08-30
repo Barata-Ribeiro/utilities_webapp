@@ -72,7 +72,7 @@ function SidebarProvider({
             }
 
             // This sets the cookie to keep the sidebar state.
-            fetcher.submit(
+            void fetcher.submit(
                 { sidebar_state: String(openState) },
                 {
                     method: 'post',

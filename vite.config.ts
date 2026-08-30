@@ -1,18 +1,47 @@
-/// <reference types="vitest/config" />
-
 import { reactRouter } from '@react-router/dev/vite';
 import { serwist } from '@serwist/vite';
 import tailwindcss from '@tailwindcss/vite';
-import { playwright } from '@vitest/browser-playwright';
 import path from 'node:path';
 import devtoolsJson from 'vite-plugin-devtools-json';
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite-plus';
+import { playwright } from 'vite-plus/test/browser-playwright';
 import { routesManifest } from './routes-manifest.ts';
 
 export default defineConfig(({ mode }) => {
     const isTest = mode === 'test';
 
     return {
+        staged: {
+            '*': 'vp check --fix',
+        },
+        lint: {
+            jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
+            rules: { 'vite-plus/prefer-vite-plus-imports': 'error' },
+            options: { typeAware: true, typeCheck: true },
+        },
+        fmt: {
+            endOfLine: 'lf',
+            semi: true,
+            singleQuote: true,
+            singleAttributePerLine: false,
+            tabWidth: 4,
+            printWidth: 120,
+            htmlWhitespaceSensitivity: 'css',
+            sortPackageJson: false,
+            sortTailwindcss: {
+                stylesheet: 'app/app.css',
+                functions: ['clsx', 'cn', 'cva'],
+            },
+            ignorePatterns: [
+                'node_modules/',
+                'coverage/',
+                '.pnpm-store/',
+                'pnpm-lock.yaml',
+                'package-lock.json',
+                'pnpm-lock.yaml',
+                'yarn.lock',
+            ],
+        },
         resolve: { tsconfigPaths: true },
         ssr: {
             optimizeDeps: { include: ['lodash'] },

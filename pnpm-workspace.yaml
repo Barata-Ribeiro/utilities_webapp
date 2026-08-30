@@ -8,6 +8,8 @@ allowBuilds:
 overrides:
     'sharp': '^0.33.5'
     'sharp-ico': '^0.1.5'
+    vite@*: 'catalog:'
+    vitest@*: 'catalog:'
 supportedArchitectures:
     os:
         - win32
@@ -16,44 +18,23 @@ supportedArchitectures:
     cpu:
         - x64
         - arm64
+catalog:
+    vite: npm:@voidzero-dev/vite-plus-core@0.3.0
+    vitest: 4.1.11
+    vite-plus: 0.3.0
+    '@vitest/browser-playwright': 4.1.11
+peerDependencyRules:
+    allowAny:
+        - vite
+        - vitest
+    allowedVersions:
+        vite: '*'
+        vitest: '*'
 minimumReleaseAgeExclude:
-    - isbot@5.1.44
-    - vite@8.1.0 || 8.1.4 || 8.1.5
-    - prettier@3.9.4 || 3.9.6
-    - shadcn@4.12.0 || 4.13.1 || 4.14.0 || 4.15.0 || 4.16.1 || 4.19.0
-    - lucide-react@1.22.0 || 1.26.0 || 1.27.0
-    - '@react-router/dev@8.1.0 || 8.3.0'
-    - '@react-router/express@8.1.0 || 8.3.0'
-    - '@react-router/node@8.1.0 || 8.3.0'
-    - '@react-router/serve@8.1.0 || 8.3.0'
-    - '@tailwindcss/node@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-android-arm64@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-darwin-arm64@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-darwin-x64@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-freebsd-x64@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-linux-arm-gnueabihf@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-linux-arm64-gnu@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-linux-arm64-musl@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-linux-x64-gnu@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-linux-x64-musl@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-wasm32-wasi@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-win32-arm64-msvc@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide-win32-x64-msvc@4.3.2 || 4.3.3'
-    - '@tailwindcss/oxide@4.3.2 || 4.3.3'
-    - '@tailwindcss/vite@4.3.2 || 4.3.3'
-    - react-router@8.1.0 || 8.3.0
-    - tailwindcss@4.3.2 || 4.3.3
-    - '@types/node@26.1.1'
-    - react-dropzone@17.0.0 || 19.0.1 || 19.1.1 || 19.2.0 || 20.1.0
-    - prettier-plugin-tailwindcss@0.8.1
-    - react-hook-form@7.82.0 || 7.84.0
-    - '@fontsource-variable/fira-code@5.3.0'
-    - '@fontsource-variable/montserrat@5.3.0'
-    - '@fontsource-variable/source-sans-3@5.3.0'
-    - vite-plugin-devtools-json@1.1.0
-    - '@hookform/resolvers@5.5.7 || 5.6.0'
-    - '@types/lodash@4.17.25'
-    - file-selector@4.1.0
-    - '@vercel/react-router@1.3.2 || 1.3.4'
-    - '@vercel/static-config@3.4.1'
-    - konva@10.3.1
+    - '@react-router/dev@8.3.1'
+    - '@react-router/express@8.3.1'
+    - '@react-router/node@8.3.1'
+    - '@react-router/serve@8.3.1'
+    - lucide-react@1.37.0
+    - react-router@8.3.1
+    - zod@4.5.2

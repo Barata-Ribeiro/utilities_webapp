@@ -4,19 +4,11 @@
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
         "source.organizeImports": "explicit",
-        "source.fixAll.eslint": "explicit"
+        "source.fixAll.eslint": "explicit",
+        "source.fixAll.oxc": "explicit"
     },
     "css.lint.unknownAtRules": "ignore",
     "css.customData": [".vscode/tailwind.json"],
-    "[typescript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
     "tailwindCSS.classAttributes": ["class", "className", "ngClass", "class:list", ".*Styles*"],
     "tailwindCSS.experimental.classRegex": [
         "(?:enter|leave)(?:From|To)?=\\s*(?:\"|'|{`)([^(?:\"|'|`})]*)",
@@ -32,5 +24,15 @@
             "(?:\\b(?:const|let|var)\\s+)?[\\w$_]*(?:[Ss]tyles|[Cc]lasses|[Cc]lassnames)[\\w\\d]*\\s*=\\s*{([\\s\\S]*?)}",
             "\\s?[\\w].*:\\s*?[\"'`]([^\"'`]*).*?,?\\s?"
         ]
-    ]
+    ],
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "oxc.disableNestedConfig": true,
+    "oxc.fmt.disableNestedConfig": true,
+    "editor.formatOnSaveMode": "file"
 }

@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vite-plus/test';
 import { render } from 'vitest-browser-react';
 import RuleOfThree from '~/components/pages/calculators/rule-of-three';
 
@@ -16,7 +16,7 @@ describe('RuleOfThree', () => {
             await screen.getByPlaceholder('Value C').fill(c);
             await screen.getByRole('button', { name: /calculate rule of three/i }).click();
 
-            const error = await screen.getByText('Value must be a number.');
+            const error = screen.getByText('Value must be a number.');
             expect(error.element().textContent).toMatchInlineSnapshot('"Value must be a number."');
         });
 

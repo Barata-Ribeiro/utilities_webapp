@@ -1,5 +1,5 @@
 import { createRoutesStub } from 'react-router';
-import { afterEach, describe, expect, test, vi } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vite-plus/test';
 import { render } from 'vitest-browser-react';
 import ChuckNorrisJokesClient from '~/components/home/chucknorris-jokes-client';
 import SystemInfoClient from '~/components/home/systeminfo-client';

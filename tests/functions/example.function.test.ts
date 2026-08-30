@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { expect, test } from 'vite-plus/test';
 
 test('Math.sqrt works for perfect squares', () => {
     expect(Math.sqrt(4)).toBe(2);
