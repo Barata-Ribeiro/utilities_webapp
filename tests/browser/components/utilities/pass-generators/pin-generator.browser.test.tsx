@@ -42,7 +42,8 @@ describe('PINGenerator', () => {
         const screen = await render(<PINGenerator />);
         const slider = screen.getByRole('slider');
 
-        await slider.fill('6');
+        // Base UI slider input is visually hidden for a11y; bypass the visibility check.
+        await slider.fill('6', { force: true });
         expect(slider).toBeTruthy();
     });
 
@@ -92,7 +93,7 @@ describe('PINGenerator', () => {
         const slider = screen.getByRole('slider');
 
         // Set to minimum
-        await slider.fill('3');
+        await slider.fill('3', { force: true });
         expect(slider).toBeTruthy();
     });
 
@@ -101,7 +102,7 @@ describe('PINGenerator', () => {
         const slider = screen.getByRole('slider');
 
         // Set to maximum
-        await slider.fill('12');
+        await slider.fill('12', { force: true });
         expect(slider).toBeTruthy();
     });
 });

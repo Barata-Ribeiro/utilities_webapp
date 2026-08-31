@@ -47,17 +47,13 @@ describe('TextToSpeech', () => {
         },
     );
 
-    test('shows validation error for empty text', async () => {
+    test('keeps play disabled when text is too short', async () => {
         const screen = await render(<TextToSpeech />);
         const textarea = screen.getByPlaceholder('e.g. "Hello, how are you today?"');
         const playButton = screen.getByRole('button', { name: 'Play Text to Speech' });
 
-        // Fill with invalid text
         await textarea.fill('short');
-        await playButton.click();
-
-        // Should show error or button should be disabled
-        expect(playButton).toBeTruthy();
+        await expect.element(playButton).toBeDisabled();
     });
 
     test('shows validation error when text is too short', async () => {

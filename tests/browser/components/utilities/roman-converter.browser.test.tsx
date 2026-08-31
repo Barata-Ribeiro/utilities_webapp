@@ -106,7 +106,7 @@ describe('RomanConverter', () => {
         const input = screen.getByLabelText('Number');
         await input.fill('42');
         await input.fill('');
-        await expect.element(input).toHaveValue(0);
+        await expect.element(input).toHaveValue(null);
     });
 
     test.each([

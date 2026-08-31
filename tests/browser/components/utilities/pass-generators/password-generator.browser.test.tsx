@@ -34,8 +34,8 @@ describe('PasswordGenerator', () => {
         const screen = await render(<PasswordGenerator />);
         const slider = screen.getByRole('slider');
 
-        // Try to change slider value
-        await slider.fill('16');
+        // Try to change slider value (Base UI slider input is visually hidden for a11y)
+        await slider.fill('16', { force: true });
         // After adjusting, should show updated length
         expect(slider).toBeTruthy();
     });

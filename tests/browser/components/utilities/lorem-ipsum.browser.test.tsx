@@ -113,8 +113,8 @@ describe('LoremIpsum', () => {
         const input = screen.getByLabelText('Amount');
         const paragraphsRadio = screen.getByRole('radio', { name: 'Paragraphs' });
 
-        // Ensure Paragraphs mode is selected
-        await paragraphsRadio.click();
+        // Paragraphs is the default mode.
+        await expect.element(paragraphsRadio).toBeChecked();
 
         // Try to enter amount that exceeds max (max is 170 for paragraphs)
         await input.fill('171');
