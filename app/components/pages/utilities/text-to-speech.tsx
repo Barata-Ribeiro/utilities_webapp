@@ -46,8 +46,10 @@ export default function TextToSpeech() {
 
     const form = useForm<TextToSpeechType>({
         resolver: zodResolver(TextToSpeechSchema),
+        mode: 'onChange',
         defaultValues: { text: '', rate: 1, pitch: 1, voice: '' },
     });
+    const canPlay = TextToSpeechSchema.shape.text.safeParse(form.watch('text')).success;
 
     function onsubmit(data: TextToSpeechType) {
         const s = globalThis.speechSynthesis;
@@ -175,11 +177,7 @@ export default function TextToSpeech() {
             />
 
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-4">
-                <Button
-                    type="submit"
-                    disabled={!form.formState.isValid || !form.formState.isDirty}
-                    aria-label="Play Text to Speech"
-                >
+                <Button type="submit" disabled={!canPlay} aria-label="Play Text to Speech">
                     Play
                 </Button>
                 <Button type="reset" variant="ghost" onClick={reset} aria-label="Reset Form">
