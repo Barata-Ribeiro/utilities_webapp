@@ -115,8 +115,8 @@ export default defineConfig(({ mode }) => {
                 },
                 {
                     extends: true,
-                    setupFiles: ['./tests/setup.ts'],
                     test: {
+                        setupFiles: ['./tests/setup.ts'],
                         include: [
                             'tests/browser/**/*.browser.test.{js,ts,jsx,tsx}',
                             'tests/browser/**/*.browser.spec.{js,ts,jsx,tsx}',
