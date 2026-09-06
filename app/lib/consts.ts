@@ -10,6 +10,7 @@ import D8Icon from '~/components/icons/d8.icon';
 export const URLS = {
     utilities: [
         { title: 'Char. Counter', url: '/utilities/character-counter' },
+        { title: 'Dead-pixel Check', url: '/utilities/dead-pixel-check' },
         { title: 'Dice Roller', url: '/utilities/dice-roller' },
         { title: 'Lorem Ipsum Generator', url: '/utilities/lorem-ipsum' },
         { title: 'Meme Generator', url: '/utilities/meme-generator' },

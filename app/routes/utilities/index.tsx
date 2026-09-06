@@ -16,6 +16,11 @@ const utilities = [
         description: 'Count characters, words, and lines for any text input quickly.',
     },
     {
+        title: 'Dead-pixel Check',
+        href: '/utilities/dead-pixel-check',
+        description: 'Inspect your screen for dead pixels with a full-screen test in five solid colors.',
+    },
+    {
         title: 'Dice Roller',
         href: '/utilities/dice-roller',
         description: 'Roll virtual dice for games or simulations with customizable options.',

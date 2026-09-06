@@ -152,3 +152,26 @@
         @apply font-mono;
     }
 }
+
+/* Diagnostic colors must remain exact, with no theme overrides, transitions, or visible controls. */
+.dead-pixel-test,
+.dead-pixel-test-surface {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    outline: none;
+    cursor: none;
+    transition: none;
+    forced-color-adjust: none;
+}
+
+.dead-pixel-test {
+    overflow: hidden;
+}
