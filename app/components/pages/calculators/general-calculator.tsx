@@ -1,7 +1,7 @@
 import { evaluate, round } from 'mathjs';
 import { useEffect, useRef } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { cn } from '~/lib/utils';
+import { twMerge } from 'cn';
 
 function isNumber(value: unknown) {
     if (typeof value === 'number') return !Number.isNaN(value) && Number.isFinite(value);

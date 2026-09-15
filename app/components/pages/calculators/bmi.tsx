@@ -2,7 +2,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { BadgeAlertIcon, BadgeCheckIcon } from 'lucide-react';
 import { useState } from 'react';
 import { Controller, Resolver, useForm } from 'react-hook-form';
-import { twMerge } from 'tailwind-merge';
 import { z } from 'zod/v4';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
@@ -11,6 +10,7 @@ import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from '~/c
 import { Input } from '~/components/ui/input';
 import { Progress } from '~/components/ui/progress';
 import { cn } from '~/lib/utils';
+import { twMerge } from 'cn';
 
 const BmiSchema = z.object({
     weight: z.coerce
