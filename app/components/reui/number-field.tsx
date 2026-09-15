@@ -3,11 +3,10 @@ import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useId, useMemo } from 'react';
-
-import { ClassValue } from 'clsx';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 import { Label } from '~/components/ui/label';
 import { cn } from '~/lib/utils';
+import { ClassValue } from 'cn';
 
 const NumberFieldContext = createContext<{
     fieldId: string;
