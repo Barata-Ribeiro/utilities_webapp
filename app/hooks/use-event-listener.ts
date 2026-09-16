@@ -46,7 +46,11 @@ function useEventListener<
     eventName: KW | KH | KM,
     handler: (
         event:
-            WindowEventMap[KW] | HTMLElementEventMap[KH] | SVGElementEventMap[KH] | MediaQueryListEventMap[KM] | Event,
+            | WindowEventMap[KW]
+            | HTMLElementEventMap[KH]
+            | SVGElementEventMap[KH]
+            | MediaQueryListEventMap[KM]
+            | Event,
     ) => void,
     element?: RefObject<T>,
     options?: boolean | AddEventListenerOptions,
