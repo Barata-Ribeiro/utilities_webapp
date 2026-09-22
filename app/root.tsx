@@ -27,11 +27,15 @@ import type { Route } from './+types/root';
 export async function loader({ request }: Route.LoaderArgs) {
     const cookieHeader = request.headers.get('Cookie');
 
-    const theme = ((await themeCookie.parse(cookieHeader)) as 'light' | 'dark' | 'system' | undefined) ?? 'system';
+    const [theme, sidebarState] = await Promise.all([
+        themeCookie.parse(cookieHeader),
+        sidebarCookie.parse(cookieHeader),
+    ]);
 
-    const sidebarState = ((await sidebarCookie.parse(cookieHeader)) as boolean | undefined) ?? false;
-
-    return { theme, sidebarState };
+    return {
+        theme: (theme as 'light' | 'dark' | 'system' | undefined) ?? 'system',
+        sidebarState: (sidebarState as boolean | undefined) ?? false,
+    };
 }
 
 export function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
